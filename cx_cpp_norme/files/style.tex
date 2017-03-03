@@ -1,0 +1,183 @@
+\section{Identation}
+  Allman's ident style was chosen for this project because of its clarity. 
+  This style puts the brace associated with a control statement on the next 
+  line, indented to the same level as the control statement. Statements within 
+  the braces are indented to the next level.
+  
+  \includecode{\styleSnippets indentationAllman.cpp}
+  
+  From Wikipedia:
+  
+  \begin{quote}
+  Consequences of this style are that the indented code is clearly set apart 
+  from the containing statement by lines that are almost completely whitespace 
+  and the closing brace lines up in the same column as the opening brace. Some 
+  people feel this makes it easy to find matching braces. The blocking style 
+  also delineates the actual block of code from the associated control 
+  statement itself. Commenting out the control statement, removing the control 
+  statement entirely, refactoring, or removing of the block of code is less 
+  likely to introduce syntax errors because of dangling or missing braces. 
+  Furthermore, it's consistent with brace placement for the outer/function 
+  block.
+  \end{quote}
+
+\section{Naming format conventions}
+
+The various formats presented here aim at marking a clear distinction between 
+any piece of code used. They bring further distinctions among types of code 
+structures and help avoid errors.
+
+\subsection{Variables}
+
+% Standard variables:
+Variables need to follow a \texttt{camelCase} format:
+
+\includecode{\styleSnippets variables.cpp}
+
+% Constants:
+Constant need to be in \texttt{UPPERCASE} format. If you want to separate words 
+for a constant, only the underscore (\_) character is allowed, as in 
+\texttt{UPPERCASE\_CONSTANT}:
+
+\includecode{\styleSnippets constants.cpp}
+
+% Parameters:
+To differentiate parameters from regular variables or member variables, the 
+prefix \texttt(p\_) has to be added before the parameter variable name (which 
+shoul be in \texttt{camelCase}. In other words, the format is 
+\texttt{p\_myParameter}:
+
+\includecode{\styleSnippets parameters.cpp}
+
+% Attributes:
+Like parameters, member variables often need to be distinguished from other 
+variables, including parameters. The prefix \texttt{p\_} needs to be added 
+befor the variable name (in \texttt{camelCase}). The format is: 
+\texttt{m\_memberVariable}:
+
+\includecode{\styleSnippets attributes.cpp}
+
+Notice in the last code snippet --in the constructor's initialization list-- 
+how the parameter/member variable distinction is clear.
+  
+\subsection{Functions and methods}
+Function and method names follow the same rules as variables, that is they are 
+written in \texttt{camelCase}. Of course, constructors and destructors are 
+exceptions of this.
+
+  \includecode{\styleSnippets functionsAndMethods.cpp}
+  
+\subsection{MACROs}
+MACRO names follow the same rules as constants, that is they are written in 
+\texttt{UPPERCASE}, possibly with underscores between seperated words. MACRO 
+parameters, however, do not follow the same conventions as regular parameters. 
+Rather, the format \texttt{\_\_parameterName\_\_} is used. These two rules 
+combined make it very clear that the piece of code used is not a function or a 
+method, but a MACRO.
+
+  \includecode{\styleSnippets macros.cpp}
+
+\subsection{Classes, structures and enumerations}
+
+% Naming
+A class name uses the \texttt{CamelCase} format. They always start with an 
+uppercase letter. If more than one word is used to describe the class, 
+uppercase letters for every first letter of a word are used to distinguish 
+them. This helps avoid confusion between a class name and an instance name.
+
+  \includecode{\styleSnippets classesAndStructs.cpp}
+  
+% Access
+To avoid confusion, respect the following order for member access when 
+declaring an class interface:
+\begin{enumerate}
+ \item \texttt{public};
+ \item \texttt{protected};
+ \item \texttt{private}.
+\end{enumerate}
+Sometimes, this rule is hard to follow (for example with private 
+\texttt{typedefs} that need to be know from the beginning by the interface). 
+When it is not possible to follow this rule, duplicate as few access keyword as 
+possible troughout the class interface.
+
+  \includecode{\styleSnippets classAccess.cpp}
+  
+% Interfaces
+Interface classes names follow the same pattern as regular classes, but an 
+'\texttt{I}' character is added before the name. The pattern is 
+\texttt{IClass}: 
+
+  \includecode{\styleSnippets interfaces.cpp}
+  
+% Enumerations
+Enumerations follow the same naming convention as regular classes. The actual 
+enumeration can take place on one single line, but can also span on several 
+lines if the layout seems clearer:
+
+  \includecode{\styleSnippets enums.cpp}
+  
+% Test classes
+A class that is tested using another class (for example by creating a test 
+fixture in Google Tests) should always hold the original class name followed by 
+the string \texttt{Tests}, clearly identifying its purpose. The format is 
+\texttt{ClassTests}:
+
+  \includecode{\styleSnippets testClasses.cpp}
+  
+\subsection{Files}
+
+A class should be interfaced in an eponym header file and implemented in an 
+eponym source file. The class should be tested in a source file whose 
+name begins with \texttt{test\_} and ends with the class name. In other words:
+
+\begin{center}
+  \begin{tabular}{|l|l|}
+    \hline
+    \textbf{Item}  & \textbf{Name format}  \\
+    \hline\hline
+    class          & \texttt{Foo}          \\
+    header file    & \texttt{Foo.h}        \\
+    source file    & \texttt{Foo.cpp}      \\
+    test file      & \texttt{test\_Foo.cpp} \\
+    \hline
+  \end{tabular} 
+\end{center}
+
+  \includecode{\styleSnippets files.cpp}
+  
+The only file extensions accepted are \texttt{.h} and \texttt{.cpp} for 
+uniformity. Furthermore, these extensions are supported by nearly all (if not 
+all!) compilers.
+  
+\subsection{Summary}
+
+The \cref{tblNamingConventions} summarizes all naming conventions introduced in 
+this section.
+
+\begin{table}
+  \begin{tabular}{|l|l|l|}
+    \hline
+    \textbf{Item}              & \textbf{Format}                              \\
+    \hline\hline
+    variable                   & \texttt{camelCase}                           \\
+    constant                   & \texttt{UPPERCASE\_CONSTANT}                 \\
+    parameter                  & \texttt{p\_camelCase}                        \\
+    member variable            & \texttt{m\_camelCase}                        \\
+    function \& method         & \texttt{camelCase()}                         \\
+    MACRO (w/o param)          & \texttt{UPPERCASE\_MACRO()}                  \\
+    MACRO (param)              & \texttt{UPPERCASE\_MACRO(\_\_aParameter\_\_)}\\
+    class                      & \texttt{CamelCase}                           \\
+    structure                  & \texttt{CamelCase}                           \\
+    enumeration                & \texttt{CamelCase}                           \\
+    interface                  & \texttt{ICamelCase}                          \\
+    files                      & \texttt{[test\_]CamelCase[.h/.cpp]}          \\
+    \hline
+  \end{tabular} 
+  \caption{Summary of the naming conventions}
+  \label{tblNamingConventions}
+\end{table} 
+
+\section{Spacing}
+
+The only spacing rule is to respect a \textbf{150 characters limit} for every
+line of code.

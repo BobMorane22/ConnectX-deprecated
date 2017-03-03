@@ -1,0 +1,49 @@
+\documentclass{report}
+
+% ------------------------------------------------------------------------------
+%                                    MACROs
+%-------------------------------------------------------------------------------
+% Facilitate source code inclusion:
+\newcommand{\includecode}[1]{\lstinputlisting[language=c++]{#1}}
+
+% Facilitate typewriter font usage:
+\newcommand{\ttt}[1]{\texttt{#1}}
+
+% General code snippet location:
+\newcommand{\snippets}{./snippets/}
+
+% Relative code snippet locations:
+\newcommand{\styleSnippets}{\snippets style/}
+\newcommand{\generalSnippets}{\snippets general/}
+\newcommand{\varClassStructSnippets}{\snippets varClassStruct/}
+\newcommand{\controlSnippets}{\snippets control/}
+
+% Document teX files location:
+\newcommand{\files}{./files/}
+% ------------------------------------------------------------------------------
+% ------------------------------------------------------------------------------
+
+\input{\files preambule.tex}
+
+
+
+\begin{document}
+
+% Title page
+\title{C++ Programming Style Guide for \texttt{cXbase}}
+\author{Éric Poirier}
+\maketitle
+
+
+% Document body:
+\chapter{General}                              \input{\files general.tex}
+\chapter{Style}                                \input{\files style.tex}
+\chapter{Variables, classes and structures}    \input{\files varClasStruct.tex}
+\chapter{Control structures}                   \input{\files control.tex}
+
+\chapter{Functions, methods and MACROs}
+\chapter{Documenting the code}
+\chapter{STL use}
+\chapter{Advanced}
+
+\end{document}

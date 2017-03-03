@@ -1,0 +1,148 @@
+/------------------------------------------------------------------------------/
+/                                                                              /
+/                  NORME DE PROGRAMMATION -- PUISSANCE X                       /
+/                                                                              /
+/               Par: Éric Poirier  (poirier.eric.1@gmail.com)                  /
+/                                                                              /
+/                              Version: 1.0                                    /
+/                                                                              /
+/                               Hiver 2016                                     /
+/                                                                              /
+/------------------------------------------------------------------------------/
+
+TEST UNITAIRES NAMING:
+http://osherove.com/blog/2005/4/3/naming-standards-for-unit-tests.html
+
+TABLE DES MATIÈRES
+
+INTRODUCTION
+
+    La présente norme a pour but de normaliser le code source afin que chaque 
+    programmeur puisse se retrouver facilement et communiquer efficacement ses 
+    idées dans le projet. Il est primordial de l'utiliser. L'auteur prend pour 
+    acquis l'utilisation du C++11.
+    
+    Différents codes sont utilisés dans ce document pour en simplifier 
+    l'organisation:
+    
+    [NRM]   Norme.
+    [BIB.]  Élément de bibliographie.
+    [LN.]   Liens vers une ressource externe.
+    [LST.]  Élément de code.
+    [FIG.]  Figure.
+    [TAB.]  Tableau.
+    
+    La norme content peu d'explication sur le « pourquoi » de chaque norme, 
+    même si ce « pourquoi » existe. L'idée est de rendre la norme aussi concise 
+    que possible pour faciliter son utilisation comme un outil de travail. Il 
+    ne s'agit pas d'un cours de programmation.
+    
+    NIVEAUX DES NORMES
+    
+    À chaque norme est identifié un niveau d'importance qui indique au 
+    programmeur les attentes d'application face à cette norme. Ces niveaux sont 
+    indiqués à l'intérieur de doubles crochets: [[ ]]. Les trois niveaux sont:
+    
+    [[OBLIGATOIRE]] La norme doit absolument être appliquée, sans passe droit 
+                    possible.
+                    
+    [[RECOMMENDÉ]]  Il est (fortement) recommendé de suivre la norme, mais des
+                    exceptions peuvent être acceptées. Par exemple, si pour une 
+                    raison ou pour une autre il est impossible de suivre la 
+                    norme, ou que celle-ci rend la lecture du code très 
+                    difficile.
+    
+    [[AU CHOIX]]    La norme est suggérée mais son application est au goût du 
+                    programmeur.
+                    
+    Pour le niveau [[RECOMMENDÉ]], si le programmeur décide de ne pas appliquer 
+    la norme en vigueur, la raison doit être CLAIREMENT INDIQUÉE dans un 
+    commentaire à même le code.
+    
+    C++11
+    
+    L'utilisation du C++11 est obligatoire. Des exemples de son utilisation 
+    seront fournies dans cette norme, mais ces exemples ne sont pas exhaustifs. 
+    Il est de la responsabilité du programmeur de se documenter à cet effet.
+    De la documentation est fournie dans la section LIENS.
+    
+ORGANISATION
+    CODE SOURCE
+        - Pas de tabs, mettre des espaces (4 espaces = 1 tab).
+        - header guards obligatoires.
+        - séparer .cpp et .h
+        - une classe/struct/union par fichier, sauf si reliés de près.
+        
+    MISE EN FORME
+        - donner des exemples.
+        - le cas des inline dans .h.
+        
+    COMMENTAIRES
+        - commentaires tjrs en mots, jamais en code.
+        - commenter par le code autant que possible.
+        - documentation doxygène.
+        - noms de variables/fonctions/classes/macros significatifs
+        
+    TESTS
+        - pas facultatifs.
+        - tester même ce qui est évident.
+        
+    COMPILATION
+        -treat warning as errors: mettre les options de gcc à utiliser.
+        
+STRUCTURES DE BASE
+    INITIALISATION & VARIABLES
+        - uneVariable
+        - Définir aussi près de l'utilisation que possible.
+        - initialisation universelle, toujours.
+        - attributs: m_attribut
+        - paramètre: p_paremètre
+        - tests: t_test
+        - jamais déclarer plus d'une variable par ligne, sauf si très relié.
+        
+    STRUCTURES DE CONTRÔLE
+        - Éviter les boucles lorsque possible (algorithmes).
+        - boucle for sur intervalles préférées.
+        - boucles: utiliser itérateurs pour conteneurs (et string).
+        - Pas de else dans if-else. Continuer avec le code.
+    
+    CLASSES & STRUCTURES
+        - uneClasse
+        - classe vs struct: object vs conteneur de données.
+        - public/protected/private.
+        - tableau des préfixes.
+        - pas de get/set: orienté objet.
+        - utiliser des lambdas si possible.
+    
+    FONCTIONS & MÉTHODES
+        - uneMethode()
+        - uneFonction()
+        - Inline sur une ligne, jamais le mot-clé inline.
+        - passer paramètres par références constantes, sauf si type de base.
+        - un seul return par fonction/méthode.
+        - const, default, delete et override obligatoires.
+        - Destructeurs: toujours virtuels.
+    
+    MACROS
+        -lettres majuscules
+        -préférer les fonctions (inline au besoin)
+        
+    CONTRAT
+        - obligatoire (avec documentation & tests)
+
+AVANCÉS
+        - typer le code au maximum.
+        - éviter la redondance.
+
+COMMENT UTILISER ECLIPSE POUR SUIVRE LA NORME
+    - fichier de configuration disponible.
+    - ne pas se battre contre Eclipse.
+        
+LIENS UTILES
+
+    [LN.cpp11a]
+    [LN.cpp11b]
+
+BIBLIOGRAPHIE
+
+    [BIB.]

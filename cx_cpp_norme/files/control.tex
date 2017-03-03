@@ -1,0 +1,33 @@
+\section{Prefer iterators}
+Iterators in C++ provide a way to generalize a looping process to all 
+\ttt{std}-like data containers. No random access operator is needed to perform 
+the loop. For example:
+
+\includecode{\controlSnippets iterator.cpp}
+
+In the above example, the \ttt{std::string} could be replaced by an 
+\ttt{std::list}, even if no random access operator is defined for it. Iterators 
+should always be preffered to simple \ttt{for}-loops. They are welcomed allied 
+for efficient refactoring!
+
+\section{Use range \ttt{for} loops}
+Whenever possible, prefer the range-\ttt{for}-loop. It is one of the best self 
+documenting tool available in C++11. However, be careful with the keyword 
+\ttt{auto} not to generate unwanted copies of objects (especially for large 
+ones!). Consider the following example:
+
+\includecode{\controlSnippets auto.cpp}
+
+The second example produces the expected result and is cheaper for no copy is 
+done. The first loop is just wrong since the \ttt{format()} method is only 
+applied to the copy!
+
+\section{Nesting is evil}
+Whenever you can, try to avoid loop nesting and even logic nesting. Instead, 
+use more functions or \ttt{std::algorithms}. Nested structures are often hard 
+to follow, allow more maistakes to be made and are poorly self documented.
+
+\section{Try to avoid loops}
+If you can, use an \ttt{std::algorithm} instead, especially if it makes reading 
+the code clearer. Remember that algorithms are well tested allies! See the 
+\cref{chapterAlgorithms} for more examples of their use!

@@ -1,0 +1,39 @@
+\section{\texttt{class} vs \texttt{struct}}
+A \texttt{struct} should be defined only when the data members that are 
+considered form a data aglomeration without specific behaviour. For example, 
+the following data collection is only a way to structure two \texttt{double}s 
+but follow no specific behaviour and should be defined inside a \texttt{struct}:
+
+\includecode{\varClassStructSnippets struct.cpp}
+
+In the other hand, the following data agglomeration holds a specific behaviour 
+-- a way to calculate its length:
+
+\includecode{\varClassStructSnippets class.cpp}
+
+and therefore should be defined inside a \texttt{class}. Note that 
+\texttt{struct}s can sometimes hold constructors and methods. Usually, the 
+content of a \texttt{struct} should be completely public.
+
+\section{Access qualifiers}
+When thinking about access qualifiers, the principle of least privilege should 
+be applied. Also, make sure the public part of your class is as stable as 
+possible, especially if it is to be included in a public API!
+
+
+\section{Inheritance}
+Single inheritance is encouraged, multiple inheritance is discouraged other 
+than for interface implementation. Consider the following classes and 
+interfaces:
+
+\includecode{\varClassStructSnippets baseClass.cpp}
+
+The \texttt{Foo} and \texttt{Waldo} classes are regular classes and should be 
+inherited one at a time (even if the class is abstract, but contains some 
+implementation--that is, it is not an interface). In the other hand, both 
+classes \texttt{IBar} and \texttt{IBaz} are interfaces an can be inherited 
+simultaneously. For example:
+
+\includecode{\varClassStructSnippets inheritance.cpp}
+
+Unless you really know what you are doing, all inheritance should be public.

@@ -1,0 +1,52 @@
+\section{C++11 is the default}
+Throughout this document, you will notice that C++11 is used whenever possible. 
+This same behaviour is expected from any programmer for the \texttt{cXbase} 
+project. C++11 is becoming the new standard in the industry and it is important 
+to create as modern a codebase as possible.
+
+For now, C++14 and C++17 features are not to be used (unless there is no 
+confortable way around it). When C++17 will become the new standard (that is,
+it will ship with most compilers), it will be possible to use its features.
+
+
+\section{Meaningful names}
+Try to produce selft-documenting code which requires a minimum analysis from 
+the reader. In a perfect world, names given to variables, functions and so on 
+should never add to the analysis a user must perform while reading the code. 
+Names should be clear and unambiguous. For example:
+
+\includecode{\generalSnippets meaningfulNames.cpp}
+
+Don't fear long names, as long as they are clear!
+
+
+\section{Source code organization}
+
+The source code should always be organized in multiple files.
+
+\subsection{Classes and structs}
+A header file (with the extention \texttt{.h} named after the class it defines. 
+This header file contains the class definition but not its implementation. The 
+implementation should be in a source file named after the class it implements 
+with a \texttt{.cpp} extension.
+
+\subsection{Templates}
+Template classes need to have the method definitions inside the header file. To 
+keep declaration and implementation separated, do the following:
+
+\includecode{\generalSnippets fileOrganization.cpp}
+
+Keep \textbf{one and only one} class, struct or template should be defined 
+in a given pair of files. Finally, include header guards for each header file 
+created. For example, for a header file containing the declaration of a class 
+\texttt{Foo}:
+
+\includecode{\generalSnippets headerGuards.cpp}
+
+\section{Language and characters}
+To avoid encoding issues, always use English ans ASCII characters either in 
+your programming or your commenting.
+
+\textbf{IMPORTANT:} tab characters should be replaced by four (4) space 
+characters. Tab characters may be interpreted differently by different 
+applications and therefore are a source of ambiguity which should be eleminated.
