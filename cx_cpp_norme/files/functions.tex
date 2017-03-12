@@ -1,0 +1,69 @@
+The following sections apply both to methods and functions.
+
+\section{Parameter passing}
+Parameters, when they represent objects (custom or not) should always be passed 
+as constant references to avoid uneccessary copying. In other words, a 
+parameter named \ttt{p\_aParameter} of type \ttt{Object} should be passed as:
+
+\begin{center}
+\ttt{const Object\& p\_aParameter}.
+\end{center}
+
+If the parameter is of a fundamental data type and is not an object (\ttt{int}, 
+\ttt{bool}, \ttt{double}, etc), this rule does not apply since copy is cheap. 
+For example:
+
+\includecode{\functionsSnippets parameters.cpp}
+
+\section{\ttt{const} correctness}
+\ttt{const} correctness is perhaps one of the most important rules introduced 
+in this document. If a method does not modify the object it acts upon, mark it 
+as \ttt{const}. Consider the following example:
+
+\includecode{\functionsSnippets const.cpp}
+which shows how \ttt{const} correctness helps avoid tricky mistakes by running 
+checks at compile time!
+
+\section{Other specifiers}
+The \ttt{delete} keyword should be added to methods which should not exist in a 
+class (usually because they don't make sense in the context of the class). For 
+example, in the class \ttt{Person} below, the programmer has decided that 
+instanciating am object without specifying a name should not be done. 
+Therefore, he deleted the default constructor:
+
+\includecode{\functionsSnippets delete.cpp}
+
+The \ttt{override} keyword is also very important. The following example shows 
+how it can be used to avoid errors using the compiler:
+\includecode{\functionsSnippets override.cpp}
+
+In this case, the \ttt{override} addition makes the compiler complain that the 
+method with the signature
+
+\begin{center}
+ \ttt{int foo();}
+\end{center}
+does not exist in the base class. This tells the programmer that the 
+\ttt{const} keyword is absent from the signature instead of generating a "new" 
+non \ttt{const} \ttt{foo()} method (Notice in the example how the keyword 
+\ttt{virtual} is repeated in the overriden method signature. This is good 
+practice!).
+
+These two keywords should always be used, when applicable.
+
+Other keywords such as \ttt{default} and \ttt{final} can be used but are not 
+mandatory.
+
+\section{Virtual destructors}
+Destructor should always be made \ttt{virtual} to ensure correct behaviour if 
+the class is eventually derived. This rule does not apply if a class is made 
+\ttt{final}, of course.
+
+\section{Inlining}
+One line methods should be inlined to ensure correct optimization at compile 
+time. If a method has more than one line, do not inline! Example:
+\includecode{\functionsSnippets inlining.cpp}
+
+Prefer \ttt{inline} to MACROs, whenever possible. This avoid tricky copy and 
+paste errors which may be hard to find:
+\includecode{\functionsSnippets inlineVsMacros.cpp}

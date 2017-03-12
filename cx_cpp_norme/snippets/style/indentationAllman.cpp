@@ -13,7 +13,6 @@ void Foo::aMethod(int p_x, int p_y)
 	}
 }
 
-
 // Not OK: Less clear and more error prone, esppecially for brace matching.
 void Foo::aMethod(int p_x, int p_y){
 

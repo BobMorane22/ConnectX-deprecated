@@ -1,0 +1,50 @@
+\section{Documentation tools}
+Connect X uses Doxygen to document APIs. Some madatory pieces of 
+documentation have been designed to ensure complete documentation for the users 
+(and the developpers!).
+
+\section{Public API mandatory documentation}
+All files should start with:
+\includecode{\documentationSnippets file.cpp}
+
+All methods and functions should start with:
+\includecode{\documentationSnippets function.cpp}
+Some private methods or functions may not be documented but it is good practice 
+to do so. Doxygen will ignore this documentation, but it may help fellow 
+developpers in the future.
+
+All classes and structures should start with:
+\includecode{\documentationSnippets class.cpp}
+
+All attricutes should alwo be documented as follow:
+\includecode{\documentationSnippets attribute.cpp}
+
+Other pieces of code (\ttt{namespace}s, \ttt{typedef}s, etc) should also be 
+documented using the docygen tags, but a normalized documentation format has not 
+been designed.
+
+\section{Internal documentation}
+One should only add comment to internal code (for example to explain a line 
+inside the body of a function) after careful consideration. Usually, this 
+practice is a sign of bad design (but not always) and poor self documenting 
+code. The code should speak for itself. Here are some ideas on how to avoid 
+comments in internal code:
+
+\begin{enumerate}
+
+ \item separate the code in smaller functions with meaningful names;
+ 
+ \item code what you want to communicate (for example, use \ttt{const} to say 
+       that your method does not modify an object, instead of writting a 
+       comment);
+       
+ \item use well know functions wherever possible (for example, in the excellent 
+       \ttt{algorithm} STL header.
+       
+\end{enumerate}
+
+For example avoid this:
+\includecode{\documentationSnippets useless.cpp}
+
+and write this instead:
+\includecode{\documentationSnippets inTheCode.cpp}
