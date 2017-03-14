@@ -80,6 +80,9 @@ $(MAIN): $(OBJS)
 	$(CPPC) $(CPPFLAGS) $(INCLUDES) -c $< -o $@
 	@echo Object files created!
 
+doc:
+	$(MAKE) -C doc
+
 clean:
 	@echo Removing object files...
 	$(RM) *.o 
