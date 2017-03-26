@@ -8,8 +8,8 @@
 # This makefile defines how cXbase.lib should be built. Both the following
 # build steps are done from here:
 #
-#    1. Build cXbase.lib
-#    2. Build the cXbase.lib Doxygen documentation.
+#    1. Build libcXbase.a
+#    2. Build the cXbase library Doxygen documentation.
 #
 # To use this makefile, you need at least these tools installed on your
 # machine:
@@ -28,14 +28,15 @@ WARN_AS_ERRORS_FLAGS = -pedantic-errors\
                        -Werror\
                        -Wconversion
 DEBUG_FLAGS          = -g3
-OPT_FLAGS            = -0O
+OPT_FLAGS            = -O0
 NO_LINKER_FLAGS      = -c
 CPPFLAGS             = $(OPT_FLAGS) $(DEBUG_FLAGS) $(NO_LINKER_FLAGS) $(STANDARD_FLAGS) \
                        $(WARN_AS_ERRORS_FLAGS)
 
 # Source files, headers, etc.:
-ROOT     = $(CURDIR)
+ROOT     = $(ROOT_DIR)/cXbase
 INCLUDES = -I$(ROOT)source -I$(ROOT)publicAPI
+VPATH    = source
 
 SRCS     = AsciiColorCode.cpp\
            Color.cpp\
@@ -60,29 +61,37 @@ OBJS     = AsciiColorCode.o\
 LIBS =
 
 # Product:
-MAIN = cXbase.a # static library
+MAIN = libcXbase.a # static library
 
 # Other
-RM = rm -f *.o
+RM = rm -fd *.o
+
 
 all:	$(MAIN)
-	@echo $(MAIN).lib has been compiled!
+	@echo $(MAIN) has been compiled!
 
 $(MAIN): $(OBJS)
-	@echo $(CPPC) $(CPPFLAGS) $(INCLUDES) -o $(OBJS) $(LIBS) # use ar?
+	@echo Invoquing GCC Archiver...
+	ar -r $(MAIN) $(OBJS) $(LIBS)
+	@echo Static library $(MAIN) created!
 
-%.cpp%.o:
-	$(CPPC) $(CPPFLAGS) $(INCLUDES) -c #no
+.cpp.o:
+	@echo Invoquing GCC...
+	$(CPPC) $(CPPFLAGS) $(INCLUDES) -c $< -o $@
+	@echo Object files created!
 
 clean:
 	@echo Removing object files...
-	$(RM)
+	$(RM) *.o 
 	@echo Object files removed!
 
 mrproper:
 	@echo Cleaning project...
-	$(RM) *.lib
+	$(RM) *.o
+	$(RM) *.a
 	@echo Project cleaned!
 
 depend: $(SRCS)
+	@echo Finding dependencies...
 	makedepend $(INCLUDES) $^
+	@echo Dependencies found!

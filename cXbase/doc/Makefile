@@ -29,6 +29,8 @@ doxygen:
 	doxygen $(DOXYFILE)
 	@echo Doxygen documentation created!
 
+mrproper: clean
+
 clean:
 	@echo Deleting Doxygen documentation...
 	$(RM) $(DOXYDIR)/html
