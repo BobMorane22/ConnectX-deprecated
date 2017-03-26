@@ -48,7 +48,7 @@ cxbase:
 
 cxbaseunit:
 	$(MAKE) -C cXbase/unit
-	$(shell $(TESTS_RUNNER) $(CXBASE_UNIT_TESTS_EXEC) $(CXBASE_UNIT_TESTS_LOG) > /dev/null 2>&1)
+	python $(TESTS_RUNNER) $(CXBASE_UNIT_TESTS_EXEC) $(CXBASE_UNIT_TESTS_LOG)
 
 cxbasedoc:
 	$(MAKE) -C cXbase/doc
