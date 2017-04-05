@@ -41,7 +41,7 @@ OBJS      = main.o
 LIBS      = -lcXbase
 
 # Product:
-MAIN = connect4-nw # Connect X, no window version
+MAIN = connectx-nw.out # Connect X, no window version
 
 # Other
 RM = rm -fd *.o
@@ -52,7 +52,7 @@ all:	$(MAIN)
 $(MAIN): $(OBJS)
 	@echo Invoquing GCC...
 	$(CPPC) $(LIBINCLUDES) -o $(MAIN) $(OBJS) $(LIBS)
-	@echo $(MAIN) created!
+	@echo Static library $(MAIN) created!
 
 .cpp.o:
 	@echo Invoquing GCC...

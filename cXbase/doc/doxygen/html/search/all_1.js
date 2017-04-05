@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['checkinvariant',['checkInvariant',['../classAsciiColorCode.html#a54fafe054c35fb6bc9bb2415e14f9324',1,'AsciiColorCode::checkInvariant()'],['../className.html#a9da4f013ddf570bb4e37a4a48f3a38ab',1,'Name::checkInvariant()'],['../classIEnforceContract.html#a228561550b5d3f86bc5e91b3a23e4181',1,'IEnforceContract::checkInvariant()']]],
+  ['checkinvariant',['checkInvariant',['../classAsciiColorCode.html#a54fafe054c35fb6bc9bb2415e14f9324',1,'AsciiColorCode::checkInvariant()'],['../classGame.html#aecedc5bb0e63d453b5c604bb97c0b19e',1,'Game::checkInvariant()'],['../className.html#a9da4f013ddf570bb4e37a4a48f3a38ab',1,'Name::checkInvariant()'],['../classIEnforceContract.html#a228561550b5d3f86bc5e91b3a23e4181',1,'IEnforceContract::checkInvariant()']]],
   ['color',['Color',['../classColor.html',1,'Color'],['../classColor.html#a9a742cbe9f9f4037f5d9f4e81a9b2428',1,'Color::Color()'],['../classColor.html#afcbe8303b10ade0b1ea9ccd2c0d7393b',1,'Color::Color(Name p_name, AsciiColorCode p_asciiColorCode)'],['../classDisc.html#ab746d6285c68359bcb2ad899cfb29f7e',1,'Disc::color()']]],
   ['color_2ecpp',['Color.cpp',['../Color_8cpp.html',1,'']]],
   ['color_2eh',['Color.h',['../Color_8h.html',1,'']]],

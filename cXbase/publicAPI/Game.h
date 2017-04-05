@@ -211,7 +211,7 @@ public:
     void nextTurn();
 ///@}
 
-private:
+protected:
 
     virtual void checkInvariant() const;
 

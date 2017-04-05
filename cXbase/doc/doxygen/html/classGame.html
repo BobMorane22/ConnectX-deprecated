@@ -110,6 +110,8 @@ $(document).ready(function(){initNavTree('classGame.html','');});
 <div class="header">
   <div class="summary">
 <a href="#pub-types">Public Types</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classGame-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Game Class Reference</div>  </div>
@@ -131,6 +133,7 @@ Collaboration diagram for Game:</div>
 <div class="center"><img src="classGame__coll__graph.png" border="0" usemap="#Game_coll__map" alt="Collaboration graph"/></div>
 <map name="Game_coll__map" id="Game_coll__map">
 <area shape="rect" id="node2" href="classIEnforceContract.html" title="IEnforceContract" alt="" coords="5,5,127,32"/>
+<area shape="rect" id="node3" href="classPosition.html" title="Position" alt="" coords="151,5,221,32"/>
 </map>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
@@ -172,6 +175,38 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~Game</b> ()=defau
 <tr class="separator:ae0279110be71873fa18de7e343c822cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a801658c7cef474bc1d9a830f4a79034c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGame.html#a801658c7cef474bc1d9a830f4a79034c">nextTurn</a> ()</td></tr>
 <tr class="separator:a801658c7cef474bc1d9a830f4a79034c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:aecedc5bb0e63d453b5c604bb97c0b19e"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGame.html#aecedc5bb0e63d453b5c604bb97c0b19e">checkInvariant</a> () const </td></tr>
+<tr class="separator:aecedc5bb0e63d453b5c604bb97c0b19e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:af662dfd7a2b3322878a444285edd8be5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af662dfd7a2b3322878a444285edd8be5"></a>
+PlayerList&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGame.html#af662dfd7a2b3322878a444285edd8be5">m_players</a></td></tr>
+<tr class="memdesc:af662dfd7a2b3322878a444285edd8be5"><td class="mdescLeft">&#160;</td><td class="mdescRight">List of Players for the <a class="el" href="classGame.html">Game</a>. <br /></td></tr>
+<tr class="separator:af662dfd7a2b3322878a444285edd8be5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af70356190a8b1d776ec0014379500e1d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af70356190a8b1d776ec0014379500e1d"></a>
+GameBoardSPtr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGame.html#af70356190a8b1d776ec0014379500e1d">m_gameboard</a></td></tr>
+<tr class="memdesc:af70356190a8b1d776ec0014379500e1d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The GameGoard used. <br /></td></tr>
+<tr class="separator:af70356190a8b1d776ec0014379500e1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa54f23d71729d73b34b684996c97edd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaa54f23d71729d73b34b684996c97edd"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGame.html#aaa54f23d71729d73b34b684996c97edd">m_inARow</a></td></tr>
+<tr class="memdesc:aaa54f23d71729d73b34b684996c97edd"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <em>inARow</em> for the <a class="el" href="classGame.html">Game</a>. <br /></td></tr>
+<tr class="separator:aaa54f23d71729d73b34b684996c97edd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa45d3cce6b6731f0e8c24e23848c2ff1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa45d3cce6b6731f0e8c24e23848c2ff1"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGame.html#aa45d3cce6b6731f0e8c24e23848c2ff1">m_nbTurns</a> {0}</td></tr>
+<tr class="memdesc:aa45d3cce6b6731f0e8c24e23848c2ff1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Total number of turns for the <a class="el" href="classGameBoard.html">GameBoard</a>. <br /></td></tr>
+<tr class="separator:aa45d3cce6b6731f0e8c24e23848c2ff1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9442e9eb5eacee1fd1bac6ab9e0737dc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9442e9eb5eacee1fd1bac6ab9e0737dc"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGame.html#a9442e9eb5eacee1fd1bac6ab9e0737dc">m_turn</a> {0}</td></tr>
+<tr class="memdesc:a9442e9eb5eacee1fd1bac6ab9e0737dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">The current turn (first turn is 0). <br /></td></tr>
+<tr class="separator:a9442e9eb5eacee1fd1bac6ab9e0737dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a70951a9bcf45c67b89f1443ce713c4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8a70951a9bcf45c67b89f1443ce713c4"></a>
+<a class="el" href="classPosition.html">Position</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGame.html#a8a70951a9bcf45c67b89f1443ce713c4">m_currentPosition</a> {<a class="el" href="classRow.html">Row</a>{0}, <a class="el" href="classColumn.html">Column</a>{0}}</td></tr>
+<tr class="memdesc:a8a70951a9bcf45c67b89f1443ce713c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a class="el" href="classPosition.html">Position</a> where the active player places a <a class="el" href="classDisc.html">Disc</a>. <br /></td></tr>
+<tr class="separator:a8a70951a9bcf45c67b89f1443ce713c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Gives access to several higher level features to construct Connect X games.</p>
@@ -249,6 +284,32 @@ The current turn is always between 0 and the total numbers of Players minus one.
 <p>Active <a class="el" href="classPlayer.html">Player</a> accessor.</p>
 <p>Gives access to the <a class="el" href="classPlayer.html">Player</a> whose current turn it is.</p>
 <dl class="section return"><dt>Returns</dt><dd>The active player. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="aecedc5bb0e63d453b5c604bb97c0b19e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Game::checkInvariant </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Mandatory method for design-by-contract implementation (most precisely, for class invariants validation). </p>
+
+<p>Implements <a class="el" href="classIEnforceContract.html#a228561550b5d3f86bc5e91b3a23e4181">IEnforceContract</a>.</p>
 
 </div>
 </div>
