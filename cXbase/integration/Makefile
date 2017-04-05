@@ -30,7 +30,7 @@ CPPFLAGS             = $(OPT_FLAGS) $(DEBUG_FLAGS) $(STANDARD_FLAGS) \
 
 # Source files, headers, etc.:
 ROOT        = $(CURDIR)
-INCLUDES    = -I$(ROOT)/..
+INCLUDES    = -I$(ROOT)/../publicAPI
 LIBINCLUDES = -L$(ROOT)/..
 VPATH       = integration
 
@@ -41,7 +41,7 @@ OBJS      = main.o
 LIBS      = -lcXbase
 
 # Product:
-MAIN = connectx-nw # Connect X, no window version
+MAIN = connect4-nw # Connect X, no window version
 
 # Other
 RM = rm -fd *.o
@@ -52,7 +52,7 @@ all:	$(MAIN)
 $(MAIN): $(OBJS)
 	@echo Invoquing GCC...
 	$(CPPC) $(LIBINCLUDES) -o $(MAIN) $(OBJS) $(LIBS)
-	@echo Static library $(MAIN) created!
+	@echo $(MAIN) created!
 
 .cpp.o:
 	@echo Invoquing GCC...

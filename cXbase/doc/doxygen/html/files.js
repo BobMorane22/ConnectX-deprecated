@@ -13,6 +13,7 @@ var files =
     [ "Coordinate.h", "Coordinate_8h.html", [
       [ "Coordinate", "classCoordinate.html", "classCoordinate" ]
     ] ],
+    [ "cxbaseAPI.h", "cxbaseAPI_8h.html", null ],
     [ "cXbaseInternal.h", "cXbaseInternal_8h.html", "cXbaseInternal_8h" ],
     [ "Disc.cpp", "Disc_8cpp.html", "Disc_8cpp" ],
     [ "Disc.h", "Disc_8h.html", [

@@ -14,6 +14,7 @@ var searchData=
   ['coordinate_3c_20int_20_3e',['Coordinate&lt; int &gt;',['../classCoordinate.html',1,'']]],
   ['currentturn',['currentTurn',['../classGame.html#ab56744a458db796cc2d2c9b779c5cc49',1,'Game']]],
   ['cxbase',['cXbase',['../namespacecXbase.html',1,'']]],
+  ['cxbaseapi_2eh',['cxbaseAPI.h',['../cxbaseAPI_8h.html',1,'']]],
   ['cxbaseinternal_2eh',['cXbaseInternal.h',['../cXbaseInternal_8h.html',1,'']]],
   ['cxbase',['cXbase',['../index.html',1,'']]]
 ];

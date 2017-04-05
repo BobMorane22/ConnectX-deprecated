@@ -1,5 +1,6 @@
 <map id="Player.h" name="Player.h">
-<area shape="rect" id="node2" href="$Game_8h.html" title="Game.h" alt="" coords="13,80,81,107"/>
-<area shape="rect" id="node4" href="$Player_8cpp.html" title="Player.cpp" alt="" coords="105,80,189,107"/>
-<area shape="rect" id="node3" href="$Game_8cpp.html" title="Game.cpp" alt="" coords="5,155,88,181"/>
+<area shape="rect" id="node2" href="$Game_8h.html" title="Game.h" alt="" coords="92,80,160,107"/>
+<area shape="rect" id="node3" href="$cxbaseAPI_8h.html" title="cxbaseAPI.h" alt="" coords="5,155,103,181"/>
+<area shape="rect" id="node5" href="$Player_8cpp.html" title="Player.cpp" alt="" coords="184,80,268,107"/>
+<area shape="rect" id="node4" href="$Game_8cpp.html" title="Game.cpp" alt="" coords="127,155,210,181"/>
 </map>
