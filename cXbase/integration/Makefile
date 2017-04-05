@@ -2,7 +2,7 @@
 #
 # @file    Makefile
 # @author  Eric Poirier
-# @date    March 2017
+# @date    April 2017
 # @version 1
 #
 # This makefile defines how the unit tests for cXbase are built.
@@ -12,11 +12,10 @@
 #
 #    1. GNU make (tested with)
 #    2. gcc compiler (g++ is used)
-#    3. Google Tests
+#    3. cxbase library
 #
 #--------------------------------------------------------------------------------------------------#
 
-# Compiler:
 CPPC                 = g++
 STANDARD_FLAGS       = -std=c++0x
 WARN_AS_ERRORS_FLAGS = -pedantic-errors\
@@ -33,36 +32,19 @@ CPPFLAGS             = $(OPT_FLAGS) $(DEBUG_FLAGS) $(STANDARD_FLAGS) \
 ROOT        = $(CURDIR)
 INCLUDES    = -I$(ROOT)/..
 LIBINCLUDES = -L$(ROOT)/..
-VPATH       = tests
+VPATH       = integration
 
-SRCS      = cxUnitTests.cpp\
-            test_Player.cpp\
-            test_Name.cpp\
-            test_Game.cpp\
-            test_GameBoard.cpp\
-            test_Disc.cpp\
-            test_Color.cpp\
-            test_AsciiColorCode.cpp\
+SRCS      = main.cpp
 
-OBJS      = test_Player.o\
-            test_Name.o\
-            test_Game.o\
-            test_GameBoard.o\
-            test_Disc.o\
-            test_Color.o\
-            test_AsciiColorCode.o\
+OBJS      = main.o
 
-LIBS      = -lgtest\
-            -lgtest_main\
-            -lpthread\
-            -lcXbase
- 
+LIBS      = -lcXbase
+
 # Product:
-MAIN = cxUnitTests
+MAIN = connectx-nw # Connect X, no window version
 
 # Other
 RM = rm -fd *.o
-
 
 all:	$(MAIN)
 	@echo $(MAIN) has been compiled!
