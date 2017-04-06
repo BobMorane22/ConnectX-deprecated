@@ -1,32 +1,10 @@
 #include <iostream>
 #include <vector>
-#include <cxbaseAPI.h>
+
+#include "Connect4Game.h" // Custom Game class
 
 USING_NAMESPACE_STD
 USING_NAMESPACE_CXBASE
-
-void clearScreen();
-
-// Connect4Game class: needed to customize th game... 
-class Connect4Game : public Game
-{
-public:
-    // Regular Game class, plus a specialized stream operator for
-    // my own needs (none defined in the Game class):
-    Connect4Game(const vector< shared_ptr<Player> >& p_players,
-				 const shared_ptr<GameBoard> p_gameboard,
-				 int p_inARow):
-		         Game(p_players, p_gameboard, p_inARow) {}
-
-    // Stream operator specific for this particular game:
-	friend ostream& operator<<(ostream& p_flux, const Connect4Game& p_game)
-	{
-        // In this case, only the board is printed:
-        p_flux << *(p_game.m_gameboard) << endl;
-
-		return p_flux;
-	}
-};
 
 int main()
 {
@@ -73,21 +51,32 @@ int main()
 	{
 		cout << "Select column to play: ";
 		cin >> chosenColumn;
-        clearScreen();
 
 		game.playTurn(chosenColumn);
         cout << game;
-		game.nextTurn();
+
+        game.nextTurn();
+	}
+
+	// Game ending:
+	if(game.isWon())
+	{
+		Player winner {game.activePlayer()};
+		
+		// Active player is not the winner:
+		if(*players[0] == game.activePlayer())
+		{
+			cout <<  *players[1] << " has won!" << endl;
+		}
+		else
+		{
+		    cout << *players[0] << " has won!" << endl;
+		}
+	}
+	else
+	{
+		cout << "It's a tie!" << endl;
 	}
 	
 	return 0;
-}
-
-
-void clearScreen()
-{
-	for (int i{0}; i < 50; ++i)
-	{
-		cout << endl;
-	}
 }

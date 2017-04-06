@@ -47,12 +47,12 @@ MAIN = connectx-nw.out # Connect X, no window version
 RM = rm -fd *.o
 
 all:	$(MAIN)
-	@echo $(MAIN) has been compiled!
+	@echo $(MAIN) has been compiled and linked!
 
 $(MAIN): $(OBJS)
 	@echo Invoquing GCC...
 	$(CPPC) $(LIBINCLUDES) -o $(MAIN) $(OBJS) $(LIBS)
-	@echo Static library $(MAIN) created!
+	@echo $(MAIN) created!
 
 .cpp.o:
 	@echo Invoquing GCC...
