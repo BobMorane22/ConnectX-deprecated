@@ -37,7 +37,8 @@ MAIN     = connectx
 TARGETS  += cxbase \
             cxbaseunit \
             cxbasedoc \
-            cxcppnorm
+            cxcppnorm \
+            cxintegration
 
 all: $(MAIN)
 
@@ -49,6 +50,9 @@ cxbase:
 cxbaseunit:
 	$(MAKE) -C cXbase/unit
 	python $(TESTS_RUNNER) $(CXBASE_UNIT_TESTS_EXEC) $(CXBASE_UNIT_TESTS_LOG)
+
+cxintegration:
+	$(MAKE) -C cXbase/integration
 
 cxbasedoc:
 	$(MAKE) -C cXbase/doc
