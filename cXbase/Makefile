@@ -20,16 +20,16 @@
 #--------------------------------------------------------------------------------------------------#
 
 # Compilator:
-CPPC                 = g++
-STANDARD_FLAGS       = -std=c++0x
-WARN_AS_ERRORS_FLAGS = -pedantic-errors\
-                       -Wall\
-                       -Wextra\
-                       -Werror\
-                       -Wconversion
-DEBUG_FLAGS          = -g3
-OPT_FLAGS            = -O0
-NO_LINKER_FLAGS      = -c
+#CPPC                 = g++
+#STANDARD_FLAGS       = -std=c++0x
+#WARN_AS_ERRORS_FLAGS = -pedantic-errors\
+#                       -Wall\
+#                       -Wextra\
+#                       -Werror\
+#                       -Wconversion
+#DEBUG_FLAGS          = -g3
+#OPT_FLAGS            = -O0
+#NO_LINKER_FLAGS      = -c
 CPPFLAGS             = $(OPT_FLAGS) $(DEBUG_FLAGS) $(NO_LINKER_FLAGS) $(STANDARD_FLAGS) \
                        $(WARN_AS_ERRORS_FLAGS)
 
@@ -62,9 +62,6 @@ LIBS =
 
 # Product:
 MAIN = libcXbase.a # static library
-
-# Other
-RM = rm -fd *.o
 
 
 all:	$(MAIN)
