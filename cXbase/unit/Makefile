@@ -17,15 +17,6 @@
 #--------------------------------------------------------------------------------------------------#
 
 # Compiler:
-CPPC                 = g++
-STANDARD_FLAGS       = -std=c++0x
-WARN_AS_ERRORS_FLAGS = -pedantic-errors\
-                       -Wall\
-                       -Wextra\
-                       -Werror\
-                       -Wconversion
-DEBUG_FLAGS          = -g3
-OPT_FLAGS            = -O0
 CPPFLAGS             = $(OPT_FLAGS) $(DEBUG_FLAGS) $(STANDARD_FLAGS) \
                        $(WARN_AS_ERRORS_FLAGS)
 
@@ -59,9 +50,6 @@ LIBS      = -lgtest\
  
 # Product:
 MAIN = cxUnitTests
-
-# Other
-RM = rm -fd *.o
 
 
 all:	$(MAIN)

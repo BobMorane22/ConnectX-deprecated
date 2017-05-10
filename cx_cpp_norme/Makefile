@@ -24,4 +24,4 @@ clean:
 
 mrproper:
 	$(CC) -c
-	rm $(OUT)
+	$(RM) $(OUT)

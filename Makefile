@@ -26,9 +26,9 @@
 #
 #--------------------------------------------------------------------------------------------------#
 
-export ROOT_DIR = $(CURDIR)
 
-SHELL := /bin/bash
+include init.mk
+
 TESTS_RUNNER            = $(ROOT_DIR)/cxPythonTools/RunUnitTests.py
 CXBASE_UNIT_TESTS_EXEC  = -t $(ROOT_DIR)/cXbase/unit/cxUnitTests
 CXBASE_UNIT_TESTS_LOG   = -l $(ROOT_DIR)/cXbase/unit/log/unitTests.log

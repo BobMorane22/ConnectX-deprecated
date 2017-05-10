@@ -15,8 +15,7 @@
 #
 #--------------------------------------------------------------------------------------------------#
 
-ROOT     = $(CURDIR)
-RM       = rm -rdf
+ROOT     = $(ROOT_DIR)/cXbase/doc
 
 # Doxygen:
 DOXYDIR  = $(ROOT)/doxygen
@@ -33,7 +32,7 @@ mrproper: clean
 
 clean:
 	@echo Deleting Doxygen documentation...
-	$(RM) $(DOXYDIR)/html
+	$(RM) -r $(DOXYDIR)/html
 	@echo Doxygen documentation deleted!
 	
 

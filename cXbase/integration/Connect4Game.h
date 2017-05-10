@@ -60,4 +60,4 @@ std::ostream& operator<<(std::ostream& p_flux, const Connect4Game& p_game)
 	return p_flux;
 }
 
-#endif /* CONNECT4GAME_H */_
+#endif /* CONNECT4GAME_H */

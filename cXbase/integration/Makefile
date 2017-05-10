@@ -16,15 +16,7 @@
 #
 #--------------------------------------------------------------------------------------------------#
 
-CPPC                 = g++
-STANDARD_FLAGS       = -std=c++0x
-WARN_AS_ERRORS_FLAGS = -pedantic-errors\
-                       -Wall\
-                       -Wextra\
-                       -Werror\
-                       -Wconversion
-DEBUG_FLAGS          = -g3
-OPT_FLAGS            = -O0
+
 CPPFLAGS             = $(OPT_FLAGS) $(DEBUG_FLAGS) $(STANDARD_FLAGS) \
                        $(WARN_AS_ERRORS_FLAGS)
 
@@ -43,9 +35,6 @@ LIBS      = -lcXbase
 # Product:
 MAIN = connectx-nw.out # Connect X, no window version
 
-# Other
-RM = rm -fd *.o
-
 all:	$(MAIN)
 	@echo $(MAIN) has been compiled and linked!
 
@@ -61,10 +50,10 @@ $(MAIN): $(OBJS)
 
 clean:
 	@echo Removing object files...
-	$(RM)
+	$(RM) *.o
 	@echo Object files removed!
 
-mrproper:
+mrproper: clean
 	@echo Cleaning project...
 	$(RM) $(MAIN)
 	@echo Project cleaned!
