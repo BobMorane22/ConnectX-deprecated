@@ -38,9 +38,9 @@
  * dimensions.
  *
  *
- * @section liscence Liscence
+ * @section licence Licence
  *
- *      @todo Free software. Add the wanted GNU liscence.
+ *      @todo Free software. Add the wanted GNU licence.
  *
  *
  * @todo Add complete console app example from library.

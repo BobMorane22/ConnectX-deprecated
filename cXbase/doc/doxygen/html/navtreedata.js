@@ -3,7 +3,7 @@ var NAVTREE =
   [ "cXbase", "index.html", [
     [ "Introduction", "index.html#intro", null ],
     [ "Possible parametrizations", "index.html#parametrizations", null ],
-    [ "Liscence", "index.html#liscence", null ],
+    [ "Licence", "index.html#licence", null ],
     [ "General UML representation of cXbase.", "uml.html", null ],
     [ "Todo List", "todo.html", null ],
     [ "Namespaces", null, [

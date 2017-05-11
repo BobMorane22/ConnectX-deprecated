@@ -19,17 +19,7 @@
 #
 #--------------------------------------------------------------------------------------------------#
 
-# Compilator:
-#CPPC                 = g++
-#STANDARD_FLAGS       = -std=c++0x
-#WARN_AS_ERRORS_FLAGS = -pedantic-errors\
-#                       -Wall\
-#                       -Wextra\
-#                       -Werror\
-#                       -Wconversion
-#DEBUG_FLAGS          = -g3
-#OPT_FLAGS            = -O0
-#NO_LINKER_FLAGS      = -c
+# Compiler:
 CPPFLAGS             = $(OPT_FLAGS) $(DEBUG_FLAGS) $(NO_LINKER_FLAGS) $(STANDARD_FLAGS) \
                        $(WARN_AS_ERRORS_FLAGS)
 
@@ -59,6 +49,8 @@ OBJS     = AsciiColorCode.o\
            Position.o
 
 LIBS =
+
+# Build output:
 
 # Product:
 MAIN = libcXbase.a # static library

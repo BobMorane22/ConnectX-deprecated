@@ -33,9 +33,9 @@ OBJS      = main.o
 LIBS      = -lcXbase
 
 # Product:
-MAIN = connectx-nw.out # Connect X, no window version
+MAIN = connect4-nw.out # Connect X, no window version
 
-all:	$(MAIN)
+all:	$(MAIN) doc
 	@echo $(MAIN) has been compiled and linked!
 
 $(MAIN): $(OBJS)
@@ -47,6 +47,14 @@ $(MAIN): $(OBJS)
 	@echo Invoquing GCC...
 	$(CPPC) $(CPPFLAGS) $(INCLUDES) -c $< -o $@
 	@echo Object files created!
+
+doc:
+	@echo Copying documentation files...
+	python ../../cxPythonTools/CreateCopy.py main.cpp ../doc/doxygen/examples/
+	python ../../cxPythonTools/CreateCopy.py Connect4Game.h ../doc/doxygen/examples/
+	python ../../cxPythonTools/CreateCopy.py output_tie ../doc/doxygen/examples/
+	python ../../cxPythonTools/CreateCopy.py output_win ../doc/doxygen/examples/
+	@echo documentation files created!
 
 clean:
 	@echo Removing object files...
