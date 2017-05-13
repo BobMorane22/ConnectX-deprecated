@@ -17,14 +17,15 @@
 #--------------------------------------------------------------------------------------------------#
 
 # Compiler:
-CPPFLAGS             = $(OPT_FLAGS) $(DEBUG_FLAGS) $(STANDARD_FLAGS) \
-                       $(WARN_AS_ERRORS_FLAGS)
+CPPFLAGS = $(OPT_FLAGS) $(DEBUG_FLAGS) $(STANDARD_FLAGS) \
+           $(WARN_AS_ERRORS_FLAGS)
 
 # Source files, headers, etc.:
-ROOT        = $(CURDIR)
-INCLUDES    = -I$(ROOT)/..
-LIBINCLUDES = -L$(ROOT)/..
-VPATH       = tests
+OBJ_DIR      = $(CX_BUILD_ROOT)/tests/unit
+OUT_DIR      = $(CX_BUILD_ROOT)/tests/unit
+INCLUDES     = -I$(CX_SRC_ROOT)/cXbase
+LIBINCLUDES  = -L$(CX_BUILD_ROOT)/connectx/libs
+VPATH        = tests
 
 SRCS      = cxUnitTests.cpp\
             test_Player.cpp\
@@ -42,6 +43,8 @@ OBJS      = test_Player.o\
             test_Disc.o\
             test_Color.o\
             test_AsciiColorCode.o\
+            
+OBJS := $(addprefix $(OBJ_DIR)/,$(OBJS))
 
 LIBS      = -lgtest\
             -lgtest_main\
@@ -49,30 +52,37 @@ LIBS      = -lgtest\
             -lcXbase
  
 # Product:
-MAIN = cxUnitTests
+MAIN = cxUnitTests.out
 
 
-all:	$(MAIN)
-	@echo $(MAIN) has been compiled!
+all: make_dir make_log $(MAIN)
 
 $(MAIN): $(OBJS)
 	@echo Invoquing GCC...
-	$(CPPC) $(LIBINCLUDES) -o $(MAIN) $(OBJS) $(LIBS)
-	@echo Static library $(MAIN) created!
+	$(CPPC) $(LIBINCLUDES) -o $(OUT_DIR)/$(MAIN) $(OBJS) $(LIBS)
+	@echo $(MAIN) has been compiled and linked!
 
-.cpp.o:
+$(OBJ_DIR)/%.o: %.cpp
 	@echo Invoquing GCC...
 	$(CPPC) $(CPPFLAGS) $(INCLUDES) -c $< -o $@
 	@echo Object files created!
 
+make_dir:
+	mkdir -p $(OBJ_DIR)
+	mkdir -p $(OUT_DIR)
+
+make_log:
+	mkdir -p $(OUT_DIR)/log
+	touch $(OUT_DIR)/log/unitTests.log
+
 clean:
 	@echo Removing object files...
-	$(RM)
+	$(RM) $(OBJ_DIR)/*.o
 	@echo Object files removed!
 
-mrproper:
+mrproper: clean
 	@echo Cleaning project...
-	$(RM) $(MAIN)
+	$(RM) $(OUT_DIR)/$(MAIN)
 	@echo Project cleaned!
 
 depend: $(SRCS)

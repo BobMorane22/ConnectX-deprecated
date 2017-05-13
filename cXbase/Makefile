@@ -24,9 +24,12 @@ CPPFLAGS             = $(OPT_FLAGS) $(DEBUG_FLAGS) $(NO_LINKER_FLAGS) $(STANDARD
                        $(WARN_AS_ERRORS_FLAGS)
 
 # Source files, headers, etc.:
-ROOT     = $(ROOT_DIR)/cXbase
-INCLUDES = -I$(ROOT)source -I$(ROOT)publicAPI
-VPATH    = source
+MAKEFILE_LOC = $(CX_SRC_ROOT)/cXbase
+OBJ_DIR      = $(CX_BUILD_ROOT)/connectx
+OUT_DIR      = $(CX_BUILD_ROOT)/connectx
+LIBS_OUT     = $(CX_BUILD_ROOT)/connectx/libs
+INCLUDES     = -I$(MAKEFILE_LOC)/source -I$(MAKEFILE_LOC)/publicAPI
+VPATH        = source
 
 SRCS     = AsciiColorCode.cpp\
            Color.cpp\
@@ -38,15 +41,15 @@ SRCS     = AsciiColorCode.cpp\
            Player.cpp\
            Position.cpp
 
-OBJS     = AsciiColorCode.o\
-           Color.o\
-           ContractException.o\
-           Disc.o\
-           Game.o\
-           GameBoard.o\
-           Name.o\
-           Player.o\
-           Position.o
+OBJS     = $(OBJ_DIR)/AsciiColorCode.o\
+           $(OBJ_DIR)/Color.o\
+           $(OBJ_DIR)/ContractException.o\
+           $(OBJ_DIR)/Disc.o\
+           $(OBJ_DIR)/Game.o\
+           $(OBJ_DIR)/GameBoard.o\
+           $(OBJ_DIR)/Name.o\
+           $(OBJ_DIR)/Player.o\
+           $(OBJ_DIR)/Position.o
 
 LIBS =
 
@@ -56,28 +59,32 @@ LIBS =
 MAIN = libcXbase.a # static library
 
 
-all:	$(MAIN)
+all: make_dir $(MAIN)
 	@echo $(MAIN) has been compiled!
 
 $(MAIN): $(OBJS)
 	@echo Invoquing GCC Archiver...
-	ar -r $(MAIN) $(OBJS) $(LIBS)
+	ar -r $(LIBS_OUT)/$(MAIN) $(OBJS) $(LIBS)
 	@echo Static library $(MAIN) created!
 
-.cpp.o:
+$(OBJ_DIR)/%.o: %.cpp
 	@echo Invoquing GCC...
 	$(CPPC) $(CPPFLAGS) $(INCLUDES) -c $< -o $@
 	@echo Object files created!
 
+make_dir:
+	mkdir -p $(OBJ_DIR)
+	mkdir -p $(LIBS_OUT)
+
 clean:
 	@echo Removing object files...
-	$(RM) *.o 
+	$(RM) $(OBJ_DIR)/*.o 
 	@echo Object files removed!
 
 mrproper:
 	@echo Cleaning project...
-	$(RM) *.o
-	$(RM) *.a
+	$(RM) $(OBJ_DIR)/*.o
+	$(RM) $(OUT_DIR)/$(MAIN)
 	@echo Project cleaned!
 
 depend: $(SRCS)

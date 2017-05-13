@@ -29,9 +29,9 @@
 
 include init.mk
 
-TESTS_RUNNER            = $(ROOT_DIR)/cxPythonTools/RunUnitTests.py
-CXBASE_UNIT_TESTS_EXEC  = -t $(ROOT_DIR)/cXbase/unit/cxUnitTests
-CXBASE_UNIT_TESTS_LOG   = -l $(ROOT_DIR)/cXbase/unit/log/unitTests.log
+TESTS_RUNNER            = $(SRC_ROOT)/cxPythonTools/RunUnitTests.py
+CXBASE_UNIT_TESTS_EXEC  = -t $(BIN_ROOT)/tests/unit/cxUnitTests.out
+CXBASE_UNIT_TESTS_LOG   = -l $(BIN_ROOT)/tests/unit/log/unitTests.log
 
 MAIN     = connectx
 TARGETS  += cxbase \
@@ -40,7 +40,7 @@ TARGETS  += cxbase \
             cxcppnorm \
             cxintegration
 
-all: $(MAIN)
+all: $(MAIN) clean
 
 $(MAIN): $(TARGETS)
 
@@ -65,6 +65,7 @@ mrproper:
 	cd cXbase && make mrproper
 	cd cXbase/doc && make mrproper
 	cd cXbase/unit && make mrproper
+	cd cXbase/integration && make clean
 	cd cx_cpp_norme && make mrproper
 	@echo ConnectX cleaned!
 
@@ -73,5 +74,6 @@ clean:
 	cd cXbase && make clean
 	cd cXbase/doc && make clean
 	cd cXbase/unit && make clean
+	cd cXbase/integration && make clean
 	cd cx_cpp_norme && make clean
 	@echo Object files removed!

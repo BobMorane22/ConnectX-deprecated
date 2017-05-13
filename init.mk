@@ -16,7 +16,8 @@ export OS = linux
 
 # File location:
 # --------------------------------------------------------------------------------------------------
-export ROOT_DIR = $(CX_SRC_ROOT)
+export SRC_ROOT = $(CX_SRC_ROOT)
+export BIN_ROOT = $(CX_BUILD_ROOT)
 
 # Compilation:
 # --------------------------------------------------------------------------------------------------

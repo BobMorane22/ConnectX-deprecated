@@ -15,10 +15,10 @@
 #
 #--------------------------------------------------------------------------------------------------#
 
-ROOT     = $(ROOT_DIR)/cXbase/doc
+MAKEFILE_LOC = $(CURDIR)
 
 # Doxygen:
-DOXYDIR  = $(ROOT)/doxygen
+DOXYDIR  = $(MAKEFILE_LOC)/doxygen
 DOXYFILE = $(DOXYDIR)/cXbase.doxyfile
 
 .PHONY: doxygen clean
