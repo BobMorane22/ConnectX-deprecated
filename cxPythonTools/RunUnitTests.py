@@ -38,10 +38,12 @@ import getopt
 import subprocess
 import datetime
 
+from subprocess import CREATE_NEW_CONSOLE
+
 # Error codes:
 NB_ARGUMENTS_ERROR         = 1
 COMMAND_SYNTAX_ERROR       = 2
-TEST_PROGRAM_ERROR         = 3
+TESTS_HAVE_FAILED          = 3
 OTHER_ERROR                = 4
 
 # Other:
@@ -91,13 +93,20 @@ def runTests(program, logFile):
     log.write(header)
     log.write(guard)
     
-    processus = subprocess.Popen([program], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    process = subprocess.Popen([program], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     
-    for line in processus.stdout:
+    for line in process.stdout:
         sys.stdout.write(line)
         log.write(line)
         
     log.write(guard)
+    
+    # Exit with non zero exit code if all tests have not passed:
+    streamdata = process.communicate()[0]
+    rc = process.returncode
+    
+    if rc != 0:
+        sys.exit(TESTS_HAVE_FAILED)
 
 
 def main(argv):
