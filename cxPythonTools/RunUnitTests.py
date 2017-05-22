@@ -2,7 +2,7 @@
 #coding=utf-8
 
 #***************************************************************************************************
- # 
+ #
  # Copyright (C) 2016 Connect X team
  #
  # This file is part of Connect X.
@@ -38,8 +38,6 @@ import getopt
 import subprocess
 import datetime
 
-from subprocess import CREATE_NEW_CONSOLE
-
 # Error codes:
 NB_ARGUMENTS_ERROR         = 1
 COMMAND_SYNTAX_ERROR       = 2
@@ -58,7 +56,7 @@ def printHelp():
     Prints an help page.
     """
     script = os.path.basename(__file__)
-    
+
     print("Usage:")
     print("\t" + script + " OPTION\n")
     print("Options:")
@@ -73,53 +71,53 @@ def printHelp():
 
 def runTests(program, logFile):
     """
-    Runs an external test program (or a program, in general). The program 
+    Runs an external test program (or a program, in general). The program
     output is printed to the log file passed as the second argument.
-    
+
     Args:
         program    The test program to run.
         logFile    A log file for the program.
     """
-    
+
     now = datetime.datetime.now()
     header = "Application: " + program + "\n"
     headerLength = len(header)
     guard = ("-" * headerLength) + "\n"
-    
+
     log = open(logFile, 'w')
-    
+
     log.write(guard)
     log.write(str(now) + "\n")
     log.write(header)
     log.write(guard)
-    
+
     process = subprocess.Popen([program], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-    
+
     for line in process.stdout:
         sys.stdout.write(line)
         log.write(line)
-        
+
     log.write(guard)
-    
+
     # Exit with non zero exit code if all tests have not passed:
     streamdata = process.communicate()[0]
     rc = process.returncode
-    
+
     if rc != 0:
         sys.exit(TESTS_HAVE_FAILED)
 
 
 def main(argv):
     """
-    Runs an external test program passed as an argument. The user can also call 
+    Runs an external test program passed as an argument. The user can also call
     for help with the following options: "-h" or "--help".
-    
+
     Args:
         argv    A list containing all the arguments.
     """
 
     nbArguments = len(argv)
-    
+
     if nbArguments != 1 and nbArguments != NB_ARGUMENTS_MAX:
         print("Error: number of arguments.")
         sys.exit(NB_ARGUMENTS_ERROR)
@@ -137,14 +135,14 @@ def main(argv):
 
     tests   = ""
     log     = ""
-    
+
     for option, argument in options:
-    
+
         print(option, argument)
-        
+
         if option == "-t" or option == "--tests":
             tests = argument
-        
+
         elif option == "-l" or option == "--log":
             log = argument
 
