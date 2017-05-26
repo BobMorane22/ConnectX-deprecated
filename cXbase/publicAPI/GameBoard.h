@@ -1,5 +1,5 @@
 /***************************************************************************************************
- * 
+ *
  * Copyright (C) 2016 Connect X team
  *
  * This file is part of Connect X.
@@ -308,7 +308,7 @@ public:
      *   @code{.cpp}
      *
      *      // A disc, red in this case:
-     *      Disc        RED_DISC{Color{Name{"Red"}, AsciiColorCode{'R'}}};
+     *      Disc        RED_DISC{Color::RED};
      *
      *      // A classic Connect 4 board:
      *      GameBoard   aBoard;
@@ -360,7 +360,7 @@ private:
     int   NB_ROWS_MAX      {64};
     int   NB_COLUMNS_MIN   {7};
     int   NB_ROWS_MIN      {6};
-    Disc  NO_DISC          {Color{Name{"No color"}, AsciiColorCode{' '}}};
+    Disc  NO_DISC          {Color::TRANSPARENT};
 
     enum class GridValidationType: int
     {

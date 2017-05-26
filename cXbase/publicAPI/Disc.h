@@ -1,5 +1,5 @@
 /***************************************************************************************************
- * 
+ *
  * Copyright (C) 2016 Connect X team
  *
  * This file is part of Connect X.
@@ -58,11 +58,11 @@ public:
     /*******************************************************************************************//**
      * Default constructor.
      *
-     * Constructs a Disc with a "no color" Color value. In a collection of Discs, this is to
+     * Constructs a Disc with a TRANSPARENT Color value. In a collection of Discs, this is to
      * be seen as the absence of a Disc.
      *
      **********************************************************************************************/
-    Disc() : m_color{NO_COLOR} {}
+    Disc() : m_color{Color::TRANSPARENT} {}
 
 
     /*******************************************************************************************//**
@@ -164,8 +164,6 @@ public:
 ///@}
 
 private:
-
-    Color NO_COLOR{Name{"No color"}, AsciiColorCode{' '}};
 
     Color m_color;  ///< The disc Color.
 

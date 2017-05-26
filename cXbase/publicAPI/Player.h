@@ -1,5 +1,5 @@
 /***************************************************************************************************
- * 
+ *
  * Copyright (C) 2016 Connect X team
  *
  * This file is part of Connect X.
@@ -47,8 +47,8 @@ BEGIN_CXBASE_NAMESPACE
  *
  * A Player object is a Name and Disc pair.
  *
- * @invariant A Player's Disc cannot have @c NO_COLOR and the space (@c ' ') character as their
- * Color attributes. In other words, a Player cannot possess a @c NO_COLOR Disc, which is seen
+ * @invariant A Player's Disc cannot have @c TRANSPARENT and the space (@c ' ') character as their
+ * Color attributes. In other words, a Player cannot possess a @c TRANSPARENT Disc, which is seen
  * as no disc.
  *
  * @see Name
@@ -145,7 +145,7 @@ private:
 
     void checkInvariant() const;
 
-    const Disc NO_DISC{Color{Name{"No color"}, AsciiColorCode{' '}}};
+    const Disc NO_DISC{Color::TRANSPARENT};
 
     Name m_name;    ///< The Player's Name.
     Disc m_disc;    ///< The Player's Disc.

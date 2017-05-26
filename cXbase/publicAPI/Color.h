@@ -1,5 +1,5 @@
 /***************************************************************************************************
- * 
+ *
  * Copyright (C) 2016 Connect X team
  *
  * This file is part of Connect X.
@@ -22,10 +22,10 @@
 /***********************************************************************************************//**
  * @file    Color.h
  * @author  Eric Poirier
- * @date    September 2016
- * @version 0.1
+ * @date    April 2017
+ * @version 0.2
  *
- * Interface for a color utility.
+ * Interface for a RGBA color utility.
  *
  **************************************************************************************************/
 
@@ -41,15 +41,18 @@ BEGIN_CXBASE_NAMESPACE
 /***********************************************************************************************//**
  * @class Color
  *
- * A Color refers to a color Name paired with an ASCII @c char AsciiColorCode to be displayed in
- * text mode. When a Color object representing the absence of color is needed, two values are
- * made available to the developper: @c NO_COLOR (Name) and @c NO_COLOR_ASCII_CODE (AsciiColorCode).
+ * A Color object is composed of 32 bits defining its position on the RGBA spectrum and an
+ * AsciiColorCode (optional) to display in text mode. Of the 32 bits, 8 are for the red component,
+ * 8 are for the green component, 8 are for the blue component and 8 are for the alpha component,
+ * which defines opacity. The absence is seen as the color for which all four RGBA components are
+ * set to 0. See https://www.w3schools.com/colors/colors_hex.asp for more information.
  *
- * @see Name
+ * @invariant All RBGA values are set between 0 and 255 inclusively.
+ *
  * @see AsciiColorCode
  *
  **************************************************************************************************/
-class Color
+class Color : public IEnforceContract
 {
 
 public:
@@ -61,38 +64,62 @@ public:
     /*******************************************************************************************//**
      * Default constructor.
      *
-     * Construct an object with the "No color" values mentionned above (@c NO_COLOR and
-     * @c NO_COLOR_ASCII_CODE).
+     * Constructs a black color with complete opacity. The AsciiColorCode is a space (' ').
      *
      **********************************************************************************************/
-    Color() : m_name{NO_COLOR}, m_asciiColorCode{NO_COLOR_ASCII_CODE} {}
+    Color() = default;
 
 
     /*******************************************************************************************//**
      * Constructor with parameters.
      *
-     * @param[in] p_name            The Color name.
-     * @param[in] p_asciiColorCode  The wanted AsciiColorCode.
+     * @param[in] p_red             The red component.
+     * @param[in] p_green           The green component.
+     * @param[in] p_blue            The blue component.
+     * @param[in] p_alpha           The alpha (opacity) component.
+     * @param[in] p_asciiColorCode  The Color's AsciiColorCode.
      *
      **********************************************************************************************/
-    Color(Name p_name, AsciiColorCode p_asciiColorCode) : m_name{p_name}, m_asciiColorCode{p_asciiColorCode} {}
-///@}
+    Color(int p_red, int p_green, int p_blue, int p_alpha, AsciiColorCode p_asciiColorCode);
 
 
 ///@{ @name Data access
     /*******************************************************************************************//**
-     * Name accessor.
+     * Red component accessor.
      *
-     * @return The Color's name.
+     * @return The Color's red component value (8 bits).
      *
      **********************************************************************************************/
-    Name name() const {return m_name;}
-
+    int red() const {return m_red;}
 
     /*******************************************************************************************//**
-     * ASCII code accessor.
+     * Green component accessor.
      *
-     * @return The Color's ASCII code.
+     * @return The Color's green component value (8 bits).
+     *
+     **********************************************************************************************/
+    int green() const {return m_green;}
+
+    /*******************************************************************************************//**
+     * Blue component accessor.
+     *
+     * @return The Color's blue component value (8 bits).
+     *
+     **********************************************************************************************/
+    int blue() const {return m_blue;}
+
+    /*******************************************************************************************//**
+     * Aplpha component accessor.
+     *
+     * @return The Color's alpha component value (8 bits).
+     *
+     **********************************************************************************************/
+    int alpha() const {return m_alpha;}
+
+    /*******************************************************************************************//**
+     * AsciiColorCode accessor.
+     *
+     * @return The Color's asciiColorCode.
      *
      **********************************************************************************************/
     AsciiColorCode asciiColorCode() const {return m_asciiColorCode;}
@@ -103,8 +130,9 @@ public:
     /*******************************************************************************************//**
      * Equal-to operator.
      *
-     * Two Colors are considered equal <em> if and only if </em> their names are equal. The way
-     * the color is represented in text mode has no effect on the equality check.
+     * Two Colors are considered equal <em> if and only if </em> all of their four RGBA components
+     * are equal. The way the Color is represented in text mode has no effect on the equality
+     * check.
      *
      * @param[in] p_color The Color to compare with.
      *
@@ -115,9 +143,9 @@ public:
     /*******************************************************************************************//**
      * Not-equal-to operator.
      *
-     * Two Colors are considered @b NOT equal <em> if and only if </em> their names are @ b NOT
-     * equal. The way the color is represented in text mode has no effect on the non-equality
-     * check.
+     * Two Colors are considered @b NOT equal <em> if and only if </em> at least one of their RGBA
+     * components are NOT equal. The way the color is represented in text mode has no effect on
+     * the non-equality check.
      *
      * @param[in] p_color The Color to compare with.
      *
@@ -125,13 +153,30 @@ public:
     virtual bool operator!=(const Color& p_color) const;
 ///@}
 
+///@{ @name Predefined Colors
+    static const Color TRANSPARENT;
+    static const Color WHITE;
+    static const Color BLACK;
+
+    static const Color GREEN;
+    static const Color RED;
+    static const Color YELLOW;
+    static const Color BLUE;
+///@}
+
+protected:
+    virtual void checkInvariant() const;
+
 private:
 
-    Name                NO_COLOR               { "No color" };
-    AsciiColorCode      NO_COLOR_ASCII_CODE    { ' ' };
+    // RGB definition:
+    int             m_red               {0};     ///< The Color's red component.
+    int             m_green             {0};     ///< The Color's green component.
+    int             m_blue              {0};     ///< The Color's blue component.
+    int             m_alpha             {255};   ///< The Color's alpha (opacity) component.
 
-    Name                m_name;             ///< The Color name.
-    AsciiColorCode      m_asciiColorCode;   ///< The Color ASCII code.
+    // Terminal representation:
+    AsciiColorCode      m_asciiColorCode    {' '};
 
 };
 

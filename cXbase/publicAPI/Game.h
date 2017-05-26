@@ -1,5 +1,5 @@
 /***************************************************************************************************
- * 
+ *
  * Copyright (C) 2016 Connect X team
  *
  * This file is part of Connect X.
@@ -152,7 +152,7 @@ public:
      * string of equal Disc can be either horizontal, vertical or diagonal.
      *
      * This method checks, <em> for the current Position only, </em> if such a winning string of
-     * adjacent Discs exists. Here is an example where for a Disc with ColorAsciiCode @c R,
+     * adjacent Discs exists. Here is an example where for a Disc with AsciiColorCode @c R,
      * represents the current Position, i.e. the Position where the last activePlayer placed a
      * Disc. The Positions considered for the winner check by this method  (other than the
      * active one) are shown with the ASCII code @c x. Note that this example uses an
