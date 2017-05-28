@@ -1,5 +1,5 @@
 /***************************************************************************************************
- * 
+ *
  * Copyright (C) 2016 Connect X team
  *
  * This file is part of Connect X.
@@ -40,16 +40,13 @@ USING_NAMESPACE_CXBASE
 int main()
 {
 	int IN_A_ROW {4};
-	
+
 	// Create discs:
 	AsciiColorCode RED_COLOR_CODE      {'R'};
 	AsciiColorCode YELLOW_COLOR_CODE   {'Y'};
 
-	Name           RED_NAME            {"Red"};
-	Name           YELLOW_NAME         {"Yellow"};
-
-	Color          RED                 {RED_NAME, RED_COLOR_CODE};
-	Color          YELLOW              {YELLOW_NAME, YELLOW_COLOR_CODE};
+	Color          RED                 {255, 0  , 0  , 255, RED_COLOR_CODE};
+	Color          YELLOW              {255, 255, 0  , 255, YELLOW_COLOR_CODE};
 
 	Disc           RED_DISC            {RED};
 	Disc           YELLOW_DISC         {YELLOW};
@@ -58,7 +55,7 @@ int main()
 	string nameP1, nameP2;
 
 	cout << "Enter the players' names:" << endl;
-	
+
 	cout << "First player: ";
 	getline(cin, nameP1);
 
@@ -67,16 +64,16 @@ int main()
 
 	shared_ptr<Player> player1{new Player{nameP1, RED_DISC}};
 	shared_ptr<Player> player2{new Player{nameP2, YELLOW_DISC}};
-	
+
 	// Create gameboard:
 	shared_ptr<GameBoard> classicGameBoard{new GameBoard};
-	
+
 	// Create game:
     vector< shared_ptr<Player> >   players   {player1, player2};
 	Connect4Game                   game      {players, classicGameBoard, IN_A_ROW};
 
 	int chosenColumn {0};
-	
+
 	// Game loop:
 	while(!game.isWon() && !game.isDraw())
 	{
@@ -93,7 +90,7 @@ int main()
 	if(game.isWon())
 	{
 		Player winner {game.activePlayer()};
-		
+
 		// Active player is not the winner:
 		if(*players[0] == game.activePlayer())
 		{
@@ -108,6 +105,6 @@ int main()
 	{
 		cout << "It's a tie!" << endl;
 	}
-	
+
 	return 0;
 }

@@ -1,5 +1,5 @@
 /***************************************************************************************************
- * 
+ *
  * Copyright (C) 2016 Connect X team
  *
  * This file is part of Connect X.
@@ -31,81 +31,44 @@
 
 #include <publicAPI/Disc.h>
 
-#include<gtest/gtest.h>
+#include <gtest/gtest.h>
 
 #include <sstream>
 
 
 USING_NAMESPACE_CXBASE
 
-const Name NO_COLOR     {"No color"};
-const Name RED          {"Red"};
-const Name BLACK        {"Black"};
-
-const AsciiColorCode NO_COLOR_ASCII_CODE  {' '};
-const AsciiColorCode RED_ASCII_CODE       {'R'};
-const AsciiColorCode BLACK_ASCII_CODE     {'B'};
-
 
 TEST(Disc, Constructor_Default_SetsNoColor)
 {
     Disc t_disc;
-
-    ASSERT_EQ(t_disc.color().name(), NO_COLOR);
-    ASSERT_EQ(t_disc.asciiColorCode(), NO_COLOR_ASCII_CODE);
+    ASSERT_EQ(t_disc.color(), Color::TRANSPARENT);
 }
 
-TEST(Disc, Constructor_RedColor_RedNameAndASCIICode)
+TEST(Disc, Constructor_RedColor_SetsRedComponentsAndRedAsciiColorCode)
 {
-    Color t_red{RED, RED_ASCII_CODE};
-    Disc t_disc{t_red};
-
-    ASSERT_EQ(t_disc.color().name(), RED);
-    ASSERT_EQ(t_disc.asciiColorCode(), RED_ASCII_CODE);
+    Disc t_disc{Color::RED};
+    ASSERT_EQ(t_disc.color(), Color::RED);
 }
 
-TEST(Disc, ColorAccessor_NoColor_GetsNoColor)
-{
-    Color t_colorNone{NO_COLOR, NO_COLOR_ASCII_CODE};
-    Disc t_disc;
-
-    ASSERT_EQ(t_disc.color(), t_colorNone);
-}
-
-TEST(Disc, AsciiColorCodeAccessor_NoColor_GetsNoColorASCII)
+TEST(Disc, ColorAccessor_Transparent_GetsTransparent)
 {
     Disc t_disc;
-
-    ASSERT_EQ(t_disc.asciiColorCode(), NO_COLOR_ASCII_CODE);
+    ASSERT_EQ(t_disc.color(), Color::TRANSPARENT);
 }
 
 TEST(Disc, EqualOperator_TwoEqualDiscs_ReturnsTrue)
 {
-    Color t_red1{RED, RED_ASCII_CODE};
-    Color t_red2{RED, RED_ASCII_CODE};
-
-    Disc t_disc1{t_red1};
-    Disc t_disc2{t_red2};
+    Disc t_disc1{Color::RED};
+    Disc t_disc2{Color::RED};
 
     ASSERT_TRUE(t_disc1 == t_disc2);
 }
 
-TEST(Disc, EqualOperator_TwoDifferentASCIICodes_ReturnsFalse)
+TEST(Disc, EqualOperator_TwoDifferentAsciiColorCodes_ReturnsFalse)
 {
-    Color t_red1{RED, RED_ASCII_CODE};
-    Color t_red2{RED, AsciiColorCode{'x'}};
-
-    Disc t_disc1(t_red1);
-    Disc t_disc2(t_red2);
-
-    ASSERT_FALSE(t_disc1 == t_disc2);
-}
-
-TEST(Disc, EqualOperator_TwoDifferentColorAndASCIICode_ReturnsFalse)
-{
-
-    Color t_red1{RED, RED_ASCII_CODE};
-    Color t_red2{BLACK, BLACK_ASCII_CODE};
+    Color t_red1{Color::RED};
+    Color t_red2{255, 0, 0, 255, AsciiColorCode{'r'}};
 
     Disc t_disc1{t_red1};
     Disc t_disc2{t_red2};
@@ -113,21 +76,26 @@ TEST(Disc, EqualOperator_TwoDifferentColorAndASCIICode_ReturnsFalse)
     ASSERT_FALSE(t_disc1 == t_disc2);
 }
 
-TEST(Disc, OperatorNotEqual_TwoDifferentDiscs_ReturnTrue)
+TEST(Disc, EqualOperator_TwoDifferentColorAndAsciiColorCode_ReturnsFalse)
 {
-    Color t_red1{RED, RED_ASCII_CODE};
-    Color t_red2{BLACK, BLACK_ASCII_CODE};
+    Disc t_discRed   {Color::RED};
+    Disc t_discBlack {Color::BLACK};
 
-    Disc t_disc1{t_red1};
-    Disc t_disc2{t_red2};
+    ASSERT_FALSE(t_discRed == t_discBlack);
+}
 
-    ASSERT_TRUE(t_disc1 != t_disc2);
+TEST(Disc, OperatorNotEqual_TwoDifferentColorAndAsciiColorCode_ReturnTrue)
+{
+    Disc t_discRed   {Color::RED};
+    Disc t_discBlack {Color::BLACK};
+
+    ASSERT_TRUE(t_discRed != t_discBlack);
 }
 
 TEST(Disc, OperatorNotEqual_TwoEqualColorsButDifferentASCIICode_ReturnTrue)
 {
-    Color t_red1{RED, RED_ASCII_CODE};
-    Color t_red2{RED, AsciiColorCode{'x'}};
+    Color t_red1{Color::RED};
+    Color t_red2{255, 0, 0, 255, AsciiColorCode{'r'}};
 
     Disc t_disc1{t_red1};
     Disc t_disc2{t_red2};
@@ -137,11 +105,8 @@ TEST(Disc, OperatorNotEqual_TwoEqualColorsButDifferentASCIICode_ReturnTrue)
 
 TEST(Disc, OperatorNotEqual_TwoEqualDiscs_ReturnFalse)
 {
-    Color t_red1{RED, RED_ASCII_CODE};
-    Color t_red2{RED, RED_ASCII_CODE};
-
-    Disc t_disc1{t_red1};
-    Disc t_disc2{t_red2};
+    Disc t_disc1{Color::RED};
+    Disc t_disc2{Color::RED};
 
     ASSERT_FALSE(t_disc1 != t_disc2);
 }
@@ -151,11 +116,10 @@ TEST(Disc, StreamInsertionOperator_StandardDisc_PrintsRightString)
     std::ostringstream t_flux;
     std::ostringstream t_asciiRepresentation;
 
-    Color t_red{RED, RED_ASCII_CODE};
-    Disc t_disc{t_red};
+    Disc t_disc{Color::RED};
 
     t_flux << t_disc;
-    t_asciiRepresentation << " " << RED_ASCII_CODE << " ";
+    t_asciiRepresentation << " " << 'R' << " ";
 
     ASSERT_EQ(t_flux.str(), t_asciiRepresentation.str());
 }

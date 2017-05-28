@@ -203,7 +203,7 @@ public:
     /*******************************************************************************************//**
      * Checks if a specific Column is full.
      *
-     * If Discs (other than the @c NO_DISC specifier) are stacked all the way up to the last
+     * If Discs (other than the @c Disc::NO_DISC specifier) are stacked all the way up to the last
      * Column's position, the Column is considered full. Concretely:
      *
      *   @verbatim
@@ -314,18 +314,18 @@ public:
      *      GameBoard   aBoard;
      *
      *      // Fill first Column:
-     *      aBoard.placeDisc(Column{0}, RED_DISC);
-     *      aBoard.placeDisc(Column{0}, RED_DISC);
-     *      aBoard.placeDisc(Column{0}, RED_DISC);
-     *      aBoard.placeDisc(Column{0}, RED_DISC);
-     *      aBoard.placeDisc(Column{0}, RED_DISC);
-     *      aBoard.placeDisc(Column{0}, RED_DISC);
-     *      aBoard.placeDisc(Column{0}, RED_DISC); // Oops! No effect: already full!
+     *      aBoard.placeDisc(Column{0}, Disc::RED_DISC);
+     *      aBoard.placeDisc(Column{0}, Disc::RED_DISC);
+     *      aBoard.placeDisc(Column{0}, Disc::RED_DISC);
+     *      aBoard.placeDisc(Column{0}, Disc::RED_DISC);
+     *      aBoard.placeDisc(Column{0}, Disc::RED_DISC);
+     *      aBoard.placeDisc(Column{0}, Disc::RED_DISC);
+     *      aBoard.placeDisc(Column{0}, Disc::RED_DISC); // Oops! No effect: already full!
      *
      *      // Put three Discs in second:
-     *      aBoard.placeDisc(Column{1}, RED_DISC);
-     *      aBoard.placeDisc(Column{1}, RED_DISC);
-     *      aBoard.placeDisc(Column{1}, RED_DISC);
+     *      aBoard.placeDisc(Column{1}, Disc::RED_DISC);
+     *      aBoard.placeDisc(Column{1}, Disc::RED_DISC);
+     *      aBoard.placeDisc(Column{1}, Disc::RED_DISC);
      *
      *      // Print it to console:
      *      std::cout << aBoard;
@@ -353,14 +353,22 @@ public:
     friend std::ostream& operator<<(std::ostream& p_flux, const GameBoard& p_gameBoard);
 ///@}
 
+///@{ @name Predefined values
+    static const int CONNECT_THREE;
+    static const int CONNECT_FOUR;
+    static const int CONNECT_FIVE;
+    static const int CONNECT_SIX;
+    static const int CONNECT_SEVEN;
+    static const int CONNECT_EIGHT;
+    static const int CONNECT_NINE;
+///@}
 
 private:
 
-    int   NB_COLUMNS_MAX   {64};
-    int   NB_ROWS_MAX      {64};
-    int   NB_COLUMNS_MIN   {7};
-    int   NB_ROWS_MIN      {6};
-    Disc  NO_DISC          {Color::TRANSPARENT};
+    static const int   NB_COLUMNS_MAX   {64};
+    static const int   NB_ROWS_MAX      {64};
+    static const int   NB_COLUMNS_MIN   {7};
+    static const int   NB_ROWS_MIN      {6};
 
     enum class GridValidationType: int
     {

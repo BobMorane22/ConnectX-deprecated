@@ -1,5 +1,5 @@
 /***************************************************************************************************
- * 
+ *
  * Copyright (C) 2016 Connect X team
  *
  * This file is part of Connect X.
@@ -73,5 +73,5 @@ END_CXBASE_NAMESPACE
 
 void Player::checkInvariant() const
 {
-    INVARIANT(m_disc != NO_DISC);
+    INVARIANT(m_disc != Disc::NO_DISC);
 }

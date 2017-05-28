@@ -163,6 +163,17 @@ public:
     friend std::ostream& operator<<(std::ostream& p_flux, const Disc& p_disc);
 ///@}
 
+///@{ @name Predefined Discs
+    static const Disc NO_DISC;
+    static const Disc WHITE_DISC;
+    static const Disc BLACK_DISC;
+
+    static const Disc GREEN_DISC;
+    static const Disc RED_DISC;
+    static const Disc YELLOW_DISC;
+    static const Disc BLUE_DISC;
+///@}
+
 private:
 
     Color m_color;  ///< The disc Color.

@@ -1,5 +1,5 @@
 /***************************************************************************************************
- * 
+ *
  * Copyright (C) 2016 Connect X team
  *
  * This file is part of Connect X.
@@ -34,6 +34,13 @@
 USING_NAMESPACE_STD
 USING_NAMESPACE_CXBASE
 
+const int GameBoard::CONNECT_THREE  {3};
+const int GameBoard::CONNECT_FOUR   {4};
+const int GameBoard::CONNECT_FIVE   {5};
+const int GameBoard::CONNECT_SIX    {6};
+const int GameBoard::CONNECT_SEVEN  {7};
+const int GameBoard::CONNECT_EIGHT  {8};
+const int GameBoard::CONNECT_NINE   {9};
 
 GameBoard::GameBoard(): m_grid(NB_ROWS_MIN, vector<Disc>(NB_COLUMNS_MIN, Disc())),
                         m_nbRows{NB_ROWS_MIN}, m_nbColumns{NB_COLUMNS_MIN}
@@ -45,7 +52,7 @@ GameBoard::GameBoard(): m_grid(NB_ROWS_MIN, vector<Disc>(NB_COLUMNS_MIN, Disc())
     {
         for(auto& disc : row)
         {
-            if(disc == NO_DISC)
+            if(disc == Disc::NO_DISC)
             {
                 ++nbPositionsGameBoard;
             }
@@ -59,7 +66,7 @@ GameBoard::GameBoard(): m_grid(NB_ROWS_MIN, vector<Disc>(NB_COLUMNS_MIN, Disc())
     INVARIANTS();
 }
 
-GameBoard::GameBoard(int p_nbRows, int p_nbColumns): m_grid(p_nbRows, vector<Disc>(p_nbColumns, NO_DISC)),
+GameBoard::GameBoard(int p_nbRows, int p_nbColumns): m_grid(p_nbRows, vector<Disc>(p_nbColumns, Disc::NO_DISC)),
                                                      m_nbRows{p_nbRows}, m_nbColumns{p_nbColumns}
 
 {
@@ -75,7 +82,7 @@ GameBoard::GameBoard(int p_nbRows, int p_nbColumns): m_grid(p_nbRows, vector<Dis
     {
         for(auto& disc : row)
         {
-            if(disc == NO_DISC)
+            if(disc == Disc::NO_DISC)
             {
                 ++nbPositionsGameBoard;
             }
@@ -84,7 +91,7 @@ GameBoard::GameBoard(int p_nbRows, int p_nbColumns): m_grid(p_nbRows, vector<Dis
 
     ASSERTION(nbPositionsGameBoard >= NB_ROWS_MIN * NB_COLUMNS_MIN);
     ASSERTION(nbPositionsGameBoard <= NB_ROWS_MAX * NB_COLUMNS_MAX);
-    ASSERTION(nbPositionsGameBoard ==  m_nbRows * m_nbColumns);
+    ASSERTION(nbPositionsGameBoard == m_nbRows * m_nbColumns);
 
     INVARIANTS();
 }
@@ -129,7 +136,7 @@ Position GameBoard::placeDisc(const Column& p_column, const Disc& p_disc)
 
     for(auto row = m_grid.begin(); row != m_grid.end(); ++row)
     {
-        if(discAtPosition(Position{Row{rowSubscript}, p_column}) == NO_DISC)
+        if(discAtPosition(Position{Row{rowSubscript}, p_column}) == Disc::NO_DISC)
         {
             m_grid[rowSubscript][p_column.value()] = p_disc;
             break;
@@ -153,7 +160,7 @@ bool GameBoard::isColumnFull(const Column& p_column) const
 
     for(auto row = m_grid.rbegin(); row != m_grid.rend(); ++row)
     {
-        if(discAtPosition(Position{Row{rowSubscript}, p_column}) == NO_DISC)
+        if(discAtPosition(Position{Row{rowSubscript}, p_column}) == Disc::NO_DISC)
         {
             isPlayable = true;
             break;
@@ -441,7 +448,7 @@ int GameBoard::horizontalNbOfAdjacentDiscs(Position p_positionLastPlacedDisc, in
     {
         for(int j = 0; j < p_inARow - 1; ++j)
         {
-            if((discAtPosition(Position{rowLastPlacedDisc, Column{i + j}}) != NO_DISC) &&
+            if((discAtPosition(Position{rowLastPlacedDisc, Column{i + j}}) != Disc::NO_DISC) &&
                (discAtPosition(Position{rowLastPlacedDisc, Column{i + j}}) == discAtPosition(Position{rowLastPlacedDisc, Column{i + j + 1}})))
             {
                 pairIdenticalDiscs++;
@@ -478,7 +485,7 @@ int GameBoard::verticalNbOfAdjacentDiscs(Position p_positionLastPlacedDisc, int 
     {
         for(int j = 0; j < p_inARow - 1; ++j)
         {
-            if((discAtPosition(Position{Row{i + j}, columnLastPlacedDisc}) != NO_DISC) &&
+            if((discAtPosition(Position{Row{i + j}, columnLastPlacedDisc}) != Disc::NO_DISC) &&
                (discAtPosition(Position{Row{i + j}, columnLastPlacedDisc}) == discAtPosition(Position{Row{i + j + 1}, columnLastPlacedDisc})))
             {
                 pairIdenticalDiscs++;
@@ -517,7 +524,7 @@ int GameBoard::upwardNbOfAdjacentDiscs(Position p_positionLastPlacedDisc, int p_
 
         for(int j = 0; j < p_inARow - 1; ++j)
         {
-            if((discAtPosition(Position{Row{k}, Column{i + j}}) != NO_DISC) &&
+            if((discAtPosition(Position{Row{k}, Column{i + j}}) != Disc::NO_DISC) &&
                (discAtPosition(Position{Row{k}, Column{i + j}}) == discAtPosition(Position{Row{k + 1}, Column{i + j + 1}})))
             {
                 pairIdenticalDiscs++;
@@ -558,7 +565,7 @@ int GameBoard::downwardNbOfAdjacentDiscs(Position p_positionLastPlacedDisc, int 
 
         for(int j = 0; j < p_inARow - 1; ++j)
         {
-            if((discAtPosition(Position{Row{k}, Column{i + j}}) != NO_DISC) &&
+            if((discAtPosition(Position{Row{k}, Column{i + j}}) != Disc::NO_DISC) &&
                (discAtPosition(Position{Row{k}, Column{i + j}}) == discAtPosition(Position{Row{k - 1}, Column{i + j + 1}})))
             {
                 ++pairIdenticalDiscs;

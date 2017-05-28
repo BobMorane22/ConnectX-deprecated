@@ -1,5 +1,5 @@
 /***************************************************************************************************
- * 
+ *
  * Copyright (C) 2016 Connect X team
  *
  * This file is part of Connect X.
@@ -22,8 +22,9 @@
 /***********************************************************************************************//**
  * @file    test_Color.cpp
  * @author  Eric Poirier
- * @date    September 2016
- * @version 0.1
+ * @date    May 2017
+ * @version 0.2
+ * @sa https://www.w3schools.com/cssref/css_colors.asp
  *
  * Unit tests for a the Color class.
  *
@@ -36,100 +37,162 @@
 
 USING_NAMESPACE_CXBASE
 
-const Name              NO_COLOR              {"No color"};
-const AsciiColorCode    NO_COLOR_ASCII_CODE   {' '};
-
-const Name              RED                   {"Red"};
-const AsciiColorCode    RED_ASCII_CODE        {'R'};
-
-
 class ColorTests: public::testing::Test
 {
 public:
 
-    Color t_color;
+    Color t_defaultColor;
+
+    Color t_colorRed         {255, 0, 0, 255, AsciiColorCode{'R'}};
+    Color t_transparentColor {Color::TRANSPARENT};
 };
 
-TEST(Color, Constructor_Default_NoColor)
+TEST_F(ColorTests, Constructor_Default_Black)
 {
-    Color t_colorNone;
-
-    ASSERT_EQ(t_colorNone.name(), NO_COLOR);
-    ASSERT_EQ(t_colorNone.asciiColorCode(), NO_COLOR_ASCII_CODE);
+    Color defaultColor {0, 0, 0, 255, AsciiColorCode{'K'}};
+    ASSERT_EQ(t_defaultColor, defaultColor);
 }
 
-TEST(Color, Constructor_Red_RedColor)
+TEST_F(ColorTests, ConstructorParam_Red_RedColor)
 {
-    Color t_color{RED, RED_ASCII_CODE};
-
-    ASSERT_EQ(t_color.name(), RED);
-    ASSERT_EQ(t_color.asciiColorCode(), RED_ASCII_CODE);
+    Color red {255, 0, 0, 255, AsciiColorCode{'R'}};
+    ASSERT_EQ(t_colorRed, red);
 }
 
-TEST(Color, Constructor_AsciiColorCodeLowerCase_CustomColor)
+TEST(Color, ConstructorParam_RedNegative_ThrowsException)
 {
-    Color t_color{Name{"test"}, AsciiColorCode{'t'}};
-
-    ASSERT_EQ(t_color.name(), Name{"test"});
-    ASSERT_EQ(t_color.asciiColorCode(), AsciiColorCode{'t'});
+    ASSERT_THROW((Color{-1, 128, 128, 128, AsciiColorCode('b')}), PreconditionException);
 }
 
-TEST(Color, Constructor_AsciiColorCodeUpperCase_CustomColor)
+TEST(Color, ConstructorParam_RedOver255_ThrowsException)
 {
-    Color t_color{Name{"test"}, AsciiColorCode{'T'}};
-
-    ASSERT_EQ(t_color.name(), Name{"test"});
-    ASSERT_EQ(t_color.asciiColorCode(), AsciiColorCode{'T'});
+    ASSERT_THROW((Color{256, 128, 128, 128, AsciiColorCode('b')}), PreconditionException);
 }
 
-TEST_F(ColorTests, NameAccessor_Default_ReturnsNoColor)
+TEST(Color, ConstructorParam_GreenNegative_ThrowsException)
 {
-    ASSERT_EQ(NO_COLOR, t_color.name());
+    ASSERT_THROW((Color{128, -1, 128, 128, AsciiColorCode('b')}), PreconditionException);
+}
+
+TEST(Color, ConstructorParam_GreenOver255_ThrowsException)
+{
+    ASSERT_THROW((Color{128, 256, 128, 128, AsciiColorCode('b')}), PreconditionException);
+}
+
+TEST(Color, ConstructorParam_BlueNegative_ThrowsException)
+{
+    ASSERT_THROW((Color{128, 128, -1, 128, AsciiColorCode('b')}), PreconditionException);
+}
+
+TEST(Color, ConstructorParam_BlueOver255_ThrowsException)
+{
+    ASSERT_THROW((Color{128, 128, 256, 128, AsciiColorCode('b')}), PreconditionException);
+}
+
+TEST(Color, ConstructorParam_AlphaNegative_ThrowsException)
+{
+    ASSERT_THROW((Color{128, 128, 128, -1, AsciiColorCode('b')}), PreconditionException);
+}
+
+TEST(Color, ConstructorParam_AlphaOver255_ThrowsException)
+{
+    ASSERT_THROW((Color{128, 128, 128, 256, AsciiColorCode('b')}), PreconditionException);
+}
+
+TEST_F(ColorTests, RedAccessor_Default_ReturnsRedComponent)
+{
+    ASSERT_EQ(255, t_colorRed.red());
+}
+
+TEST_F(ColorTests, GreenAccessor_Default_ReturnsGreenComponent)
+{
+    ASSERT_EQ(0, t_colorRed.green());
+}
+
+TEST_F(ColorTests, BlueAccessor_Default_ReturnsBlueComponent)
+{
+    ASSERT_EQ(0, t_colorRed.blue());
+}
+
+TEST_F(ColorTests, AlphaAccessor_Default_ReturnsAlphaComponent)
+{
+    ASSERT_EQ(255, t_colorRed.alpha());
 }
 
 TEST_F(ColorTests, AsciiColorCodeAccessor_Default_ReturnsNoColor)
 {
-    ASSERT_EQ(NO_COLOR_ASCII_CODE, t_color.asciiColorCode());
+    AsciiColorCode t_redAsciiColorCode{'R'};
+    ASSERT_EQ(t_redAsciiColorCode, t_colorRed.asciiColorCode());
 }
 
-TEST_F(ColorTests, EqualOperator_TwoDefaultColors_ReturnsTrue)
+TEST_F(ColorTests, EqualOperator_SameColors_ReturnsTrue)
 {
-    Color t_colorByDefault;
-
-    ASSERT_TRUE(t_colorByDefault == t_color);
+    Color t_colorOther {255, 0, 0, 255, AsciiColorCode{'R'}};
+    ASSERT_TRUE(t_colorRed == t_colorOther);
 }
 
-TEST_F(ColorTests, EqualOperator_TwoDifferentNamesButSameASCIICode_ReturnsFalse)
+TEST_F(ColorTests, EqualOperator_DifferentRedElementOnly_ReturnsFalse)
 {
-    Color t_colorRed{RED, NO_COLOR_ASCII_CODE};
-
-    ASSERT_FALSE(t_colorRed == t_color);
+    Color t_colorOther {254, 0, 0, 255, AsciiColorCode{'R'}};
+    ASSERT_FALSE(t_colorRed == t_colorOther);
 }
 
-TEST_F(ColorTests, EqualOperator_TwoNamesEqualButDifferentASCIICode_ReturnsTrue)
+TEST_F(ColorTests, EqualOperator_DifferentGreenElementOnly_ReturnsFalse)
 {
-    Color t_colorNone{NO_COLOR, RED_ASCII_CODE};
-
-    ASSERT_TRUE(t_colorNone == t_color);
+    Color t_colorOther {255, 1, 0, 255, AsciiColorCode{'R'}};
+    ASSERT_FALSE(t_colorRed == t_colorOther);
 }
 
-TEST_F(ColorTests, NotEqualOperator_TwoDefaultColors_ReturnsFalse)
+TEST_F(ColorTests, EqualOperator_DifferentBlueElementOnly_ReturnsFalse)
 {
-    Color t_colorByDefault;
-
-    ASSERT_FALSE(t_colorByDefault != t_color);
+    Color t_colorOther {255, 0, 1, 255, AsciiColorCode{'R'}};
+    ASSERT_FALSE(t_colorRed == t_colorOther);
 }
 
-TEST_F(ColorTests, NotEqualOperator_DifferentNames_ReturnsTrue)
+TEST_F(ColorTests, EqualOperator_DifferentAlphaElementOnly_ReturnsFalse)
 {
-    Color t_colorRed{RED, NO_COLOR_ASCII_CODE};
-
-    ASSERT_TRUE(t_colorRed != t_color);
+    Color t_colorOther {255, 0, 0, 254, AsciiColorCode{'R'}};
+    ASSERT_FALSE(t_colorRed == t_colorOther);
 }
 
-TEST_F(ColorTests, NotEqualOperator_SameNamesButDifferentASCIICode_ReturnsFalse)
+TEST_F(ColorTests, EqualOperator_DifferentAsciiColorCodeOnly_ReturnsTrue)
 {
-    Color t_colorNone{NO_COLOR, RED_ASCII_CODE};
+    Color t_colorOther {255, 0, 0, 255, AsciiColorCode{'r'}};
+    ASSERT_TRUE(t_colorRed == t_colorOther);
+}
 
-    ASSERT_FALSE(t_colorNone != t_color);
+TEST_F(ColorTests, NotEqualOperator_SameColors_ReturnsFalse)
+{
+    Color t_colorOther {255, 0, 0, 255, AsciiColorCode{'R'}};
+    ASSERT_FALSE(t_colorRed != t_colorOther);
+}
+
+TEST_F(ColorTests, NotEqualOperator_DifferentRedElementOnly_ReturnsTrue)
+{
+    Color t_colorOther {254, 0, 0, 255, AsciiColorCode{'R'}};
+    ASSERT_TRUE(t_colorRed != t_colorOther);
+}
+
+TEST_F(ColorTests, NotEqualOperator_DifferentGreenElementOnly_ReturnsTrue)
+{
+    Color t_colorOther {255, 1, 0, 255, AsciiColorCode{'R'}};
+    ASSERT_TRUE(t_colorRed != t_colorOther);
+}
+
+TEST_F(ColorTests, NotEqualOperator_DifferentBlueElementOnly_ReturnsTrue)
+{
+    Color t_colorOther {255, 0, 1, 255, AsciiColorCode{'R'}};
+    ASSERT_TRUE(t_colorRed != t_colorOther);
+}
+
+TEST_F(ColorTests, NotEqualOperator_DifferentAlphaElementOnly_ReturnsTrue)
+{
+    Color t_colorOther {255, 0, 0, 254, AsciiColorCode{'R'}};
+    ASSERT_TRUE(t_colorRed != t_colorOther);
+}
+
+TEST_F(ColorTests, NotEqualOperator_DifferentAsciiColorCodeOnly_ReturnsFalse)
+{
+    Color t_colorOther {255, 0, 0, 255, AsciiColorCode{'r'}};
+    ASSERT_FALSE(t_colorRed != t_colorOther);
 }

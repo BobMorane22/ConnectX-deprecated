@@ -1,5 +1,5 @@
 /***************************************************************************************************
- * 
+ *
  * Copyright (C) 2016 Connect X team
  *
  * This file is part of Connect X.
@@ -44,55 +44,40 @@ class PlayerTests : public ::testing::Test
 
 public:
 
-    const Name              JOHN_DOE              {"John Doe"};
-    const Name              JOHNNY_DOE            {"Johnny Doe"};
-    const Name              RED                   {"Red"};
-    const Name              BLACK                 {"Black"};
-
-    const AsciiColorCode    ASCII_CODE_RED        {'R'};
-    const AsciiColorCode    ASCII_CODE_BLACK      {'B'};
-
-    const Color             COLOR_RED             {RED, ASCII_CODE_RED};
-    const Color             COLOR_BLACK           {BLACK, ASCII_CODE_BLACK};
-
-    const Disc              RED_DISC              {COLOR_RED};
-    const Disc              BLACK_DISC            {COLOR_BLACK};
-
-
-    Player                  t_player1             {JOHN_DOE, RED_DISC};
-    Player                  t_player2             {JOHNNY_DOE, BLACK_DISC};
+    const Name  NAME1     {"John Doe"};
+    const Name  NAME2     {"Johnny Doe"};
+    Player      t_player1 {NAME1, Disc::RED_DISC};
+    Player      t_player2 {NAME2, Disc::BLACK_DISC};
 
 };
 
 TEST_F(PlayerTests, Constructor_TwoValidParameters_NoExceptionThrown)
 {
-    Player t_player{JOHN_DOE, RED_DISC};
+    Player t_player{NAME1, Disc::RED_DISC};
 
-    ASSERT_EQ(t_player.name(), JOHN_DOE);
-    ASSERT_EQ(t_player.disc(), RED_DISC);
+    ASSERT_EQ(t_player.name(), NAME1);
+    ASSERT_EQ(t_player.disc(), Disc::RED_DISC);
 }
 
 TEST_F(PlayerTests, Constructor_NoDiscAsParameter_ExceptionThrown)
 {
-    Disc NO_DISC{Color{Name{"No color"}, AsciiColorCode{' '}}};
-
-    ASSERT_THROW(Player t_player(JOHN_DOE, NO_DISC), InvariantException);
+    ASSERT_THROW(Player t_player(NAME1, Disc::NO_DISC), InvariantException);
 }
 
 TEST_F(PlayerTests, NameAccessor_ValidPlayer_ReturnsName)
 {
-    ASSERT_EQ(t_player1.name(), JOHN_DOE);
+    ASSERT_EQ(t_player1.name(), NAME1);
 }
 
 TEST_F(PlayerTests, DiscAccessor_ValidPlayer_ReturnsDisc)
 {
-    ASSERT_EQ(t_player1.disc(), RED_DISC);
+    ASSERT_EQ(t_player1.disc(), Disc::RED_DISC);
 }
 
 TEST_F(PlayerTests, EqualOperator_TwoEqualPlayers_ReturnsTrue)
 {
-    Name sameName{JOHN_DOE};
-    Disc sameDisc{RED_DISC};
+    Name sameName{NAME1};
+    Disc sameDisc{Disc::RED_DISC};
     Player t_player3{sameName, sameDisc};
 
     ASSERT_TRUE(t_player1 == t_player3);
@@ -105,16 +90,16 @@ TEST_F(PlayerTests, EqualOperator_TwoDifferentPlayers_ReturnsFalse)
 
 TEST_F(PlayerTests, EqualOperator_TwoEqualNamesButDifferentDiscs_ReturnsFalse)
 {
-    Player t_player3{JOHN_DOE, RED_DISC};
-    Player t_player4{JOHN_DOE, BLACK_DISC};
+    Player t_player3{NAME1, Disc::RED_DISC};
+    Player t_player4{NAME1, Disc::BLACK_DISC};
 
     ASSERT_FALSE(t_player3 == t_player4);
 }
 
 TEST_F(PlayerTests, EqualOperator_TwoDifferentNamesButEqualDiscs_ReturnsFalse)
 {
-    Player t_player3{JOHN_DOE, RED_DISC};
-    Player t_player4{JOHNNY_DOE, RED_DISC};
+    Player t_player3{NAME1, Disc::RED_DISC};
+    Player t_player4{NAME2, Disc::RED_DISC};
 
     ASSERT_FALSE(t_player1 == t_player2);
 }
@@ -126,23 +111,23 @@ TEST_F(PlayerTests, NotEqualOperator_TwoDifferentPlayers_ReturnsTrue)
 
 TEST_F(PlayerTests, NotEqualOperator_TwoEqualNamesButDifferentDiscs_ReturnsTrue)
 {
-    Player t_player3(JOHN_DOE, RED_DISC);
-    Player t_player4(JOHN_DOE, BLACK_DISC);
+    Player t_player3{NAME1, Disc::RED_DISC};
+    Player t_player4{NAME1, Disc::BLACK_DISC};
 
     ASSERT_TRUE(t_player3 != t_player4);
 }
 
 TEST_F(PlayerTests, NotEqualOperator_TwoDifferentNamesButEqualDiscs_ReturnsTrue)
 {
-    Player t_player3(JOHN_DOE, RED_DISC);
-    Player t_player4(JOHNNY_DOE, RED_DISC);
+    Player t_player3{NAME1, Disc::RED_DISC};
+    Player t_player4{NAME2, Disc::RED_DISC};
 
     ASSERT_TRUE(t_player3 != t_player4);
 }
 
 TEST_F(PlayerTests, NotEqualOperator_TwoEqualPlayers_ReturnsFalse)
 {
-    Player t_player3(JOHN_DOE, RED_DISC);
+    Player t_player3{NAME1, Disc::RED_DISC};
 
     ASSERT_FALSE(t_player1 != t_player3);
 }

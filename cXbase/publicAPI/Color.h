@@ -176,7 +176,7 @@ private:
     int             m_alpha             {255};   ///< The Color's alpha (opacity) component.
 
     // Terminal representation:
-    AsciiColorCode      m_asciiColorCode    {' '};
+    AsciiColorCode      m_asciiColorCode    {'K'};
 
 };
 

@@ -40,7 +40,7 @@ TARGETS  += cxbase \
             cxcppnorm \
             cxintegration
 
-all: $(MAIN) clean
+all: $(MAIN)
 
 $(MAIN): $(TARGETS)
 

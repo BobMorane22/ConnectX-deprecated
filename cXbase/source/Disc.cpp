@@ -35,6 +35,17 @@ USING_NAMESPACE_STD
 USING_NAMESPACE_CXBASE
 
 
+const Disc Disc::NO_DISC        {Color::TRANSPARENT};
+const Disc Disc::WHITE_DISC     {Color::WHITE};
+const Disc Disc::BLACK_DISC     {Color::BLACK};
+
+const Disc Disc::GREEN_DISC     {Color::GREEN};
+const Disc Disc::RED_DISC       {Color::RED};
+const Disc Disc::YELLOW_DISC    {Color::YELLOW};
+const Disc Disc::BLUE_DISC      {Color::BLUE};
+
+
+
 bool Disc::operator==(const Disc &p_disc) const
 {
     bool isEqual = false;
