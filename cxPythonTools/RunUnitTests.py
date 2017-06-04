@@ -57,16 +57,19 @@ def printHelp():
     """
     script = os.path.basename(__file__)
 
-    print("Usage:")
+    print("\nUsage:")
     print("\t" + script + " OPTION\n")
     print("Options:")
     print("\t-h, --help\tPrint help.")
-    print("\t-t, --tests\tTest program (full path).\n")
+    print("\t-t, --tests\tTest program (full path).")
+    print("\t-l, --log\tLog file (full path),\n ")
     print("Examples:")
     print("\t" + script + " --tests=/home/user/someTests")
     print("\t" + script + " -t /home/user/someTests")
+    print("\t" + script + " -t /home/user/someTests -l /home/user/log/someLogFile.log")
+    print("\t" + script + " --test=/home/user/someTests --log=/home/user/log/someLogFile.log")
     print("\t" + script + " -h")
-    print("\t" + script + " --help")
+    print("\t" + script + " --help\n")
 
 
 def runTests(program, logFile):
