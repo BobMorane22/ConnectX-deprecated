@@ -66,14 +66,7 @@ bool Disc::operator!=(const Disc &p_disc) const
     return !(*this == p_disc);
 }
 
-BEGIN_CXBASE_NAMESPACE
-
-ostream& operator<<(ostream& p_flux, const Disc& p_disc)
+void Disc::print(ostream& p_stream) const
 {
-
-    p_flux << " " << p_disc.asciiColorCode() << " ";
-
-    return p_flux;
+    p_stream << " " << asciiColorCode() << " ";
 }
-
-END_CXBASE_NAMESPACE

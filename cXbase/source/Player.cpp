@@ -60,16 +60,10 @@ bool Player::operator!=(const Player& p_player) const
     return !(*this == p_player);
 }
 
-BEGIN_CXBASE_NAMESPACE
-
-ostream& operator<<(ostream& p_flux, const Player& p_player)
+void Player::print(ostream& p_stream) const
 {
-    p_flux << p_player.name().toString();
-
-    return p_flux;
+    p_stream << m_name.toString();
 }
-
-END_CXBASE_NAMESPACE
 
 void Player::checkInvariant() const
 {

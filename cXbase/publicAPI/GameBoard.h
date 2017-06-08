@@ -68,7 +68,7 @@ BEGIN_CXBASE_NAMESPACE
  * @note 3D GameBoards are not supported.
  *
  **************************************************************************************************/
-class GameBoard : public IEnforceContract
+class GameBoard : public IEnforceContract, public ICliObject
 {
 
 private:
@@ -294,13 +294,25 @@ public:
      *
      **********************************************************************************************/
     bool operator!=(const GameBoard &p_gameBoard) const;
+///@}
 
+///@{ @name Predefined values
+    static const int CONNECT_THREE;
+    static const int CONNECT_FOUR;
+    static const int CONNECT_FIVE;
+    static const int CONNECT_SIX;
+    static const int CONNECT_SEVEN;
+    static const int CONNECT_EIGHT;
+    static const int CONNECT_NINE;
+///@}
+
+protected:
 
     /*******************************************************************************************//**
-     * Stream insertion operator.
+     * Insert text into stream.
      *
-     * A GameBoard can be printed to text-mode using this operator. Only the grid and its
-     * underlying Discs are printed with Row and Column numbers. The character "|" is used
+     * A GameBoard can be inserted into a stream to text-mode using this method. Only the grid 
+     * and its underlying Discs are printed with Row and Column numbers. The character "|" is used
      * to separate different columns.
      *
      * For example:
@@ -346,22 +358,13 @@ public:
      *
      *     @endverbatim
      *
-     * @param[in] p_flux        The stream in which to insert.
-     * @param[in] p_gameBoard   The GameBoard to insert.
+     * @param[in] p_stream        The stream in which to insert.
      *
      **********************************************************************************************/
-    friend std::ostream& operator<<(std::ostream& p_flux, const GameBoard& p_gameBoard);
-///@}
+    virtual void print(std::ostream& p_stream) const;
 
-///@{ @name Predefined values
-    static const int CONNECT_THREE;
-    static const int CONNECT_FOUR;
-    static const int CONNECT_FIVE;
-    static const int CONNECT_SIX;
-    static const int CONNECT_SEVEN;
-    static const int CONNECT_EIGHT;
-    static const int CONNECT_NINE;
-///@}
+
+    virtual void checkInvariant() const;
 
 private:
 
@@ -384,7 +387,6 @@ private:
     int       m_nbRows;     ///< The GameBoard grid's number of rows.
     int       m_nbColumns;  ///< The GameBoard grid's number of columns.
 
-    virtual void checkInvariant() const;
 
     int leftValidationLimit  (Position p_positionLastPlacedDisc, int p_inARow, GridValidationType validationType = GridValidationType::Straight) const;
     int rightValidationLimit (Position p_positionLastPlacedDisc, int p_inARow, GridValidationType validationType = GridValidationType::Straight) const;

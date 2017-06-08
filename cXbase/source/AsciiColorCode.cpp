@@ -1,5 +1,5 @@
 /***************************************************************************************************
- * 
+ *
  * Copyright (C) 2016 Connect X team
  *
  * This file is part of Connect X.
@@ -56,13 +56,7 @@ void AsciiColorCode::checkInvariant() const
 }
 
 
-BEGIN_CXBASE_NAMESPACE
-
-ostream& operator<<(ostream& p_flux, const AsciiColorCode& p_asciiColorCode)
+void AsciiColorCode::print(ostream& p_stream) const
 {
-    p_flux << p_asciiColorCode.m_asciiColorCode;
-
-    return p_flux;
+	p_stream << m_asciiColorCode;
 }
-
-END_CXBASE_NAMESPACE

@@ -1,5 +1,5 @@
 /***************************************************************************************************
- * 
+ *
  * Copyright (C) 2016 Connect X team
  *
  * This file is part of Connect X.
@@ -20,7 +20,7 @@
  **************************************************************************************************/
 
 /***********************************************************************************************//**
- * 
+ *
  * Copyright (C) 2016 Connect X team
  *
  * This file is part of Connect X.
@@ -51,6 +51,8 @@
 #ifndef ASCIICOLORCODE_H_
 #define ASCIICOLORCODE_H_
 
+#include <sstream>
+
 #include "../source/cXbaseInternal.h"
 
 
@@ -78,7 +80,7 @@ BEGIN_CXBASE_NAMESPACE
  * @see Color
  *
  **************************************************************************************************/
-class AsciiColorCode : public IEnforceContract
+class AsciiColorCode : public IEnforceContract, public ICliObject
 {
 
 public:
@@ -138,29 +140,24 @@ public:
     bool operator!=(const AsciiColorCode& p_asciiColorCode) const { return p_asciiColorCode.m_asciiColorCode != m_asciiColorCode; }
 
 
+protected:
+
     /*******************************************************************************************//**
-     * Stream insertion operator.
+     * Print text to stream.
      *
-     * The operator simply inserts the @c char encoding the color in @c p_flux.
+     * The AsciiColorCode is represented as the @char from which it is constructed.
      *
-     * @param[in] p_flux            The stream.
-     * @param[in] p_asciiColorCode  The ASCII color code to insert.
-     *
-     * @todo Add an indirection such that subclasses can use polymorphic behaviour with
-     * <tt> operator<< </tt>. See <a href="http://stackoverflow.com/questions/4571611/
-     * making-operator-virtual"> this </a> for a nice hot-to example.
+     * @param[in] p_stream The stream in which to insert the text representation.
      *
      **********************************************************************************************/
-    friend std::ostream& operator<<(std::ostream& p_flux, const AsciiColorCode& p_asciiColorCode);
-///@}
+    virtual void print(std::ostream& p_stream) const;
 
-
-protected:
 
     virtual void checkInvariant() const;
 
 
 private:
+
 
     char m_asciiColorCode; ///< The ASCII color code.
 

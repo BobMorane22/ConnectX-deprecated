@@ -55,7 +55,7 @@ BEGIN_CXBASE_NAMESPACE
  * @see Disc
  *
  **************************************************************************************************/
-class Player : IEnforceContract
+class Player : public IEnforceContract, public ICliObject
 {
 
 public:
@@ -123,27 +123,22 @@ public:
      *
      **********************************************************************************************/
     virtual bool operator!=(const Player& p_player) const;
-
-
-    /*******************************************************************************************//**
-     * Stream-insertion operator.
-     *
-     * Simply inserts the Player's Name into the stream.
-     *
-     * @param[in] p_flux    The stream in which to insert.
-     * @param[in] p_player  The Player to insert into the stream.
-     *
-     * @todo Add an indirection such that subclasses can use polymorphic behaviour with
-     * <tt> operator<< </tt>. See <a href="http://stackoverflow.com/questions/4571611/
-     * making-operator-virtual"> this </a> for a nice hot-to example.
-     *
-     **********************************************************************************************/
-    friend std::ostream& operator<<(std::ostream& p_flux, const Player& p_player);
 ///@}
 
 private:
 
     void checkInvariant() const;
+
+    /*******************************************************************************************//**
+     * Insert text into stream.
+     *
+     * Inserts the Player's Name into a stream.
+     *
+     * @param[in] p_stream    The stream in which to insert.
+     *
+     **********************************************************************************************/
+    virtual void print(std::ostream& p_stream) const;
+
 
     const Disc NO_DISC{Color::TRANSPARENT};
 

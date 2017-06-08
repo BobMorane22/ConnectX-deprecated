@@ -235,56 +235,6 @@ bool GameBoard::operator!=(const GameBoard &p_gameBoard) const
     return !(*this == p_gameBoard);
 }
 
-BEGIN_CXBASE_NAMESPACE
-
-ostream& operator<<(ostream& p_flux, const GameBoard& p_gameBoard)
-{
-
-    int rowSubscript{p_gameBoard.nbRows() - 1};
-    int columnSubscript{0};
-    GameBoard::Grid grid{p_gameBoard.grid()};
-
-    for(auto row = grid.rbegin(); row != grid.rend(); ++row)
-    {
-        p_flux << rowSubscript << " ";
-
-        if(rowSubscript < 10)
-            p_flux << " ";
-
-        p_flux << "|";
-
-        for(auto& disc : *row)
-        {
-            p_flux << disc;
-
-            if(columnSubscript >= 10)
-                p_flux << " ";
-
-            p_flux << "|";
-
-            ++columnSubscript;
-        }
-
-        p_flux << endl;
-
-        columnSubscript = 0;
-        --rowSubscript;
-    }
-
-    p_flux << "  ";
-
-    for(columnSubscript = 0; columnSubscript < p_gameBoard.nbColumns(); ++columnSubscript)
-    {
-        p_flux << "   " << columnSubscript;
-    }
-
-    p_flux << endl;
-
-    return p_flux;
-}
-
-END_CXBASE_NAMESPACE
-
 void GameBoard::checkInvariant() const
 {
     INVARIANT(m_nbRows >= NB_ROWS_MIN);
@@ -292,6 +242,49 @@ void GameBoard::checkInvariant() const
 
     INVARIANT(m_nbColumns >= NB_COLUMNS_MIN);
     INVARIANT(m_nbColumns < NB_COLUMNS_MAX + 1);
+}
+
+void GameBoard::print(ostream& p_stream) const
+{
+
+    int rowSubscript     {nbRows() - 1};
+    int columnSubscript  {0};
+
+    for(auto row = m_grid.rbegin(); row != m_grid.rend(); ++row)
+    {
+        p_stream << rowSubscript << " ";
+
+        if(rowSubscript < 10)
+            p_stream << " ";
+
+        p_stream << "|";
+
+        for(auto& disc : *row)
+        {
+            p_stream << disc;
+
+            if(columnSubscript >= 10)
+                p_stream << " ";
+
+            p_stream << "|";
+
+            ++columnSubscript;
+        }
+
+        p_stream << endl;
+
+        columnSubscript = 0;
+        --rowSubscript;
+    }
+
+    p_stream << "  ";
+
+    for(columnSubscript = 0; columnSubscript < nbColumns(); ++columnSubscript)
+    {
+        p_stream << "   " << columnSubscript;
+    }
+
+    p_stream << endl;
 }
 
 int GameBoard::leftValidationLimit(Position p_positionLastPlacedDisc, int p_inARow, GridValidationType validationType) const

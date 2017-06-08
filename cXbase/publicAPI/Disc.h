@@ -32,6 +32,8 @@
 #ifndef DISC_H_
 #define DISC_H_
 
+#include <sstream>
+
 #include "../publicAPI/Color.h"
 
 BEGIN_CXBASE_NAMESPACE
@@ -47,7 +49,7 @@ BEGIN_CXBASE_NAMESPACE
  * @see Color
  *
  **************************************************************************************************/
-class Disc
+class Disc : public ICliObject
 {
 
 public:
@@ -123,10 +125,25 @@ public:
     virtual bool operator!=(const Disc &p_disc) const;
 
 
+///@}
+
+///@{ @name Predefined Discs
+    static const Disc NO_DISC;
+    static const Disc WHITE_DISC;
+    static const Disc BLACK_DISC;
+
+    static const Disc GREEN_DISC;
+    static const Disc RED_DISC;
+    static const Disc YELLOW_DISC;
+    static const Disc BLUE_DISC;
+///@}
+
+protected:
+
     /*******************************************************************************************//**
-     * Stream-insertion operator.
+     * Text to stream.
      *
-     * Inserts the Disc formatted in text mode into the stream. To do so, it uses the Disc Color's
+     * Inserts the Disc formatted in text mode into a stream. To do so, it uses the Disc Color's
      * AsciiColorCode. It adds one space character to the left and one space character to the right
      * of the AsciiColorCode @c char value. For example, if you define a Disc as such:
      *
@@ -152,27 +169,11 @@ public:
      *    "| R |"    // Without the quotes
      *  @endverbatim
      *
-     * @param[in] p_flux  The stream in which to insert.
-     * @param[in] p_disc  The Disc to output to the stream.
-     *
-     * @todo Add an indirection such that subclasses can use polymorphic behaviour with
-     * <tt> operator<< </tt>. See <a href="http://stackoverflow.com/questions/4571611/
-     * making-operator-virtual"> this </a> for a nice hot-to example.
+     * @param[in] p_stream  The stream in which to insert.
      *
      **********************************************************************************************/
-    friend std::ostream& operator<<(std::ostream& p_flux, const Disc& p_disc);
-///@}
+    virtual void print(std::ostream& p_stream) const;
 
-///@{ @name Predefined Discs
-    static const Disc NO_DISC;
-    static const Disc WHITE_DISC;
-    static const Disc BLACK_DISC;
-
-    static const Disc GREEN_DISC;
-    static const Disc RED_DISC;
-    static const Disc YELLOW_DISC;
-    static const Disc BLUE_DISC;
-///@}
 
 private:
 
