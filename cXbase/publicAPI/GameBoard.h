@@ -32,6 +32,8 @@
 #ifndef GAMEBOARD_H_
 #define GAMEBOARD_H_
 
+#include "../source/IEnforceContract.h"
+#include "../source/ICliObject.h"
 #include "Disc.h"
 #include "Position.h"
 

@@ -33,6 +33,7 @@
 #define NAME_H_
 
 #include "../source/cXbaseInternal.h"
+#include "../source/IEnforceContract.h"
 
 #include <string>
 

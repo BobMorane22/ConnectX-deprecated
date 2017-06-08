@@ -35,6 +35,8 @@
 #include <string>
 #include <sstream>
 
+#include "../source/IEnforceContract.h"
+#include "../source/ICliObject.h"
 #include "Disc.h"
 
 

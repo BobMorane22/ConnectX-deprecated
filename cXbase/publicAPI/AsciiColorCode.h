@@ -54,6 +54,8 @@
 #include <sstream>
 
 #include "../source/cXbaseInternal.h"
+#include "../source/IEnforceContract.h"
+#include "../source/ICliObject.h"
 
 
 BEGIN_CXBASE_NAMESPACE

@@ -32,6 +32,7 @@
 #ifndef POSITION_H_
 #define POSITION_H_
 
+#include "../source/IEnforceContract.h"
 #include "../source/Coordinate.h"
 
 BEGIN_CXBASE_NAMESPACE

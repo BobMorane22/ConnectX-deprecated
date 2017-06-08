@@ -34,6 +34,7 @@
 
 #include <sstream>
 
+#include "../source/ICliObject.h"
 #include "../publicAPI/Color.h"
 
 BEGIN_CXBASE_NAMESPACE

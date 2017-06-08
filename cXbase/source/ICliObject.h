@@ -35,7 +35,7 @@
 #include <iostream>
 #include <string>
 
-#include <cXbaseInternal.h>
+#include "cXbaseInternal.h"
 
 
 BEGIN_CXBASE_NAMESPACE
@@ -64,7 +64,12 @@ public:
      * method is inserted "as is" in the stream.
      *
      **********************************************************************************************/
-    friend std::ostream& operator<<(std::ostream& p_stream, const ICliObject& p_cliUiObject);
+    friend std::ostream& operator<<(std::ostream& p_stream, const ICliObject& p_cliUiObject)
+    {
+        p_cliUiObject.print(p_stream);
+
+        return p_stream;
+    }
 
 
 protected:
@@ -83,14 +88,6 @@ protected:
     virtual void print(std::ostream& p_stream) const = 0;
 
 };
-
-
-std::ostream& operator<<(std::ostream& p_stream, const ICliObject& p_cliUiObject)
-{
-    p_cliUiObject.print(p_stream);
-
-    return p_stream;
-}
 
 
 END_CXBASE_NAMESPACE

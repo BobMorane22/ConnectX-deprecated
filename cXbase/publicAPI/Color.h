@@ -32,6 +32,7 @@
 #ifndef COLOR_H_
 #define COLOR_H_
 
+#include "../source/IEnforceContract.h"
 #include "AsciiColorCode.h"
 #include "Name.h"
 

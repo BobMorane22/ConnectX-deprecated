@@ -32,6 +32,7 @@
 #ifndef GAME_H_
 #define GAME_H_
 
+#include "../source/IEnforceContract.h"
 #include "GameBoard.h"
 #include "Player.h"
 
@@ -55,7 +56,7 @@ BEGIN_CXBASE_NAMESPACE
  * @invariant The current turn is always between 0 and the total numbers of Players minus one.
  *
  **************************************************************************************************/
-class Game : IEnforceContract
+class Game : public IEnforceContract
 {
 
 public:
