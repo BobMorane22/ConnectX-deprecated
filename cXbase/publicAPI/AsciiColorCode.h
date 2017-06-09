@@ -152,10 +152,10 @@ protected:
      * @param[in] p_stream The stream in which to insert the text representation.
      *
      **********************************************************************************************/
-    virtual void print(std::ostream& p_stream) const;
+    virtual void print(std::ostream& p_stream) const override;
 
 
-    virtual void checkInvariant() const;
+    virtual void checkInvariant() const override;
 
 
 private:

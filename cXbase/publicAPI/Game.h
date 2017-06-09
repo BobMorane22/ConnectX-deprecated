@@ -214,7 +214,7 @@ public:
 
 protected:
 
-    virtual void checkInvariant() const;
+    virtual void checkInvariant() const override;
 
     PlayerList      m_players;                                    ///< List of Players for the Game.
     GameBoardSPtr   m_gameboard;                                  ///< The GameGoard used.

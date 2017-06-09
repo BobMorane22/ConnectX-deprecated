@@ -129,7 +129,7 @@ public:
 
 private:
 
-    void checkInvariant() const;
+    void checkInvariant() const override;
 
     /*******************************************************************************************//**
      * Insert text into stream.
@@ -139,7 +139,7 @@ private:
      * @param[in] p_stream    The stream in which to insert.
      *
      **********************************************************************************************/
-    virtual void print(std::ostream& p_stream) const;
+    virtual void print(std::ostream& p_stream) const override;
 
 
     const Disc NO_DISC{Color::TRANSPARENT};

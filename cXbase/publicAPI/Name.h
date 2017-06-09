@@ -106,7 +106,7 @@ public:
 
 protected:
 
-    virtual void checkInvariant() const;
+    virtual void checkInvariant() const override;
 
 
 private:

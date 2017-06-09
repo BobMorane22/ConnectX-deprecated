@@ -173,7 +173,7 @@ protected:
      * @param[in] p_stream  The stream in which to insert.
      *
      **********************************************************************************************/
-    virtual void print(std::ostream& p_stream) const;
+    virtual void print(std::ostream& p_stream) const override;
 
 
 private:
