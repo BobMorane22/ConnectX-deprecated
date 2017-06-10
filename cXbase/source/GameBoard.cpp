@@ -129,6 +129,7 @@ Disc GameBoard::discAtPosition(const Position& p_case) const
 
 Position GameBoard::placeDisc(const Column& p_column, const Disc& p_disc)
 {
+    PRECONDITION(p_disc != Disc::NO_DISC);
     PRECONDITION(p_column >= Column{0});
     PRECONDITION(p_column < Column{m_nbColumns});
 

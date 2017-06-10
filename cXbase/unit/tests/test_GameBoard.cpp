@@ -188,6 +188,11 @@ TEST_F(GameBoardTests, PlaceDisc_ValidDiscAsParameter_DiscInsertedInGameboardOve
     ASSERT_EQ(t_gameBoard.discAtPosition(Position{Row{2}, Column{0}}), Disc::NO_DISC);
 }
 
+TEST_F(GameBoardTests, PlaceDisc_InvalidDiscAsParameter_ExceptionThrown)
+{   
+    ASSERT_THROW(t_gameBoard.placeDisc(Column{0}, Disc::NO_DISC), PreconditionException);
+}
+
 TEST_F(GameBoardTests, PlaceDisc_ValidDiscAsParameter_DiscInsertedInGameboardOverPrevious2)
 {
     t_gameBoard.placeDisc(Column{0}, Disc::RED_DISC);
