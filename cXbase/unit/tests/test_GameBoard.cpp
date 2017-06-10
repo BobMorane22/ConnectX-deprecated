@@ -470,6 +470,34 @@ TEST(GameBoard, StreamInsertionOperator_12x14GameBoardAsParameter_PrintsCorrectF
     ASSERT_EQ(t_gameBoard1.str(), t_gameBoard2.str());
 }
 
+TEST_F(GameBoardTests, IsWinner_RowUnderLimit_ExceptionThrown)
+{
+    Position rowUnderLimitRow{{-1}, Column{0}};
+
+    ASSERT_THROW(t_gameBoard.isWinner(rowUnderLimitRow, GameBoard::CONNECT_FOUR), PreconditionException);
+}
+
+TEST_F(GameBoardTests, IsWinner_RowOverLimit_ExceptionThrown)
+{
+    Position rowOverLimit{Row{t_gameBoard.nbRows() + 1}, Column{0}};
+
+    ASSERT_THROW(t_gameBoard.isWinner(rowOverLimit, GameBoard::CONNECT_FOUR), PreconditionException);
+}
+
+TEST_F(GameBoardTests, IsWinner_ColumnUnderLimit_ExceptionThrown)
+{
+    Position columnUnderLimit{Row{0}, Column{-1}};
+
+    ASSERT_THROW(t_gameBoard.isWinner(columnUnderLimit, GameBoard::CONNECT_FOUR), PreconditionException);
+}
+
+TEST_F(GameBoardTests, IsWinner_ColumnOverLimit_ExceptionThrown)
+{
+    Position columnOverLimit{Row{0}, Column{t_gameBoard.nbColumns() + 1}};
+
+    ASSERT_THROW(t_gameBoard.isWinner(columnOverLimit, GameBoard::CONNECT_FOUR), PreconditionException);
+}
+
 class ValidHorizontalGameBoardTests : public GameBoardTests
 {
 public:
