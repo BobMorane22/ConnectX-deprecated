@@ -1,0 +1,43 @@
+Testing the code is one of the most important part of software 
+developpement. As the codebase grows, tests are added. At some 
+point, the tests collection becomes huge and navigating through 
+it a real pain, endangering its further use and maintenance. If 
+it starts adding too musch overhead to the developper's work, 
+there is always the rish that he (the developper) starts neglecting 
+it.
+
+\section{Unit testing}
+
+Unit testing aims to test one indivisible entity (a unit). By definition, 
+it is easy to know exactly what they do and this knowledge needs 
+to be reflected in the name. The rule is that unit test names need to 
+always have three parts:
+
+\begin{description}
+ \item[Method name]        The name of the method (or function) that is tested.
+ 
+ \item[State under test]   The state of the testes unit, at the moment 
+                           it is tested.
+
+ \item[Expected behaviour] The way the unit is expected to react, or behave 
+                           when tested in these conditions.
+\end{description}
+
+These Three fields should be concatenated using underscores, like so: 
+
+\begin{center}
+ \ttt{MethodName\_StateUnderTest\_ExpectedBehaviour}
+\end{center}
+
+For examples, test names could look like:
+
+\begin{enumerate}
+ \item \ttt{IsAdult\_AgeLessThan18\_ReturnFalse}
+ \item \ttt{WithdrawMoney\_InvalidAccount\_ExceptionThrown}
+ \item \ttt{AdmitStudent\_MissingMandatoryFields\_ReturnFailToAdmit}
+\end{enumerate}
+
+Regarding methods \ttt{isAdult()}, \ttt{withdrawMoney()} and 
+\ttt{admitStudent()}. With such a naming convention and a clear 
+test body, unit test should not need a lot of documentation. Try to 
+keep it minimal for there might be thousands of tests.

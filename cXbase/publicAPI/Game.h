@@ -184,7 +184,7 @@ public:
     bool isWon() const {return m_gameboard->isWinner(m_currentPosition, m_inARow);}
 
 
-    /*******************************************************************************************//**
+    /*****************************************************************************************//**
      * Plays a turn.
      *
      * If possible, places a Disc at the specified Column, otherwise, does nothing.
@@ -224,7 +224,7 @@ protected:
     Position        m_currentPosition     {Row{0}, Column{0}};    ///< The Position where the active player places a Disc.
 
 };
-
+ 
 END_CXBASE_NAMESPACE
 
 #endif /* GAME_H_ */

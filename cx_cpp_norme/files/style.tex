@@ -148,13 +148,32 @@ name begins with \texttt{test\_} and ends with the class name. In other words:
 \clearpage
 
   \includecode{\styleSnippets files.cpp}
-  
+
 The only file extensions accepted are \texttt{.h} and \texttt{.cpp} for 
 uniformity. Furthermore, these extensions are supported by nearly all (if not 
 all!) compilers.
-  
+
 \clearpage
+
+\subsection{Namespaces}
+
+Namespace names should always be short. They are candidate to be typed often by 
+the programmer and should not be a burden. For example, the Standard Template 
+Library uses the namespace \ttt{std} for its members. Furthermore, it is good 
+practice to use a \ttt{\#define} to hide the namespace name. This way, if the 
+namespace name changes (idealy, it should not), the program can sucessfully 
+recompile with almost no work. For example, this is a set of \ttt{\#define}s 
+used for the Standard Template Library:
+
+  \includecode{\styleSnippets namespaceMacro.cpp}
   
+You can then use namespaces in the following manner in your code:
+
+  \includecode{\styleSnippets namespaceUse.cpp}
+
+The idea is to be consistent at least within a same module, and ideally within 
+the whole code base.
+
 \subsection{Summary}
 
 The \cref{tblNamingConventions} summarizes all naming conventions introduced in 
