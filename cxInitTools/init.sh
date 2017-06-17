@@ -14,8 +14,8 @@
 
 #!/bin/bash
 
-export OS            = linux
-export DEBUG         = 1
+export OS= linux
+export DEBUG=1
 
-export CX_SRC_ROOT   = # full path to the main Connect X source directory.
-export CX_BUILD_ROOT = # full path to the main directory into which you want to build Connect X.
+export CX_SRC_ROOT= # full path to the main Connect X source directory.
+export CX_BUILD_ROOT= # full path to the main directory into which you want to build Connect X.
