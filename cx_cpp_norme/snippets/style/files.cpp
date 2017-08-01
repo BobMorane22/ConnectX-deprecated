@@ -4,13 +4,11 @@
 class Foo
 {
 public:
-
-	Foo();
-	void aMethod();
+    Foo();
+    void aMethod();
 
 private:
-
-	int m_attribute;
+    int m_attribute;
 };
 
 
@@ -19,12 +17,12 @@ private:
 // ---------------------------------------------
 Foo::Foo() : m_attribute{0}
 {
-	// Other potential work here...
+    // Other potential work here...
 }
 
 void Foo::aMethod()
 {
-	// Some stuff...
+    // Some stuff...
 }
 
 
@@ -33,5 +31,5 @@ void Foo::aMethod()
 // ---------------------------------------------
 TEST(Foo, SomeTest)
 {
-	// Test here...
+    // Test here...
 }

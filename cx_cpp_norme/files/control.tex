@@ -1,3 +1,34 @@
+% ------------------------------------------------------------------------------
+% Connect X project's programming standard section on control structure.
+%
+% Explains the basic guidelines on how to use control structures when 
+% needed.
+%
+% @file     control.tex
+% @author   Éric Poirier
+% @date     March, 2017
+% @version  1.0
+% ------------------------------------------------------------------------------
+
+% ------------------------------------------------------------------------------
+% Copyright (C) 2017 Connect X team.
+%
+% This file is part of Connect X.
+%
+% Connect X is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or
+% (at your option) any later version.
+%
+% Connect X is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+%
+% You should have received a copy of the GNU General Public License
+% along with Connect X.  If not, see <http://www.gnu.org/licenses/>.
+% ------------------------------------------------------------------------------
+
 \section{Prefer iterators}
 Iterators in C++ provide a way to generalize a looping process to all 
 \ttt{std}-like data containers. No random access operator is needed to perform 
@@ -24,8 +55,8 @@ applied to the copy!
 
 \section{Nesting is evil}
 Whenever you can, try to avoid loop nesting and even logic nesting. Instead, 
-use more functions or \ttt{std::algorithms}. Nested structures are often hard 
-to follow, allow more maistakes to be made and are poorly self documented.
+use more functions or \ttt{std::algorithm}. Nested structures are often hard 
+to follow, allow more mistakes to be made and are poorly self documented.
 
 \section{Try to avoid loops}
 If you can, use an \ttt{std::algorithm} instead, especially if it makes reading 

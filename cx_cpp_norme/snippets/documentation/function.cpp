@@ -11,5 +11,4 @@
  * @return	What the function returns.
  *
  * @todo	Task description.
- *
  ******************************************************************************/

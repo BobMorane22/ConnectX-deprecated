@@ -6,5 +6,4 @@
  * Detailed class description, if necessary.
  *
  * @invariant Class invariant description.
- *
  *******************************************************************************/

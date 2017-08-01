@@ -1,0 +1,67 @@
+/***********************************************************************************************//**
+ * @mainpage cxbase
+ *
+ * @section intro Introduction
+ *
+ * <b> cxbase </b> is a library written in C++ that is intended to facilitate 
+ * the creation of <a href="https://en.wikipedia.org/wiki/Connect_Four"> 
+ * Connect 4 applications and variations </a>. The library renders available 
+ * classes and tools to create games with various grid dimensions, player 
+ * count, etc.
+ *
+ * @section parametrizations Possible parametrizations
+ *
+ * The following items of a classic Connect 4 game are customizable:
+ *
+ *  @li Grid dimensions:
+ *      A classic Connect 4 game is limited to a six (6) by seven (7) grid. 
+ *      Some classic variations include other grid dimensions. With the cxbase 
+ *      library, you can make grids from the classic 6 by 7 grid all the way to 
+ *      an outrageous sixty-four (64) by 64 grid.
+ *
+ *  @li Number of players:
+ *      Why limit yourself to playing with only one opponent when you can play 
+ *      with 8?
+ *
+ *  @li Disc color:
+ *      Colors are only limited to your imagination! They can also easily be 
+ *      printed to text mode for rapid console based game creation.
+ *
+ *  @li "In a row" value:
+ *      With cXbase, the classic <em> four in a row </em> can now be rebaptized 
+ *      the <em> X in a row </em>. You can play from two (2) to sixty-four (64) 
+ *      in a row.
+ *
+ * If you need even larger sizes, all hope is not lost! the cXbase library 
+ * is made available as free software. You can easily recompile it 
+ * to fit your needs, however tests are not always designed to check these 
+ * dimensions.
+ *
+ *
+ * @section licence Licence
+ *
+ * The cxbase library is licenced under the GPL v.3 licence. You can get a copy of the licence 
+ * here: https://www.gnu.org/licenses/gpl.txt.
+ *
+ *
+ *
+ *
+ * @example "Classic Connect 4 minimal implementation" Example of an implementation to build a 
+ * classic 2 players Connect 4 game. First, a custom Game class:
+ *
+ *  @include Connect4Game.h
+ *
+ * Then the game loop:
+ *
+ *  @include main.cpp
+ *
+ * This will give the following console outputs. First, when there is a winner:
+ *
+ *  @include output_win
+ *
+ * Then when it's a tie:
+ *
+ *  @include output_tie
+ *
+ ************************************************************************************************//*
+

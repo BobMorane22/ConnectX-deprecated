@@ -1,12 +1,43 @@
+% ------------------------------------------------------------------------------
+% Connect X project's programming standard general section. 
+%
+% All general items which do not fit in any other section and that do not (yet 
+% at least) diserve a new section should be included here.
+%
+% @file     general.tex
+% @author   Éric Poirier
+% @date     March, 2017
+% @version  1.0
+% ------------------------------------------------------------------------------
+
+% ------------------------------------------------------------------------------
+% Copyright (C) 2017 Connect X team.
+%
+% This file is part of Connect X.
+%
+% Connect X is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or
+% (at your option) any later version.
+%
+% Connect X is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+%
+% You should have received a copy of the GNU General Public License
+% along with Connect X.  If not, see <http://www.gnu.org/licenses/>.
+% ------------------------------------------------------------------------------
+
 \section{C++11 is the default}
 Throughout this document, you will notice that C++11 is used whenever possible. 
-This same behaviour is expected from any programmer for the \texttt{cXbase} 
+This same behaviour is expected from any programmer for the \texttt{Connect X} 
 project. C++11 is becoming the new standard in the industry and it is important 
 to create as modern a codebase as possible.
 
 For now, C++14 and C++17 features are not to be used (unless there is no 
 confortable way around it). When C++17 will become the new standard (that is,
-it will ship with most compilers), it will be possible to use its features.
+when it will ship with \ttt{gcc}), it will be possible to use it.
 
 
 \section{Meaningful names}
@@ -17,36 +48,40 @@ Names should be clear and unambiguous. For example:
 
 \includecode{\generalSnippets meaningfulNames.cpp}
 
-Don't fear long names, as long as they are clear!
+Don't fear long names, as long as they are clear.
 
 
 \section{Source code organization}
 
 The source code should always be organized in multiple files.
 
-\subsection{Classes and structs}
-A header file (with the extention \texttt{.h} named after the class it defines. 
-This header file contains the class definition but not its implementation. The 
-implementation should be in a source file named after the class it implements 
-with a \texttt{.cpp} extension.
+\subsection{Classes and structures}
+A header file (with the extention \texttt{.h} named after the class it declares 
+contains the class declaration but not its implementation. The implementation 
+should be in a source file named after the class it implements with a 
+\texttt{.cpp} extension. This is also the case for structures.
 
 \subsection{Templates}
-Template classes need to have the method definitions inside the header file. To 
+Class templates need to have the method declarations inside the header file. To 
 keep declaration and implementation separated, do the following:
 
 \includecode{\generalSnippets fileOrganization.cpp}
 
-Keep \textbf{one and only one} class, struct or template should be defined 
-in a given pair of files. Finally, include header guards for each header file 
-created. For example, for a header file containing the declaration of a class 
-\texttt{Foo}:
+
+\subsection{Classes and files}
+Keep \textbf{one and only one} class, structure or class template in a given pair of
+\ttt{.h/.cpp} files unless they are strongly coupled by concept and their aggregation 
+in a unique pair of files simplifies the reader's understanding. Finally, include 
+header guards for each header file created. For example, for a header file containing 
+the declaration of a class \texttt{Foo}:
 
 \includecode{\generalSnippets headerGuards.cpp}
 
 \section{Language and characters}
-To avoid encoding issues, always use English ans ASCII characters either in 
+To avoid encoding issues, always use English and ASCII characters either in 
 your programming or your commenting.
 
-\textbf{IMPORTANT:} tab characters should be replaced by four (4) space 
-characters. Tab characters may be interpreted differently by different 
-applications and therefore are a source of ambiguity which should be eleminated.
+\textbf{IMPORTANT:} tab (\ttt{'\textbackslash t'}) characters should be replaced by 
+four (4) space characters. Tab characters may be interpreted differently by other 
+applications (such as text editors and IDE) and therefore are a source of ambiguity 
+which should be eliminated.

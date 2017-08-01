@@ -1,28 +1,49 @@
-% =================================================================================
-% PROGRAMMING NORM
-% Winter 2016
+% ------------------------------------------------------------------------------
+% Connect X project's programming standard LaTeX document preambule.
 %
-% This preambule aims to facilitate the redaction of a programming norm.
-% =================================================================================
+% @file     preambule.tex
+% @author   Éric Poirier
+% @date     March, 2017
+% @version  1.0
+% ------------------------------------------------------------------------------
 
-% PAQUETS:
+% ------------------------------------------------------------------------------
+% Copyright (C) 2017 Connect X team.
+%
+% This file is part of Connect X.
+%
+% Connect X is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or
+% (at your option) any later version.
+%
+% Connect X is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+%
+% You should have received a copy of the GNU General Public License
+% along with Connect X.  If not, see <http://www.gnu.org/licenses/>.
+% ------------------------------------------------------------------------------
 
-% General document properties:
+% PACKAGES:
+
+  % General document properties:
   \usepackage[titletoc, title]{appendix}
   \usepackage[colorlinks=true, allcolors=black, plainpages=false,pdfpagelabels]{hyperref}
   \usepackage[nottoc]{tocbibind}
   \usepackage[margin = 1.25in]{geometry}
   \usepackage{setspace} \onehalfspacing
   \usepackage{multicol}
-    
-  
-% Language options:
+
+
+  % Language options:
   \usepackage{lmodern}
   \usepackage[utf8]{inputenc}
   \usepackage[T1]{fontenc}
   \usepackage[main = english, french]{babel}
- 
-% Figures options:
+
+  % Figures options:
   \usepackage{graphicx}
   \usepackage{wrapfig}
   \usepackage[font = small]{caption}
@@ -31,8 +52,8 @@
   \usepackage{floatrow}
   \usepackage{pdfpages}
   \usepackage{cleveref}
-  
-  
+
+
   % Math options:
   \usepackage{amsmath}
     \numberwithin{equation}{section}
@@ -45,7 +66,7 @@
 
     % Source code formatting:
     \definecolor{forestgreen}{rgb}{0.15,0.42,0.16}
-    
+
     \lstset{
            backgroundcolor = \color{lightgray},
            basicstyle = \footnotesize\ttfamily\color{black}\bfseries,

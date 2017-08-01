@@ -1,17 +1,54 @@
-The following sections apply both to methods and functions.
+% ------------------------------------------------------------------------------
+% Connect X project's programming standard section on methods and functions.
+%
+% This sections explains how to use functions and methods.
+%
+% @file     functions.tex
+% @author   Éric Poirier
+% @date     March, 2017
+% @version  1.1
+% ------------------------------------------------------------------------------
+
+% ------------------------------------------------------------------------------
+% Copyright (C) 2017 Connect X team.
+%
+% This file is part of Connect X.
+%
+% Connect X is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or
+% (at your option) any later version.
+%
+% Connect X is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+%
+% You should have received a copy of the GNU General Public License
+% along with Connect X.  If not, see <http://www.gnu.org/licenses/>.
+% ------------------------------------------------------------------------------
+
+The following sections apply both to methods and (free) functions.
 
 \section{Parameter passing}
 Parameters, when they represent objects (custom or not) should always be passed 
-as constant references to avoid uneccessary copying. In other words, a 
-parameter named \ttt{p\_aParameter} of type \ttt{Object} should be passed as:
+as references to avoid uneccessary copying. In other words, a parameter named 
+\ttt{p\_aParameter} of type \ttt{Object} should be passed as:
+
+\begin{center}
+\ttt{Object\& p\_aParameter}.
+\end{center}
+
+if the object referred to by \ttt{p\_aParameter} is assumed to see it's value 
+modified (usually an out parameter) or
 
 \begin{center}
 \ttt{const Object\& p\_aParameter}.
 \end{center}
 
-If the parameter is of a fundamental data type and is not an object (\ttt{int}, 
-\ttt{bool}, \ttt{double}, etc), this rule does not apply since copy is cheap. 
-For example:
+if the object is assumed not to change. If the parameter is of a fundamental 
+data type and is not an object (\ttt{int}, \ttt{bool}, \ttt{double}, etc), 
+this rule does not apply since copy is cheap. For example:
 
 \includecode{\functionsSnippets parameters.cpp}
 
@@ -56,8 +93,8 @@ mandatory.
 
 \section{Virtual destructors}
 Destructor should always be made \ttt{virtual} to ensure correct behaviour if 
-the class is eventually derived. This rule does not apply if a class is made 
-\ttt{final}, of course.
+the class is eventually derived from. This rule does not apply if a class 
+is made \ttt{final}, of course.
 
 \section{Inlining}
 One line methods should be inlined to ensure correct optimization at compile 

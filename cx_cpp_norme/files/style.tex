@@ -1,3 +1,34 @@
+% ------------------------------------------------------------------------------
+% Connect X project's programming standard style section.
+%
+% This document discusses style issues, that is, how to format names and 
+% such.
+%
+% @file     style.tex
+% @author   Éric Poirier
+% @date     March, 2017
+% @version  1.1
+% ------------------------------------------------------------------------------
+
+% ------------------------------------------------------------------------------
+% Copyright (C) 2017 Connect X team.
+%
+% This file is part of Connect X.
+%
+% Connect X is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or
+% (at your option) any later version.
+%
+% Connect X is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+%
+% You should have received a copy of the GNU General Public License
+% along with Connect X.  If not, see <http://www.gnu.org/licenses/>.
+% ------------------------------------------------------------------------------
+
 \section{Identation}
   Allman's ident style was chosen for this project because of its clarity. 
   This style puts the brace associated with a control statement on the next 
@@ -20,7 +51,7 @@
   statement entirely, refactoring, or removing of the block of code is less 
   likely to introduce syntax errors because of dangling or missing braces. 
   Furthermore, it's consistent with brace placement for the outer/function 
-  block.
+  block.\cite{noauthor_indent_2017}
   \end{quote}
 
 \section{Naming format conventions}
@@ -37,38 +68,42 @@ Variables need to follow a \texttt{camelCase} format:
 \includecode{\styleSnippets variables.cpp}
 
 % Constants:
-Constant need to be in \texttt{UPPERCASE} format. If you want to separate words 
-for a constant, only the underscore (\_) character is allowed, as in 
+Constant need to be in \texttt{UPPERCASE} format. If you want separate words 
+in a constant name, only the underscore (\_) character is allowed, as in 
 \texttt{UPPERCASE\_CONSTANT}:
+
+\newpage
 
 \includecode{\styleSnippets constants.cpp}
 
 % Parameters:
 To differentiate parameters from regular variables or member variables, the 
 prefix \texttt(p\_) has to be added before the parameter variable name (which 
-shoul be in \texttt{camelCase}. In other words, the format is 
+should be in \texttt{camelCase}. In other words, the format is 
 \texttt{p\_myParameter}:
 
 \includecode{\styleSnippets parameters.cpp}
 
 % Attributes:
 Like parameters, member variables often need to be distinguished from other 
-variables, including parameters. The prefix \texttt{p\_} needs to be added 
+variables, including parameters. The prefix \texttt{m\_} needs to be added 
 befor the variable name (in \texttt{camelCase}). The format is: 
 \texttt{m\_memberVariable}:
 
 \includecode{\styleSnippets attributes.cpp}
 
-Notice in the last code snippet --in the constructor's initialization list-- 
+Notice in the last code snippet ---in the constructor's initialization list--- 
 how the parameter/member variable distinction is clear.
-  
+
 \subsection{Functions and methods}
 Function and method names follow the same rules as variables, that is they are 
 written in \texttt{camelCase}. Of course, constructors and destructors are 
 exceptions of this.
 
+  \newpage
+
   \includecode{\styleSnippets functionsAndMethods.cpp}
-  
+
 \subsection{MACROs}
 MACRO names follow the same rules as constants, that is they are written in 
 \texttt{UPPERCASE}, possibly with underscores between seperated words. MACRO 
@@ -97,10 +132,8 @@ declaring an class interface:
  \item \texttt{protected};
  \item \texttt{private}.
 \end{enumerate}
-Sometimes, this rule is hard to follow (for example with private 
-\texttt{typedefs} that need to be know from the beginning by the interface). 
-When it is not possible to follow this rule, duplicate as few access keyword as 
-possible troughout the class interface.
+Sometimes, this rule is hard to follow. When not possible, duplicate as 
+few access keyword as possible throughout the class interface.
 
   \includecode{\styleSnippets classAccess.cpp}
   
@@ -150,28 +183,30 @@ name begins with \texttt{test\_} and ends with the class name. In other words:
   \includecode{\styleSnippets files.cpp}
 
 The only file extensions accepted are \texttt{.h} and \texttt{.cpp} for 
-uniformity. Furthermore, these extensions are supported by nearly all (if not 
-all!) compilers.
+uniformity. These extensions are supported by nearly all compilers.
 
 \clearpage
 
 \subsection{Namespaces}
 
-Namespace names should always be short. They are candidate to be typed often by 
-the programmer and should not be a burden. For example, the Standard Template 
-Library uses the namespace \ttt{std} for its members. Furthermore, it is good 
-practice to use a \ttt{\#define} to hide the namespace name. This way, if the 
-namespace name changes (idealy, it should not), the program can sucessfully 
-recompile with almost no work. For example, this is a set of \ttt{\#define}s 
-used for the Standard Template Library:
+Namespace names should always be composed of a couple lowercase letters and 
+possibly numbers. They are candidates to be typed often by the programmer 
+and hence should not exceed six (6) characters in order not to become a burden. 
+For example, the Standard Template Library uses the namespace \ttt{std} for 
+its members.
+
+Furthermore, it is good practice to use a \ttt{\#define} to hide the namespace 
+name. This way, if the namespace name changes (idealy, it should not), the 
+program can sucessfully recompile with almost no work. For example, this is 
+a set of \ttt{\#define}s used for the Standard Template Library:
 
   \includecode{\styleSnippets namespaceMacro.cpp}
-  
+
 You can then use namespaces in the following manner in your code:
 
   \includecode{\styleSnippets namespaceUse.cpp}
 
-The idea is to be consistent at least within a same module, and ideally within 
+The idea is to be consistent at least within a same module, and ideally across 
 the whole code base.
 
 \subsection{Summary}
@@ -182,20 +217,21 @@ this section.
 \begin{table}[H]
   \begin{tabular}{|l|l|l|}
     \hline
-    \textbf{Item}              & \textbf{Format}                              \\
+    \textbf{Item}              & \textbf{Format}                            \\
     \hline\hline
-    variable                   & \texttt{camelCase}                           \\
-    constant                   & \texttt{UPPERCASE\_CONSTANT}                 \\
-    parameter                  & \texttt{p\_camelCase}                        \\
-    member variable            & \texttt{m\_camelCase}                        \\
-    function \& method         & \texttt{camelCase()}                         \\
-    MACRO (w/o param)          & \texttt{UPPERCASE\_MACRO()}                  \\
-    MACRO (param)              & \texttt{UPPERCASE\_MACRO(\_\_aParameter\_\_)}\\
-    class                      & \texttt{CamelCase}                           \\
-    structure                  & \texttt{CamelCase}                           \\
-    enumeration                & \texttt{CamelCase}                           \\
-    interface                  & \texttt{ICamelCase}                          \\
-    files                      & \texttt{[test\_]CamelCase[.h/.cpp]}          \\
+    variable                   & \ttt{camelCase}                            \\
+    constant                   & \ttt{UPPERCASE\_CONSTANT}                  \\
+    parameter                  & \ttt{p\_camelCase}                         \\
+    member variable            & \ttt{m\_camelCase}                         \\
+    function \& method         & \ttt{camelCase()}                          \\
+    MACRO (w/o param)          & \ttt{UPPERCASE\_MACRO()}                   \\
+    MACRO (param)              & \ttt{UPPERCASE\_MACRO(\_\_aParameter\_\_)} \\
+    class                      & \ttt{CamelCase}                            \\
+    structure                  & \ttt{CamelCase}                            \\
+    enumeration                & \ttt{CamelCase}                            \\
+    interface                  & \ttt{ICamelCase}                           \\
+    files                      & \ttt{[test\_]CamelCase[.h/.cpp]}           \\
+    namespace                  & \ttt{namesp} (6 chars max.)                \\
     \hline
   \end{tabular} 
   \caption{Summary of the naming conventions}

@@ -442,4 +442,23 @@ flycheck_*.el
 # directory configuration
 .dir-locals.el
 
+####################################################################################################
+#                            CONNECT X SPECIFIC FILES AND DIRECTORIES                              #
+####################################################################################################
+
+### global ###
+init.sh
+
+### cxutil ###
+cxutil/doc/doxygen/html/
+cxutil/doc/doxygen/latex/
+
+### cxbase ###
+cxbase/doc/doxygen/html/
+cxbase/doc/doxygen/latex/
+
+### cx_cpp_norm ###
+cx_cpp_norme/versions/
+cx_cpp_norme/cx_cpp_norme.pdf
+
 # End of https://www.gitignore.io/api/c++,python,eclipse,latex, emacs

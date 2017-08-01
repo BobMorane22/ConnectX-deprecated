@@ -1,0 +1,20 @@
+/***********************************************************************************************//**
+ * @mainpage cxutil
+ *
+ * @section intro Introduction
+ *
+ *   The cxutil library offers utility services which aim at being widely used accross the 
+ *   Connect X project. As of now, these services include:
+ *
+ *      - Various mechanisms to enforce common practices (e.g. Design by Contract (DbC), 
+ *        CLI interfacing, etc.)
+ *      - Easily reusable classes and class templates (e.g. Color, Name, Coordinates, etc.)
+ *
+ *
+ * @section licence Licence
+ *
+ *   The cxutil library is licenced under the GPL v.3 licence. You can get a copy of the licence 
+ *   here: https://www.gnu.org/licenses/gpl.txt.
+ *
+ **************************************************************************************************/
+

@@ -1,11 +1,11 @@
 // Function:
 void myFunction()
 {
-	// Some work...
+    // Some work...
 }
 
 // Method for class Foo:
 void Foo::myMethod()
 {
-	// Some work...
+    // Some work...
 }

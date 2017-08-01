@@ -2,16 +2,14 @@ class Person
 {
 
 public:
+    Person() = delete;
 
-	Person() = delete;
-
-	Person(const std::string& p_name) : m_name{p_name}
-	{
-		//...
-	}
+    Person(const std::string& p_name) : m_name{p_name}
+    {
+        //...
+    }
 
 private:
-
-	std::string m_name;
+    std::string m_name;
 
 };

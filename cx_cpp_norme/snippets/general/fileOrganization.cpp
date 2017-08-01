@@ -2,7 +2,7 @@
 template<typename T>
 T Foo<T>::doSomething()
 {
-	// code...
+    // code...
 }
 
 // Foo.h
@@ -11,11 +11,11 @@ class Foo
 {
 public:
 
-	T doSomething();
+    T doSomething();
 
 private:
 
-	T anAttribute;
-}
+    T m_anAttribute;
+};
 
 #include "Foo.cpp" // Important!

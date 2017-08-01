@@ -2,15 +2,14 @@
 class Foo
 {
 public:
-
-	Foo();
-	Foo(int p_value);
+    Foo();
+    Foo(int p_value);
 
 protected:
-	void writeOverData(p_newValue);
+    void writeOverData(p_newValue);
 
 private:
-	int m_value;
+    int m_value;
 };
 
 
@@ -18,12 +17,10 @@ private:
 class Foo
 {
 private:
-
-	int m_value;
+    int m_value;
 
 public:
-
-	Foo(int p_value);
+    Foo(int p_value);
 };
 
 
@@ -31,15 +28,14 @@ public:
 class Foo
 {
 public:
-
-	Foo(int p_value);
+    Foo(int p_value);
 
 protected:
-	void writeOverData(p_newValue);
+    void writeOverData(p_newValue);
 
 private:
-	int m_value;
+    int m_value;
 
 public:
-	Foo();
+    Foo();
 };

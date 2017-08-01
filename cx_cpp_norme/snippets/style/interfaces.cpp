@@ -1,5 +1,5 @@
 class IEnforceSuchAThing
 {
-	void such() = 0;
-	int thing(char p_aChar) = 0;
+    virtual void such()              = 0;
+    virtual int thing(char p_aChar)  = 0;
 };

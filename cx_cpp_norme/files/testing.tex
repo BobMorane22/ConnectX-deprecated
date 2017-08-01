@@ -1,9 +1,39 @@
+% ------------------------------------------------------------------------------
+% Connect X project's programming standard section on testing.
+%
+% This sections explains how to use unit testing in Connect X.
+%
+% @file     testing.tex
+% @author   Éric Poirier
+% @date     March, 2017
+% @version  1.0
+% ------------------------------------------------------------------------------
+
+% ------------------------------------------------------------------------------
+% Copyright (C) 2017 Connect X team.
+%
+% This file is part of Connect X.
+%
+% Connect X is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or
+% (at your option) any later version.
+%
+% Connect X is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+%
+% You should have received a copy of the GNU General Public License
+% along with Connect X.  If not, see <http://www.gnu.org/licenses/>.
+% ------------------------------------------------------------------------------
+
 Testing the code is one of the most important part of software 
 developpement. As the codebase grows, tests are added. At some 
 point, the tests collection becomes huge and navigating through 
 it a real pain, endangering its further use and maintenance. If 
 it starts adding too musch overhead to the developper's work, 
-there is always the rish that he (the developper) starts neglecting 
+there is always the risk that he (the developper) starts neglecting 
 it.
 
 \section{Unit testing}
@@ -16,14 +46,14 @@ always have three parts:
 \begin{description}
  \item[Method name]        The name of the method (or function) that is tested.
  
- \item[State under test]   The state of the testes unit, at the moment 
+ \item[State under test]   The state of the tested unit, at the moment 
                            it is tested.
 
  \item[Expected behaviour] The way the unit is expected to react, or behave 
                            when tested in these conditions.
 \end{description}
 
-These Three fields should be concatenated using underscores, like so: 
+These three fields should be concatenated using underscores, like so: 
 
 \begin{center}
  \ttt{MethodName\_StateUnderTest\_ExpectedBehaviour}
@@ -39,5 +69,5 @@ For examples, test names could look like:
 
 Regarding methods \ttt{isAdult()}, \ttt{withdrawMoney()} and 
 \ttt{admitStudent()}. With such a naming convention and a clear 
-test body, unit test should not need a lot of documentation. Try to 
+test body, unit tests should not need a lot of documentation. Try to 
 keep it minimal for there might be thousands of tests.

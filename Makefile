@@ -30,50 +30,70 @@
 include init.mk
 
 TESTS_RUNNER            = $(SRC_ROOT)/cxPythonTools/RunUnitTests.py
-CXBASE_UNIT_TESTS_EXEC  = -t $(BIN_ROOT)/tests/unit/cxUnitTests.out
-CXBASE_UNIT_TESTS_LOG   = -l $(BIN_ROOT)/tests/unit/log/unitTests.log
+
+CXUTIL_UNIT_TESTS_EXEC  = -t $(BIN_ROOT)/tests/unit/cxutilTest.out
+CXBASE_UNIT_TESTS_EXEC  = -t $(BIN_ROOT)/tests/unit/cxbaseTest.out
+
+CXUTIL_UNIT_TESTS_LOG   = -l $(BIN_ROOT)/tests/unit/log/cxutilUnitTests.log
+CXBASE_UNIT_TESTS_LOG   = -l $(BIN_ROOT)/tests/unit/log/cxbaseUnitTests.log
+
 
 MAIN     = connectx
-TARGETS  += cxbase \
-            cxbaseunit \
-            cxbasedoc \
-            cxcppnorm \
-            cxintegration
+TARGETS  += cxutil     \
+            cxutiltest \
+            cxbase     \
+            cxbasetest \
+            cxutildoc  \
+            cxbasedoc  \
+            cxcppnorm
+
+.PHONY: cxutil cxbase
 
 all: $(MAIN)
 
 $(MAIN): $(TARGETS)
 
-cxbase:
-	$(MAKE) -C cXbase
+cxutil:
+	$(MAKE) -C cxutil
 
-cxbaseunit:
-	$(MAKE) -C cXbase/unit
+cxutiltest:
+	$(MAKE) -C cxutil/test
+	python $(TESTS_RUNNER) $(CXUTIL_UNIT_TESTS_EXEC) $(CXUTIL_UNIT_TESTS_LOG)
+
+cxbase:
+	$(MAKE) -C cxbase
+
+cxbasetest:
+	$(MAKE) -C cxbase/test
 	python $(TESTS_RUNNER) $(CXBASE_UNIT_TESTS_EXEC) $(CXBASE_UNIT_TESTS_LOG)
 
-cxintegration:
-	$(MAKE) -C cXbase/integration
+cxutildoc:
+	$(MAKE) -C cxutil/doc
 
 cxbasedoc:
-	$(MAKE) -C cXbase/doc
+	$(MAKE) -C cxbase/doc
 
 cxcppnorm:
 	$(MAKE) -C cx_cpp_norme
 
 mrproper:
 	@echo Cleaning ConnectX...
-	cd cXbase && make mrproper
+	cd cxutil && make mrproper
+	cd cxutil/test && mrproper
+	cd cxbase && make mrproper
+	cd cxbase/test && make mrproper
+	cd cxutil/doc && make mrproper
 	cd cXbase/doc && make mrproper
-	cd cXbase/unit && make mrproper
-	cd cXbase/integration && make clean
 	cd cx_cpp_norme && make mrproper
 	@echo ConnectX cleaned!
 
 clean:
 	@echo Removing object files...
-	cd cXbase && make clean
-	cd cXbase/doc && make clean
-	cd cXbase/unit && make clean
-	cd cXbase/integration && make clean
+	cd cxutil && make clean
+	cd cxutil/test && make clean
+	cd cxbase && make clean
+	cd cxbase/test && make clean
+	cd cxutil/doc && make clean
+	cd cxbase/doc && make clean
 	cd cx_cpp_norme && make clean
 	@echo Object files removed!

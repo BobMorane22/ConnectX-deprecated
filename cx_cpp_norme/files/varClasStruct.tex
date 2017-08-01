@@ -1,3 +1,34 @@
+% ------------------------------------------------------------------------------
+% Connect X project's programming standard section on class-like elements.
+%
+% This section describes some limitations on how classes (and other class-like 
+% elements can be used.
+%
+% @file     varClassStruct.tex
+% @author   Éric Poirier
+% @date     March, 2017
+% @version  1.1
+% ------------------------------------------------------------------------------
+
+% ------------------------------------------------------------------------------
+% Copyright (C) 2017 Connect X team.
+%
+% This file is part of Connect X.
+%
+% Connect X is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or
+% (at your option) any later version.
+%
+% Connect X is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+%
+% You should have received a copy of the GNU General Public License
+% along with Connect X.  If not, see <http://www.gnu.org/licenses/>.
+% ------------------------------------------------------------------------------
+
 \section{\texttt{class} vs \texttt{struct}}
 A \texttt{struct} should be defined only when the data members that are 
 considered form a data aglomeration without specific behaviour. For example, 
@@ -13,12 +44,18 @@ In the other hand, the following data agglomeration holds a specific behaviour
 
 and therefore should be defined inside a \texttt{class}. Note that 
 \texttt{struct}s can sometimes hold constructors and methods. Usually, the 
-content of a \texttt{struct} should be completely public.
+content of a \texttt{struct} should be completely public and focus should 
+be put on the data, not the behaviour.
 
 \section{Access qualifiers}
 When thinking about access qualifiers, the principle of least privilege should 
-be applied. Also, make sure the public part of your class is as stable as 
-possible, especially if it is to be included in a public API!
+be applied. This principle states that (from Wikipedia):
+
+\begin{quote}
+  Every module must be able to access only the information and 
+  resources that are necessary for its legitimate purpose.
+  \cite{noauthor_principle_2016}
+\end{quote}
 
 
 \section{Inheritance}
@@ -36,4 +73,5 @@ simultaneously. For example:
 
 \includecode{\varClassStructSnippets inheritance.cpp}
 
-Unless you really know what you are doing, all inheritance should be public.
+Unless you really know what you are doing, all inheritance should be 
+\ttt{public}.

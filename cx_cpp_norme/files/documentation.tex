@@ -1,7 +1,39 @@
+% ------------------------------------------------------------------------------
+% Connect X project's programming standard section on code documentation.
+%
+% This sections explains how to use the Doxygen framework to document the 
+% code and argue that inline documentation should be reduced to a minimum.
+% Code self documentation should be the real goal.
+%
+% @file     documentation.tex
+% @author   Éric Poirier
+% @date     March, 2017
+% @version  1.0
+% ------------------------------------------------------------------------------
+
+% ------------------------------------------------------------------------------
+% Copyright (C) 2017 Connect X team.
+%
+% This file is part of Connect X.
+%
+% Connect X is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or
+% (at your option) any later version.
+%
+% Connect X is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+%
+% You should have received a copy of the GNU General Public License
+% along with Connect X.  If not, see <http://www.gnu.org/licenses/>.
+% ------------------------------------------------------------------------------
+
 \section{Documentation tools}
 Connect X uses Doxygen to document APIs. Some madatory pieces of 
-documentation have been designed to ensure complete documentation for the users 
-(and the developpers!).
+documentation have been designed to ensure complete documentation 
+for the developpers.
 
 \section{Public API mandatory documentation}
 All files should start with:
@@ -16,12 +48,12 @@ developpers in the future.
 All classes and structures should start with:
 \includecode{\documentationSnippets class.cpp}
 
-All attricutes should alwo be documented as follow:
+All attributes should also be documented as follow:
 \includecode{\documentationSnippets attribute.cpp}
 
 Other pieces of code (\ttt{namespace}s, \ttt{typedef}s, etc) should also be 
-documented using the docygen tags, but a normalized documentation format has not 
-been designed.
+documented using the Doxygen tags, but a normalized documentation format 
+has not been designed.
 
 \section{Internal documentation}
 One should only add comment to internal code (for example to explain a line 
@@ -45,6 +77,8 @@ comments in internal code:
 
 For example avoid this:
 \includecode{\documentationSnippets useless.cpp}
+
+\newpage
 
 and write this instead:
 \includecode{\documentationSnippets inTheCode.cpp}

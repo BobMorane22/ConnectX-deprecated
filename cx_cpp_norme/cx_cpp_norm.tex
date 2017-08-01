@@ -1,3 +1,31 @@
+% ------------------------------------------------------------------------------
+% Connect X project's programming standard master document.
+%
+% @file     cx_cpp_norm.tex
+% @author   Éric Poirier
+% @date     March, 2017
+% @version  1.1
+% ------------------------------------------------------------------------------
+
+% ------------------------------------------------------------------------------
+% Copyright (C) 2017 Connect X team.
+%
+% This file is part of Connect X.
+%
+% Connect X is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or
+% (at your option) any later version.
+%
+% Connect X is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+%
+% You should have received a copy of the GNU General Public License
+% along with Connect X.  If not, see <http://www.gnu.org/licenses/>.
+% ------------------------------------------------------------------------------
+
 \documentclass{report}
 
 % ------------------------------------------------------------------------------
@@ -15,12 +43,12 @@
 \newcommand{\snippets}{./snippets/}
 
 % Relative code snippet locations:
-\newcommand{\styleSnippets}{\snippets style/}
-\newcommand{\generalSnippets}{\snippets general/}
-\newcommand{\varClassStructSnippets}{\snippets varClassStruct/}
-\newcommand{\controlSnippets}{\snippets control/}
-\newcommand{\functionsSnippets}{\snippets functions/}
-\newcommand{\documentationSnippets}{\snippets documentation/}
+\newcommand{\styleSnippets}           {\snippets style/}
+\newcommand{\generalSnippets}         {\snippets general/}
+\newcommand{\varClassStructSnippets}  {\snippets varClassStruct/}
+\newcommand{\controlSnippets}         {\snippets control/}
+\newcommand{\functionsSnippets}       {\snippets functions/}
+\newcommand{\documentationSnippets}   {\snippets documentation/}
 
 % Document teX files location:
 \newcommand{\files}{./files/}
@@ -33,7 +61,7 @@
 \begin{document}
 
 % Title page
-\title{C++ Programming Style Guide for \texttt{cXbase}}
+\title{C++ Programming Style Guide for \texttt{Connect X}}
 \author{Éric Poirier}
 \maketitle
 
@@ -41,7 +69,7 @@
 % Document body:
 \input{\files info.tex}
 
-
+\chapter{Introduction}                         \input{\files intro.tex}
 \chapter{General}                              \input{\files general.tex}
 \chapter{Style}                                \input{\files style.tex}
 \chapter{Variables, classes and structures}    \input{\files varClasStruct.tex}
@@ -49,5 +77,9 @@
 \chapter{Functions, methods and MACROs}        \input{\files functions.tex}
 \chapter{Documenting the code}                 \input{\files documentation.tex}
 \chapter{Testing}                              \input{\files testing.tex}
+
+% Bibliography:
+\bibliographystyle{plain}
+\bibliography{cx_cpp_norm.bib}
 
 \end{document}

@@ -12,5 +12,3 @@ USING_NAMESPACE_STD
 cout << "Using directive hidden in a MACRO";
 
 // and so on...
-
-

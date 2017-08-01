@@ -1,19 +1,19 @@
 class Foo
 {
-	// Implementation... (abstract)
+    // Implementation... (abstract)
 };
 
 class Waldo
 {
-	// Some implementation... (abstract)
+    // Some implementation... (abstract)
 };
 
 class IBar
 {
-	// Interface... (abstract)
+    // Interface... (abstract)
 };
 
 class IBaz
 {
-	// Interface... (abstract)
+    // Interface... (abstract)
 };

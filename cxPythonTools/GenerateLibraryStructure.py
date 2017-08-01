@@ -200,11 +200,10 @@ def generateLibraryMakefile(p_path, p_libName, p_headerInfo):
     makefile.write("# @date    " + p_headerInfo.date + "\n"                                                                  )
     makefile.write("# @version 1\n"                                                                                          )
     makefile.write("#\n"                                                                                                     )
-    makefile.write("# This makefile defines how " + p_libName + " should be built. Both the following\n"                     )
-    makefile.write("# build steps are done from here:\n"                                                                     )
+    makefile.write("# This makefile defines how " + p_libName + " should be built. The following\n"                          )
+    makefile.write("# build step is done from here:\n"                                                                       )
     makefile.write("#\n"                                                                                                     )
     makefile.write("#    1. Build lib" + p_libName + ".a\n"                                                                  )
-    makefile.write("#    2. Build the " + p_libName + " library Doxygen documentation.\n"                                    )
     makefile.write("#\n"                                                                                                     )
     makefile.write("# To use this makefile, you need at least these tools installed on your\n"                               )
     makefile.write("# machine:\n"                                                                                            )
@@ -223,8 +222,8 @@ def generateLibraryMakefile(p_path, p_libName, p_headerInfo):
     makefile.write("OBJ_DIR      = $(CX_BUILD_ROOT)/connectx\n"                                                              )
     makefile.write("OUT_DIR      = $(CX_BUILD_ROOT)/connectx\n"                                                              )
     makefile.write("LIBS_OUT     = $(CX_BUILD_ROOT)/connectx/libs\n"                                                         )
-    makefile.write("INCLUDES     = -I$(MAKEFILE_LOC)/source -I$(MAKEFILE_LOC)/include\n"                                   )
-    makefile.write("VPATH        = src\n\n"                                                                               )
+    makefile.write("INCLUDES     = -I$(MAKEFILE_LOC)/src -I$(MAKEFILE_LOC)/include\n"                                        )
+    makefile.write("VPATH        = src\n\n"                                                                                  )
 
     makefile.write("SRCS     = \\\n"                                                                                         )
 
@@ -235,7 +234,7 @@ def generateLibraryMakefile(p_path, p_libName, p_headerInfo):
     makefile.write("# Build output:\n\n"                                                                                     )
 
     makefile.write("# Product:\n"                                                                                            )
-    makefile.write("MAIN = lib" + p_libName + ".a # static library\n"                                                        )
+    makefile.write("MAIN = lib" + p_libName + ".a # static library\n\n\n"                                                    )
 
 
     makefile.write("all: make_dir $(MAIN)\n"                                                                                 )
@@ -243,7 +242,7 @@ def generateLibraryMakefile(p_path, p_libName, p_headerInfo):
 
     makefile.write("$(MAIN): $(OBJS)\n"                                                                                      )
     makefile.write("\t@echo Invoquing GCC Archiver...\n"                                                                     )
-    makefile.write("\tar -r $(LIBS_OUT)/$(MAIN) $(OBJS) $(LIBS)\n"                                                           )
+    makefile.write("\tar -r $(LIBS_OUT)/$(MAIN) $(OBJS)\n"                                                                   )
     makefile.write("\t@echo Static library $(MAIN) created!\n\n"                                                             )
 
     makefile.write("$(OBJ_DIR)/%.o: %.cpp\n"                                                                                 )
@@ -317,7 +316,7 @@ def generateTestMakefile(p_path, p_libName, p_headerInfo):
     makefile.write("OUT_DIR      = $(CX_BUILD_ROOT)/tests/unit\n"                                                            )
     makefile.write("INCLUDES     = -I$(CX_SRC_ROOT)/" + p_libName + "\n"                                                     )
     makefile.write("LIBINCLUDES  = -L$(CX_BUILD_ROOT)/connectx/libs\n"                                                       )
-    makefile.write("VPATH        = tests\n\n"                                                                                )
+    makefile.write("VPATH        = unit\n\n"                                                                                )
 
     makefile.write("SRCS      = " + p_libName + "Test.cpp\\\n\n"                                                            )
 
@@ -351,7 +350,7 @@ def generateTestMakefile(p_path, p_libName, p_headerInfo):
 
     makefile.write("make_log:\n"                                                                                             )
     makefile.write("\tmkdir -p $(OUT_DIR)/log\n"                                                                             )
-    makefile.write("\ttouch $(OUT_DIR)/log/unitTests.log\n\n"                                                                )
+    makefile.write("\ttouch $(OUT_DIR)/log/" + libName + "UnitTests.log\n\n"                                                 )
 
     makefile.write("clean:\n"                                                                                                )
     makefile.write("\t@echo Removing object files...\n"                                                                      )
@@ -463,7 +462,7 @@ def generateUnitTestMain(p_path, p_libName):
     testFilePath = p_path + p_libName + "/test/" + p_libName + "Test.cpp"
     
     testFile = open(testFilePath, "w+")
-    
+
     # Populate the file:
     testFile.write("/***************************************************************************************************\n")
     testFile.write("* \n"                                                                                                  )
@@ -1457,7 +1456,7 @@ def generateDoxyfile(p_path, p_libName):
     doxyfile.write("# spaces. See also FILE_PATTERNS and EXTENSION_MAPPING\n"                          )
     doxyfile.write("# Note: If this tag is empty the current directory is searched.\n\n"               )
 
-    doxyfile.write("INPUT = ../include ../src .\n\n"                                                   )
+    doxyfile.write("INPUT = ../include ../src ./doxygen/mainpage.dox\n\n"                                                   )
 
     doxyfile.write("# This tag can be used to specify the character encoding of the source files\n"    )
     doxyfile.write("# that doxygen parses. Internally doxygen uses the UTF-8 encoding. Doxygen uses\n" )
