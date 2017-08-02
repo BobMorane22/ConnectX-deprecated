@@ -40,15 +40,20 @@ import time
 import datetime
 
 
+NB_ARGUMENTS = 2
+
 # Codes d'execution:
 EXEC_OK                              = 0
-ERROR_DIRECTORY_ALREADY_EXISTS       = 1
-ERROR_LIB_MAKEFILE_NOT_CREATED       = 2
-ERROR_UNITTESTS_MAKEFILE_NOT_CREATED = 3
-ERROR_DOXYGEN_MAKEFILE_NOT_CREATED   = 4
-ERROR_TEST_MAIN_FILE_NOT_CREATED     = 5
-ERROR_DOXYFILE_NOT_CREATED           = 6
-ERROR_DOXYINTRO_NOT_CREATED          = 7
+ERROR_NB_ARGUMENTS                   = 1
+ERROR_PATH_DOES_NOT_EXIST            = 2
+ERROR_LIB_NAME_INVALID               = 3
+ERROR_DIRECTORY_ALREADY_EXISTS       = 4
+ERROR_LIB_MAKEFILE_NOT_CREATED       = 5
+ERROR_UNITTESTS_MAKEFILE_NOT_CREATED = 6
+ERROR_DOXYGEN_MAKEFILE_NOT_CREATED   = 7
+ERROR_TEST_MAIN_FILE_NOT_CREATED     = 8
+ERROR_DOXYFILE_NOT_CREATED           = 9
+ERROR_DOXYINTRO_NOT_CREATED          = 10
 
 
 # Classes:
@@ -89,23 +94,24 @@ def printHelp():
     script = os.path.basename(__file__)
     
     print("\nSYNOPSIS:")
-    print("\t" + script + " [-h | --help] LIBNAME DEST\n")
+    print("\t" + script + " [-h | --help] DEST LIBNAME\n")
     
-    print("\tLIBNAME : The library name for which we want to generate the structure.")
     print("\tDEST    : A previously existing directory.\n")
+    print("\tLIBNAME : The library name for which we want to generate the structure.")
     
     print("OPTION:")
     print("\t-h, --help\tPrint usage.\n")
     
     print("EXAMPLES:")
-    print("\t" + script + " cxfoo /home/user/someDirectory/")
-    print("\t" + script + " cXfOo /home/user/someDirectory/")
+    print("\t" + script + "/home/user/someDirectory/ cxfoo")
+    print("\t" + script + "/home/user/someDirectory/ cXfOo")
     print("\t" + script + " -h")
     print("\t" + script + " --help\n")
     print("\tNote that in the two first examples, \"/home/user/someDirectory/\"")
     print("\talready existed before the script was called. The paths can be")
     print("\trelative. Furthermore, the library name\'s case is not important.")
-    print("\tIt will always be brought down to lowercase.")
+    print("\tIt will always be brought down to lowercase. However, characters")
+    print("\tmust be alphanumeric.")
 
 
 
@@ -173,7 +179,7 @@ def generateDirectoryStructure(p_path, p_libName):
     for directory in directories:
         if os.path.exists(directory):
             print ("The directory " + directory + " already exists!\n")
-            exit(ERROR_DIRECTORY_ALREADY_EXISTS)
+            sys.exit(ERROR_DIRECTORY_ALREADY_EXISTS)
 
     # All clear, we can start creating the structure:
     for directory in directories:
@@ -272,7 +278,7 @@ def generateLibraryMakefile(p_path, p_libName, p_headerInfo):
 
     if not os.path.exists(makefilePath):
         print("Error: The library makefile was not created!")
-        exit(ERROR_LIB_MAKEFILE_NOT_CREATED)
+        sys.exit(ERROR_LIB_MAKEFILE_NOT_CREATED)
 
 
 
@@ -350,7 +356,7 @@ def generateTestMakefile(p_path, p_libName, p_headerInfo):
 
     makefile.write("make_log:\n"                                                                                             )
     makefile.write("\tmkdir -p $(OUT_DIR)/log\n"                                                                             )
-    makefile.write("\ttouch $(OUT_DIR)/log/" + libName + "UnitTests.log\n\n"                                                 )
+    makefile.write("\ttouch $(OUT_DIR)/log/" + p_libName + "UnitTests.log\n\n"                                                 )
 
     makefile.write("clean:\n"                                                                                                )
     makefile.write("\t@echo Removing object files...\n"                                                                      )
@@ -371,7 +377,7 @@ def generateTestMakefile(p_path, p_libName, p_headerInfo):
 
     if not os.path.exists(makefilePath):
         print("Error: The unit tests makefile was not created!")
-        exit(ERROR_UNITTESTS_MAKEFILE_NOT_CREATED)
+        sys.exit(ERROR_UNITTESTS_MAKEFILE_NOT_CREATED)
 
 
 
@@ -429,7 +435,7 @@ def generateDoxygenMakefile(p_path, p_libName, p_headerInfo):
 
     if not os.path.exists(makefilePath):
         print("Error: The Doxygen makefile was not created!")
-        exit(ERROR_DOXYGEN_MAKEFILE_NOT_CREATED)
+        sys.exit(ERROR_DOXYGEN_MAKEFILE_NOT_CREATED)
 
 
 
@@ -666,7 +672,7 @@ def generateUnitTestMain(p_path, p_libName):
     
     if not os.path.exists(testFilePath):
         print("Error: The test main file was not created!")
-        exit(ERROR_TEST_MAIN_FILE_NOT_CREATED)
+        sys.exit(ERROR_TEST_MAIN_FILE_NOT_CREATED)
 
 
 
@@ -3115,7 +3121,7 @@ def generateDoxyfile(p_path, p_libName):
 
     if not os.path.exists(doxyfilePath):
         print("Error: The test main file was not created!")
-        exit(ERROR_DOXYFILE_NOT_CREATED)
+        sys.exit(ERROR_DOXYFILE_NOT_CREATED)
 
 
 
@@ -3145,7 +3151,7 @@ def generateDoxygenIntroFile(p_path, p_libName):
 
     if not os.path.exists(doxyIntroPath):
         print("Error: The Doxygen intro file was not created!")
-        exit(ERROR_DOXYINTRO_NOT_CREATED)
+        sys.exit(ERROR_DOXYINTRO_NOT_CREATED)
 
 
 
@@ -3171,8 +3177,26 @@ def main(argv):
         argv    A list containing all the arguments.
     """
 
+    nbArguments = len(argv)
+
+    if nbArguments != 1 and nbArguments != NB_ARGUMENTS:
+        print("Error: number of arguments.")
+        sys.exit(ERROR_NB_ARGUMENTS)
+
+    if (len(argv) == 1) and (argv[0] in ("-h", "--help")):
+        printHelp()
+        sys.exit()
+    
     path    = fixPath(argv[0])
     libName = libNameToLowerCase(argv[1])
+
+    if not os.path.exists(path):
+        print("Error: path \"" + path + "\" does not exist!\n")
+        sys.exit(ERROR_PATH_DOES_NOT_EXIST)
+
+    if not libName.isalnum():
+        print("Error: library name \"" + libName + "\" is invalid!\n")
+        sys.exit(ERROR_LIB_NAME_INVALID)
 
     headerInfo = HeaderInformation()
     
@@ -3181,7 +3205,7 @@ def main(argv):
     generateDoxygenFiles       (path, libName)
     generateMakefiles          (path, libName, headerInfo)
     
-    exit(EXEC_OK)
+    sys.exit(EXEC_OK)
 
 if __name__ == "__main__":
     main(sys.argv[1:])
