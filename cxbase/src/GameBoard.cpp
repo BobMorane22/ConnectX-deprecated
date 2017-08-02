@@ -28,6 +28,11 @@
  * Implementation for a GameBoard utility.
  *
  **************************************************************************************************/
+
+#include <algorithm>
+#include <iterator>
+#include <sstream>
+
 #include "../include/GameBoard.h"
 
 

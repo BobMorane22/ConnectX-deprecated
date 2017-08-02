@@ -29,6 +29,8 @@
  *
  **************************************************************************************************/
 
+#include <sstream>
+
 #include "../include/AsciiColorCode.h"
 
 USING_NAMESPACE_STD

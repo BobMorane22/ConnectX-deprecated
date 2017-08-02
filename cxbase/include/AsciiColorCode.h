@@ -51,8 +51,6 @@
 #ifndef ASCIICOLORCODE_H_89A38543_0B75_49ED_807D_B95EB8A3B7F6
 #define ASCIICOLORCODE_H_89A38543_0B75_49ED_807D_B95EB8A3B7F6
 
-#include <sstream>
-
 #include <cxutil/include/ICliObject.h>
 #include <cxutil/include/IEnforceContract.h>
 

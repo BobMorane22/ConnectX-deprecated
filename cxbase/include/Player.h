@@ -32,7 +32,6 @@
 #ifndef PLAYER_H_9B43C099_9307_4C05_956D_3F12FE5F1A1F
 #define PLAYER_H_9B43C099_9307_4C05_956D_3F12FE5F1A1F
 
-#include <sstream>
 #include <string>
 
 #include <cxutil/include/ICliObject.h>

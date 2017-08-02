@@ -32,7 +32,6 @@
 #ifndef DISC_H_97C4FDCA_4FD8_4DB4_B111_6F80F62266FA
 #define DISC_H_97C4FDCA_4FD8_4DB4_B111_6F80F62266FA
 
-#include <sstream>
 
 #include <cxutil/include/ICliObject.h>
 

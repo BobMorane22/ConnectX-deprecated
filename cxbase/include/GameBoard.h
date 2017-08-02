@@ -32,13 +32,8 @@
 #ifndef GAMEBOARD_H_59F7D710_94EA_491A_9C14_94AE5C014E9A
 #define GAMEBOARD_H_59F7D710_94EA_491A_9C14_94AE5C014E9A
 
-#include <algorithm>
-#include <iostream>
-#include <iterator>
-#include <sstream>
 #include <string>
 #include <vector>
-
 
 #include <cxutil/include/ICliObject.h>
 #include <cxutil/include/IEnforceContract.h>

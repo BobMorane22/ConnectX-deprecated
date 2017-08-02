@@ -1,6 +1,6 @@
 /***************************************************************************************************
- *
- * Copyright (C) 2016 Connect X team
+ * 
+ * Copyright (C) 2017 Connect X team
  *
  * This file is part of Connect X.
  *
@@ -20,55 +20,23 @@
  **************************************************************************************************/
 
 /***********************************************************************************************//**
- * @file    Player.cpp
+ * @file    cxutilAPI.h
  * @author  Eric Poirier
- * @date    November 2016
+ * @date    August 2017
  * @version 0.1
  *
- * Implementation for a Player utility.
+ * Interface for the cxutil library public API
  *
  **************************************************************************************************/
 
-#include <sstream>
+#ifndef CXUTILAPI_H_FCFC9F42_868C_4859_A16C_11D2013A3788
+#define CXUTILAPI_H_FCFC9F42_868C_4859_A16C_11D2013A3788
 
-#include "../include/Player.h"
+#include"ContractException.h"
+#include"IEnforceContract.h"
+#include"ICliObject.h"
+#include"Coordinate.h"
+#include"Name.h"
 
-USING_NAMESPACE_STD
-USING_NAMESPACE_CXUTIL
-USING_NAMESPACE_CXBASE
+#endif // CXUTILAPI_H_FCFC9F42_868C_4859_A16C_11D2013A3788
 
-
-Player::Player(const Name& p_name, const Disc& p_disc): m_name{p_name}, m_disc{p_disc}
-{
-    POSTCONDITION(m_name == p_name);
-    POSTCONDITION(m_disc == p_disc);
-
-    INVARIANTS();
-}
-
-bool Player::operator==(const Player& p_player) const
-{
-    bool areEqual{false};
-
-    if(m_name == p_player.name() && m_disc == p_player.disc())
-    {
-        areEqual = true;
-    }
-
-    return areEqual;
-}
-
-bool Player::operator!=(const Player& p_player) const
-{
-    return !(*this == p_player);
-}
-
-void Player::print(ostream& p_stream) const
-{
-    p_stream << m_name.toString();
-}
-
-void Player::checkInvariant() const
-{
-    INVARIANT(m_disc != Disc::NO_DISC);
-}
