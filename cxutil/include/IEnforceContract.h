@@ -25,7 +25,8 @@
  * @date    December 2016
  * @version 0.1
  *
- * Interface for design-by-contract enforcement.
+ * Interface for design-by-contract enforcement. Note that all the services defined in this file
+ * only have meaning in debug mode, i.e. if the constant @c NDEBUG is @a not defined.
  *
  **************************************************************************************************/
 
@@ -60,7 +61,7 @@ protected:
 
     /*******************************************************************************************//**
      * Mandatory method for design-by-contract implementation (most precisely, for class invariants
-     * validation).
+     * validation). Only apply if @c NDEBUG is @a not defined.
      *
      **********************************************************************************************/
     virtual void checkInvariant() const = 0;

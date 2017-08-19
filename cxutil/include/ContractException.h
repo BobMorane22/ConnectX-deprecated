@@ -21,13 +21,13 @@
 
 /***********************************************************************************************//**
  * @file    ContractException.h
- * @author  ULaval
+ * @author  Université Laval
  * @author  Eric Poirier (translation)
  * @date    January 2014
  * @version 1.0
  *
  * Interfaces for the <a href="https://en.wikipedia.org/wiki/Design_by_contract">
- * design-by-contract </a> exceptions classes and MACROs.
+ * design-by-contract</a> exceptions classes and MACROs.
  *
  **************************************************************************************************/
 
@@ -113,7 +113,7 @@ private:
  * Class for assertion errors management.
  *
  * In this context, an <a href="https://en.wikipedia.org/wiki/Assertion_(software_development)">
- * assertion </a> is a predicate that is expected to be true at a specific point in the program.
+ * assertion</a> is a predicate that is expected to be true at a specific point in the program.
  *
  * @see ContractException
  **************************************************************************************************/
@@ -132,7 +132,7 @@ public:
     * @param[in] p_expression  The logical test that has failed (and thrown the exception)
     *
     * @note In this specialized case of the ContractException, the message is internally set
-    * to <tt> ASSERTION ERROR </tt>
+    * to <tt> "ASSERTION ERROR" </tt>
     *
     **********************************************************************************************/
     AssertionException(
@@ -154,7 +154,7 @@ public:
  *
  * Class for precondition errors management.
  *
- * In this context, an <a href="https://en.wikipedia.org/wiki/Precondition"> precondition </a> is a
+ * In this context, an <a href="https://en.wikipedia.org/wiki/Precondition"> precondition</a> is a
  * predicate that is expected to be true before the execution of a certain section of code.
  *
  * @see ContractException
@@ -175,7 +175,7 @@ public:
     * @param[in] p_expression  The logical test that has failed (and thrown the exception)
     *
     * @note In this specialized case of the ContractException, the message is internally set
-    * to <tt> PRECONDITION ERROR </tt>
+    * to <tt> "PRECONDITION ERROR" </tt>
     *
     **********************************************************************************************/
     PreconditionException(std::string p_file,
@@ -196,7 +196,7 @@ public:
  *
  * Class for postcondition errors management.
  *
- * In this context, an <a href="https://en.wikipedia.org/wiki/Postcondition"> postcondition </a>
+ * In this context, an <a href="https://en.wikipedia.org/wiki/Postcondition"> postcondition</a>
  * is a predicate that is expected to be true before the execution of a certain section of code.
  *
  * @see ContractException
@@ -217,7 +217,7 @@ public:
     * @param[in] p_expression  The logical test that has failed (and thrown the exception)
     *
     * @note In this specialized case of the ContractException, the message is internally set
-    * to <tt> POSTCONDITION ERROR </tt>
+    * to <tt> "POSTCONDITION ERROR" </tt>
     *
     **********************************************************************************************/
     PostconditionException(std::string p_file,
@@ -238,7 +238,7 @@ public:
  *
  * Class for class invariant errors management.
  *
- * In this context, an <a href="https://en.wikipedia.org/wiki/Class_invariant"> invariant </a>
+ * In this context, an <a href="https://en.wikipedia.org/wiki/Class_invariant"> invariant</a>
  * is a predicate that is expected to be true before the execution of a certain section of code.
  *
  * @see ContractException
@@ -259,7 +259,7 @@ public:
     * @param[in] p_expression  The logical test that has failed (and thrown the exception)
     *
     * @note In this specialized case of the ContractException, the message is internally set
-    * to <tt> INVARIANT ERROR </tt>
+    * to <tt> "INVARIANT ERROR" </tt>
     *
     **********************************************************************************************/
     InvariantException(
@@ -284,137 +284,151 @@ public:
 /***********************************************************************************************//**
  * @def INVARIANTS()
  *
- * Checks the state an object.
+ * Checks the state of an object.
  *
  * The MACRO calls the @c checkInvariant() method (which has to be defined by the developper for
  * each class). This methods checks the state of various @a invariants (also defined by the class
- * developper). For example, if you have a @c People class which has a @c name member. An invariant
- * for this class could be that the @c name member should never be empty. Thus, at every time,
- * if you want your object to be valid, you should check that the @c name member is not empty
+ * developper). For example, if you have a @c People class which has a @c m_name member. An invariant
+ * for this class could be that the @c m_name member should never be empty. Thus, every time
+ * you want your object to be valid, you should check that the @c m_name member is not empty
  * (i.e. the invariant is respected). This is done using this MACRO.
  *
  * The nice thing about the @c checkInvariant() method is that it enables the developper to
  * check many invariants all at once. This is especially easy with this MACRO.
  *
  **************************************************************************************************/
-# define INVARIANTS() \
+#define INVARIANTS() \
     checkInvariant()
 
 
 /***********************************************************************************************//**
- * @def ASSERTION(f)
+ * @def ASSERTION(__f__)
  *
- * Checks the validity of a predicate @c f.
+ * Checks the validity of a predicate @c __f__.
  *
  * This MACRO is usually used as a checkpoint inside a complex procedure to validate the state of
  * the procedure so far. This MACRO should not be used as Pre/postconditions checks.
  *
- * @throw   AssertionException if @c f is not valid.
+ * @throw   AssertionException if @c __f__ is not valid.
  * @note    Should not be used in constant methods.
  * @see     AssertionException
  *
  **************************************************************************************************/
-# define ASSERTION(f)     \
-    if (!(f)) throw AssertionException(__FILE__,__LINE__, #f);
+#define ASSERTION(__f__)                                      \
+    if(!(__f__))                                              \
+    {                                                         \
+        throw AssertionException(__FILE__,__LINE__, #__f__);  \
+    }
 
 
 /***********************************************************************************************//**
- * @def PRECONDITION(f)
+ * @def PRECONDITION(__f__)
  *
- * Checks the validity of a predicate @c f to determine if the preconditions for the contract are
- * met.
+ * Checks the validity of a predicate @c __f__ to determine if the preconditions for the contract 
+ * are met.
  *
  * This MACRO is usually used as the first step(s) in a method implementation, to check wether
  * the contract's preconditions are met.
  *
- * @throw   PreconditionException if @c f is not valid (i.e. the requierements for the contract
+ * @throw   PreconditionException if @c __f__ is not valid (i.e. the requierements for the contract
  *          are not met).
  * @note    Should not be used in constant methods.
  * @see     PreconditionException
  *
  **************************************************************************************************/
-#  define PRECONDITION(f)  \
-    if (!(f)) throw PreconditionException(__FILE__, __LINE__, #f);
+#define PRECONDITION(__f__)                                       \
+    if(!(__f__))                                                  \
+    {                                                             \
+        throw PreconditionException(__FILE__, __LINE__, #__f__);  \
+    }
 
 
 /***********************************************************************************************//**
- * @def POSTCONDITION(f)
+ * @def POSTCONDITION(__f__)
  *
- * Checks the validity of a predicate @c f to determine if the postconditions for the contract
+ * Checks the validity of a predicate @c __f__ to determine if the postconditions for the contract
  * are met.
  *
  * This MACRO is usually used as the step(s) coming right after the body of a method
  * implementation, to check wether the contract's postconditions are met.
  *
- * @throw   PreconditionException if "f" is not valid (i.e. the requierements for the contract
+ * @throw   PreconditionException if @c __f__ is not valid (i.e. the requierements for the contract
  *          are not met).
  * @note    Should not be used in constant methods.
  * @see     PostconditionException
  **************************************************************************************************/
-#  define POSTCONDITION(f) \
-      if (!(f)) throw PostconditionException(__FILE__, __LINE__, #f);
+#define POSTCONDITION(__f__)                                     \
+    if(!(__f__))                                                 \
+    {                                                            \
+      throw PostconditionException(__FILE__, __LINE__, #__f__);  \
+    }
 
 
 /***********************************************************************************************//**
- * @def INVARIANT(f)
+ * @def INVARIANT(__f__)
  *
- * Checks the validity of @a one predicate @c f to determine if an invariant (only one) is valid.
+ * Checks the validity of @a one predicate @c __f__ to determine if an invariant (only one)
+ * is valid.
  *
  * This MACRO usually is used in two distinct ways:
  *     @li to check the validity of a unique/specific invariant, i.e. an invariant that cannot
  *         be treated in the @c checkInvariant() method;
  *     @li to implement the @c checkInvariant() method.
  *
- * @throw   InvariantException If @c f is not valid.
+ * @throw   InvariantException If @c __f__ is not valid.
  * @see     InvariantException
  **************************************************************************************************/
-#  define INVARIANT(f)   \
-      if (!(f)) throw InvariantException(__FILE__,__LINE__, #f);
+#define INVARIANT(__f__)                                  \
+    if(!(__f__))                                          \
+    {                                                     \
+    throw InvariantException(__FILE__,__LINE__, #__f__);  \
+    }
 
 
 // --- Release mode (all design-by-contract checks are desactivated).
 #else
 
-#  define PRECONDITION(f);
-#  define POSTCONDITION(f);
-#  define INVARIANTS();
-#  define INVARIANT(f);
-#  define ASSERTION(f);
+#define PRECONDITION(__f__);
+#define POSTCONDITION(__f__);
+#define INVARIANTS();
+#define INVARIANT(__f__);
+#define ASSERTION(__f__);
 
 #endif  // --- if !defined (NDEBUG)
-#endif  // --- ifndef CONTRACTEXCEPTION_H_97E29E65_7EC1_4A81_B380_415871B24249
+
+#endif  // CONTRACTEXCEPTION_H_97E29E65_7EC1_4A81_B380_415871B24249
 
 /***********************************************************************************************//**
- * A classic usage of these design-by-contract exceptions and MACROs can be summarized by these
- * steps:
- *      @li Implement the @c checkInvariant() methods with the following signature: <tt>
+ * A classic usage of these design-by-contract exceptions and MACROs can be summarized as follows:
+ *
+ *      @li Implement the @c checkInvariant() method with the following signature: <tt>
  *          void checkInvariant() const </tt>. In the method body, use the @c INVARIANT(f) MACRO
- *          to test <em> for each </em> class invariant. Each class invariant @c f must be
- *          implemented as a predicate (something that evaluates to @c true or @c false). If the
- *          class requires the verification of five (5) class invariants, then use the MACRO five
- *          times, with the 5 respective predicates. Note that sometimes, a class has no invariant.
- *          In this case, do not define the @a checkInvariant() method.
+ *          to test <em> for each </em> class invariant. Each class invariant @c __f__ must be
+ *          implemented as a predicate (something that evaluates to @c true or @c false). For 
+ *          example, if the class requires the verification of five (5) class invariants, then use 
+ *          the MACRO five times, with the 5 respective predicates. Note that sometimes, a class 
+ *          has no invariant. In this case, do not define the @c checkInvariant() method.
  *
  *      @li For each method that needs to have precondition(s) verified to ensure a correct
- *          behaviour, use the @c PRECONDITION(f) MACRO in the body. Again, Each class invariant
- *          @c f must be implemented as a predicate. The MACRO must be included in the method body
- *          <em> before any other line of code is written </em> for good results. If the method
+ *          behaviour, use the @c PRECONDITION(__f__) MACRO in the body. Again, Each class 
+ *          invariant @c __f__ must be implemented as a predicate. The MACRO must be included in 
+ *          the method body<em> before any other line of code is written</em>. If the method
  *          requires the verification of five (5) preconditions, then use the MACRO five times,
  *          with the 5 respective predicates.
  *
  *      @li Just like for preconditions, add the required number of postconditions MACROs <em> at
  *          the end of the method body. </em> These MACROs must be the last code to be executed
  *          before a @c return statement, or the method's end of scope if no class invariant are
- *          defined. Otherwise, they must be the last code to be executed before the
- *          @c INVARIANTS() MACRO (notice the @a S !).
+ *          defined (see next item). Otherwise, they must be the last code to be executed before the
+ *          @c INVARIANTS() MACRO (notice the @c S !).
  *
  *      @li If you have defined class invariant in the first step, add the @c INVARIANTS()
- *          (notice the @a S !) MACRO before the method's @c return statement, or before the method
+ *          (notice the @c S !) MACRO before the method's @c return statement, or before the method
  *          goes out of scope for void methods.
  *
  * Furthermore, if you have complicated methods, in every step of the method's body, you can add
  * the @c ASSERTION(f) MACRO to test a predicate @c f. The following example shows how all these
- * tools can be combined.
+ * tools can be combined:
  *
  * @example DesignByContract.h
  *

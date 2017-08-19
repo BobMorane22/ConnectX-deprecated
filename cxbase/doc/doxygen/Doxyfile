@@ -227,7 +227,7 @@ TAB_SIZE = 4
 # will allow you to put the command \sideeffect (or @sideeffect) in the
 # documentation, which will result in a user-defined paragraph with heading
 # "Side Effects:". You can put 
-'s in the value part of an alias to insert
+# 's in the value part of an alias to insert
 # newlines.
 
 ALIASES = 
@@ -356,8 +356,7 @@ GROUP_NESTED_COMPOUNDS = NO
 # (for instance a group of public functions) to be put as a subgroup of that
 # type (e.g. under the Public Functions section). Set it to NO to prevent
 # subgrouping. Alternatively, this can be done per class using the
-# 
-osubgrouping command.
+# osubgrouping command.
 # The default value is: YES.
 
 SUBGROUPING = YES
@@ -419,7 +418,7 @@ LOOKUP_CACHE_SIZE = 0
 # normally produced when WARNINGS is set to YES.
 # The default value is: NO.
 
-EXTRACT_ALL = NO
+EXTRACT_ALL = YES
 
 # If the EXTRACT_PRIVATE tag is set to YES, all private members of a class will
 # be included in the documentation.

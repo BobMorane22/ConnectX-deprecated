@@ -63,7 +63,22 @@ class Game : public CXUTIL::IEnforceContract
 
 public:
 
+    /*******************************************************************************************//**
+     * @typedef PlayerList
+     *
+     * An @c std::vector of @c std::shared_ptr to Player objects. This @c typedef is introduced 
+     * internally to simplify the syntax.
+     *
+     **********************************************************************************************/
     typedef std::vector<std::shared_ptr<Player>>    PlayerList;
+    
+    /*******************************************************************************************//**
+     * @typedef GameBoardSPtr
+     *
+     * A @c std::shared_ptr of a GameBoard object. This @c typedef is introduced internally to 
+     * simplify the syntax.
+     *
+     **********************************************************************************************/
     typedef std::shared_ptr<GameBoard>              GameBoardSPtr;
 
 ///@{ @name Object construction and destruction

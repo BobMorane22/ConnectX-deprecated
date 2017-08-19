@@ -38,7 +38,7 @@ USING_NAMESPACE_CXUTIL
 USING_NAMESPACE_CXBASE
 
 
-Player::Player(const Name& p_name, const Disc& p_disc): m_name{p_name}, m_disc{p_disc}
+Player::Player(const CXUTIL::Name& p_name, const Disc& p_disc): m_name{p_name}, m_disc{p_disc}
 {
     POSTCONDITION(m_name == p_name);
     POSTCONDITION(m_disc == p_disc);

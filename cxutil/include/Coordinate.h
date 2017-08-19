@@ -47,7 +47,7 @@ BEGIN_CXUTIL_NAMESPACE
  *
  * @tparam  T   A fully comparable type.
  * @note    The value stored is limited to types @c T where the comparison operators are @a all
- *          defined (more precisely, <tt> ==, !=, <, >, <= and >= </tt>).
+ *          defined (more precisely, <tt> ==, !=, <, >, <=</tt> and </tt>>= </tt>).
  *
  **************************************************************************************************/
 template <typename T>
@@ -75,7 +75,7 @@ public:
 
 ///@{ @name Data access
     /*******************************************************************************************//**
-     * Gets the encapsulated value.
+     * Gets the value.
      *
      * @return The encapsulated value.
      *
@@ -97,7 +97,7 @@ public:
 
 
     /*******************************************************************************************//**
-     * Equal-to operator.
+     * Not-equal-to operator.
      *
      * The Coordinate objects are compared exactly like the are in the parameter @c T class.
      *
@@ -108,7 +108,7 @@ public:
 
 
     /*******************************************************************************************//**
-     * Equal-to operator.
+     * Smaller-than operator.
      *
      * The Coordinate objects are compared exactly like the are in the parameter @c T class.
      *
@@ -119,7 +119,7 @@ public:
 
 
     /*******************************************************************************************//**
-     * Equal-to operator.
+     * Smaller-or-equal-than operator.
      *
      * The Coordinate objects are compared exactly like the are in the parameter @c T class.
      *
@@ -131,7 +131,7 @@ public:
 
 
     /*******************************************************************************************//**
-     * Equal-to operator.
+     * Greater than operator.
      *
      * The Coordinate objects are compared exactly like the are in the parameter @c T class.
      *
@@ -142,7 +142,7 @@ public:
 
 
     /*******************************************************************************************//**
-     * Equal-to operator.
+     * Greater-or-qual-than operator.
      *
      * The Coordinate objects are compared exactly like the are in the parameter @c T class.
      *

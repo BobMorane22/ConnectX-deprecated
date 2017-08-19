@@ -916,7 +916,7 @@ def generateDoxyfile(p_path, p_libName):
     doxyfile.write("# \"sideeffect=@par Side Effects:\"\n\n"                                             )
     doxyfile.write("# will allow you to put the command \sideeffect (or @sideeffect) in the\n"         )
     doxyfile.write("# documentation, which will result in a user-defined paragraph with heading\n"     )
-    doxyfile.write("# \"Side Effects:\". You can put \n's in the value part of an alias to insert\n"   )
+    doxyfile.write("# \"Side Effects:\". You can put 's in the value part of an alias to insert\n"     )
     doxyfile.write("# newlines.\n\n"                                                                   )
 
     doxyfile.write("ALIASES = \n\n"                                                                    )
@@ -1045,7 +1045,7 @@ def generateDoxyfile(p_path, p_libName):
     doxyfile.write("# (for instance a group of public functions) to be put as a subgroup of that\n"    )
     doxyfile.write("# type (e.g. under the Public Functions section). Set it to NO to prevent\n"       )
     doxyfile.write("# subgrouping. Alternatively, this can be done per class using the\n"              )
-    doxyfile.write("# \nosubgrouping command.\n"                                                       )
+    doxyfile.write("# osubgrouping command.\n"                                                         )
     doxyfile.write("# The default value is: YES.\n\n"                                                  )
 
     doxyfile.write("SUBGROUPING = YES\n\n"                                                             )
@@ -1107,7 +1107,7 @@ def generateDoxyfile(p_path, p_libName):
     doxyfile.write("# normally produced when WARNINGS is set to YES.\n"                                )
     doxyfile.write("# The default value is: NO.\n\n"                                                   )
 
-    doxyfile.write("EXTRACT_ALL = NO\n\n"                                                              )
+    doxyfile.write("EXTRACT_ALL = YES\n\n"                                                             )
 
     doxyfile.write("# If the EXTRACT_PRIVATE tag is set to YES, all private members of a class will\n" )
     doxyfile.write("# be included in the documentation.\n"                                             )

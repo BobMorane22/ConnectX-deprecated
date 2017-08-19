@@ -45,8 +45,11 @@ BEGIN_CXUTIL_NAMESPACE
  *
  * A name utility.
  *
- * @invariant A name is assumed to never be empty. This is the main difference between an @c
- * std::string and a @c Name object.
+ * Use this class instead of @c std::string whenever you want to name something. Additionnal checks 
+ * are performed on the name string to ensure the name is valid.
+ *
+ * @invariant A name is assumed to never be empty. This is the main difference between an
+ *            @c std::string and a @c Name object.
  *
  **************************************************************************************************/
 class Name : public IEnforceContract
@@ -87,6 +90,8 @@ public:
 ///@{ @name Operators
     /*******************************************************************************************//**
      * Equal-to operator.
+     *
+     * Two Name objects are considered equal if both the @c std::string they hold are equal.
      *
      * @param[in]   p_name The Name to compare with.
      *

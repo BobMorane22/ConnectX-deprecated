@@ -47,7 +47,9 @@
 /***********************************************************************************************//**
  * @namespace std
  *
- * This is the standard library namespace.
+ * This is the standard library namespace. You can find documentation on this namespace either 
+ * in Bjarne Stroustrup's <em>The C++ Programming Language (Fourth Edition)</em> in Part IV or on 
+ * the Internet, for example here: http://www.cplusplus.com/reference/.
  *
  **************************************************************************************************/
 #define BEGIN_STD_NAMESPACE           namespace std {

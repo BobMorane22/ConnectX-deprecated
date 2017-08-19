@@ -43,11 +43,10 @@
  * The cxbase library is licenced under the GPL v.3 licence. You can get a copy of the licence 
  * here: https://www.gnu.org/licenses/gpl.txt.
  *
+ * @section example Example
  *
- *
- *
- * @example "Classic Connect 4 minimal implementation" Example of an implementation to build a 
- * classic 2 players Connect 4 game. First, a custom Game class:
+ * "Classic Connect 4 minimal implementation" Example of an implementation to build a classic 2 
+ * players Connect 4 game. First, a custom Game class:
  *
  *  @include Connect4Game.h
  *

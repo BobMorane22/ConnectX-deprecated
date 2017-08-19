@@ -20,7 +20,7 @@
  **************************************************************************************************/
 
 /***********************************************************************************************//**
- * @file    ICliObject
+ * @file    ICliObject.h
  * @author  Eric Poirier
  * @date    June 2017
  * @version 0.1
@@ -57,7 +57,7 @@ public:
 
     ~ICliObject() = default;
 
-    /********************************************************************************************//*
+    /*******************************************************************************************//**
      * Stream insertion operator.
      *
      * Simply calls the @c print() method. In other words, what is returned by the @c print()
@@ -74,7 +74,7 @@ public:
 
 protected:
 
-    /********************************************************************************************//*
+    /*******************************************************************************************//**
      * Represent object as an ASCII text string and insert it into a stream.
      *
      * This method is internally called by the stream insertion operator ( @c operator<< ) to
@@ -82,7 +82,7 @@ protected:
      * method alone should be redefined in all derived classes.
      *
      * @param[in] p_stream The stream into which to insert the text string representing the
-     * CliUiObject.
+     *            CliUiObject.
      *
      **********************************************************************************************/
     virtual void print(std::ostream& p_stream) const = 0;

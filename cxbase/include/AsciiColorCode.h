@@ -146,7 +146,7 @@ protected:
     /*******************************************************************************************//**
      * Print text to stream.
      *
-     * The AsciiColorCode is represented as the @char from which it is constructed.
+     * The AsciiColorCode is represented as the @c char from which it is constructed.
      *
      * @param[in] p_stream The stream in which to insert the text representation.
      *
