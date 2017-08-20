@@ -36,7 +36,8 @@
 #include "ContractException.h"
 #include "../src/cxutilInternal.h"
 
-BEGIN_CXUTIL_NAMESPACE
+namespace cxutil
+{
 
 /***********************************************************************************************//**
  * class IEnforceContract
@@ -67,6 +68,6 @@ protected:
     virtual void checkInvariant() const = 0;
 };
 
-END_CXUTIL_NAMESPACE
+} // namespace cxutil
 
 #endif /* IENFORCECONTRACT_H_C97649B0_072C_4320_952D_D6E7DF1D98D0 */

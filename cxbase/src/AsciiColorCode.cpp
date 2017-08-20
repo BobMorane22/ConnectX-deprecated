@@ -33,9 +33,7 @@
 
 #include "../include/AsciiColorCode.h"
 
-USING_NAMESPACE_STD
-USING_NAMESPACE_CXUTIL
-USING_NAMESPACE_CXBASE
+using namespace cxbase;
 
 AsciiColorCode::AsciiColorCode(char p_asciiColorCode): m_asciiColorCode{p_asciiColorCode}
 {
@@ -59,7 +57,7 @@ void AsciiColorCode::checkInvariant() const
 }
 
 
-void AsciiColorCode::print(ostream& p_stream) const
+void AsciiColorCode::print(std::ostream& p_stream) const
 {
 	p_stream << m_asciiColorCode;
 }

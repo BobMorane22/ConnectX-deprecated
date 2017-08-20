@@ -37,6 +37,7 @@
 #include"ICliObject.h"
 #include"Coordinate.h"
 #include"Name.h"
+//#include"narrow_cast.h"
 
 #endif // CXUTILAPI_H_FCFC9F42_868C_4859_A16C_11D2013A3788
 

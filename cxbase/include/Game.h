@@ -41,7 +41,8 @@
 #include "Player.h"
 
 
-BEGIN_CXBASE_NAMESPACE
+namespace cxbase
+{
 
 
 /***********************************************************************************************//**
@@ -58,7 +59,7 @@ BEGIN_CXBASE_NAMESPACE
  * @invariant The current turn is always between 0 and the total numbers of Players minus one.
  *
  **************************************************************************************************/
-class Game : public CXUTIL::IEnforceContract
+class Game : public cxutil::IEnforceContract
 {
 
 public:
@@ -136,7 +137,7 @@ public:
     /*******************************************************************************************//**
      * Number of turns accessor.
      *
-     * @return The current number of turn played in the Game.
+     * @return The current number of turns played in the Game.
      *
      **********************************************************************************************/
     int nbOfTurnsPlayed() const {return m_nbTurns;}
@@ -144,7 +145,7 @@ public:
 
 ///@{ @name Game utilities
     /*******************************************************************************************//**
-     * Checks is a Game is a draw.
+     * Checks if a Game is a draw.
      *
      * A Game is considered a draw if the number of turns for the Game exceeds by one (1) the
      * total number of positions in the Grid. Note that no check is run as to wether the GameBoard
@@ -154,10 +155,6 @@ public:
      * @return A boolean indicating if the Game is a draw.
      *
      * @see isWon()
-     *
-     * @todo If the Game can be declared a draw but not all turns have been played, this method
-     *       will miss it. I would be nice for this method to catch the draw as early as possible.
-     *       this would include some kind of GameBoard check.
      *
      **********************************************************************************************/
     bool isDraw() const {return (m_nbTurns == m_gameboard->nbPositions());}
@@ -170,9 +167,9 @@ public:
      * string of equal Disc can be either horizontal, vertical or diagonal.
      *
      * This method checks, <em> for the current Position only, </em> if such a winning string of
-     * adjacent Discs exists. Here is an example where for a Disc with AsciiColorCode @c R,
+     * adjacent Discs exists. Here is an example where a Disc with AsciiColorCode @c R,
      * represents the current Position, i.e. the Position where the last activePlayer placed a
-     * Disc. The Positions considered for the winner check by this method  (other than the
+     * Disc. The Positions considered for the winner check by this method (other than the
      * active one) are shown with the ASCII code @c x. Note that this example uses an
      * @a inARow value of four (4).
      *
@@ -189,8 +186,8 @@ public:
      * In other words, all Positions that are not marked by either @c R or @c x in this example are
      * not taken into account by this method.
      *
-     * Note that this methods does not check for draws. It is the user's responsability to check
-     * for those using the isDray() method.
+     * Note that this method does not check for draws. It is the user's responsability to check
+     * for those using the @c isDray() method.
      *
      * @return A boolean indicating if a winning string of Discs has been found from the
      *         current Position.
@@ -217,7 +214,7 @@ public:
 
 
     /*******************************************************************************************//**
-     * Setups the Game's internal data for the next turn.
+     * Updates the Game's internal data for the next turn.
      *
      * Update the Game's internal data to make the next turn available. This method should be
      * called after a turn is considered done. It will, for example, increment the current turn.
@@ -242,6 +239,6 @@ protected:
 
 };
  
-END_CXBASE_NAMESPACE
+} // namespace cxbase
 
 #endif /* GAME_H_2D56E7FC_5FA9_4841_B204_05ADCF2DCE07_ */

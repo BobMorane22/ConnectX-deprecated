@@ -31,8 +31,7 @@
 
 #include "../include/Name.h"
 
-USING_NAMESPACE_STD
-USING_NAMESPACE_CXUTIL
+using namespace cxutil;
 
 Name::Name(const std::string& p_name): m_name{p_name}
 {

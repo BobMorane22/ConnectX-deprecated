@@ -37,15 +37,16 @@
 
 #include "../src/cxbaseInternal.h"
 
-BEGIN_CXBASE_NAMESPACE
+namespace cxbase
+{
 
 /***********************************************************************************************//**
- * class Row
+ * @class Row
  *
- * An integer coordinate used as a row.
+ * An integer coordinate representing a row.
  *
  **************************************************************************************************/
-class Row : public CXUTIL::Coordinate <int>
+class Row : public cxutil::Coordinate <int>
 {
 
 public:
@@ -61,19 +62,19 @@ public:
      * @param[in] p_row An integer containing the wanted Row value.
      *
      **********************************************************************************************/
-    Row(int p_row): CXUTIL::Coordinate<int>{p_row} {};
+    Row(int p_row): cxutil::Coordinate<int>{p_row} {};
 ///@}
 
 };
 
 
 /***********************************************************************************************//**
- * class Column
+ * @class Column
  *
- * An integer coordinate used as a column.
+ * An integer coordinate representing a column.
  *
  **************************************************************************************************/
-class Column : public CXUTIL::Coordinate<int>
+class Column : public cxutil::Coordinate<int>
 {
 
 public:
@@ -89,14 +90,14 @@ public:
      * @param[in] p_column An integer containing the wanted Column value.
      *
      **********************************************************************************************/
-    Column(int p_column): CXUTIL::Coordinate<int>{p_column} {};
+    Column(int p_column): cxutil::Coordinate<int>{p_column} {};
 ///@}
 
 };
 
 
 /***********************************************************************************************//**
- * class Position
+ * @class Position
  *
  * A Position is nothing but an (Row, Column) tuple with a special meaning attached to it: that
  * of a 2D location on a grid. To that effect, the tuple mentionned above
@@ -128,14 +129,14 @@ public:
     Position(const Row& p_row, const Column& p_column);
 ///@}
 
-///@{ @name access
+///@{ @name Data access
     /*******************************************************************************************//**
      * Row accessor.
      *
      * @return The Position's Row element.
      *
      **********************************************************************************************/
-    Row     row() const         { return m_row; }
+    Row row() const { return m_row; }
 
 
     /*******************************************************************************************//**
@@ -144,7 +145,7 @@ public:
      * @return The Position's Column element.
      *
      **********************************************************************************************/
-    Column  column() const      { return m_column; }
+    Column column() const { return m_column; }
 
 
     /*******************************************************************************************//**
@@ -153,7 +154,7 @@ public:
      * @return The Position's Row element integer value.
      *
      **********************************************************************************************/
-    int     rowValue() const    { return m_row.value(); }
+    int rowValue() const { return m_row.value(); }
 
 
     /*******************************************************************************************//**
@@ -162,7 +163,7 @@ public:
      * @return The Position's Column element integer value.
      *
      **********************************************************************************************/
-    int     columnValue() const { return m_column.value(); }
+    int columnValue() const { return m_column.value(); }
 ///@}
 
 ///@{ @name Operators
@@ -197,6 +198,6 @@ private:
 
 };
 
-END_CXBASE_NAMESPACE
+} // namespace cxbase
 
 #endif /* POSITION_H_423583B9_6944_4DC7_BB34_56FC0A5DC45B */

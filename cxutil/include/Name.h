@@ -38,7 +38,8 @@
 #include <string>
 
 
-BEGIN_CXUTIL_NAMESPACE
+namespace cxutil
+{
 
 /***********************************************************************************************//**
  * @class Name
@@ -120,6 +121,6 @@ private:
 
 };
 
-END_CXUTIL_NAMESPACE
+} // namespace cxutil
 
 #endif /* NAME_H_2DA14333_B8DB_4500_93A3_12263270A65C */

@@ -35,7 +35,8 @@
 #include "../src/cxutilInternal.h"
 
 
-BEGIN_CXUTIL_NAMESPACE
+namespace cxutil
+{
 
 /***********************************************************************************************//**
  * @class Coordinate
@@ -160,6 +161,6 @@ protected:
 
 };
 
-END_CXUTIL_NAMESPACE
+} // namespace cxutil
 
 #endif // COORDINATE_H_DCA364D9_C267_4BAC_9C3F_9FEE7C23F2D7

@@ -456,6 +456,7 @@ cxutil/doc/doxygen/latex/
 ### cxbase ###
 cxbase/doc/doxygen/html/
 cxbase/doc/doxygen/latex/
+cxbase/doc/doxygen/examples/out
 
 ### cx_cpp_norm ###
 cx_cpp_norme/versions/

@@ -31,9 +31,7 @@
 
 #include "../include/Color.h"
 
-USING_NAMESPACE_STD
-USING_NAMESPACE_CXUTIL
-USING_NAMESPACE_CXBASE
+using namespace cxbase;
 
 const Color Color::TRANSPARENT    {255, 255, 255, 0  , AsciiColorCode{' '}};
 const Color Color::WHITE          {255, 255, 255, 255, AsciiColorCode{'W'}};

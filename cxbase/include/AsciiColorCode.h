@@ -20,25 +20,6 @@
  **************************************************************************************************/
 
 /***********************************************************************************************//**
- *
- * Copyright (C) 2016 Connect X team
- *
- * This file is part of Connect X.
- *
- * Connect X is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * Connect X is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Connect X.  If not, see <http://www.gnu.org/licenses/>.
- *
- *
  * @file    AsciiColorCode.h
  * @author  Eric Poirier
  * @date    November 2016
@@ -57,7 +38,8 @@
 #include "../src/cxbaseInternal.h"
 
 
-BEGIN_CXBASE_NAMESPACE
+namespace cxbase
+{
 
 /***********************************************************************************************//**
  * @class AsciiColorCode
@@ -81,7 +63,7 @@ BEGIN_CXBASE_NAMESPACE
  * @see Color
  *
  **************************************************************************************************/
-class AsciiColorCode : public CXUTIL::IEnforceContract, public CXUTIL::ICliObject
+class AsciiColorCode : public cxutil::IEnforceContract, public CXUTIL::ICliObject
 {
 
 public:
@@ -94,7 +76,7 @@ public:
     /*******************************************************************************************//**
      * Constructor with parameters.
      *
-     * Constructs an @c AsciiColorCode object from a character (@c char).
+     * Constructs an AsciiColorCode object from a character (@c char).
      *
      * @param[in]   p_asciiColorCode The char containing the ASCII code.
      * @pre         @c p_asciiColorCode is a letter (lower or upper case) or a space.
@@ -108,15 +90,14 @@ public:
     /*******************************************************************************************//**
      * Accessor for the ascii color code attribute.
      *
-     * @return A char containing the ascii color code.
+     * @return A @c char representing the ASCII color code.
      *
      **********************************************************************************************/
     char toChar() const { return m_asciiColorCode; }
 ///@}
 
 
-/// @name Operators
-///@{
+///@{ @name Operators
     /*******************************************************************************************//**
      * Equal-to operator.
      *
@@ -160,10 +141,10 @@ protected:
 private:
 
 
-    char m_asciiColorCode; ///< The ASCII color code.
+    char m_asciiColorCode; ///< The ASCII @c char.
 
 };
 
-END_CXBASE_NAMESPACE
+} // namespace cxbase
 
 #endif // ASCIICOLORCODE_H_89A38543_0B75_49ED_807D_B95EB8A3B7F6

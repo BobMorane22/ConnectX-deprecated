@@ -25,7 +25,7 @@
  * @date    November 2016
  * @version 0.1
  *
- * Deals with internal tools of the cXbase library.
+ * Deals with internal tools of the cxbase library.
  *
  * This file includes Connect X related global internal tools. For example, namespaces and includes
  * used throughout the entire Connect X codebase should be included here. @attention If a tools can
@@ -47,7 +47,9 @@
 /***********************************************************************************************//**
  * @namespace std
  *
- * This is the standard library namespace.
+ * This is the standard library namespace. You can find documentation on this namespace either 
+ * in Bjarne Stroustrup's <em>The C++ Programming Language (Fourth Edition)</em> in Part IV or on 
+ * the Internet, for example here: http://www.cplusplus.com/reference/.
  *
  **************************************************************************************************/
 #define BEGIN_STD_NAMESPACE           namespace std {
@@ -56,15 +58,15 @@
 #define STD                           std
 
 /***********************************************************************************************//**
- * @namespace cXbase
+ * @namespace cxbase
  *
  * This namespace englobes every Connect X related tools.
  *
  **************************************************************************************************/
-#define BEGIN_CXBASE_NAMESPACE        namespace cXbase {
-#define END_CXBASE_NAMESPACE          } // namespace cXbase
-#define USING_NAMESPACE_CXBASE        using namespace cXbase;
-#define CXBASE                        cXbase
+#define BEGIN_CXBASE_NAMESPACE        namespace cxbase {
+#define END_CXBASE_NAMESPACE          } // namespace cxbase
+#define USING_NAMESPACE_CXBASE        using namespace cxbase;
+#define CXBASE                        cxbase
 ///@}
 
 

@@ -37,8 +37,8 @@
 
 #include "Color.h"
 
-BEGIN_CXBASE_NAMESPACE
-
+namespace cxbase
+{
 
 /***********************************************************************************************//**
  * @class Disc
@@ -73,7 +73,7 @@ public:
      *
      * Constructs a Disc with the Color passed as an argument.
      *
-     * @param[in] p_color The color with which to create the Disc.
+     * @param[in] p_color The Color with which to create the Disc.
      *
      **********************************************************************************************/
     Disc(const Color& p_color) : m_color{p_color} {}
@@ -91,7 +91,7 @@ public:
 
 
     /*******************************************************************************************//**
-     * ASCII Color code accessor.
+     * ASCII color code accessor.
      *
      * @return The Disc's Color's AsciiColorCode.
      *
@@ -117,7 +117,7 @@ public:
      * Not-equal-to operator.
      *
      * Two discs are compared for non-equality by Color. Two discs are considered @b NOT equal
-     * <em> if and only if </em> either their Colors are @b NOT equal, or their ASCII Color code
+     * <em> if and only if </em> either their Colors are @b NOT equal, or their ASCII color code
      * (or both).
      *
      * @see Color::operator!=().
@@ -155,7 +155,7 @@ protected:
      * You will get the following string inserted into the stream:
      *
      *  @verbatim
-     *    " R "       // Without the quotes
+     *     R       // With spaces on both sides.
      *  @endverbatim
      *
      * So if you write this:
@@ -167,7 +167,7 @@ protected:
      * You will see this to the console:
      *
      *  @verbatim
-     *    "| R |"    // Without the quotes
+     *    | R |
      *  @endverbatim
      *
      * @param[in] p_stream  The stream in which to insert.
@@ -182,6 +182,6 @@ private:
 
 };
 
-END_CXBASE_NAMESPACE
+} //namespace cxbas
 
 #endif /* DISC_H_97C4FDCA_4FD8_4DB4_B111_6F80F62266FA */

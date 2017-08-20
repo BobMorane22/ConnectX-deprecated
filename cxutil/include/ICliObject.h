@@ -38,7 +38,8 @@
 #include "../src/cxutilInternal.h"
 
 
-BEGIN_CXUTIL_NAMESPACE
+namespace cxutil
+{
 
 /***********************************************************************************************//**
  * class ICliObject
@@ -90,6 +91,6 @@ protected:
 };
 
 
-END_CXUTIL_NAMESPACE
+} // namespace cxutil
 
 #endif /* ICLIOBJECT_H_3FD2758A_36D4_4A51_BAE9_9346D1806B3B */

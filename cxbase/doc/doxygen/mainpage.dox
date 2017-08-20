@@ -5,34 +5,34 @@
  *
  * <b> cxbase </b> is a library written in C++ that is intended to facilitate 
  * the creation of <a href="https://en.wikipedia.org/wiki/Connect_Four"> 
- * Connect 4 applications and variations </a>. The library renders available 
+ * Connect 4 applications and variations </a>. The library offers 
  * classes and tools to create games with various grid dimensions, player 
- * count, etc.
+ * counts, etc.
  *
  * @section parametrizations Possible parametrizations
  *
- * The following items of a classic Connect 4 game are customizable:
+ * The following items of a classic Connect 4 game are customizable with cxbase:
  *
- *  @li Grid dimensions:
+ *  @li <b>Grid dimensions:</b>
  *      A classic Connect 4 game is limited to a six (6) by seven (7) grid. 
  *      Some classic variations include other grid dimensions. With the cxbase 
  *      library, you can make grids from the classic 6 by 7 grid all the way to 
  *      an outrageous sixty-four (64) by 64 grid.
  *
- *  @li Number of players:
+ *  @li <b>Number of players:</b>
  *      Why limit yourself to playing with only one opponent when you can play 
- *      with 8?
+ *      with height (8)?
  *
- *  @li Disc color:
+ *  @li <b>Disc color:</b>
  *      Colors are only limited to your imagination! They can also easily be 
  *      printed to text mode for rapid console based game creation.
  *
- *  @li "In a row" value:
- *      With cXbase, the classic <em> four in a row </em> can now be rebaptized 
+ *  @li <b>"In a row" value:</b>
+ *      With cxbase, the classic <em> four in a row </em> can now be rebaptized 
  *      the <em> X in a row </em>. You can play from two (2) to sixty-four (64) 
  *      in a row.
  *
- * If you need even larger sizes, all hope is not lost! the cXbase library 
+ * If you need even larger sizes, all hope is not lost! the cxbase library 
  * is made available as free software. You can easily recompile it 
  * to fit your needs, however tests are not always designed to check these 
  * dimensions.

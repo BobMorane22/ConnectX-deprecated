@@ -36,9 +36,7 @@
 #include "../include/GameBoard.h"
 
 
-USING_NAMESPACE_STD
-USING_NAMESPACE_CXUTIL
-USING_NAMESPACE_CXBASE
+using namespace cxbase;
 
 const int GameBoard::CONNECT_THREE  {3};
 const int GameBoard::CONNECT_FOUR   {4};
@@ -48,7 +46,7 @@ const int GameBoard::CONNECT_SEVEN  {7};
 const int GameBoard::CONNECT_EIGHT  {8};
 const int GameBoard::CONNECT_NINE   {9};
 
-GameBoard::GameBoard(): m_grid(NB_ROWS_MIN, vector<Disc>(NB_COLUMNS_MIN, Disc())),
+GameBoard::GameBoard(): m_grid(NB_ROWS_MIN, std::vector<Disc>(NB_COLUMNS_MIN, Disc())),
                         m_nbRows{NB_ROWS_MIN}, m_nbColumns{NB_COLUMNS_MIN}
 
 {
@@ -72,7 +70,7 @@ GameBoard::GameBoard(): m_grid(NB_ROWS_MIN, vector<Disc>(NB_COLUMNS_MIN, Disc())
     INVARIANTS();
 }
 
-GameBoard::GameBoard(int p_nbRows, int p_nbColumns): m_grid(p_nbRows, vector<Disc>(p_nbColumns, Disc::NO_DISC)),
+GameBoard::GameBoard(int p_nbRows, int p_nbColumns): m_grid(p_nbRows, std::vector<Disc>(p_nbColumns, Disc::NO_DISC)),
                                                      m_nbRows{p_nbRows}, m_nbColumns{p_nbColumns}
 
 {
@@ -251,7 +249,7 @@ void GameBoard::checkInvariant() const
     INVARIANT(m_nbColumns < NB_COLUMNS_MAX + 1);
 }
 
-void GameBoard::print(ostream& p_stream) const
+void GameBoard::print(std::ostream& p_stream) const
 {
 
     int rowSubscript     {nbRows() - 1};
@@ -278,7 +276,7 @@ void GameBoard::print(ostream& p_stream) const
             ++columnSubscript;
         }
 
-        p_stream << endl;
+        p_stream << std::endl;
 
         columnSubscript = 0;
         --rowSubscript;
@@ -291,7 +289,7 @@ void GameBoard::print(ostream& p_stream) const
         p_stream << "   " << columnSubscript;
     }
 
-    p_stream << endl;
+    p_stream << std::endl;
 }
 
 int GameBoard::leftValidationLimit(Position p_positionLastPlacedDisc, int p_inARow, GridValidationType validationType) const
@@ -300,12 +298,12 @@ int GameBoard::leftValidationLimit(Position p_positionLastPlacedDisc, int p_inAR
     int lastPlayedColumn{p_positionLastPlacedDisc.columnValue()};
 
     int leftSubscript{lastPlayedColumn - (p_inARow - 1)};
-    leftSubscript = max(leftSubscript, 0);
+    leftSubscript = std::max(leftSubscript, 0);
 
     if(validationType == GridValidationType::ObliqueDecreasing)
     {
         int lowerSubscript{lastPlayedRow + (p_inARow - 1)};
-        lowerSubscript = min(m_nbRows - 1, lowerSubscript);
+        lowerSubscript = std::min(m_nbRows - 1, lowerSubscript);
 
         if(lastPlayedColumn - leftSubscript > lowerSubscript - lastPlayedRow)
         {
@@ -315,7 +313,7 @@ int GameBoard::leftValidationLimit(Position p_positionLastPlacedDisc, int p_inAR
     else if(validationType == GridValidationType::ObliqueIncreasing)
     {
         int upperSubscript{lastPlayedRow - (p_inARow - 1)};
-        upperSubscript = max(0, upperSubscript);
+        upperSubscript = std::max(0, upperSubscript);
 
         if(lastPlayedColumn - leftSubscript > lastPlayedRow - upperSubscript)
         {
@@ -333,12 +331,12 @@ int GameBoard::rightValidationLimit(Position p_positionLastPlacedDisc, int p_inA
     int lastPlayedColumn{p_positionLastPlacedDisc.columnValue()};
 
     int rightSubscript{lastPlayedColumn + (p_inARow - 1)};
-    rightSubscript = min(rightSubscript, m_nbColumns - 1);
+    rightSubscript = std::min(rightSubscript, m_nbColumns - 1);
 
     if(validationType == GridValidationType::ObliqueDecreasing)
     {
         int upperSubscript{(lastPlayedRow) - (p_inARow - 1)};
-        upperSubscript = max(0, upperSubscript);
+        upperSubscript = std::max(0, upperSubscript);
 
         if(rightSubscript - lastPlayedColumn > lastPlayedRow - upperSubscript)
         {
@@ -348,7 +346,7 @@ int GameBoard::rightValidationLimit(Position p_positionLastPlacedDisc, int p_inA
     else if(validationType == GridValidationType::ObliqueIncreasing)
     {
         int lowerSubscript{lastPlayedRow + (p_inARow - 1)};
-        lowerSubscript = min(m_nbRows - 1, lowerSubscript);
+        lowerSubscript = std::min(m_nbRows - 1, lowerSubscript);
 
         if(rightSubscript - lastPlayedColumn > lowerSubscript - lastPlayedRow)
         {
@@ -365,12 +363,12 @@ int GameBoard::upperValidationLimit(Position p_positionLastPlacedDisc, int p_inA
     int lastPlayedColumn{p_positionLastPlacedDisc.columnValue()};
 
     int upperSubscript{lastPlayedRow + (p_inARow - 1)};
-    upperSubscript = min(m_nbRows - 1, upperSubscript);
+    upperSubscript = std::min(m_nbRows - 1, upperSubscript);
 
     if(validationType == GridValidationType::ObliqueDecreasing)
     {
         int leftSubscript{lastPlayedColumn - (p_inARow - 1)};
-        leftSubscript = max(leftSubscript, 0);
+        leftSubscript = std::max(leftSubscript, 0);
 
         if(upperSubscript - lastPlayedRow > lastPlayedColumn - leftSubscript)
         {
@@ -380,7 +378,7 @@ int GameBoard::upperValidationLimit(Position p_positionLastPlacedDisc, int p_inA
     else if(validationType == GridValidationType::ObliqueIncreasing)
     {
         int rightSubscript{lastPlayedColumn + (p_inARow - 1)};
-        rightSubscript = min(rightSubscript, m_nbColumns - 1);
+        rightSubscript = std::min(rightSubscript, m_nbColumns - 1);
 
         if(upperSubscript - lastPlayedRow > rightSubscript - lastPlayedColumn)
         {
@@ -398,12 +396,12 @@ int GameBoard::lowerValidationLimit(Position p_positionLastPlacedDisc, int p_inA
     int lastPlayedColumn{p_positionLastPlacedDisc.columnValue()};
 
     int lowerSubscript{lastPlayedRow - (p_inARow - 1)};
-    lowerSubscript = max(0, lowerSubscript);
+    lowerSubscript = std::max(0, lowerSubscript);
 
     if(validationType == GridValidationType::ObliqueDecreasing)
     {
         int rightSubscript{lastPlayedColumn + (p_inARow - 1)};
-        rightSubscript = min(rightSubscript, m_nbColumns - 1);
+        rightSubscript = std::min(rightSubscript, m_nbColumns - 1);
 
         if(lastPlayedRow - lowerSubscript > rightSubscript - lastPlayedColumn)
         {
@@ -413,7 +411,7 @@ int GameBoard::lowerValidationLimit(Position p_positionLastPlacedDisc, int p_inA
     else if(validationType == GridValidationType::ObliqueIncreasing)
     {
         int leftSubscript = lastPlayedColumn - (p_inARow - 1);
-        leftSubscript = max(leftSubscript, 0);
+        leftSubscript = std::max(leftSubscript, 0);
 
         if(lastPlayedRow - lowerSubscript > lastPlayedColumn - leftSubscript)
         {

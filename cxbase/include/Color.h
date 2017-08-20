@@ -37,7 +37,8 @@
 #include "AsciiColorCode.h"
 
 
-BEGIN_CXBASE_NAMESPACE
+namespace cxbase
+{
 
 
 /***********************************************************************************************//**
@@ -46,8 +47,9 @@ BEGIN_CXBASE_NAMESPACE
  * A Color object is composed of 32 bits defining its position on the RGBA spectrum and an
  * AsciiColorCode (optional) to display in text mode. Of the 32 bits, 8 are for the red component,
  * 8 are for the green component, 8 are for the blue component and 8 are for the alpha component,
- * which defines opacity. The absence is seen as the color for which all four RGBA components are
- * set to 0. See https://www.w3schools.com/colors/colors_hex.asp for more information.
+ * which defines opacity. The absence of color is reesented as the Color object for which all four 
+ * RGBA components are set to 0. See https://www.w3schools.com/colors/colors_hex.asp for more 
+ * information.
  *
  * @invariant All RBGA values are set between 0 and 255 inclusively.
  *
@@ -111,7 +113,7 @@ public:
     int blue() const {return m_blue;}
 
     /*******************************************************************************************//**
-     * Aplpha component accessor.
+     * Alpha component accessor.
      *
      * @return The Color's alpha component value (8 bits).
      *
@@ -146,8 +148,8 @@ public:
      * Not-equal-to operator.
      *
      * Two Colors are considered @b NOT equal <em> if and only if </em> at least one of their RGBA
-     * components are NOT equal. The way the color is represented in text mode has no effect on
-     * the non-equality check.
+     * components is @b NOT equal. The way the Color is represented in text mode has no effect 
+     * on the non-equality check.
      *
      * @param[in] p_color The Color to compare with.
      *
@@ -182,6 +184,6 @@ private:
 
 };
 
-END_CXBASE_NAMESPACE
+} // namespace cxbase
 
 #endif /* COLOR_H_52B8DD85_78C2_40D9-9354_8BA481E96E38 */

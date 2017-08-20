@@ -42,32 +42,33 @@
 #include "Position.h"
 
 
-BEGIN_CXBASE_NAMESPACE
+namespace cxbase
+{
 
 /***********************************************************************************************//**
- * class GameBoard
+ * @class GameBoard
  *
  * Connect X GameBoard.
  *
- * A Connect X GameBoard consists mainly of a Grid, or a 2D Disc array and dimensionnal information
- * about the grid. In this document, grid and GameBoard will be used interchangeably. The GameBoard
+ * A Connect X GameBoard consists mainly of a Grid, or a 2D Disc array, and dimensionnal information
+ * about the Grid. In this document, Grid and GameBoard will be used interchangeably. The GameBoard
  * also support features to check itself for a winner if additionnal information is supplied
  * (like the <em> in a row </em> value for the game).
  *
- * @invariant The number of rows exceeds the minimal number of rows: 6
- * @invariant The number of rows is less than the maximal number of rows: 64
- * @invariant The number of columns exceeds the minimal number of columns: 7
- * @invariant The number of columns is less than the maximal number of columns: 64
+ * @invariant The number of rows exceeds or is equal to the minimal number of rows: 6
+ * @invariant The number of rows is less than  or equal to the maximal number of rows: 64
+ * @invariant The number of columns exceeds  or is equal to the minimal number of columns: 7
+ * @invariant The number of columns is less than  or equal to the maximal number of columns: 64
  *
  * @note If you want dimensions smaller than 6 by 7 or larger than 64 by 64, you must recompile
- * the cXbase library after having modified the values for private data members @c NB_ROWS_MIN,
+ * the cxbase library after having modified the values for private data members @c NB_ROWS_MIN,
  * @c NB_COLUMNS_MIN, @c NB_ROWS_MAX and @c NB_COLUMNS_MAX to your needs. Note that the library
  * has only been officially tested for default values.
  *
  * @note 3D GameBoards are not supported.
  *
  **************************************************************************************************/
-class GameBoard : public CXUTIL::IEnforceContract, public CXUTIL::ICliObject
+class GameBoard : public cxutil::IEnforceContract, public cxutil::ICliObject
 {
 
 private:
@@ -97,10 +98,10 @@ public:
      * @param[in] p_nbRows      The wanted number of rows for the GameBoard.
      * @param[in] p_nbColumns   The wanted number of columns for the GameBoard.
      *
-     * @pre The number of rows exceeds the minimal number of rows: 6
-     * @pre The number of rows is less than the maximal number of rows: 64
-     * @pre The number of columns exceeds the minimal number of columns: 7
-     * @pre The number of columns is less than the maximal number of columns: 64
+     * @pre The number of rows exceeds or is equal to the minimal number of rows: 6
+     * @pre The number of rows is less than  or equal to the maximal number of rows: 64
+     * @pre The number of columns exceeds  or is equal to the minimal number of columns: 7
+     * @pre The number of columns is less than  or equal to the maximal number of columns: 64
      *
      **********************************************************************************************/
     GameBoard(int p_nbRows, int p_nbColumns);
@@ -112,7 +113,6 @@ public:
      * Accessor for the grid.
      *
      * @return The Gameboard grid.
-     * @todo This in soly used as a mean to iterate over the grid... Make an iterator instead!
      *
      **********************************************************************************************/
     Grid grid() const;
@@ -128,7 +128,7 @@ public:
 
 
     /*******************************************************************************************//**
-     * Accessor for the number of columns in the Gameboard.
+     * Accessor for the number of columns in the GameBoard.
      *
      * @return The number of columns in the GameBoard.
      *
@@ -164,11 +164,9 @@ public:
      * Places a Disc in a specific Column.
      *
      * Just like in the classic Connect 4 game, the Disc is inserted in a specific Column and sets
-     * to the bottommost available Position in the Column.
+     * to the bottommost available Position in the Column. For example:
      *
      *   @verbatim
-     *
-     *   Example:
      *
      *      | N | <- Last placed disc (unless already full, see below)
      *      | R |
@@ -179,8 +177,8 @@ public:
      *
      *   @endverbatim
      *
-     * If the Column is already full, the action is ignored (the disc is not placed!) ad the top
-     * most position is returned. It is a good idea to use the isColumnFull() method before
+     * If the Column is already full, the action is ignored (the disc is not placed) and the top
+     * most position is returned. It is a good idea to use the @c isColumnFull() method before
      * trying to place a Disc.
      *
      * @param[in] p_column  The Column where to insert the Disc.
@@ -191,9 +189,6 @@ public:
      *
      * @pre The Column number is between 0 and the maximum Column number for the GameBoard.
      * @pre The Disc that is placed has a ColorAsciiCode other than the space character (@c ' ').
-     *
-     * @todo Remove possibility for "no disc" Disc insertion (add as PRECONDITION) and test.
-     * @todo Test the return value.
      *
      **********************************************************************************************/
     Position placeDisc(const Column& p_column, const Disc& p_disc);
@@ -206,8 +201,6 @@ public:
      * Column's position, the Column is considered full. Concretely:
      *
      *   @verbatim
-     *
-     *   Example:
      *
      *      |   | <- Not full, no Disc here...
      *      |   |
@@ -247,7 +240,7 @@ public:
      * Checks for a win at a specified Position.
      *
      * Checks from the specified Position if a combination of @c p_inARow consecutive Discs
-     * matching the Disc at @c p_positionLastDiscPlaced ispresent either horizontally, vertically
+     * matching the Disc at @c p_positionLastDiscPlaced is present either horizontally, vertically
      * or diagonally. Be aware that it is @b NOT the responsablity of this method to know who
      * won. In other words, it only checks if @a someone won.
      *
@@ -262,9 +255,6 @@ public:
      *
      * @return @c true if someone won, @c false otherwise.
      *
-     * @todo Add unit tests for PRECONDITION checks!
-     * @todo The methods works fine, but could be optimized. See implementation for details.
-     *
      **********************************************************************************************/
     bool isWinner(const Position& p_positionLastDiscPlaced, int p_inARow) const;
 ///@}
@@ -272,9 +262,9 @@ public:
 
 ///@{ @name Operators
     /*******************************************************************************************//**
-     * Equal operator.
+     * Equal-to operator.
      *
-     * Two GameBoards are considered equal <em> if and only if </em> both their grids and
+     * Two GameBoards are considered equal <em> if and only if </em> both their Grids and
      * dimension information are the same.
      *
      * @param[in] p_gameBoard The GameBoard with which to compare.
@@ -284,9 +274,9 @@ public:
 
 
     /*******************************************************************************************//**
-     * Not equal operator.
+     * Not-equal-to operator.
      *
-     * Two GameBoards are considered @b NOT equal <em> if and only if </em> their grids or
+     * Two GameBoards are considered @b NOT equal <em> if and only if </em> their Grids or
      * dimension information (or both) are @b NOT the same.
      *
      * @param[in] p_gameBoard The GameBoard with which to compare.
@@ -311,15 +301,12 @@ protected:
      * Insert text into stream.
      *
      * A GameBoard can be inserted into a stream to text-mode using this method. Only the grid 
-     * and its underlying Discs are printed with Row and Column numbers. The character "|" is used
-     * to separate different columns.
+     * and its underlying Discs are printed with Row and Column numbers. The character @c "|" is 
+     * used to separate different columns.
      *
      * For example:
      *
      *   @code{.cpp}
-     *
-     *      // A disc, red in this case:
-     *      Disc        RED_DISC{Color::RED};
      *
      *      // A classic Connect 4 board:
      *      GameBoard   aBoard;
@@ -406,6 +393,6 @@ private:
 
 };
 
-END_CXBASE_NAMESPACE
+} // namespace cxbase
 
 #endif /* GAMEBOARD_H_59F7D710_94EA_491A_9C14_94AE5C014E9A */

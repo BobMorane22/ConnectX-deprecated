@@ -31,16 +31,14 @@
 
 #include "../include/Game.h"
 
-USING_NAMESPACE_STD
-USING_NAMESPACE_CXUTIL
-USING_NAMESPACE_CXBASE
+using namespace cxbase;
 
 Game::Game(const PlayerList& p_players, const GameBoardSPtr p_gameboard, int p_inARow):
            m_players{p_players}, m_gameboard{p_gameboard}, m_inARow{p_inARow}
 {
     PRECONDITION(p_players.size() >= 2);
     PRECONDITION(p_inARow >= 2);
-    PRECONDITION(p_inARow < min(p_gameboard->nbColumns(), p_gameboard->nbRows()));
+    PRECONDITION(p_inARow < std::min(p_gameboard->nbColumns(), p_gameboard->nbRows()));
 
     INVARIANTS();
 }
@@ -77,7 +75,7 @@ void Game::nextTurn()
 void Game::checkInvariant() const
 {
     INVARIANT(m_inARow >= 2);
-    INVARIANT(m_inARow < min(m_gameboard->nbColumns(), m_gameboard->nbRows()));
+    INVARIANT(m_inARow < std::min(m_gameboard->nbColumns(), m_gameboard->nbRows()));
 
     INVARIANT(m_nbTurns >= 0);
     INVARIANT(m_nbTurns < m_gameboard->nbPositions());

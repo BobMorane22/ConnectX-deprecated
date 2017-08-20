@@ -19,7 +19,7 @@
  *
  **************************************************************************************************/
 
-/***********************************************************************************************//**
+/***************************************************************************************************
  * @file    main.cpp
  * @author  Eric Poirier
  * @date    April 2017
@@ -29,27 +29,15 @@
  *
  **************************************************************************************************/
 
-#include <iostream>
-#include <vector>
 
 #include "Connect4Game.h" // Custom Game class
 
-USING_NAMESPACE_STD
-USING_NAMESPACE_CXBASE
+using namespace std;
+using namespace cxbase;
 
 int main()
 {
-	int IN_A_ROW {4};
-
-	// Create discs:
-	AsciiColorCode RED_COLOR_CODE      {'R'};
-	AsciiColorCode YELLOW_COLOR_CODE   {'Y'};
-
-	Color          RED                 {255, 0  , 0  , 255, RED_COLOR_CODE};
-	Color          YELLOW              {255, 255, 0  , 255, YELLOW_COLOR_CODE};
-
-	Disc           RED_DISC            {RED};
-	Disc           YELLOW_DISC         {YELLOW};
+	const int IN_A_ROW {4};
 
 	// Create players:
 	string nameP1, nameP2;
@@ -62,8 +50,8 @@ int main()
 	cout << "Second player: ";
 	getline(cin, nameP2);
 
-	shared_ptr<Player> player1{new Player{nameP1, RED_DISC}};
-	shared_ptr<Player> player2{new Player{nameP2, YELLOW_DISC}};
+	shared_ptr<Player> player1{new Player{nameP1, Disc::RED_DISC}};
+	shared_ptr<Player> player2{new Player{nameP2, Disc::YELLOW_DISC}};
 
 	// Create gameboard:
 	shared_ptr<GameBoard> classicGameBoard{new GameBoard};

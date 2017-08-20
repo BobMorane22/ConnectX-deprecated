@@ -33,9 +33,8 @@
 
 #include "../include/Disc.h"
 
-USING_NAMESPACE_STD
-USING_NAMESPACE_CXUTIL
-USING_NAMESPACE_CXBASE
+
+using namespace cxbase;
 
 
 const Disc Disc::NO_DISC        {Color::TRANSPARENT};
@@ -69,7 +68,7 @@ bool Disc::operator!=(const Disc &p_disc) const
     return !(*this == p_disc);
 }
 
-void Disc::print(ostream& p_stream) const
+void Disc::print(std::ostream& p_stream) const
 {
     p_stream << " " << asciiColorCode() << " ";
 }

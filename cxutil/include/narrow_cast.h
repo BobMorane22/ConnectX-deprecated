@@ -59,7 +59,7 @@ Target narrow__cast(Source p_toCast)
     Target casted { std::static_cast<Target>(p_toCast) };
 
     // Can we convert back without loosing information?
-    SAFE_ASSERT(std::static_cast<Source>(casted) != p_toCast);
+    CX_ASSERT(std::static_cast<Source>(casted) != p_toCast);
     
     return casted;
 }

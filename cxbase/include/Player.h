@@ -41,7 +41,8 @@
 #include "Disc.h"
 
 
-BEGIN_CXBASE_NAMESPACE
+namespace cxbase
+{
 
 /***********************************************************************************************//**
  * @class Player
@@ -54,11 +55,11 @@ BEGIN_CXBASE_NAMESPACE
  * Color attributes. In other words, a Player cannot possess a @c TRANSPARENT Disc, which is seen
  * as no disc.
  *
- * @see Name
+ * @see cxutil::Name
  * @see Disc
  *
  **************************************************************************************************/
-class Player : public CXUTIL::IEnforceContract, public CXUTIL::ICliObject
+class Player : public cxutil::IEnforceContract, public cxutil::ICliObject
 {
 
 public:
@@ -75,11 +76,11 @@ public:
      *
      * @param[in] p_name The new Player's Name.
      * @param[in] p_disc The new Player's Disc.
-     * @post @c p_name is now the Player's Name.
-     * @post @c p_disc is now the Player's Disc.
+     * @post @c p_name is the new Player's Name.
+     * @post @c p_disc is the new Player's Disc.
      *
      **********************************************************************************************/
-    Player(const CXUTIL::Name& p_name, const Disc& p_disc);
+    Player(const cxutil::Name& p_name, const Disc& p_disc);
 ///@}
 
 
@@ -90,7 +91,7 @@ public:
      * @return The Player's Name.
      *
      **********************************************************************************************/
-    CXUTIL::Name name() const {return m_name;}
+    cxutil::Name name() const {return m_name;}
 
 
     /*******************************************************************************************//**
@@ -105,7 +106,7 @@ public:
 
 ///@{ @name Operators
     /*******************************************************************************************//**
-     * Equal operator.
+     * Equal-to operator.
      *
      * Two Players are considered equal <em> if and only if </em> both their Name and Disc are
      * equal respectively.
@@ -117,7 +118,7 @@ public:
 
 
     /*******************************************************************************************//**
-     * Not equal operator.
+     * Not-equal-to operator.
      *
      * Two Players are considered @b NOT equal <em> if and ony if </em> their Name or their Disc
      * (or both) are @b NOT equal respectively.
@@ -150,6 +151,6 @@ private:
 
 };
 
-END_CXBASE_NAMESPACE
+} // namespace cxbase
 
 #endif /* PLAYER_H_9B43C099_9307_4C05_956D_3F12FE5F1A1F */

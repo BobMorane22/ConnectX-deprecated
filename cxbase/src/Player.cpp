@@ -33,12 +33,9 @@
 
 #include "../include/Player.h"
 
-USING_NAMESPACE_STD
-USING_NAMESPACE_CXUTIL
-USING_NAMESPACE_CXBASE
+using namespace cxbase;
 
-
-Player::Player(const CXUTIL::Name& p_name, const Disc& p_disc): m_name{p_name}, m_disc{p_disc}
+Player::Player(const cxutil::Name& p_name, const Disc& p_disc): m_name{p_name}, m_disc{p_disc}
 {
     POSTCONDITION(m_name == p_name);
     POSTCONDITION(m_disc == p_disc);
@@ -63,7 +60,7 @@ bool Player::operator!=(const Player& p_player) const
     return !(*this == p_player);
 }
 
-void Player::print(ostream& p_stream) const
+void Player::print(std::ostream& p_stream) const
 {
     p_stream << m_name.toString();
 }

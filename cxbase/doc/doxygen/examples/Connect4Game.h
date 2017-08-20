@@ -19,7 +19,7 @@
  *
  **************************************************************************************************/
 
-/***********************************************************************************************//**
+/***************************************************************************************************
  * @file    Connect4Game.h
  * @author  Eric Poirier
  * @date    April 2017
@@ -37,15 +37,15 @@
 #include <cxbaseAPI.h>
 
 // Connect4Game class: needed to customize th game... 
-class Connect4Game : public cXbase::Game
+class Connect4Game : public cxbase::Game
 {
 public:
     // Regular Game class, plus a specialized stream operator for
     // my own needs (none defined in the Game class):
-    Connect4Game(const std::vector< std::shared_ptr<cXbase::Player> >& p_players,
-			     const std::shared_ptr<cXbase::GameBoard> p_gameboard,
-				 int p_inARow):
-		         Game(p_players, p_gameboard, p_inARow) {}
+    Connect4Game(const std::vector< std::shared_ptr<cxbase::Player> >& p_players,
+                 const std::shared_ptr<cxbase::GameBoard> p_gameboard,
+                 int p_inARow):
+                 Game(p_players, p_gameboard, p_inARow) {}
 
     // Stream operator specific for this particular game:
 	friend std::ostream& operator<<(std::ostream& p_flux, const Connect4Game& p_game);
