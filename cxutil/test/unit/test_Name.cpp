@@ -23,7 +23,7 @@
  * @file    test_Name.cpp
  * @author  Eric Poirier
  * @date    November 2016
- * @version 0.1
+ * @version 1.0
  *
  * Unit tests for a the Name class.
  *
@@ -33,7 +33,7 @@
 #include <gtest/gtest.h>
 
 
-USING_NAMESPACE_CXUTIL
+using namespace cxutil;
 
 TEST(Name, Constructor_ValidName_NoExceptionThrown)
 {
