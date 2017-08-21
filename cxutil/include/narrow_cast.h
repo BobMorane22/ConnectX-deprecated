@@ -23,7 +23,7 @@
  * @file    narrow_cast.h
  * @author  Eric Poirier
  * @date    August 2017
- * @version 0.1
+ * @version 1.0
  *
  * narrow_cast utility.
  *

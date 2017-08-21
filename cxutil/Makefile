@@ -34,7 +34,9 @@ SRCS     = ContractException.cpp\
            Name.cpp
 
 OBJS     = $(OBJ_DIR)/ContractException.o\
+           $(OBJ_DIR)/Logger.o\
            $(OBJ_DIR)/Name.o
+
 LIBS=
 
 # Build output:
