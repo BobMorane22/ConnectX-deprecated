@@ -270,6 +270,8 @@ private:
     std::ostream*  m_outStream;              ///< The out stream in which to log the entries.
 };
 
+// The following methods are not documented: they are simple drivers...
+
 inline void Logger::logInfo(const std::string& p_message)
 {
     log(p_message, Logger::Severity::INFO);
