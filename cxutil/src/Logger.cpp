@@ -29,29 +29,29 @@
  *
  **************************************************************************************************/
 
-#include <cassert>
 #include <iostream>
 #include <sstream>
 
+#include "Assertion.h"
 #include "Logger.h"
 
 
 using namespace cxutil;
 
-Logger::Logger(const std::string& p_logFile) : m_logFile{p_logFile}
+Logger::Logger(std::ostream* p_outStream) : m_outStream{p_outStream}
 {
-    m_fileStream.open(m_logFile, std::fstream::out);
-    assert(m_fileStream.is_open());
+#if !defined(NDEBUG)
+    CX_ASSERT_MSG(m_outStream != &std::cout, "std::cout is already set as a secondary stream in degub mode.")
+#endif
 }
 
 Logger::~Logger()
 {
-    m_fileStream.close();
 }
 
 void Logger::log(const std::string& p_message, Severity p_severity)
 {
-    m_fileStream << formatLogLine(p_message, p_severity) << std::endl;
+    (*m_outStream) << formatLogLine(p_message, p_severity) << std::endl;
     
     #if !defined(NDEBUG)
     std::cout << formatLogLine(p_message, p_severity) << std::endl;

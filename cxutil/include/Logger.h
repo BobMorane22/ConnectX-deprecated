@@ -32,7 +32,6 @@
 #ifndef LOGGER_H_96F6CF7D_75F8_450A_A335_86BEEE723B83
 #define LOGGER_H_96F6CF7D_75F8_450A_A335_86BEEE723B83
 
-#include <fstream>
 #include <string>
 
 namespace cxutil
@@ -49,13 +48,18 @@ namespace cxutil
  * available: DEBUG.
  *
  * If you log something in release mode (NDEGUG set), all entries will be redirected only to the 
- * log file. In the other hand, if you log something in debug mode, all entries go in the log file 
+ * log stream. In the other hand, if you log something in debug mode, all entries go in the log stream 
  * as well as in the standard output (usually a terminal). To log something, use the @c logInfo(), 
  * @c logWarning(), @c logError() and @c logDebug() 
  * methods. For example:
  *
- * @verbatim
- *   Logger logger("execution.log")
+ * @code{.cpp}
+ *
+ *   std::fstream stream("execution.log");
+ *
+ *   // Assuming the stream is good...
+ *
+ *   Logger logger(&stream)
  *
  *   logger.logInfo("Logger activated...");
  *
@@ -70,7 +74,7 @@ namespace cxutil
  *
  *   //...
  *
- * @endverbatim
+ * @endcode
  *
  * Will produce an output like:
  * 
@@ -110,12 +114,12 @@ public:
      *
      * It is through the constructor that a filename can be specified into which log all entries.
      *
-     * @param[in]   p_logFile   The file name (with path) in which to output the log entries.
+     * @param[in]   p_outStream   The out stream in which to log the entries.
      * 
-     * @pre     p_logFile must be a valid file name.
+     * @pre     The out stream must be valid.
      *
      **********************************************************************************************/
-    Logger(const std::string& p_logFile);
+    Logger(std::ostream* p_outStream);
 
 
     /*******************************************************************************************//**
@@ -261,10 +265,9 @@ private:
      **********************************************************************************************/
     std::string formatLogLine(const std::string& p_message, Severity p_severity) const;
 
-    char          m_separator   {'\t'};     ///< The colum separator character.
-    unsigned int  m_lineNumber  {0   };     ///< The entry line number.
-    std::string   m_logFile;                ///< The full log file name (with path).
-    std::ofstream m_fileStream;             ///< The file stream.
+    char           m_separator   {'\t'};     ///< The colum separator character.
+    unsigned int   m_lineNumber  {0   };     ///< The entry line number.
+    std::ostream*  m_outStream;              ///< The out stream in which to log the entries.
 };
 
 inline void Logger::logInfo(const std::string& p_message)
