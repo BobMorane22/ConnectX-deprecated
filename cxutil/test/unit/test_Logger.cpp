@@ -84,7 +84,7 @@ TEST(Logger, ConstructorWithParameter)
                                header        + separator +
                                message       + endOfLine   };
     
-    std::regex fileFormat{oneLine + oneLine + oneLine + oneLine};           /* Four (4) log lines... */
+    std::regex fileFormat{"(" + oneLine + oneLine + oneLine + oneLine + ")+"};
     
     ASSERT_TRUE(std::regex_match(t_logContents, fileFormat));
 }
