@@ -32,12 +32,15 @@
 #ifndef CXUTILAPI_H_FCFC9F42_868C_4859_A16C_11D2013A3788
 #define CXUTILAPI_H_FCFC9F42_868C_4859_A16C_11D2013A3788
 
+#include"Assertion.h"
 #include"ContractException.h"
-#include"IEnforceContract.h"
-#include"ICliObject.h"
 #include"Coordinate.h"
+#include"ICliObject.h"
+#include"IEnforceContract.h"
 #include"Name.h"
-//#include"narrow_cast.h"
+#include"Uncopyable.h"
+
+#include"narrow_cast.h"
 
 #endif // CXUTILAPI_H_FCFC9F42_868C_4859_A16C_11D2013A3788
 

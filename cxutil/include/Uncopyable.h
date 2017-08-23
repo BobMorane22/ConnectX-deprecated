@@ -35,6 +35,39 @@
 namespace cxutil
 {
 
+/***********************************************************************************************//**
+ * @class UnCopyable
+ *
+ * Inherit from this class to make the child class uncopyable. Since UnCopyable is not meant to
+ * be used polymorphically, (i.e. we never want to use a pointer to UnCopyable to represent a 
+ * derived class) @c private inheritance can be used (and is recommended).
+ * 
+ * For example:
+ *
+ * @code{.cpp}
+ *
+ *   class Foo : private UnCopyable
+ *   {
+ *       //...
+ *   };
+ *   
+ *   int main()
+ *   {
+ *       Foo first;
+ *       
+ *       Foo second{first}; // Not possible!
+ *       
+ *       // or:
+ *       
+ *       Foo second;
+ *       
+ *       second = first; // Not possible!
+ *       return 0;
+ *   }
+ *   
+ * @endcode
+ *
+ **************************************************************************************************/
 class Uncopyable
 {
 protected:
