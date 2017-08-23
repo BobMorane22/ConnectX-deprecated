@@ -34,7 +34,6 @@
 
 #include <string>
 
-class ostream;
 
 namespace cxutil
 {
@@ -45,7 +44,7 @@ public:
 
     static const std::string NO_MESSAGE;
 
-    enum class Code: int
+    enum class Code : int
     {
         OK,       /* Action executes as expected.                                        */
         WARNING,  /* Action does NOT execute as expected. Executable may not be unstable */
@@ -53,7 +52,7 @@ public:
         CANCEL    /* Action is canceled.                                                 */
     };
 
-     ReturnCode( Code p_code = Code::ERROR, const std::string p_message = NO_MESSAGE );
+     ReturnCode(Code p_code = Code::ERROR, const std::string p_message = NO_MESSAGE);
     ~ReturnCode();
 
     bool        isOk();
@@ -69,8 +68,8 @@ public:
 
 private:
 
-    bool        m_tested   { false };
-    Code        m_code     { Code::ERROR };
+    bool        m_tested   {false      };
+    Code        m_code     {Code::ERROR};
     std::string m_message;
 };
 

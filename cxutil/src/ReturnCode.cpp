@@ -32,23 +32,23 @@
 #include <cassert>
 #include <iostream>
 
+#include "Assertion.h"
 #include "ReturnCode.h"
 
 using namespace cxutil;
 
-const std::string ReturnCode::NO_MESSAGE { "" };
+const std::string ReturnCode::NO_MESSAGE {""};
 
 typedef ReturnCode::Code Code;
 
-ReturnCode::ReturnCode( Code p_code, const std::string p_message )
+ReturnCode::ReturnCode(Code p_code, const std::string p_message): m_code{p_code}, m_message{p_message}
 {
 }
 
 ReturnCode::~ReturnCode()
 {
-    // The return code should have been tested
-    // at least once:
-    assert( m_tested );
+    // The return code should have been tested at least once:
+    CX_ASSERT(m_tested);
 }
 
 bool ReturnCode::isOk()
