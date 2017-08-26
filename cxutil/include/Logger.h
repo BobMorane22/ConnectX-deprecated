@@ -107,6 +107,8 @@ class Logger final
 {
 public:
 
+///@{ Object construction and destruction
+
     Logger() = delete;
 
     /*******************************************************************************************//**
@@ -127,6 +129,10 @@ public:
      *
      **********************************************************************************************/
     ~Logger();
+
+///@}
+
+///@{ Logging
 
 
     /*******************************************************************************************//**
@@ -190,6 +196,9 @@ public:
     void logDebug(const std::string& p_message);
     #endif
 
+///@}
+
+
 private:
 
     /*******************************************************************************************//**
@@ -208,6 +217,9 @@ private:
         #endif
     };
 
+
+///@{ Logging
+
     /*******************************************************************************************//**
      * Log a message.
      *
@@ -217,11 +229,16 @@ private:
      * @param[in] p_severity    The Severity level for the message.
      *
      * @pre     p_message is a non-empty string.
+     * @pre     The out stream is good.
      * @post    The message is logged to the wanted severity level.
+     * @post    The out stream is good.
      *
      **********************************************************************************************/
     void log(const std::string& p_message, Severity p_severity);
 
+///@}
+
+///@{ Entry format
 
     /*******************************************************************************************//**
      * Calculates the time elapsed (in ms) since the beginning of the application execution.
@@ -265,12 +282,17 @@ private:
      **********************************************************************************************/
     std::string formatLogLine(const std::string& p_message, Severity p_severity) const;
 
+///@}
+
+
     char           m_separator   {'\t'};     ///< The colum separator character.
     unsigned int   m_lineNumber  {0   };     ///< The entry line number.
     std::ostream*  m_outStream;              ///< The out stream in which to log the entries.
 };
 
 // The following methods are not documented: they are simple drivers...
+
+///@{ Logging
 
 inline void Logger::logInfo(const std::string& p_message)
 {
@@ -293,6 +315,9 @@ inline void Logger::logDebug(const std::string& p_message)
     log(p_message, Logger::Severity::DEBUG);
 }
 #endif
+
+///@}
+
 
 } // namespace cxutil
 
