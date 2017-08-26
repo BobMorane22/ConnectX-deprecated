@@ -41,7 +41,7 @@ const std::string ReturnCode::NO_MESSAGE {""};
 
 typedef ReturnCode::Code Code;
 
-ReturnCode::ReturnCode(Code p_code, const std::string p_message): m_code{p_code}, m_message{p_message}
+ReturnCode::ReturnCode(Code p_code, const std::string& p_message): m_code{p_code}, m_message{p_message}
 {
 }
 
@@ -92,9 +92,4 @@ bool ReturnCode::isTested() const
 std::string ReturnCode::message() const
 {
     return m_message;
-}
-
-Code ReturnCode::code() const
-{
-    return m_code;
 }

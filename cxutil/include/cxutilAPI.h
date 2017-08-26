@@ -38,6 +38,7 @@
 #include"ICliObject.h"
 #include"IEnforceContract.h"
 #include"Name.h"
+#include"ReturnCode.h"
 #include"Uncopyable.h"
 
 #include"narrow_cast.h"
