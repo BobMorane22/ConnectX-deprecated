@@ -29,10 +29,12 @@ VPATH        = unit
 
 SRCS      = cxutilTest.cpp\
             test_Logger.cpp\
-            test_Name.cpp
+            test_Name.cpp\
+            test_ReturnCode.cpp
 
 OBJS      = test_Name.o\
-            test_Logger.o
+            test_Logger.o\
+            test_ReturnCode.o
 
 OBJS := $(addprefix $(OBJ_DIR)/,$(OBJS))
 

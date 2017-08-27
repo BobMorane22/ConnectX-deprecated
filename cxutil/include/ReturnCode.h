@@ -99,18 +99,10 @@ public:
      * Destructor.
      *
      * In debug mode, this destrutor checks it the ReturnCode has been checked at least once
-     * elsewhere in the code. To check a ReturnCode object, you need to use one of the four
-     * following methods:
-     *
-     *      @li @c isOK()
-     *      @li @c isWarning()
-     *      @li @c isError()
-     *      @li @c isCancelled() 
+     * elsewhere in the code. To check a ReturnCode object, you need to call the method isOK()
+     * on the ReturnCode object.
      *
      * @see @c isOK()
-     * @see isWarning()
-     * @see isError()
-     * @see isCancelled() 
      *
      **********************************************************************************************/
     ~ReturnCode();

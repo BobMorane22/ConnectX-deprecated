@@ -60,22 +60,16 @@ bool ReturnCode::isOk()
 
 bool ReturnCode::isWarning()
 {
-    m_tested = true;
-
     return m_code == Code::WARNING;
 }
 
 bool ReturnCode::isError()
 {
-    m_tested = true;
-
     return m_code == Code::ERROR;
 }
 
 bool ReturnCode::isCancelled()
 {
-    m_tested = true;
-
     return m_code == Code::CANCEL;
 }
 
