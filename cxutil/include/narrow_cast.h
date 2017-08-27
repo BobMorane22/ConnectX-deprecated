@@ -48,13 +48,13 @@ namespace cxutil
  * 
  * @tparam     Target   The type to cast to.
  * @tparam     Source   The type to cast from.
- * @param[in]  p_toCast The object to cast from type "Source" to type "Target".
+ * @param[in]  p_toCast The object to cast from type @c Source to type @c Target.
  *
  * @return     The @c p_toCast object casted to type @c Target.
  *
  **************************************************************************************************/
 template<class Target, class Source>
-Target narrow__cast(Source p_toCast)
+Target narrow_cast(Source p_toCast)
 {
     Target casted { std::static_cast<Target>(p_toCast) };
 
