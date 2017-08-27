@@ -103,8 +103,8 @@ def printHelp():
     print("\t-h, --help\tPrint usage.\n")
     
     print("EXAMPLES:")
-    print("\t" + script + "/home/user/someDirectory/ cxfoo")
-    print("\t" + script + "/home/user/someDirectory/ cXfOo")
+    print("\t" + script + " /home/user/someDirectory/ cxfoo")
+    print("\t" + script + " /home/user/someDirectory/ cXfOo")
     print("\t" + script + " -h")
     print("\t" + script + " --help\n")
     print("\tNote that in the two first examples, \"/home/user/someDirectory/\"")
