@@ -31,11 +31,13 @@ INCLUDES     = -I$(MAKEFILE_LOC)/src -I$(MAKEFILE_LOC)/include
 VPATH        = src
 
 SRCS     = ContractException.cpp\
+           ISubject.cpp\
            Logger.cpp\
            Name.cpp\
            ReturnCode.cpp
 
 OBJS     = $(OBJ_DIR)/ContractException.o\
+           $(OBJ_DIR)/ISubject.o\
            $(OBJ_DIR)/Logger.o\
            $(OBJ_DIR)/Name.o\
            $(OBJ_DIR)/ReturnCode.o

@@ -33,26 +33,43 @@
 #ifndef IOBSERVER_H_516B2B88_CC83_49D3_8D69_D7AC6A4F72E2
 #define IOBSERVER_H_516B2B88_CC83_49D3_8D69_D7AC6A4F72E2
 
-#include <memory>
 
-
-// Forward declaration:
 namespace cxutil
 {
     class ISubject;
-} // namespace cxutil
+}
 
 namespace cxutil
 {
 
+/***********************************************************************************************//**
+ * @class IObserver
+ *
+ * Implement this interface to make a class an observer. Implementing this interface means 
+ * implementing the @c update() method, which describles how an observer is updated when 
+ * notified by the subject.
+ *
+ * @see ISubject
+ *
+ **************************************************************************************************/
 class IObserver
 {
 public:
+
     virtual ~IObserver() = default;
 
-    virtual void update( ISubject* p_subject ) = 0;
+    /*******************************************************************************************//**
+     * Update observer.
+     *
+     * This method is automatically called when the ISubject to which the observer has been 
+     * registered notifies its observer(s).
+     *
+     * @param[in] p_subject The subject notifying (hence observed).
+     *
+     **********************************************************************************************/
+    virtual void update(ISubject* p_subject) = 0;
 };
 
-}; // namespace cxutil
+} // namespace cxutil
 
 #endif /* IOBSERVER_H_516B2B88_CC83_49D3_8D69_D7AC6A4F72E2 */
