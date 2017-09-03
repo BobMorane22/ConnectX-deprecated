@@ -31,6 +31,7 @@ INCLUDES     = -I$(MAKEFILE_LOC)/src -I$(MAKEFILE_LOC)/include
 VPATH        = src
 
 SRCS     = ContractException.cpp\
+           Logger.cpp\
            Name.cpp\
            ReturnCode.cpp
 
