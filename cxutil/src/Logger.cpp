@@ -40,9 +40,13 @@ using namespace cxutil;
 
 Logger::Logger(std::ostream* p_outStream) : m_outStream{p_outStream}
 {
+    PRECONDITION(p_outStream->good());
+
 #if !defined(NDEBUG)
     CX_ASSERT_MSG(m_outStream != &std::cout, "std::cout is already set as a secondary stream in degub mode.")
 #endif
+
+    INVARIANTS();
 }
 
 Logger::~Logger()
@@ -51,6 +55,8 @@ Logger::~Logger()
 
 void Logger::log(const std::string& p_message, Severity p_severity)
 {
+    PRECONDITION(!p_message.empty());
+
     (*m_outStream) << formatLogLine(p_message, p_severity) << std::endl;
     
     #if !defined(NDEBUG)
@@ -58,6 +64,8 @@ void Logger::log(const std::string& p_message, Severity p_severity)
     #endif
     
     m_lineNumber++;
+    
+    INVARIANTS();
 }
 
 double Logger::execTime() const
@@ -98,7 +106,9 @@ std::string Logger::formatLogHeader() const
     
     std::ostringstream lineNumber;
     lineNumber << m_lineNumber;
-    
+
+    INVARIANTS();
+
     return lineNumber.str() + m_separator + 
            timeExec.str()   + m_separator + 
            timeAndDate();
@@ -106,6 +116,8 @@ std::string Logger::formatLogHeader() const
 
 std::string Logger::formatLogLine(const std::string& p_message, Logger::Severity p_severity) const
 {
+    PRECONDITION(!p_message.empty());
+
     std::string logLine;
     
     switch(p_severity)
@@ -139,5 +151,13 @@ std::string Logger::formatLogLine(const std::string& p_message, Logger::Severity
         }
     }
 
+    INVARIANTS();
+
     return logLine;
+}
+
+void Logger::checkInvariant() const
+{
+    INVARIANT(m_lineNumber > 0);
+    INVARIANT(m_outStream->good());
 }

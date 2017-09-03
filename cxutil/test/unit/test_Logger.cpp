@@ -39,6 +39,93 @@
 
 using namespace cxutil;
 
+TEST(Logger, ConstructorWithParameters_GoodStream_NoExceptionThrown)
+{
+    std::ostringstream t_stream;
+
+    ASSERT_NO_THROW(Logger{&t_stream});
+}
+
+TEST(Logger, ConstructorWithParameters_ReadWriteErrorStream_ExceptionThrown)
+{
+    std::ostringstream t_stream;
+    t_stream.setstate(std::ios::badbit);
+    
+    ASSERT_THROW(Logger{&t_stream}, PreconditionException);
+}
+
+TEST(Logger, ConstructorWithParameters_LogicErrorStream_ExceptionThrown)
+{
+    std::ostringstream t_stream;
+    t_stream.setstate(std::ios::failbit);
+    
+    ASSERT_THROW(Logger{&t_stream}, PreconditionException);
+}
+
+TEST(Logger, LogInfo_NonEmptyMessage_NoExceptionThrown)
+{
+    std::ostringstream t_stream;
+    Logger t_logger{&t_stream};
+    
+    ASSERT_NO_THROW(t_logger.logInfo("A message!"));
+}
+
+TEST(Logger, LogInfo_EmptyMessage_ExceptionThrown)
+{
+    std::ostringstream t_stream;
+    Logger t_logger{&t_stream};
+    
+    ASSERT_THROW(t_logger.logInfo(""), PreconditionException);
+}
+
+TEST(Logger, LogWarning_NonEmptyMessage_NoExceptionThrown)
+{
+    std::ostringstream t_stream;
+    Logger t_logger{&t_stream};
+    
+    ASSERT_NO_THROW(t_logger.logWarning("A message!"));
+}
+
+TEST(Logger, LogWarning_EmptyMessage_ExceptionThrown)
+{
+    std::ostringstream t_stream;
+    Logger t_logger{&t_stream};
+    
+    ASSERT_THROW(t_logger.logWarning(""), PreconditionException);
+}
+
+TEST(Logger, LogError_NonEmptyMessage_NoExceptionThrown)
+{
+    std::ostringstream t_stream;
+    Logger t_logger{&t_stream};
+    
+    ASSERT_NO_THROW(t_logger.logError("A message!"));
+}
+
+TEST(Logger, LogError_EmptyMessage_ExceptionThrown)
+{
+    std::ostringstream t_stream;
+    Logger t_logger{&t_stream};
+    
+    ASSERT_THROW(t_logger.logError(""), PreconditionException);
+}
+
+TEST(Logger, LogDebug_NonEmptyMessage_NoExceptionThrown)
+{
+    std::ostringstream t_stream;
+    Logger t_logger{&t_stream};
+    
+    ASSERT_NO_THROW(t_logger.logDebug("A message!"));
+}
+
+TEST(Logger, LogDebug_EmptyMessage_ExceptionThrown)
+{
+    std::ostringstream t_stream;
+    Logger t_logger{&t_stream};
+    
+    ASSERT_THROW(t_logger.logDebug(""), PreconditionException);
+}
+
 class LoggerTests : public::testing::Test
 {
 public:
@@ -75,7 +162,7 @@ private:
     std::regex t_logFileFormat;
 };
 
-TEST_F(LoggerTests, ConstructorWithParameter)
+TEST_F(LoggerTests, AllTypesMessages_ValidLogger_FormatGood)
 {
     std::ostringstream t_logStream;
     std::string messageInfo    {"Beginning of unit test..."};

@@ -34,6 +34,8 @@
 
 #include <string>
 
+#include "IEnforceContract.h"
+
 namespace cxutil
 {
 
@@ -44,10 +46,10 @@ namespace cxutil
  *
  * Once a Logger object has been instanciated, you can log messages to document the program's
  * execution. All messages are coupled with one of the three Severity levels: INFO, WARNING and
- * ERROR. If you are in degub mode (i.e. if NDEBUG is not defined) a fourth Severity level is
+ * ERROR. If you are in degub mode (i.e. if @c NDEBUG is not defined) a fourth Severity level is
  * available: DEBUG.
  *
- * If you log something in release mode (NDEGUG set), all entries will be redirected only to the 
+ * If you log something in release mode (@c NDEGUG set), all entries will be redirected only to the 
  * log stream. In the other hand, if you log something in debug mode, all entries go in the log stream 
  * as well as in the standard output (usually a terminal). To log something, use the @c logInfo(), 
  * @c logWarning(), @c logError() and @c logDebug() 
@@ -92,18 +94,18 @@ namespace cxutil
  *   - the entry message.
  *
  * Every column is separated by a tab (@c '\t') character, which makes is possible for most
- * spreadsheet software (i.e. LibreOffice) to import the log file for surther analysis.
+ * spreadsheet software (i.e. LibreOffice Calc) to import the log file for further analysis.
  *
  * @note A Logger object is not thread-safe.
  *
  * @invariant The line numbers are always positive
- * @invariant The file stream is opened from the beginning of the Logger object's life until
+ * @invariant The log stream is opened from the beginning of the Logger object's life until
  *            its destruction.
  *
  * @see Severity
  *
  **************************************************************************************************/
-class Logger final
+class Logger final : public IEnforceContract
 {
 public:
 
@@ -114,11 +116,12 @@ public:
     /*******************************************************************************************//**
      * Constructor with parameter.
      *
-     * It is through the constructor that a filename can be specified into which log all entries.
+     * It is through the constructor that a filename can be specified into which to log all 
+     * entries.
      *
-     * @param[in]   p_outStream   The out stream in which to log the entries.
+     * @param[in] p_outStream The out stream in which to log the entries.
      * 
-     * @pre     The out stream must be valid.
+     * @pre The out stream must be valid.
      *
      **********************************************************************************************/
     Logger(std::ostream* p_outStream);
@@ -126,6 +129,9 @@ public:
 
     /*******************************************************************************************//**
      * Destructor.
+     *
+     * @note The log stream is not closed by the using Logger object. It must be destroyed (if
+     *       necessary, once the Logger object has been destroyed.
      *
      **********************************************************************************************/
     ~Logger();
@@ -144,7 +150,6 @@ public:
      * @param[in]   p_message   The message to log.
      *
      * @pre  p_message is a non empty string.
-     * @post The message is logged as an INFO severity message.
      *
      **********************************************************************************************/
     void logInfo(const std::string& p_message);
@@ -159,7 +164,6 @@ public:
      * @param[in]   p_message   The message to log.
      *
      * @pre     p_message is a non empty string.
-     * @post    The message is logged as a WARNING severity message.
      *
      **********************************************************************************************/
     void logWarning(const std::string& p_message);
@@ -174,7 +178,6 @@ public:
      * @param[in]   p_message   The message to log.
      * 
      * @pre     p_message is a non-empty string.
-     * @post    The message is logged as an ERROR severity message.
      *
      **********************************************************************************************/
     void logError(const std::string& p_message);
@@ -190,7 +193,6 @@ public:
      * @param[in]   p_message   The message to log.
      * 
      * @pre     p_message is a non-empty string.
-     * @post    The message is logged as a DEBUG severity message.
      *
      **********************************************************************************************/
     void logDebug(const std::string& p_message);
@@ -227,11 +229,6 @@ private:
      *
      * @param[in] p_message     The message to log.
      * @param[in] p_severity    The Severity level for the message.
-     *
-     * @pre     p_message is a non-empty string.
-     * @pre     The out stream is good.
-     * @post    The message is logged to the wanted severity level.
-     * @post    The out stream is good.
      *
      **********************************************************************************************/
     void log(const std::string& p_message, Severity p_severity);
@@ -273,20 +270,19 @@ private:
      *
      * @param[in] p_message     The message to log.
      * @param[in] p_severity    The message severity level.
-     * 
-     * @pre     p_message is a non-empty string.
-     * @post    The line is adequatly formatted for logging.
      *
      * @return  The formatted log line.
      *
      **********************************************************************************************/
     std::string formatLogLine(const std::string& p_message, Severity p_severity) const;
 
+
+    void checkInvariant() const;
 ///@}
 
 
     char           m_separator   {'\t'};     ///< The colum separator character.
-    unsigned int   m_lineNumber  {0   };     ///< The entry line number.
+    unsigned int   m_lineNumber  {1   };     ///< The entry line number.
     std::ostream*  m_outStream;              ///< The out stream in which to log the entries.
 };
 
@@ -296,22 +292,30 @@ private:
 
 inline void Logger::logInfo(const std::string& p_message)
 {
+    PRECONDITION(!p_message.empty());
+
     log(p_message, Logger::Severity::INFO);
 }
 
 inline void Logger::logWarning(const std::string& p_message)
 {
+    PRECONDITION(!p_message.empty());
+
     log(p_message, Logger::Severity::WARNING);
 }
 
 inline void Logger::logError(const std::string& p_message)
 {
+    PRECONDITION(!p_message.empty());
+
     log(p_message, Logger::Severity::ERROR);
 }
 
 #if !defined(NDEBUG)
 inline void Logger::logDebug(const std::string& p_message)
 {
+PRECONDITION(!p_message.empty());
+
     log(p_message, Logger::Severity::DEBUG);
 }
 #endif
