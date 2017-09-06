@@ -37,16 +37,14 @@
 #include "ISubject.h"
 
 
-using namespace cxutil;
-
-ISubject::~ISubject()
+cxutil::ISubject::~ISubject()
 {
     m_observers.clear();
     
     CX_ASSERT(m_observers.empty());
 }
 
-void ISubject::registerObserver(IObserver* p_observer)
+void cxutil::ISubject::registerObserver(cxutil::IObserver* p_observer)
 {
     CX_ASSERT(p_observer != nullptr);
 
@@ -65,7 +63,7 @@ void ISubject::registerObserver(IObserver* p_observer)
     }
 }
 
-void ISubject::removeObserver(IObserver* p_observer)
+void cxutil::ISubject::removeObserver(cxutil::IObserver* p_observer)
 {
     CX_ASSERT(p_observer != nullptr);
 
@@ -82,7 +80,7 @@ void ISubject::removeObserver(IObserver* p_observer)
     }
 }
 
-void ISubject::notifyObservers()
+void cxutil::ISubject::notifyObservers()
 {
     for (const auto& observer : m_observers)
     {

@@ -28,12 +28,14 @@ LIBINCLUDES  = -L$(CX_BUILD_ROOT)/connectx/libs
 VPATH        = unit
 
 SRCS      = cxutilTest.cpp\
+            test_ISubject.cpp\
             test_Logger.cpp\
             test_Name.cpp\
             test_ReturnCode.cpp
 
-OBJS      = test_Name.o\
+OBJS      = test_ISubject.o\
             test_Logger.o\
+            test_Name.o\
             test_ReturnCode.o
 
 OBJS := $(addprefix $(OBJ_DIR)/,$(OBJS))
