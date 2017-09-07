@@ -1,6 +1,7 @@
 #include "ContractException.h"
+#include "IEnforceContract.h"
 
-class PositiveValue
+class PositiveValue : public IEnforceContract
 {
 
 public:
