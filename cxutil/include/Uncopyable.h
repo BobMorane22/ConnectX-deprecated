@@ -68,15 +68,15 @@ namespace cxutil
  * @endcode
  *
  **************************************************************************************************/
-class Uncopyable
+class UnCopyable
 {
 protected:
-     Uncopyable() = default;
-    ~Uncopyable() = default;
+     UnCopyable() = default;
+    ~UnCopyable() = default;
 
 private:
-    Uncopyable( const Uncopyable& p_object )            = delete;
-    Uncopyable& operator=( const Uncopyable& p_object ) = delete;
+    UnCopyable( const Uncopyable& p_object )            = delete;
+    UnCopyable& operator=( const Uncopyable& p_object ) = delete;
 };
 
 } // namespace cxutil
