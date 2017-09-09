@@ -1,0 +1,45 @@
+/***********************************************************************************************//**
+ * @page tutorials Tutorials
+ * @tableofcontents
+ *
+ * @section intro_tuto Introduction
+ *
+ * This page contains different tutorials on some @c cxutil tools and facilities.
+ *
+ *
+ * @section observers Using observers
+ *
+ * To observe change of state from an object. The ISubject and IObserver interfaces need to be 
+ * implemented. The class you want to be observable needs to implement the ISubject interface:
+ *
+ *   @include ISubjectImplementation.cpp
+ *
+ * Implementing the ISubject interface simply means deriving from it. Only the destrutor is 
+ * @c virtual. As we see in the above example, the @c Incrementer class will notify its registered 
+ * observer each call of the @c increment() method. The class(es) you want to have notified need 
+ * to implement the IObserver interface:
+ *
+ *   @include IObserverImplementation.cpp
+ *
+ * In the case of the IObserver interface, the method @c IObserver::update() must be implemented
+ * for different classes probably want to be updated differently upon changes in their observed 
+ * subject:
+ *
+ *   @include IObserverUpdateImplementation.cpp
+ *
+ * In the above examples, the classes @c ChecksForIncrement and @c CopiesIncrementerData both have 
+ * the possibility to observe (i.e. they are potential observers) changes in the @c Incrementer 
+ * class (the subject). To make instances of @c ChecksForIncrement and @c CopiesIncrementerData 
+ * observers, we need to register them with @c Incrementer. Now every time the Incrementer calls 
+ * @c increment() , the registered observer are notified. If needed, a @c dynamic_cast can give 
+ * access to the subject object. For example:
+ *
+ *   @include ISubjectUsage.cpp
+ *
+ * Use the method @c Incrementer::removeObserver() if you want a registered observer to stop being 
+ * notified.
+ *
+ * @see cxutil::ISubject
+ * @see cxutil::IObserver
+ *
+ **************************************************************************************************/

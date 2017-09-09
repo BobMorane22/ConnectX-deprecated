@@ -42,7 +42,7 @@ namespace cxutil
 {
 
 /***********************************************************************************************//**
- * class ICliObject
+ * @interface ICliObject
  *
  * Interface for enforcing polymorphic CLI interfacing.
  *
@@ -56,7 +56,7 @@ class ICliObject
 {
 public:
 
-    ~ICliObject() = default;
+    virtual ~ICliObject() = default;
 
     /*******************************************************************************************//**
      * Stream insertion operator.

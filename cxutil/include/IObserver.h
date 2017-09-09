@@ -43,7 +43,7 @@ namespace cxutil
 {
 
 /***********************************************************************************************//**
- * @class IObserver
+ * @interface IObserver
  *
  * Implement this interface to make a class an observer. Implementing this interface means 
  * implementing the @c update() method, which describles how an observer is updated when 

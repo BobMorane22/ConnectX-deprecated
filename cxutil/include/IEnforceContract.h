@@ -40,7 +40,7 @@ namespace cxutil
 {
 
 /***********************************************************************************************//**
- * class IEnforceContract
+ * @interface IEnforceContract
  *
  * Interface for design-by-contract enforcement.
  *
