@@ -32,15 +32,24 @@
 #ifndef CXUTILAPI_H_FCFC9F42_868C_4859_A16C_11D2013A3788
 #define CXUTILAPI_H_FCFC9F42_868C_4859_A16C_11D2013A3788
 
-#include"Assertion.h"
-#include"ContractException.h"
+// Classes:
 #include"Coordinate.h"
-#include"ICliObject.h"
-#include"IEnforceContract.h"
+#include"Date.h"
+#include"Logger.h"
 #include"Name.h"
 #include"ReturnCode.h"
+#include"Time.h"
+
+// Interfaces:
+#include"ICliObject.h"
+#include"IEnforceContract.h"
+#include"IObserver.h"
+#include"ISubject.h"
 #include"Uncopyable.h"
 
+// Other tools:
+#include"Assertion.h"
+#include"ContractException.h"
 #include"narrow_cast.h"
 
 #endif // CXUTILAPI_H_FCFC9F42_868C_4859_A16C_11D2013A3788
