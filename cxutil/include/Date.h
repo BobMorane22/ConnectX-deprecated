@@ -56,7 +56,7 @@ namespace cxutil
  *   @li time.h documentation: <http://www.cplusplus.com/reference/ctime/>
  *   @li Class limitations:    <https://en.wikipedia.org/wiki/Year_2038_problem>
  *
- * @invariant The Date object is valid.
+ * @invariant The Date object represents a date on the gregorian calendar.
  *
  **************************************************************************************************/
 class Date : public IEnforceContract, public ICliObject
@@ -244,8 +244,43 @@ private:
 
 ///@}
 
+///{@name Printers
+
+    /*******************************************************************************************//**
+     * Prints the time to a 12-hours cycle format.
+     *
+     * The format is:
+     *   @li HH:MM:SS AM (from 0-11h)
+     *   @li HH:MM:SS PM (from 11-23h)
+     *
+     * @param[in] p_stream The stream into which to insert the time string.
+     *
+     **********************************************************************************************/
+    void print12format(std::ostream& p_stream) const;
+
+
+    /*******************************************************************************************//**
+     * Prints the time to a 24-hours cycle format.
+     *
+     * The format is:
+     *   @li HH:MM:SS (from 0-11h)
+     *   @li HH:MM:SS (from 11-23h)
+     *
+     * @param[in] p_stream The stream into which to insert the time string.
+     *
+     **********************************************************************************************/
+    void print24format(std::ostream& p_stream) const;
+
+///@}
+
     virtual void checkInvariant() const override;
 
+    /*******************************************************************************************//**
+     * @enum Months
+     *
+     * The 12 months of the gregorian calendar.
+     *
+     **********************************************************************************************/
     enum Months
     {
         JANUARY,
