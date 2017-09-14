@@ -30,9 +30,9 @@
  **************************************************************************************************/
 
 
-#include<gtest/gtest.h>
+#include <gtest/gtest.h>
 
-#include<include/Date.h>
+#include <include/Date.h>
 
 
 TEST(Date, DefaultConstructor_TwoSubsequentCalls_SameDate)
