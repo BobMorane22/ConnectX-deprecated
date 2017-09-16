@@ -44,11 +44,13 @@ const int cxutil::Date::YEAR_END       {2100};
 cxutil::Date::Date()
 {
     time_t rawTime = time(nullptr);
-    struct tm* timeInfo = localtime(&rawTime);
+    struct tm timeInfo;
 
-    m_year  = timeInfo->tm_year + 1900;
-    m_month = timeInfo->tm_mon + 1;
-    m_day   = timeInfo->tm_mday;
+    localtime_r(&rawTime, &timeInfo);
+
+    m_year  = timeInfo.tm_year + 1900;
+    m_month = timeInfo.tm_mon + 1;
+    m_day   = timeInfo.tm_mday;
 
     INVARIANTS();
 }

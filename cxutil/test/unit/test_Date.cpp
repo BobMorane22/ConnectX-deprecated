@@ -294,3 +294,4 @@ TEST(Date, OperatorGE_Date1BeforeDate2_ReturnsFalse)
 
     ASSERT_FALSE(t_date1 >= t_date2);
 }
+

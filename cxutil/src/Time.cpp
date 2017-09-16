@@ -44,17 +44,16 @@ const int cxutil::Time::MINUTES_MAX {60};
 const int cxutil::Time::HOURS_MAX   {24};
 
 
-cxutil::Time::Time(bool p_daylightSavingEnabled, CycleFormat p_cycleFormat): 
-                   m_cycleFormat{p_cycleFormat}
+cxutil::Time::Time(CycleFormat p_cycleFormat): m_cycleFormat{p_cycleFormat}
 {
-    time_t rawTime = time(NULL);
-    struct tm* timeInfo = localtime(&rawTime);
+    time_t rawTime = time(nullptr);
+    struct tm timeInfo;
 
-    timeInfo->tm_isdst = static_cast<int>(p_daylightSavingEnabled);
+    localtime_r(&rawTime, &timeInfo);
 
-    m_hours = timeInfo->tm_hour;
-    m_minutes = timeInfo->tm_min;
-    m_seconds = timeInfo->tm_sec;
+    m_hours   = timeInfo.tm_hour;
+    m_minutes = timeInfo.tm_min;
+    m_seconds = timeInfo.tm_sec;
 
     INVARIANTS();
 }

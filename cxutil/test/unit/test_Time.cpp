@@ -35,19 +35,9 @@
 #include <include/Time.h>
 
 
-TEST(Time, DefaultConstructor_TwoSubsequentCallsWithDaylightSavings_SameTime)
+TEST(Time, DefaultConstructor_TwoSubsequentCalls_SameTime)
 {
-    cxutil::Time t_time1{true};
-    cxutil::Time t_time2{true};
-
-    ASSERT_EQ(t_time1, t_time2);
-}
-
-
-TEST(Time, DefaultConstructor_TwoSubsequentCallsWithoutDaylightSavings_SameTime)
-{
-    cxutil::Time t_time1;
-    cxutil::Time t_time2;
+    cxutil::Time t_time1, t_time2;
 
     ASSERT_EQ(t_time1, t_time2);
 }

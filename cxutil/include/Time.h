@@ -85,11 +85,10 @@ public:
      *
      * The default constructor generates a Date object representing the current system date.
      *
-     * @param[in] p_daylightSavingEnabled  The daylight saving time flag.
-     * @param[in] p_cycleFormat            The cycle format.
+     * @param[in] p_cycleFormat The cycle format.
      *
      **********************************************************************************************/
-    Time(bool p_daylightSavingEnabled = true, CycleFormat p_cycleFormat = CycleFormat::CYCLE_24);
+    Time(CycleFormat p_cycleFormat = CycleFormat::CYCLE_24);
 
 
     /*******************************************************************************************//**
