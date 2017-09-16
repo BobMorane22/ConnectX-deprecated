@@ -48,7 +48,7 @@ namespace cxutil
  *
  * @tparam  T   A fully comparable type.
  * @note    The value stored is limited to types @c T where the comparison operators are @a all
- *          defined (more precisely, <tt> ==, !=, <, >, <=</tt> and </tt>>= </tt>).
+ *          defined (more precisely, <tt> ==, !=, <, >, <=</tt> and <tt> >= </tt>).
  *
  **************************************************************************************************/
 template <typename T>

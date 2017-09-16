@@ -93,7 +93,7 @@ namespace cxutil
  *   - the entry severity;
  *   - the entry message.
  *
- * Every column is separated by a tab (@c '\t') character, which makes is possible for most
+ * Every column is separated by a tab (@c '\\t') character, which makes is possible for most
  * spreadsheet software (i.e. LibreOffice Calc) to import the log file for further analysis.
  *
  * @note A Logger object is not thread-safe.
@@ -139,7 +139,6 @@ public:
 ///@}
 
 ///@{ Logging
-
 
     /*******************************************************************************************//**
      * Log a message as an information.
@@ -204,8 +203,10 @@ public:
 private:
 
     /*******************************************************************************************//**
-     * @enum The three (or four in debug) different severity levels for logging. These level appear 
-     *       next to the logged message in the log output for more clarity and enhanced sorting.
+     * @enum Severity
+     *
+     * The three (or four in debug) different severity levels for logging. These level appear 
+     * next to the logged message in the log output for more clarity and enhanced sorting.
      *
      **********************************************************************************************/
     enum class Severity : int
@@ -286,9 +287,8 @@ private:
     std::ostream*  m_outStream;              ///< The out stream in which to log the entries.
 };
 
-// The following methods are not documented: they are simple drivers...
 
-///@{ Logging
+// The following methods are not documented: they are simple drivers...
 
 inline void Logger::logInfo(const std::string& p_message)
 {
@@ -319,8 +319,6 @@ PRECONDITION(!p_message.empty());
     log(p_message, Logger::Severity::DEBUG);
 }
 #endif
-
-///@}
 
 
 } // namespace cxutil

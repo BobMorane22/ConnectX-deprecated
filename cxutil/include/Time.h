@@ -57,7 +57,7 @@ namespace cxutil
  *
  * @invariant hours are in the interval [0, 23].
  * @invariant minutes are in the interval [0, 59].
- * @invatiant seconds are in the interval [0, 59].
+ * @invariant seconds are in the interval [0, 59].
  *
  **************************************************************************************************/
 class Time : public IEnforceContract, public ICliObject

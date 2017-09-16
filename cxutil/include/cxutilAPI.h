@@ -44,7 +44,7 @@
 #include"IEnforceContract.h"
 #include"IObserver.h"
 #include"ISubject.h"
-#include"Uncopyable.h"
+#include"UnCopyable.h"
 
 // Other tools:
 #include"Assertion.h"
