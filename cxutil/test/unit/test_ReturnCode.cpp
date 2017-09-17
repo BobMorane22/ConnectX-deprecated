@@ -25,7 +25,7 @@
  * @date    August 2017
  * @version 1.0
  *
- * Unit tests for a the RturnCode class.
+ * Unit tests for a the ReturnCode class.
  *
  **************************************************************************************************/
 
@@ -77,6 +77,19 @@ TEST(ReturnCode, ConstructorWithParameters_ErrorAndMessage_MessageIsSet)
     t_returnCode.isOk();
     
     ASSERT_TRUE(t_returnCode.message() == theMessage);
+}
+
+TEST(ReturnCode, Destructor_CodeNotTested_AssertionThrown)
+{
+    ::testing::FLAGS_gtest_death_test_style = "threadsafe";
+
+    const std::string returnCodeAssertionRegex{".*m_tested.*"};
+
+    ReturnCode t_returnCode;
+
+    ASSERT_DEATH(t_returnCode.~ReturnCode(), returnCodeAssertionRegex);
+
+    t_returnCode.isOk(); // Object was not really destroyed: we must let the end of scope do it.
 }
 
 TEST(ReturnCode, IsOk_CodeIsOK_ReturnsTrue)
