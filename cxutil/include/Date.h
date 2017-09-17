@@ -46,7 +46,7 @@ namespace cxutil
  *
  * The Date class is meant to work with Gregorian calendar dates. It deals with three different 
  * time entities: years, months and days.The user can get Dates as strings in only one 
- * format: DD/MM/YYYY.
+ * format: YYYY/MM/DD.
  *
  * Since the Date class uses the @c time.h facilities, it is only valid until 2038 
  * (or 2100 for methods not using ctime). More precisely, this class will be valid until 
@@ -179,7 +179,7 @@ public:
      *
      * @param[in] p_date The Date with which to compare.
      * @return    @c true if the current Date object comes before in the gregorian calendar or is 
-     *             equal. @c false otherwise.
+     *            equal. @c false otherwise.
      *
      **********************************************************************************************/
     bool operator<=(const Date& p_date) const;
@@ -207,7 +207,7 @@ public:
      *
      * @param[in] p_date The Date with which to compare.
      * @return    @c true if the current Date object comes after in the gregorian calendar or is 
-     *             equal. @c false otherwise.
+     *            equal. @c false otherwise.
      *
      **********************************************************************************************/
     bool operator>=(const Date& p_date) const;
@@ -244,34 +244,6 @@ private:
 
 ///@}
 
-///{@name Printers
-
-    /*******************************************************************************************//**
-     * Prints the time to a 12-hours cycle format.
-     *
-     * The format is:
-     *   @li HH:MM:SS AM (from 0-11h)
-     *   @li HH:MM:SS PM (from 11-23h)
-     *
-     * @param[in] p_stream The stream into which to insert the time string.
-     *
-     **********************************************************************************************/
-    void print12format(std::ostream& p_stream) const;
-
-
-    /*******************************************************************************************//**
-     * Prints the time to a 24-hours cycle format.
-     *
-     * The format is:
-     *   @li HH:MM:SS (from 0-11h)
-     *   @li HH:MM:SS (from 11-23h)
-     *
-     * @param[in] p_stream The stream into which to insert the time string.
-     *
-     **********************************************************************************************/
-    void print24format(std::ostream& p_stream) const;
-
-///@}
 
     virtual void checkInvariant() const override;
 

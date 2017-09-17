@@ -135,7 +135,7 @@ public:
         std::string endOfLine     {"\\n"                          };
         std::string lineNumber    {"(\\d)+"                       };
         std::string executionTime {"(\\d)+\\.(\\d)+"              };    /* "x.y" (where x and y = d...)         */
-        std::string date          {"\\d(\\d)?/\\d(\\d)?/20\\d\\d" };    /* "x/y/20ab" (where x and y = d or dd) */
+        std::string date          {"20\\d\\d/\\d(\\d)?/\\d(\\d)?" };    /* "20ab/x/y" (where x and y = d or dd) */
         std::string time          {"\\d(\\d)?:\\d(\\d)?:\\d(\\d)?"};    /* "x:y:z (where x, y and z = d or dd)  */
         std::string info          {"INFO\\s\\s\\s\\s:"            };    /* "INFO    :"                          */
         std::string warning       {"WARNING\\s:"                  };    /* "WARNING :"                          */

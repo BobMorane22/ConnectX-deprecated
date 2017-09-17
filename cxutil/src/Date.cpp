@@ -64,13 +64,8 @@ cxutil::Date::Date(int p_year, int p_month, int p_day): m_year{p_year}, m_month{
 
 void cxutil::Date::print(std::ostream& p_stream) const
 {
-    if(m_day < 10)
-    {
-        p_stream << 0;
-    }
-
-    p_stream << m_day << "/";
-
+    p_stream << m_year << "/";
+    
     if(m_month < 10)
     {
         p_stream << 0;
@@ -78,7 +73,12 @@ void cxutil::Date::print(std::ostream& p_stream) const
 
     p_stream << m_month << "/";
 
-    p_stream << m_year;
+    if(m_day < 10)
+    {
+        p_stream << 0;
+    }
+
+    p_stream << m_day;
 }
 
 
