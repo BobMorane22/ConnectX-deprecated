@@ -10,10 +10,6 @@
 #--------------------------------------------------------------------------------------------------#
 
 
-# OS:
-# --------------------------------------------------------------------------------------------------
-export OS = linux
-
 # File location:
 # --------------------------------------------------------------------------------------------------
 export SRC_ROOT = $(CX_SRC_ROOT)
@@ -41,16 +37,14 @@ export WARN_AS_ERRORS_FLAGS = -pedantic-errors\
   
 # Shell:
 # --------------------------------------------------------------------------------------------------
-ifeq ($(OS),linux)
-	export SHELL := /bin/bash
-else ifeq ($(OS),windows)
-	# Reads the wnvironment variable COMSPEC (usually set to CMD.EXE)
-	# See this: https://www.gnu.org/software/make/manual/make.html#Choosing-the-Shell
-	# for more information.
-else
-	export SHELL :=
-endif
+
+export SHELL := /bin/bash
+
        
 # Cleaning:
 # --------------------------------------------------------------------------------------------------
 export RM = rm -fd
+
+# Google tests:
+#---------------------------------------------------------------------------------------------------
+export GTEST_COLOR = 1

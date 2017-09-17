@@ -14,7 +14,6 @@
 
 #!/bin/bash
 
-export OS= linux
 export DEBUG=1
 
 export CX_SRC_ROOT= # full path to the main Connect X source directory.
