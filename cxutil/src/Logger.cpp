@@ -33,7 +33,9 @@
 #include <sstream>
 
 #include "Assertion.h"
+#include "Date.h"
 #include "Logger.h"
+#include "Time.h"
 
 
 using namespace cxutil;
@@ -77,24 +79,15 @@ double Logger::execTime() const
 
 std::string Logger::timeAndDate() const
 {
-	time_t rawTime {time(nullptr)};
-	struct tm* timeInfo {localtime(&rawTime)};
+    Date currentDate;
+    Time currentTime;
 
-    // Get the current date:
-	int year  = timeInfo->tm_year + 1900;
-	int month = timeInfo->tm_mon + 1;
-	int day   = timeInfo->tm_mday;
-	
-	std::ostringstream date;
-	date << year << '/' << month << '/' << day;
-
-    // Get the time:
-    int hours   = timeInfo->tm_hour;
-	int minutes = timeInfo->tm_min;
-	int seconds = timeInfo->tm_sec;
-	
+    std::ostringstream date;
     std::ostringstream time;
-	time << hours << ":" << minutes << ":" << seconds;
+
+
+    date << currentDate;
+    time << currentTime;
 
     return date.str() + m_separator + time.str();
 }

@@ -81,8 +81,8 @@ namespace cxutil
  * Will produce an output like:
  * 
  * @verbatim
- *   0	3.203	2017/8/12	17:27:4	INFO    :	Logger activated...
- *   1	11.476	2017/8/12	17:27:4	WARNING :	aPtr points to nothing!
+ *   0	3.203	12/08/2017	17:27:4	INFO    :	Logger activated...
+ *   1	11.476	12/08/2017	17:27:4	WARNING :	aPtr points to nothing!
  * @endverbatim
  *
  * The columns represent, from left to right:
