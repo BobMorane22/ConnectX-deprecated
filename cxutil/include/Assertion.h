@@ -41,7 +41,7 @@
 {                                                                         \
     if(!(__condition__))                                                  \
     {                                                                     \
-        std::cerr << "Assertion failed!"                 << std::endl;    \
+        std::cerr << "Assertion failed!"                  << std::endl;   \
         std::cerr <<   "  Condition : " << #__condition__ << std::endl;   \
         std::cerr <<   "  File      : " << __FILE__       << std::endl;   \
         std::cerr <<   "  Line      : " << __LINE__       << std::endl;   \
@@ -54,7 +54,7 @@
 {                                                                         \
     if(!(__condition__))                                                  \
     {                                                                     \
-        std::cerr << "Assertion failed!"                 << std::endl;    \
+        std::cerr << "Assertion failed!"                  << std::endl;   \
         std::cerr <<   "  Condition : " << #__condition__ << std::endl;   \
         std::cerr <<   "  Message   : " << __message__    << std::endl;   \
         std::cerr <<   "  File      : " << __FILE__       << std::endl;   \

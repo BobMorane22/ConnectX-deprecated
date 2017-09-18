@@ -32,6 +32,8 @@
 #ifndef NARROW_CAST_H_4ACD64EC_E32D_421E_A0CC_9751ACAF8E31
 #define NARROW_CAST_H_4ACD64EC_E32D_421E_A0CC_9751ACAF8E31
 
+#include "Assertion.h"
+
 namespace cxutil
 {
 
@@ -56,11 +58,11 @@ namespace cxutil
 template<class Target, class Source>
 Target narrow_cast(Source p_toCast)
 {
-    Target casted { std::static_cast<Target>(p_toCast) };
+    Target casted = static_cast<Target>(p_toCast);
 
     // Can we convert back without loosing information?
-    CX_ASSERT(std::static_cast<Source>(casted) != p_toCast);
-    
+    CX_ASSERT(static_cast<Source>(casted) == p_toCast);
+
     return casted;
 }
 

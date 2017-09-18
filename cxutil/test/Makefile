@@ -32,6 +32,7 @@ SRCS      = cxutilTest.cpp\
             test_ISubject.cpp\
             test_Logger.cpp\
             test_Name.cpp\
+            test_narrow_cast.cpp\
             test_ReturnCode.cpp\
             test_Time.cpp
 
@@ -39,6 +40,7 @@ OBJS      = test_Date.o\
             test_ISubject.o\
             test_Logger.o\
             test_Name.o\
+            test_narrow_cast.o\
             test_ReturnCode.o\
             test_Time.o
 
