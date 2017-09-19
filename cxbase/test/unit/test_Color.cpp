@@ -35,7 +35,7 @@
 #include <include/Color.h>
 
 
-USING_NAMESPACE_CXBASE
+using namespace cxbase;
 
 class ColorTests: public::testing::Test
 {

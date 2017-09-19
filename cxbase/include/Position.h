@@ -35,7 +35,6 @@
 #include <cxutil/include/Coordinate.h>
 #include <cxutil/include/IEnforceContract.h>
 
-#include "../src/cxbaseInternal.h"
 
 namespace cxbase
 {

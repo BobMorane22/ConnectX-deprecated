@@ -36,7 +36,7 @@
 #include <include/Disc.h>
 
 
-USING_NAMESPACE_CXBASE
+using namespace cxbase;
 
 
 TEST(Disc, Constructor_Default_SetsNoColor)

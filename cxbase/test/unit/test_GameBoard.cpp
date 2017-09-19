@@ -34,8 +34,8 @@
 #include <include/GameBoard.h>
 
 
-USING_NAMESPACE_STD
-USING_NAMESPACE_CXBASE
+using namespace std;
+using namespace cxbase;
 
 
 class GameBoardTests: public::testing::Test

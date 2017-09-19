@@ -146,7 +146,7 @@ private:
 
     const Disc NO_DISC{Color::TRANSPARENT};
 
-    CXUTIL::Name m_name;    ///< The Player's Name.
+    cxutil::Name m_name;    ///< The Player's Name.
     Disc         m_disc;    ///< The Player's Disc.
 
 };

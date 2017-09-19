@@ -34,6 +34,7 @@
 #define CONNECT4GAME_H_
 
 #include <iostream>
+
 #include <cxbaseAPI.h>
 
 // Connect4Game class: needed to customize th game... 

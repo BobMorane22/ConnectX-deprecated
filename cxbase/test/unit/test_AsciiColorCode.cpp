@@ -36,7 +36,7 @@
 #include <include/AsciiColorCode.h>
 
 
-USING_NAMESPACE_CXBASE
+using namespace cxbase;
 
 TEST(AciiColorCode, Constructor_ValidCode_NoExceptionThrown)
 {

@@ -50,7 +50,7 @@ namespace cxbase
  * @see Color
  *
  **************************************************************************************************/
-class Disc : public CXUTIL::ICliObject
+class Disc : public cxutil::ICliObject
 {
 
 public:

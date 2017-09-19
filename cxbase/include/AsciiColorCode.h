@@ -35,8 +35,6 @@
 #include <cxutil/include/ICliObject.h>
 #include <cxutil/include/IEnforceContract.h>
 
-#include "../src/cxbaseInternal.h"
-
 
 namespace cxbase
 {
@@ -63,7 +61,7 @@ namespace cxbase
  * @see Color
  *
  **************************************************************************************************/
-class AsciiColorCode : public cxutil::IEnforceContract, public CXUTIL::ICliObject
+class AsciiColorCode : public cxutil::IEnforceContract, public cxutil::ICliObject
 {
 
 public:

@@ -36,16 +36,16 @@
 #include <include/Player.h>
 
 
-USING_NAMESPACE_STD
-USING_NAMESPACE_CXBASE
+using namespace std;
+using namespace cxbase;
 
 class PlayerTests : public ::testing::Test
 {
 
 public:
 
-    const CXUTIL::Name  NAME1     {"John Doe"};
-    const CXUTIL::Name  NAME2     {"Johnny Doe"};
+    const cxutil::Name  NAME1     {"John Doe"};
+    const cxutil::Name  NAME2     {"Johnny Doe"};
     Player              t_player1 {NAME1, Disc::RED_DISC};
     Player              t_player2 {NAME2, Disc::BLACK_DISC};
 
@@ -76,7 +76,7 @@ TEST_F(PlayerTests, DiscAccessor_ValidPlayer_ReturnsDisc)
 
 TEST_F(PlayerTests, EqualOperator_TwoEqualPlayers_ReturnsTrue)
 {
-    CXUTIL::Name sameName{NAME1};
+    cxutil::Name sameName{NAME1};
     Disc sameDisc{Disc::RED_DISC};
     Player t_player3{sameName, sameDisc};
 

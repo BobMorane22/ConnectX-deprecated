@@ -34,8 +34,8 @@
 #include <include/Game.h>
 
 
-USING_NAMESPACE_STD
-USING_NAMESPACE_CXBASE
+using namespace std;
+using namespace cxbase;
 
 class GameTests: public::testing::Test
 {
@@ -49,9 +49,9 @@ public:
     int   NB_COLUMNS_MIN                    {7};
     int   NB_ROWS_MIN                       {6};
 
-    shared_ptr<Player> FIRST_PLAYER         {new Player{CXUTIL::Name{"First Player"},  Disc::BLACK_DISC}};
-    shared_ptr<Player> SECOND_PLAYER        {new Player{CXUTIL::Name{"Second Player"}, Disc::RED_DISC}};
-    shared_ptr<Player> THIRD_PLAYER         {new Player{CXUTIL::Name{"Third Player"},  Disc::YELLOW_DISC}};
+    shared_ptr<Player> FIRST_PLAYER         {new Player{cxutil::Name{"First Player"},  Disc::BLACK_DISC}};
+    shared_ptr<Player> SECOND_PLAYER        {new Player{cxutil::Name{"Second Player"}, Disc::RED_DISC}};
+    shared_ptr<Player> THIRD_PLAYER         {new Player{cxutil::Name{"Third Player"},  Disc::YELLOW_DISC}};
 
     shared_ptr<GameBoard> CLASSIC_GAMEBOARD {new GameBoard};
 };
@@ -111,7 +111,7 @@ TEST_F(GameTests, ActivePlayerAccessor_ThreePlayerGameAndNoTurn_ReturnsFirstPlay
     Game t_game{players, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR};
 
     // Need to create new Player object because FISRT_PLAYER was std::moved.
-    Player PLAYER1{CXUTIL::Name{"First Player"}, Disc::BLACK_DISC};
+    Player PLAYER1{cxutil::Name{"First Player"}, Disc::BLACK_DISC};
 
     ASSERT_EQ(t_game.activePlayer(), PLAYER1);
 }
@@ -126,7 +126,7 @@ TEST_F(GameTests, ActivePlayerAccessor_ThreePlayerGameAndTwoTurns_ReturnsThirdPl
     Game t_game{players, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR};
 
     // Need to create new Player object because FISRT_PLAYER was std::moved.
-    Player PLAYER3{CXUTIL::Name{"Third Player"}, Disc::YELLOW_DISC};
+    Player PLAYER3{cxutil::Name{"Third Player"}, Disc::YELLOW_DISC};
 
     t_game.nextTurn();
     t_game.nextTurn();
@@ -144,7 +144,7 @@ TEST_F(GameTests, ActivePlayerAccessor_ThreePlayerGameAndThreeTurns_ReturnsFirst
     Game t_game{players, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR};
 
     // Need to create new Player object because FISRT_PLAYER was std::moved.
-    Player PLAYER1{CXUTIL::Name{"First Player"}, Disc::BLACK_DISC};
+    Player PLAYER1{cxutil::Name{"First Player"}, Disc::BLACK_DISC};
 
     t_game.nextTurn();
     t_game.nextTurn();
@@ -234,7 +234,7 @@ TEST_F(GameTests, NextTurn_ToFirstTurn_TurnIsOneActivePlayerIsTwo)
 
     t_game.nextTurn();
 
-    Player t_player{CXUTIL::Name{"Second Player"}, Disc::RED_DISC};
+    Player t_player{cxutil::Name{"Second Player"}, Disc::RED_DISC};
 
     ASSERT_EQ(t_game.currentTurn(), 1);
     ASSERT_EQ(t_game.activePlayer(), t_player);
@@ -254,7 +254,7 @@ TEST_F(GameTests, NextTurn_AllTurns_TurnIs42ActivePlayerIsFirst)
         t_game.nextTurn(); // 42 turns for a classic GameBoard.
     }
 
-    Player t_player{CXUTIL::Name{"Third Player"}, Disc::YELLOW_DISC};
+    Player t_player{cxutil::Name{"Third Player"}, Disc::YELLOW_DISC};
 
     ASSERT_EQ(t_game.nbOfTurnsPlayed(), CLASSIC_GAMEBOARD->nbPositions() - 1);
     ASSERT_EQ(t_game.activePlayer(), t_player);
