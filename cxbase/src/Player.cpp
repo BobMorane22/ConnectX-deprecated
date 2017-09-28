@@ -37,8 +37,7 @@ using namespace cxbase;
 
 Player::Player(const cxutil::Name& p_name, const Disc& p_disc): m_name{p_name}, m_disc{p_disc}
 {
-    POSTCONDITION(m_name == p_name);
-    POSTCONDITION(m_disc == p_disc);
+    PRECONDITION(p_disc != Disc::NO_DISC);
 
     INVARIANTS();
 }

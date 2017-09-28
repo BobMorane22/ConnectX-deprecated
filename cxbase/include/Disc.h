@@ -110,7 +110,7 @@ public:
      * @see Color::operator==().
      *
      **********************************************************************************************/
-    virtual bool operator==(const Disc &p_disc) const;
+    virtual bool operator==(const Disc& p_disc) const;
 
 
     /*******************************************************************************************//**
@@ -123,7 +123,7 @@ public:
      * @see Color::operator!=().
      *
      **********************************************************************************************/
-    virtual bool operator!=(const Disc &p_disc) const;
+    virtual bool operator!=(const Disc& p_disc) const;
 
 
 ///@}
@@ -182,6 +182,6 @@ private:
 
 };
 
-} //namespace cxbas
+} //namespace cxbase
 
 #endif /* DISC_H_97C4FDCA_4FD8_4DB4_B111_6F80F62266FA */
