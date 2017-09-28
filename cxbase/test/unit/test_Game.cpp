@@ -34,8 +34,8 @@
 #include <include/Game.h>
 
 
-using namespace std;
 using namespace cxbase;
+
 
 class GameTests: public::testing::Test
 {
@@ -44,135 +44,135 @@ public:
 
     GameTests() {};
 
-    int   NB_COLUMNS_MAX                    {64};
-    int   NB_ROWS_MAX                       {64};
-    int   NB_COLUMNS_MIN                    {7};
-    int   NB_ROWS_MIN                       {6};
+    const int                                   NB_COLUMNS_MAX    {64};
+    const int                                   NB_ROWS_MAX       {64};
+    const int                                   NB_COLUMNS_MIN    {7 };
+    const int                                   NB_ROWS_MIN       {6 };
 
-    shared_ptr<Player> FIRST_PLAYER         {new Player{cxutil::Name{"First Player"},  Disc::BLACK_DISC}};
-    shared_ptr<Player> SECOND_PLAYER        {new Player{cxutil::Name{"Second Player"}, Disc::RED_DISC}};
-    shared_ptr<Player> THIRD_PLAYER         {new Player{cxutil::Name{"Third Player"},  Disc::YELLOW_DISC}};
+    const std::shared_ptr<Player>               FIRST_PLAYER      {std::make_shared<Player>(cxutil::Name{"First Player" } ,  Disc::BLACK_DISC ) };
+    const std::shared_ptr<Player>               SECOND_PLAYER     {std::make_shared<Player>(cxutil::Name{"Second Player"} ,  Disc::RED_DISC   ) };
+    const std::shared_ptr<Player>               THIRD_PLAYER      {std::make_shared<Player>(cxutil::Name{"Third Player" } ,  Disc::YELLOW_DISC) };
 
-    shared_ptr<GameBoard> CLASSIC_GAMEBOARD {new GameBoard};
+    const std::vector<std::shared_ptr<Player>>  THREE_PLAYERS     {FIRST_PLAYER, SECOND_PLAYER, THIRD_PLAYER};
+
+    const std::shared_ptr<GameBoard>            CLASSIC_GAMEBOARD {std::make_shared<GameBoard>()                                                };
+
 };
 
 
-TEST_F(GameTests, Constructor_ValidArguments_CreatesValidGame)
+TEST_F(GameTests, Constructor_ValidArguments_NoExceptionThrown)
 {
-    vector<shared_ptr<Player>> players;
-    players.push_back(move(FIRST_PLAYER));
-    players.push_back(move(SECOND_PLAYER));
-    players.push_back(move(THIRD_PLAYER));
+    ASSERT_NO_THROW((Game{THREE_PLAYERS, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR}));
 
-    ASSERT_NO_THROW((Game {players, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR}));
-
-    Game t_game3 {players, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR};
+    Game t_game3 {THREE_PLAYERS, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR};
 
     ASSERT_EQ(t_game3.inARowValue(), GameBoard::CONNECT_FOUR);
 }
 
+
 TEST_F(GameTests, Constructor_NotEnoughPlayers_ExceptionThrown)
 {
-    vector<shared_ptr<Player>> players;
-    players.push_back(move(FIRST_PLAYER));
+    std::vector<std::shared_ptr<Player>> t_players;
+    t_players.push_back(FIRST_PLAYER);
 
-    ASSERT_THROW((Game {players, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR}), PreconditionException);
+    ASSERT_THROW((Game{t_players, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR}), PreconditionException);
 }
+
+TEST_F(GameTests, Constructor_TooManyPlayers_ExceptionThrown)
+{
+    std::vector<std::shared_ptr<Player>> t_players;
+    t_players.push_back(FIRST_PLAYER);
+    t_players.push_back(SECOND_PLAYER);
+    t_players.push_back(THIRD_PLAYER);
+    t_players.push_back(std::make_shared<Player>(cxutil::Name{"Fourth Player"   } ,  Disc::YELLOW_DISC));
+    t_players.push_back(std::make_shared<Player>(cxutil::Name{"Fifth Player"    } ,  Disc::YELLOW_DISC));
+    t_players.push_back(std::make_shared<Player>(cxutil::Name{"Sixth Player"    } ,  Disc::YELLOW_DISC));
+    t_players.push_back(std::make_shared<Player>(cxutil::Name{"Seventh Player"  } ,  Disc::YELLOW_DISC));
+    t_players.push_back(std::make_shared<Player>(cxutil::Name{"Eight Player"    } ,  Disc::YELLOW_DISC));
+    t_players.push_back(std::make_shared<Player>(cxutil::Name{"Ninth Player"    } ,  Disc::YELLOW_DISC));
+    t_players.push_back(std::make_shared<Player>(cxutil::Name{"Tenth Player"    } ,  Disc::YELLOW_DISC));
+    t_players.push_back(std::make_shared<Player>(cxutil::Name{"Eleventh Player" } ,  Disc::YELLOW_DISC));
+
+    ASSERT_THROW((Game{t_players, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR}), PreconditionException);
+}
+
 
 TEST_F(GameTests, Constructor_InARowTooSmall_ExceptionThrown)
 {
-    vector<shared_ptr<Player>> players;
-    players.push_back(move(FIRST_PLAYER));
-    players.push_back(move(SECOND_PLAYER));
-    players.push_back(move(THIRD_PLAYER));
-
-    ASSERT_THROW((Game {players, CLASSIC_GAMEBOARD, 1}), PreconditionException);
+    ASSERT_THROW((Game{THREE_PLAYERS, CLASSIC_GAMEBOARD, 1}), PreconditionException);
 }
+
 
 TEST_F(GameTests, Constructor_InARowTooLarge_ExceptionThrown)
 {
-    vector<shared_ptr<Player>> players;
-    players.push_back(move(FIRST_PLAYER));
-    players.push_back(move(SECOND_PLAYER));
-    players.push_back(move(THIRD_PLAYER));
+    const int InARowTooLarge {std::min(CLASSIC_GAMEBOARD->nbRows(), CLASSIC_GAMEBOARD->nbColumns()) + 1};
 
-    int InARowTooLarge {min(CLASSIC_GAMEBOARD->nbRows(), CLASSIC_GAMEBOARD->nbColumns()) + 1};
-
-    ASSERT_THROW((Game {players, CLASSIC_GAMEBOARD, InARowTooLarge}), PreconditionException);
+    ASSERT_THROW((Game {THREE_PLAYERS, CLASSIC_GAMEBOARD, InARowTooLarge}), PreconditionException);
 }
+
+
+TEST_F(GameTests, Constructor_InvalidPlayerAddress_ExceptionThrown)
+{
+    std::vector<std::shared_ptr<Player>> t_players;
+    t_players.push_back(FIRST_PLAYER);
+    t_players.push_back(nullptr);
+    t_players.push_back(THIRD_PLAYER);
+
+    ASSERT_THROW((Game {t_players, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR}), PreconditionException);
+}
+
+
+TEST_F(GameTests, Constructor_InvalidGameboardAddress_ExceptionThrown)
+{
+    std::shared_ptr<GameBoard> gameboard{std::make_shared<GameBoard>()};
+    gameboard.reset();
+
+    ASSERT_THROW((Game {THREE_PLAYERS, gameboard, GameBoard::CONNECT_FOUR}), PreconditionException);
+}
+
 
 TEST_F(GameTests, ActivePlayerAccessor_ThreePlayerGameAndNoTurn_ReturnsFirstPlayer)
 {
-    vector<shared_ptr<Player>> players;
-    players.push_back(move(FIRST_PLAYER));
-    players.push_back(move(SECOND_PLAYER));
-    players.push_back(move(THIRD_PLAYER));
+    Game t_game{THREE_PLAYERS, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR};
 
-    Game t_game{players, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR};
-
-    // Need to create new Player object because FISRT_PLAYER was std::moved.
-    Player PLAYER1{cxutil::Name{"First Player"}, Disc::BLACK_DISC};
-
-    ASSERT_EQ(t_game.activePlayer(), PLAYER1);
+    ASSERT_EQ(t_game.activePlayer(), *FIRST_PLAYER);
 }
+
 
 TEST_F(GameTests, ActivePlayerAccessor_ThreePlayerGameAndTwoTurns_ReturnsThirdPlayer)
 {
-    vector<shared_ptr<Player>> players;
-    players.push_back(move(FIRST_PLAYER));
-    players.push_back(move(SECOND_PLAYER));
-    players.push_back(move(THIRD_PLAYER));
-
-    Game t_game{players, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR};
-
-    // Need to create new Player object because FISRT_PLAYER was std::moved.
-    Player PLAYER3{cxutil::Name{"Third Player"}, Disc::YELLOW_DISC};
+    Game t_game{THREE_PLAYERS, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR};
 
     t_game.nextTurn();
     t_game.nextTurn();
 
-    ASSERT_EQ(t_game.activePlayer(), PLAYER3);
+    ASSERT_EQ(t_game.activePlayer(), *THIRD_PLAYER);
 }
+
 
 TEST_F(GameTests, ActivePlayerAccessor_ThreePlayerGameAndThreeTurns_ReturnsFirstPlayer)
 {
-    vector<shared_ptr<Player>> players;
-    players.push_back(move(FIRST_PLAYER));
-    players.push_back(move(SECOND_PLAYER));
-    players.push_back(move(THIRD_PLAYER));
-
-    Game t_game{players, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR};
-
-    // Need to create new Player object because FISRT_PLAYER was std::moved.
-    Player PLAYER1{cxutil::Name{"First Player"}, Disc::BLACK_DISC};
+    Game t_game{THREE_PLAYERS, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR};
 
     t_game.nextTurn();
     t_game.nextTurn();
     t_game.nextTurn();
 
-    ASSERT_EQ(t_game.activePlayer(), PLAYER1);
+    ASSERT_EQ(t_game.activePlayer(), *FIRST_PLAYER);
 }
+
 
 TEST_F(GameTests, InARowValueAccessor_ValidObject_ReturnsInARowValue)
 {
-    vector<shared_ptr<Player>> players;
-    players.push_back(move(FIRST_PLAYER));
-    players.push_back(move(SECOND_PLAYER));
-    players.push_back(move(THIRD_PLAYER));
-
-    Game t_game{players, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR};
+    Game t_game{THREE_PLAYERS, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR};
 
     ASSERT_EQ(t_game.inARowValue(), 4);
 }
 
+
 TEST_F(GameTests, NbOfTurnsPlayedAccessor_ValidObject_ReturnsNbOfTurnsPlayed)
 {
-    vector<shared_ptr<Player>> players;
-    players.push_back(move(FIRST_PLAYER));
-    players.push_back(move(SECOND_PLAYER));
-    players.push_back(move(THIRD_PLAYER));
-
-    Game t_game{players, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR};
+    Game t_game{THREE_PLAYERS, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR};
 
     t_game.nextTurn();
     t_game.nextTurn();
@@ -182,38 +182,26 @@ TEST_F(GameTests, NbOfTurnsPlayedAccessor_ValidObject_ReturnsNbOfTurnsPlayed)
     ASSERT_EQ(t_game.nbOfTurnsPlayed(), 4);
 }
 
+
 TEST_F(GameTests, CurrentTurnAccessor_ValidObject_ReturnsCurrentTurn)
 {
-    vector<shared_ptr<Player>> players;
-    players.push_back(move(FIRST_PLAYER));
-    players.push_back(move(SECOND_PLAYER));
-    players.push_back(move(THIRD_PLAYER));
-
-    Game t_game{players, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR};
+    Game t_game{THREE_PLAYERS, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR};
 
     ASSERT_EQ(t_game.currentTurn(), 0);
 }
 
+
 TEST_F(GameTests, IsDraw_FirstTurn_ReturnsFalse)
 {
-    vector<shared_ptr<Player>> players;
-    players.push_back(move(FIRST_PLAYER));
-    players.push_back(move(SECOND_PLAYER));
-    players.push_back(move(THIRD_PLAYER));
-
-    Game t_game{players, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR};
+    Game t_game{THREE_PLAYERS, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR};
 
     ASSERT_FALSE(t_game.isDraw());
 }
 
+
 TEST_F(GameTests, IsDraw_AllTurnsPlayedPlusOne_ReturnsTrue)
 {
-    vector<shared_ptr<Player>> players;
-    players.push_back(move(FIRST_PLAYER));
-    players.push_back(move(SECOND_PLAYER));
-    players.push_back(move(THIRD_PLAYER));
-
-    Game t_game{players, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR};
+    Game t_game{THREE_PLAYERS, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR};
 
     for(int i{0}; i < CLASSIC_GAMEBOARD->nbPositions(); ++i)
     {
@@ -223,14 +211,10 @@ TEST_F(GameTests, IsDraw_AllTurnsPlayedPlusOne_ReturnsTrue)
     ASSERT_TRUE(t_game.isDraw());
 }
 
+
 TEST_F(GameTests, NextTurn_ToFirstTurn_TurnIsOneActivePlayerIsTwo)
 {
-    vector<shared_ptr<Player>> players;
-    players.push_back(move(FIRST_PLAYER));
-    players.push_back(move(SECOND_PLAYER));
-    players.push_back(move(THIRD_PLAYER));
-
-    Game t_game{players, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR};
+    Game t_game{THREE_PLAYERS, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR};
 
     t_game.nextTurn();
 
@@ -240,14 +224,10 @@ TEST_F(GameTests, NextTurn_ToFirstTurn_TurnIsOneActivePlayerIsTwo)
     ASSERT_EQ(t_game.activePlayer(), t_player);
 }
 
+
 TEST_F(GameTests, NextTurn_AllTurns_TurnIs42ActivePlayerIsFirst)
 {
-    vector<shared_ptr<Player>> players;
-    players.push_back(move(FIRST_PLAYER));
-    players.push_back(move(SECOND_PLAYER));
-    players.push_back(move(THIRD_PLAYER));
-
-    Game t_game{players, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR};
+    Game t_game{THREE_PLAYERS, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR};
 
     for(int i{0}; i < CLASSIC_GAMEBOARD->nbPositions() - 1; ++i)
     {
@@ -260,14 +240,10 @@ TEST_F(GameTests, NextTurn_AllTurns_TurnIs42ActivePlayerIsFirst)
     ASSERT_EQ(t_game.activePlayer(), t_player);
 }
 
+
 TEST_F(GameTests, NextTurn_ExceedsAllTurns_TurnIs43)
 {
-    vector<shared_ptr<Player>> players;
-    players.push_back(move(FIRST_PLAYER));
-    players.push_back(move(SECOND_PLAYER));
-    players.push_back(move(THIRD_PLAYER));
-
-    Game t_game{players, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR};
+    Game t_game{THREE_PLAYERS, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR};
 
     for(int i{0}; i < CLASSIC_GAMEBOARD->nbPositions(); ++i)
     {
@@ -281,14 +257,10 @@ TEST_F(GameTests, NextTurn_ExceedsAllTurns_TurnIs43)
     ASSERT_EQ(t_game.nbOfTurnsPlayed(), CLASSIC_GAMEBOARD->nbPositions());
 }
 
+
 TEST_F(GameTests, IsWon_HorizontalWinner_ReturnsTrue)
 {
-    vector<shared_ptr<Player>> players;
-    players.push_back(move(FIRST_PLAYER));
-    players.push_back(move(SECOND_PLAYER));
-    players.push_back(move(THIRD_PLAYER));
-
-    Game t_game{players, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR};
+    Game t_game{THREE_PLAYERS, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR};
 
     // Always same player:
     t_game.playTurn(Column{0});
@@ -301,15 +273,11 @@ TEST_F(GameTests, IsWon_HorizontalWinner_ReturnsTrue)
 
     ASSERT_TRUE(t_game.isWon());
 }
+
 
 TEST_F(GameTests, IsWon_VerticalWinner_ReturnsTrue)
 {
-    vector<shared_ptr<Player>> players;
-    players.push_back(move(FIRST_PLAYER));
-    players.push_back(move(SECOND_PLAYER));
-    players.push_back(move(THIRD_PLAYER));
-
-    Game t_game{players, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR};
+    Game t_game{THREE_PLAYERS, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR};
 
     // Always same player:
     t_game.playTurn(Column{0});
@@ -323,14 +291,10 @@ TEST_F(GameTests, IsWon_VerticalWinner_ReturnsTrue)
     ASSERT_TRUE(t_game.isWon());
 }
 
+
 TEST_F(GameTests, IsWon_ObliqueUpwardWinner_ReturnsTrue)
 {
-    vector<shared_ptr<Player>> players;
-    players.push_back(move(FIRST_PLAYER));
-    players.push_back(move(SECOND_PLAYER));
-    players.push_back(move(THIRD_PLAYER));
-
-    Game t_game{players, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR};
+    Game t_game{THREE_PLAYERS, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR};
 
     t_game.playTurn(Column{0}); // Player 1
     t_game.nextTurn();
@@ -366,15 +330,11 @@ TEST_F(GameTests, IsWon_ObliqueUpwardWinner_ReturnsTrue)
 
     ASSERT_TRUE(t_game.isWon());
 }
+
 
 TEST_F(GameTests, IsWon_ObliqueDownwardWinner_ReturnsTrue)
 {
-    vector<shared_ptr<Player>> players;
-    players.push_back(move(FIRST_PLAYER));
-    players.push_back(move(SECOND_PLAYER));
-    players.push_back(move(THIRD_PLAYER));
-
-    Game t_game{players, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR};
+    Game t_game{THREE_PLAYERS, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR};
 
     t_game.playTurn(Column{3}); // Player 1
     t_game.nextTurn();
@@ -411,38 +371,26 @@ TEST_F(GameTests, IsWon_ObliqueDownwardWinner_ReturnsTrue)
     ASSERT_TRUE(t_game.isWon());
 }
 
+
 TEST_F(GameTests, IsWon_NoWinner_ReturnsFalse)
 {
-    vector<shared_ptr<Player>> players;
-    players.push_back(move(FIRST_PLAYER));
-    players.push_back(move(SECOND_PLAYER));
-    players.push_back(move(THIRD_PLAYER));
-
-    Game t_game{players, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR};
+    Game t_game{THREE_PLAYERS, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR};
 
     ASSERT_FALSE(t_game.isWon());
 }
 
+
 TEST_F(GameTests, PlayTurn_ValidAndEmptyColumn_ReturnsTrue)
 {
-    vector<shared_ptr<Player>> players;
-    players.push_back(move(FIRST_PLAYER));
-    players.push_back(move(SECOND_PLAYER));
-    players.push_back(move(THIRD_PLAYER));
-
-    Game t_game{players, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR};
+    Game t_game{THREE_PLAYERS, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR};
 
     ASSERT_TRUE(t_game.playTurn(Column{0}));
 }
 
+
 TEST_F(GameTests, PlayTurn_ValidAndFullColumn_ReturnsFalse)
 {
-    vector<shared_ptr<Player>> players;
-    players.push_back(move(FIRST_PLAYER));
-    players.push_back(move(SECOND_PLAYER));
-    players.push_back(move(THIRD_PLAYER));
-
-    Game t_game{players, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR};
+    Game t_game{THREE_PLAYERS, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR};
 
     for(int i{0}; i < CLASSIC_GAMEBOARD->nbColumns(); ++i)
     {
@@ -454,26 +402,19 @@ TEST_F(GameTests, PlayTurn_ValidAndFullColumn_ReturnsFalse)
     ASSERT_FALSE(t_game.playTurn(Column{0}));
 }
 
+
 TEST_F(GameTests, PlayTurn_ColumnValueTooSmall_ExceptionThrown)
 {
-    vector<shared_ptr<Player>> players;
-    players.push_back(move(FIRST_PLAYER));
-    players.push_back(move(SECOND_PLAYER));
-    players.push_back(move(THIRD_PLAYER));
-
-    Game t_game{players, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR};
+    Game t_game{THREE_PLAYERS, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR};
 
     ASSERT_THROW(t_game.playTurn(Column{-1}), PreconditionException);
 }
 
+
 TEST_F(GameTests, PlayTurn_ColumnValueTooLarge_ExceptionThrown)
 {
-    vector<shared_ptr<Player>> players;
-    players.push_back(move(FIRST_PLAYER));
-    players.push_back(move(SECOND_PLAYER));
-    players.push_back(move(THIRD_PLAYER));
-
-    Game t_game{players, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR};
+    Game t_game{THREE_PLAYERS, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR};
 
     ASSERT_THROW(t_game.playTurn(Column{CLASSIC_GAMEBOARD->nbColumns()}), PreconditionException);
 }
+

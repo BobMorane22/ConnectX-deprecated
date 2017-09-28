@@ -22,23 +22,38 @@
 /***********************************************************************************************//**
  * @file    Game.cpp
  * @author  Eric Poirier
- * @date    January 2017
- * @version 0.1
+ * @date    September 2017
+ * @version 1.0
  *
  * Implementation for a Game utility.
  *
  **************************************************************************************************/
 
+#include <algorithm>
+
+#include <cxutil/include/narrow_cast.h>
+
 #include "../include/Game.h"
 
 using namespace cxbase;
 
-Game::Game(const PlayerList& p_players, const GameBoardSPtr p_gameboard, int p_inARow):
+Game::Game(const std::vector<std::shared_ptr<Player>>& p_players, const std::shared_ptr<GameBoard>& p_gameboard, int p_inARow):
            m_players{p_players}, m_gameboard{p_gameboard}, m_inARow{p_inARow}
 {
+    PRECONDITION(p_gameboard != nullptr);
+
+    PRECONDITION(std::none_of(p_players.begin(), p_players.end(), 
+                 [](const std::shared_ptr<Player>& player)
+                   {
+                       return player == nullptr;
+                   })
+                 );
+
     PRECONDITION(p_players.size() >= 2);
     PRECONDITION(p_inARow >= 2);
     PRECONDITION(p_inARow < std::min(p_gameboard->nbColumns(), p_gameboard->nbRows()));
+    PRECONDITION(p_players.size() > 2);
+    PRECONDITION(p_players.size() <= cxutil::narrow_cast<unsigned int>(p_gameboard->nbPositions() / p_inARow));
 
     INVARIANTS();
 }
@@ -68,12 +83,20 @@ void Game::nextTurn()
     }
 
     // Next Player is up:
-    m_turn = (m_turn + 1) % static_cast<int>(m_players.size()); // Cast is OK because this vector is always small.
+    m_turn = (m_turn + 1) % cxutil::narrow_cast<int>(m_players.size()); // Cast is OK because this vector is always small.
 
 }
 
 void Game::checkInvariant() const
 {
+    INVARIANT(m_gameboard != nullptr);
+    INVARIANT(std::none_of(m_players.begin(), m_players.end(), 
+              [](const std::shared_ptr<Player>& p_player)
+                 {
+                     return p_player == nullptr;
+                 })
+             );
+
     INVARIANT(m_inARow >= 2);
     INVARIANT(m_inARow < std::min(m_gameboard->nbColumns(), m_gameboard->nbRows()));
 
@@ -81,5 +104,8 @@ void Game::checkInvariant() const
     INVARIANT(m_nbTurns < m_gameboard->nbPositions());
 
     INVARIANT(m_turn >= 0);
-    INVARIANT(static_cast<unsigned int>(m_turn) < m_players.size());
+    INVARIANT(cxutil::narrow_cast<unsigned int>(m_turn) < m_players.size());
+
+    INVARIANT(m_players.size() > 2);
+    INVARIANT(m_players.size() <= cxutil::narrow_cast<unsigned int>(m_gameboard->nbPositions() / m_inARow));
 }
