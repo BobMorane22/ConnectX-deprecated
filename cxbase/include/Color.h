@@ -44,6 +44,8 @@ namespace cxbase
 /***********************************************************************************************//**
  * @class Color
  *
+ * @brief An HTML compliant color class.
+ *
  * A Color object is composed of 32 bits defining its position on the RGBA spectrum and an
  * AsciiColorCode (optional) to display in text mode. Of the 32 bits, 8 are for the red component,
  * 8 are for the green component, 8 are for the blue component and 8 are for the alpha component,

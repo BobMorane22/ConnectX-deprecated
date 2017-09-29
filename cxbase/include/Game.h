@@ -48,6 +48,8 @@ namespace cxbase
 /***********************************************************************************************//**
  * @class Game
  *
+ * @brief Connect X game.
+ *
  * Gives access to several higher level features to construct Connect X games.
  *
  * @invariant The Gameboard address is valid.

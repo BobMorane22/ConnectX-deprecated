@@ -48,7 +48,7 @@ namespace cxbase
 /***********************************************************************************************//**
  * @class GameBoard
  *
- * Connect X GameBoard.
+ * @brief Connect X GameBoard.
  *
  * A Connect X GameBoard consists mainly of a Grid, or a 2D Disc array, and dimensionnal information
  * about the Grid. In this document, Grid and GameBoard will be used interchangeably. The GameBoard

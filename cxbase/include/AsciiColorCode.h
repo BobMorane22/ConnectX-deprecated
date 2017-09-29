@@ -42,7 +42,7 @@ namespace cxbase
 /***********************************************************************************************//**
  * @class AsciiColorCode
  *
- * An ASCII code representing a color.
+ * @brief An ASCII code representing a color.
  *
  * An ASCII color code is an ASCII character that is used to represent a color (for example in a
  * terminal, or a text file). Not all ASCII characters can be used to represent a color. In fact,

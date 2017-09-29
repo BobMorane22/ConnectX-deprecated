@@ -42,7 +42,7 @@ namespace cxbase
 /***********************************************************************************************//**
  * @class Row
  *
- * An integer coordinate representing a row.
+ * @brief An integer coordinate representing a row.
  *
  **************************************************************************************************/
 class Row : public cxutil::Coordinate <int>
@@ -75,7 +75,7 @@ public:
 /***********************************************************************************************//**
  * @class Column
  *
- * An integer coordinate representing a column.
+ * @brief An integer coordinate representing a column.
  *
  **************************************************************************************************/
 class Column : public cxutil::Coordinate<int>
@@ -107,6 +107,8 @@ public:
 
 /***********************************************************************************************//**
  * @class Position
+ *
+ * @brief 2D position class (similar to a 2-coordinates point on a plane).
  *
  * A Position is nothing but an (Row, Column) tuple with a special meaning attached to it: that
  * of a 2D location on a grid. To that effect, the tuple mentionned above

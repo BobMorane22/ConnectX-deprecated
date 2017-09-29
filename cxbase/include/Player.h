@@ -47,7 +47,7 @@ namespace cxbase
 /***********************************************************************************************//**
  * @class Player
  *
- * A utility to manage Players of a Disc related game.
+ * @brief A utility to manage Players of a Disc related game.
  *
  * A Player object is a Name and Disc pair.
  *

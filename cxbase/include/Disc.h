@@ -43,7 +43,7 @@ namespace cxbase
 /***********************************************************************************************//**
  * @class Disc
  *
- * A colored Disc object.
+ * @brief A colored Disc object.
  *
  * A Disc can be seen as a kind of colored token. It's only data member is a Color.
  *
