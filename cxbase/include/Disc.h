@@ -56,7 +56,13 @@ class Disc : public cxutil::ICliObject
 public:
 
 ///@{ @name Object construction and destruction
-    virtual ~Disc() = default;
+
+    /*******************************************************************************************//**
+     * Default destructor.
+     *
+     **********************************************************************************************/
+    virtual ~Disc();
+
 
     /*******************************************************************************************//**
      * Default constructor.
@@ -77,6 +83,7 @@ public:
      *
      **********************************************************************************************/
     Disc(const Color& p_color) : m_color{p_color} {}
+
 ///@}
 
 
@@ -97,10 +104,12 @@ public:
      *
      **********************************************************************************************/
     AsciiColorCode asciiColorCode() const {return m_color.asciiColorCode();}
+
 ///@}
 
 
 ///@{ @name Operators
+
     /*******************************************************************************************//**
      * Equal-to operator.
      *
@@ -125,10 +134,10 @@ public:
      **********************************************************************************************/
     virtual bool operator!=(const Disc& p_disc) const;
 
-
 ///@}
 
 ///@{ @name Predefined Discs
+
     static const Disc NO_DISC;
     static const Disc WHITE_DISC;
     static const Disc BLACK_DISC;
@@ -137,6 +146,7 @@ public:
     static const Disc RED_DISC;
     static const Disc YELLOW_DISC;
     static const Disc BLUE_DISC;
+
 ///@}
 
 protected:

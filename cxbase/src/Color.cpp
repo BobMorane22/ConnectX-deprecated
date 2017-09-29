@@ -33,6 +33,7 @@
 
 using namespace cxbase;
 
+
 const Color Color::TRANSPARENT    {255, 255, 255, 0  , AsciiColorCode{' '}};
 const Color Color::WHITE          {255, 255, 255, 255, AsciiColorCode{'W'}};
 const Color Color::BLACK          {0  , 0  , 0  , 255, AsciiColorCode{'K'}};
@@ -42,7 +43,11 @@ const Color Color::RED            {255, 0  , 0  , 255, AsciiColorCode{'R'}};
 const Color Color::YELLOW         {255, 255, 0  , 255, AsciiColorCode{'Y'}};
 const Color Color::BLUE           {0  , 0  , 255, 255, AsciiColorCode{'B'}};
 
-Color::Color(int p_red, int p_green,
+
+Color::Color() = default;
+
+
+Color::Color(int p_red,  int p_green,
              int p_blue, int p_alpha,
              AsciiColorCode p_asciiColorCode) :
                                                m_red{p_red},
@@ -69,6 +74,10 @@ Color::Color(int p_red, int p_green,
     INVARIANTS();
 }
 
+
+Color::~Color() = default;
+
+
 bool Color::operator==(const Color& p_color) const
 {
     bool sameColor{false};
@@ -82,10 +91,12 @@ bool Color::operator==(const Color& p_color) const
     return sameColor;
 }
 
+
 bool Color::operator!=(const Color& p_color) const
 {
     return !(*this == p_color);
 }
+
 
 void Color::checkInvariant() const
 {

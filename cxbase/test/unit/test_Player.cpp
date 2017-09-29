@@ -61,7 +61,7 @@ TEST_F(PlayerTests, Constructor_TwoValidParameters_NoExceptionThrown)
 
 TEST_F(PlayerTests, Constructor_NoDiscAsParameter_ExceptionThrown)
 {
-    ASSERT_THROW(Player t_player(NAME1, Disc::NO_DISC), InvariantException);
+    ASSERT_THROW(Player t_player(NAME1, Disc::NO_DISC), PreconditionException);
 }
 
 TEST_F(PlayerTests, NameAccessor_ValidPlayer_ReturnsName)

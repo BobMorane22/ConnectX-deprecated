@@ -37,6 +37,10 @@
 
 using namespace cxbase;
 
+
+Game::~Game() = default;
+
+
 Game::Game(const std::vector<std::shared_ptr<Player>>& p_players, const std::shared_ptr<GameBoard>& p_gameboard, int p_inARow):
            m_players{p_players}, m_gameboard{p_gameboard}, m_inARow{p_inARow}
 {
@@ -58,6 +62,7 @@ Game::Game(const std::vector<std::shared_ptr<Player>>& p_players, const std::sha
     INVARIANTS();
 }
 
+
 bool Game::playTurn(const Column& p_column)
 {
     PRECONDITION(p_column.value() >= 0);
@@ -74,6 +79,7 @@ bool Game::playTurn(const Column& p_column)
     return success;
 }
 
+
 void Game::nextTurn()
 {
     // One more turn done:
@@ -86,6 +92,7 @@ void Game::nextTurn()
     m_turn = (m_turn + 1) % cxutil::narrow_cast<int>(m_players.size()); // Cast is OK because this vector is always small.
 
 }
+
 
 void Game::checkInvariant() const
 {

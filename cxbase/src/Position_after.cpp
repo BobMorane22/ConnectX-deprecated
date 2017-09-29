@@ -1,5 +1,5 @@
 /***************************************************************************************************
- *
+ * 
  * Copyright (C) 2016 Connect X team
  *
  * This file is part of Connect X.
@@ -20,59 +20,26 @@
  **************************************************************************************************/
 
 /***********************************************************************************************//**
- * @file    Player.cpp
+ * @file    Position.cpp
  * @author  Eric Poirier
- * @date    November 2016
+ * @date    October 2016
  * @version 0.1
  *
- * Implementation for a Player utility.
+ * Implementation for a two dimensional position tool (using rows and columns).
  *
  **************************************************************************************************/
 
-#include <sstream>
-
-#include "../include/Player.h"
+#include "../include/Position.h"
 
 using namespace cxbase;
 
 
-Player::~Player() = default;
+Row::~Row()           = default;
+Column::~Column()     = default;
+Position::~Position() = default;
 
-
-Player::Player(const cxutil::Name& p_name, const Disc& p_disc): m_name{p_name}, m_disc{p_disc}
+Position::Position(const Row& p_row, const Column& p_column): m_row{p_row}, m_column{p_column}
 {
-    PRECONDITION(p_disc != Disc::NO_DISC);
-
-    INVARIANTS();
-}
-
-
-bool Player::operator==(const Player& p_player) const
-{
-    bool areEqual{false};
-
-    if(m_name == p_player.name() && m_disc == p_player.disc())
-    {
-        areEqual = true;
-    }
-
-    return areEqual;
-}
-
-
-bool Player::operator!=(const Player& p_player) const
-{
-    return !(*this == p_player);
-}
-
-
-void Player::print(std::ostream& p_stream) const
-{
-    p_stream << m_name.toString();
-}
-
-
-void Player::checkInvariant() const
-{
-    INVARIANT(m_disc != Disc::NO_DISC);
+    POSTCONDITION(m_row == p_row);
+    POSTCONDITION(m_column == p_column);
 }

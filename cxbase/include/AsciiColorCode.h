@@ -67,8 +67,12 @@ class AsciiColorCode : public cxutil::IEnforceContract, public cxutil::ICliObjec
 public:
 
 ///@{ @name Object construction and destruction
-    AsciiColorCode()            = delete;
-    virtual ~AsciiColorCode()   = default;
+
+    /*******************************************************************************************//**
+     * Default destructor.
+     *
+     **********************************************************************************************/
+    virtual ~AsciiColorCode();
 
 
     /*******************************************************************************************//**
@@ -82,9 +86,11 @@ public:
      *
      **********************************************************************************************/
     AsciiColorCode(char p_asciiColorCode);
+
 ///@}
 
 ///@{ @name Data access
+
     /*******************************************************************************************//**
      * Accessor for the ascii color code attribute.
      *
@@ -92,10 +98,12 @@ public:
      *
      **********************************************************************************************/
     char toChar() const { return m_asciiColorCode; }
+
 ///@}
 
 
 ///@{ @name Operators
+
     /*******************************************************************************************//**
      * Equal-to operator.
      *
@@ -118,6 +126,8 @@ public:
      *
      **********************************************************************************************/
     bool operator!=(const AsciiColorCode& p_asciiColorCode) const { return p_asciiColorCode.m_asciiColorCode != m_asciiColorCode; }
+
+///@}
 
 
 protected:

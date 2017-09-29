@@ -49,14 +49,6 @@ public:
     int   NB_COLUMNS_MIN    {7};
     int   NB_ROWS_MIN       {6};
 
-    // Disc Disc::NO_DISC        {Color{Name{"No color"},    AsciiColorCode{' '}}};
-    // Disc Disc::BLACK_DISC     {Color{Name{"Black"},       AsciiColorCode{'B'}}};
-    // Disc Disc::RED_DISC       {Color{Name{"Red"},         AsciiColorCode{'R'}}};
-    // Disc Disc::YELLOW_DISC    {Color{Name{"Yellow"},      AsciiColorCode{'Y'}}};
-    // Disc Disc::GREEN_DISC     {Color{Name{"Green"},       AsciiColorCode{'G'}}};
-    // Disc Disc::WHITE_DISC     {Color{Name{"White"},       AsciiColorCode{'W'}}};
-    // Disc Disc::BLUE_DISC      {Color{Name{"Blue"},        AsciiColorCode{'b'}}};
-
     GameBoard t_gameBoard;
     GameBoard t_gameBoard10x10 {10, 10};
 };
@@ -77,6 +69,7 @@ TEST_F(GameBoardTests, Constructor_Default_CreatesStandardAndEmptyC4Board)
     }
 }
 
+
 TEST_F(GameBoardTests, Constructor_TwoValidParameters_NoExceptionThrown)
 {
 
@@ -92,25 +85,30 @@ TEST_F(GameBoardTests, Constructor_TwoValidParameters_NoExceptionThrown)
     }
 }
 
+
 TEST(GameBoard, Constructor_ColumnParameterTooSmall_ExceptionThrown)
 {
     ASSERT_THROW((GameBoard{10, 6}), PreconditionException);
 }
+
 
 TEST(GameBoard, Constructor_ColumnParameterTooLarge_ExceptionThrown)
 {
     ASSERT_THROW((GameBoard{10, 65}), PreconditionException);
 }
 
+
 TEST(GameBoard, Constructor_RowParameterTooSmall_ExceptionThrown)
 {
     ASSERT_THROW((GameBoard{5, 10}), PreconditionException);
 }
 
+
 TEST(GameBoard, Constructor_RowParameterTooLarge_ExceptionThrown)
 {
     ASSERT_THROW((GameBoard{65, 10}), PreconditionException);
 }
+
 
 TEST_F(GameBoardTests, GridAccessor_ValidGameBoard_ReturnsGrid)
 {
@@ -119,20 +117,24 @@ TEST_F(GameBoardTests, GridAccessor_ValidGameBoard_ReturnsGrid)
     ASSERT_EQ(t_defaultGrid, t_gameBoard.grid());
 }
 
+
 TEST_F(GameBoardTests, NbRowsAccessor_ValidGameBoard_ReturnsNbRows)
 {
     ASSERT_EQ(NB_ROWS_MIN, t_gameBoard.nbRows());
 }
+
 
 TEST_F(GameBoardTests, NbColumnsAccessor_ValidGameBoard_ReturnsNbColumns)
 {
     ASSERT_EQ(NB_COLUMNS_MIN, t_gameBoard.nbColumns());
 }
 
+
 TEST_F(GameBoardTests, NbPositionsAccessor_ValidGameBoard_ReturnsNbPositions)
 {
     ASSERT_EQ(NB_ROWS_MIN * NB_COLUMNS_MIN, t_gameBoard.nbPositions());
 }
+
 
 TEST_F(GameBoardTests, SpecificPositionAccessor_ExistingPositionAsParameter_ReturnsPosition)
 {
@@ -143,12 +145,14 @@ TEST_F(GameBoardTests, SpecificPositionAccessor_ExistingPositionAsParameter_Retu
     ASSERT_EQ(Disc::BLACK_DISC, t_gameBoard.discAtPosition(thisPosition));
 }
 
+
 TEST_F(GameBoardTests, SpecificPositionAccessor_RowTooLargeInPositionParameter_ExceptionThrown)
 {
     Position invalidPosition{Row{NB_ROWS_MAX + 1}, Column{4}};
 
     ASSERT_THROW(t_gameBoard.discAtPosition(invalidPosition), PreconditionException);
 }
+
 
 TEST_F(GameBoardTests, SpecificPositionAccessor_ColumnTooLargeInPositionParameter_ExceptionThrown)
 {
@@ -157,12 +161,14 @@ TEST_F(GameBoardTests, SpecificPositionAccessor_ColumnTooLargeInPositionParamete
     ASSERT_THROW(t_gameBoard.discAtPosition(invalidPosition), PreconditionException);
 }
 
+
 TEST_F(GameBoardTests, SpecificPositionAccessor_RowTooSmallInPositionParameter_ExceptionThrown)
 {
     Position invalidPosition{Row{-1}, Column{4}};
 
     ASSERT_THROW(t_gameBoard.discAtPosition(invalidPosition), PreconditionException);
 }
+
 
 TEST_F(GameBoardTests, SpecificPositionAccessor_ColumnTooSmallInPositionParameter_ExceptionThrown)
 {
@@ -171,6 +177,7 @@ TEST_F(GameBoardTests, SpecificPositionAccessor_ColumnTooSmallInPositionParamete
     ASSERT_THROW(t_gameBoard.discAtPosition(invalidPosition), PreconditionException);
 }
 
+
 TEST_F(GameBoardTests, PlaceDisc_ValidDiscAsParameter_DiscInsertedInGameboard)
 {
     t_gameBoard.placeDisc(Column{0}, Disc::RED_DISC);
@@ -178,6 +185,7 @@ TEST_F(GameBoardTests, PlaceDisc_ValidDiscAsParameter_DiscInsertedInGameboard)
     ASSERT_EQ(t_gameBoard.discAtPosition(Position{Row{0}, Column{0}}), Disc::RED_DISC);
     ASSERT_EQ(t_gameBoard.discAtPosition(Position{Row{1}, Column{0}}), Disc::NO_DISC);
 }
+
 
 TEST_F(GameBoardTests, PlaceDisc_ValidDiscAsParameter_DiscInsertedInGameboardOverPrevious)
 {
@@ -189,10 +197,12 @@ TEST_F(GameBoardTests, PlaceDisc_ValidDiscAsParameter_DiscInsertedInGameboardOve
     ASSERT_EQ(t_gameBoard.discAtPosition(Position{Row{2}, Column{0}}), Disc::NO_DISC);
 }
 
+
 TEST_F(GameBoardTests, PlaceDisc_InvalidDiscAsParameter_ExceptionThrown)
 {   
     ASSERT_THROW(t_gameBoard.placeDisc(Column{0}, Disc::NO_DISC), PreconditionException);
 }
+
 
 TEST_F(GameBoardTests, PlaceDisc_ValidDiscAsParameter_DiscInsertedInGameboardOverPrevious2)
 {
@@ -205,6 +215,7 @@ TEST_F(GameBoardTests, PlaceDisc_ValidDiscAsParameter_DiscInsertedInGameboardOve
     ASSERT_EQ(t_gameBoard.discAtPosition(Position{Row{2}, Column{0}}), Disc::RED_DISC);
     ASSERT_EQ(t_gameBoard.discAtPosition(Position{Row{3}, Column{0}}), Disc::NO_DISC);
 }
+
 
 TEST_F(GameBoardTests, PlaceDisc_ValidDiscAsParameter_DiscInsertedInGameboardOverPrevious3)
 {
@@ -219,6 +230,7 @@ TEST_F(GameBoardTests, PlaceDisc_ValidDiscAsParameter_DiscInsertedInGameboardOve
     ASSERT_EQ(t_gameBoard.discAtPosition(Position{Row{3}, Column{0}}), Disc::BLACK_DISC);
     ASSERT_EQ(t_gameBoard.discAtPosition(Position{Row{4}, Column{0}}), Disc::NO_DISC);
 }
+
 
 TEST_F(GameBoardTests, PlaceDisc_ValidDiscAsParameter_DiscInsertedInGameboardOverPrevious4)
 {
@@ -236,6 +248,7 @@ TEST_F(GameBoardTests, PlaceDisc_ValidDiscAsParameter_DiscInsertedInGameboardOve
     ASSERT_EQ(t_gameBoard.discAtPosition(Position{Row{5}, Column{0}}), Disc::NO_DISC);
 }
 
+
 TEST_F(GameBoardTests, PlaceDisc_ValidDiscAsParameter_DiscInsertedInGameboardOverPrevious5)
 {
     t_gameBoard.placeDisc(Column{0}, Disc::RED_DISC);
@@ -252,6 +265,7 @@ TEST_F(GameBoardTests, PlaceDisc_ValidDiscAsParameter_DiscInsertedInGameboardOve
     ASSERT_EQ(t_gameBoard.discAtPosition(Position{Row{4}, Column{0}}), Disc::RED_DISC);
     ASSERT_EQ(t_gameBoard.discAtPosition(Position{Row{5}, Column{0}}), Disc::BLACK_DISC);
 }
+
 
 TEST_F(GameBoardTests, PlaceDisc_ValidDiscAsParameter_DiscInsertedInGameboardOverPrevious6)
 {
@@ -273,6 +287,7 @@ TEST_F(GameBoardTests, PlaceDisc_ValidDiscAsParameter_DiscInsertedInGameboardOve
     ASSERT_EQ(t_gameBoard.discAtPosition(Position{Row{5}, Column{0}}), Disc::BLACK_DISC);
 }
 
+
 TEST_F(GameBoardTests, PlaceDisc_ValidDiscAsParameter_DiscInsertedInGameboardOverPrevious7)
 {
     t_gameBoard.placeDisc(Column{NB_COLUMNS_MIN - 1}, Disc::RED_DISC);
@@ -281,15 +296,18 @@ TEST_F(GameBoardTests, PlaceDisc_ValidDiscAsParameter_DiscInsertedInGameboardOve
     ASSERT_EQ(t_gameBoard.discAtPosition(Position{Row{1}, Column{NB_COLUMNS_MIN - 1}}), Disc::NO_DISC);
 }
 
+
 TEST_F(GameBoardTests, PlaceDisc_PlaceDisc_ColumnTooSmallAsParameter_ExceptionThrown)
 {
     ASSERT_THROW(t_gameBoard.placeDisc(Column{-1}, Disc::RED_DISC), PreconditionException);
 }
 
+
 TEST_F(GameBoardTests, PlaceDisc_PlaceDisc_ColumnTooLargeAsParameter_ExceptionThrown)
 {
     ASSERT_THROW(t_gameBoard.placeDisc(Column{NB_COLUMNS_MIN}, Disc::RED_DISC), PreconditionException);
 }
+
 
 TEST_F(GameBoardTests, IsColumFull_AFullColumnAsParameter_ReturnsTrue)
 {
@@ -303,6 +321,7 @@ TEST_F(GameBoardTests, IsColumFull_AFullColumnAsParameter_ReturnsTrue)
     ASSERT_TRUE(t_gameBoard.isColumnFull(Column{0}));
 }
 
+
 TEST_F(GameBoardTests, IsColumFull_ANotFullColumnAsParameter_ReturnsFalse)
 {
     t_gameBoard.placeDisc(Column{0}, Disc::RED_DISC);
@@ -314,15 +333,18 @@ TEST_F(GameBoardTests, IsColumFull_ANotFullColumnAsParameter_ReturnsFalse)
     ASSERT_FALSE(t_gameBoard.isColumnFull(Column{0}));
 }
 
+
 TEST_F(GameBoardTests, IsColumnFull_ColumnTooSmallAsParameter_ExceptionThrown)
 {
     ASSERT_THROW(t_gameBoard.isColumnFull(Column{-1}), PreconditionException);
 }
 
+
 TEST_F(GameBoardTests, IsColumnFull_ColumnTooLargeAsParameter_ExceptionThrown)
 {
     ASSERT_THROW(t_gameBoard.isColumnFull(Column{NB_COLUMNS_MIN}), PreconditionException);
 }
+
 
 TEST_F(GameBoardTests, EqualToOperator_TwoEqualGameBoardsAsParameters_ReturnsTrue)
 {
@@ -341,6 +363,7 @@ TEST_F(GameBoardTests, EqualToOperator_TwoEqualGameBoardsAsParameters_ReturnsTru
     ASSERT_TRUE(t_gameBoard == t_gameBoard2);
 
 }
+
 
 TEST_F(GameBoardTests, EqualToOperator_TwoDifferentGameBoardsAsParameters_ReturnsFalse)
 {
@@ -361,12 +384,14 @@ TEST_F(GameBoardTests, EqualToOperator_TwoDifferentGameBoardsAsParameters_Return
     ASSERT_FALSE(t_gameBoard == t_gameBoard2);
 }
 
+
 TEST_F(GameBoardTests, EqualToOperator_TwoDifferentSizeGameBoardsAsParameters_ExceptionThrown)
 {
     GameBoard t_gameBoard2{8, 8};
 
     ASSERT_THROW(t_gameBoard == t_gameBoard2, PreconditionException);
 }
+
 
 TEST_F(GameBoardTests, NoEqualToOperator_TwoDifferentGameBoardsAsParameters_ReturnsTrue)
 {
@@ -387,6 +412,7 @@ TEST_F(GameBoardTests, NoEqualToOperator_TwoDifferentGameBoardsAsParameters_Retu
     ASSERT_NE(t_gameBoard, t_gameBoard2);
 }
 
+
 TEST_F(GameBoardTests, NoEqualToOperator_TwoEqualGameBoardsAsParameters_ReturnsFalse)
 {
     GameBoard t_gameBoard2;
@@ -404,12 +430,14 @@ TEST_F(GameBoardTests, NoEqualToOperator_TwoEqualGameBoardsAsParameters_ReturnsF
     ASSERT_FALSE(t_gameBoard != t_gameBoard2);
 }
 
+
 TEST_F(GameBoardTests, NoEqualToOperator_TwoDifferentSizeGameBoardsAsParameters_ExceptionThrown)
 {
     GameBoard t_gameBoard2{8,8};
 
     ASSERT_THROW(t_gameBoard != t_gameBoard2, PreconditionException);
 }
+
 
 TEST_F(GameBoardTests, StreamInsertionOperator_StandardGameBoardAsParameter_PrintsCorrectFormat)
 {
@@ -436,6 +464,7 @@ TEST_F(GameBoardTests, StreamInsertionOperator_StandardGameBoardAsParameter_Prin
 
     ASSERT_EQ(t_gameBoard1.str(), t_gameBoard2.str());
 }
+
 
 TEST(GameBoard, StreamInsertionOperator_12x14GameBoardAsParameter_PrintsCorrectFormat)
 {
@@ -471,12 +500,14 @@ TEST(GameBoard, StreamInsertionOperator_12x14GameBoardAsParameter_PrintsCorrectF
     ASSERT_EQ(t_gameBoard1.str(), t_gameBoard2.str());
 }
 
+
 TEST_F(GameBoardTests, IsWinner_RowUnderLimit_ExceptionThrown)
 {
     Position rowUnderLimitRow{{-1}, Column{0}};
 
     ASSERT_THROW(t_gameBoard.isWinner(rowUnderLimitRow, GameBoard::CONNECT_FOUR), PreconditionException);
 }
+
 
 TEST_F(GameBoardTests, IsWinner_RowOverLimit_ExceptionThrown)
 {
@@ -485,6 +516,7 @@ TEST_F(GameBoardTests, IsWinner_RowOverLimit_ExceptionThrown)
     ASSERT_THROW(t_gameBoard.isWinner(rowOverLimit, GameBoard::CONNECT_FOUR), PreconditionException);
 }
 
+
 TEST_F(GameBoardTests, IsWinner_ColumnUnderLimit_ExceptionThrown)
 {
     Position columnUnderLimit{Row{0}, Column{-1}};
@@ -492,12 +524,14 @@ TEST_F(GameBoardTests, IsWinner_ColumnUnderLimit_ExceptionThrown)
     ASSERT_THROW(t_gameBoard.isWinner(columnUnderLimit, GameBoard::CONNECT_FOUR), PreconditionException);
 }
 
+
 TEST_F(GameBoardTests, IsWinner_ColumnOverLimit_ExceptionThrown)
 {
     Position columnOverLimit{Row{0}, Column{t_gameBoard.nbColumns() + 1}};
 
     ASSERT_THROW(t_gameBoard.isWinner(columnOverLimit, GameBoard::CONNECT_FOUR), PreconditionException);
 }
+
 
 class ValidHorizontalGameBoardTests : public GameBoardTests
 {
@@ -623,6 +657,7 @@ public:
 
 };
 
+
 TEST_F(ValidHorizontalGameBoardTests, IsWinner_InARowIs4_BordersChecked)
 {
     ASSERT_TRUE(t_horizontalValidGameBoard.isWinner(Position{Row{0}, Column{0}}, GameBoard::CONNECT_FOUR));
@@ -639,6 +674,7 @@ TEST_F(ValidHorizontalGameBoardTests, IsWinner_InARowIs4_BordersChecked)
     ASSERT_TRUE(t_horizontalValidGameBoard.isWinner(Position{Row{4}, Column{14}}, GameBoard::CONNECT_FOUR));
     ASSERT_TRUE(t_horizontalValidGameBoard.isWinner(Position{Row{5}, Column{14}}, GameBoard::CONNECT_FOUR));
 }
+
 
 TEST_F(ValidHorizontalGameBoardTests, IsWinner_InARowIs5_BordersChecked)
 {
@@ -657,6 +693,7 @@ TEST_F(ValidHorizontalGameBoardTests, IsWinner_InARowIs5_BordersChecked)
     ASSERT_TRUE(t_horizontalValidGameBoard.isWinner(Position{Row{5}, Column{14}}, GameBoard::CONNECT_FIVE));
 }
 
+
 TEST_F(ValidHorizontalGameBoardTests, IsWinner_InARowIs6_BordersChecked)
 {
     ASSERT_FALSE(t_horizontalValidGameBoard.isWinner(Position{Row{0}, Column{0}}, GameBoard::CONNECT_SIX));
@@ -673,6 +710,7 @@ TEST_F(ValidHorizontalGameBoardTests, IsWinner_InARowIs6_BordersChecked)
     ASSERT_FALSE(t_horizontalValidGameBoard.isWinner(Position{Row{4}, Column{14}}, GameBoard::CONNECT_SIX));
     ASSERT_FALSE(t_horizontalValidGameBoard.isWinner(Position{Row{5}, Column{14}}, GameBoard::CONNECT_SIX));
 }
+
 
 TEST_F(ValidHorizontalGameBoardTests, IsWinner_InARowIs4_GridInternalsChecked)
 {
@@ -698,6 +736,7 @@ TEST_F(ValidHorizontalGameBoardTests, IsWinner_InARowIs4_GridInternalsChecked)
     ASSERT_TRUE(t_horizontalValidGameBoard.isWinner(Position{Row{5}, Column{13}}, GameBoard::CONNECT_FOUR));
 }
 
+
 TEST_F(ValidHorizontalGameBoardTests, IsWinner_InARowIs5_GridInternalsChecked)
 {
     ASSERT_TRUE(t_horizontalValidGameBoard.isWinner(Position{Row{5}, Column{1}}, GameBoard::CONNECT_FIVE));
@@ -722,6 +761,7 @@ TEST_F(ValidHorizontalGameBoardTests, IsWinner_InARowIs5_GridInternalsChecked)
     ASSERT_TRUE(t_horizontalValidGameBoard.isWinner(Position{Row{5}, Column{13}}, GameBoard::CONNECT_FIVE));
 }
 
+
 TEST_F(ValidHorizontalGameBoardTests, IsWinner_InARowIs6_GridInternalsChecked)
 {
     ASSERT_FALSE(t_horizontalValidGameBoard.isWinner(Position{Row{5}, Column{1}}, GameBoard::CONNECT_SIX));
@@ -745,6 +785,7 @@ TEST_F(ValidHorizontalGameBoardTests, IsWinner_InARowIs6_GridInternalsChecked)
     ASSERT_FALSE(t_horizontalValidGameBoard.isWinner(Position{Row{5}, Column{13}}, GameBoard::CONNECT_SIX));
     ASSERT_FALSE(t_horizontalValidGameBoard.isWinner(Position{Row{5}, Column{13}}, GameBoard::CONNECT_SIX));
 }
+
 
 TEST_F(ValidHorizontalGameBoardTests, IsWinner_InARowIs4_GridInternalBordersChecked)
 {
@@ -777,6 +818,7 @@ TEST_F(ValidHorizontalGameBoardTests, IsWinner_InARowIs4_GridInternalBordersChec
     ASSERT_TRUE(t_horizontalValidGameBoard.isWinner(Position{Row{5}, Column{10}}, GameBoard::CONNECT_FOUR));
 }
 
+
 TEST_F(ValidHorizontalGameBoardTests, IsWinner_InARowIs5_GridInternalBordersChecked)
 {
     ASSERT_TRUE(t_horizontalValidGameBoard.isWinner(Position{Row{0}, Column{4}}, GameBoard::CONNECT_FIVE));
@@ -808,6 +850,7 @@ TEST_F(ValidHorizontalGameBoardTests, IsWinner_InARowIs5_GridInternalBordersChec
     ASSERT_TRUE(t_horizontalValidGameBoard.isWinner(Position{Row{5}, Column{10}}, GameBoard::CONNECT_FIVE));
 }
 
+
 TEST_F(ValidHorizontalGameBoardTests, IsWinner_InARowIs6_GridInternalBordersChecked)
 {
     ASSERT_FALSE(t_horizontalValidGameBoard.isWinner(Position{Row{0}, Column{4}}, GameBoard::CONNECT_SIX));
@@ -838,6 +881,7 @@ TEST_F(ValidHorizontalGameBoardTests, IsWinner_InARowIs6_GridInternalBordersChec
     ASSERT_FALSE(t_horizontalValidGameBoard.isWinner(Position{Row{4}, Column{10}}, GameBoard::CONNECT_SIX));
     ASSERT_FALSE(t_horizontalValidGameBoard.isWinner(Position{Row{5}, Column{10}}, GameBoard::CONNECT_SIX));
 }
+
 
 class VerticalValidGameBoardTests : public GameBoardTests
 {
@@ -965,6 +1009,7 @@ public:
     }
 };
 
+
 TEST_F(VerticalValidGameBoardTests, IsWinner_InARowIs4_BordersChecked)
 {
     ASSERT_TRUE(t_verticalValidGameBoard.isWinner(Position{Row{0}, Column{0}}, GameBoard::CONNECT_FOUR));
@@ -983,6 +1028,7 @@ TEST_F(VerticalValidGameBoardTests, IsWinner_InARowIs4_BordersChecked)
     ASSERT_TRUE(t_verticalValidGameBoard.isWinner(Position{Row{14}, Column{5}}, GameBoard::CONNECT_FOUR));
     ASSERT_TRUE(t_verticalValidGameBoard.isWinner(Position{Row{14}, Column{6}}, GameBoard::CONNECT_FOUR));
 }
+
 
 TEST_F(VerticalValidGameBoardTests, IsWinner_InARowIs5_BordersChecked)
 {
@@ -1003,6 +1049,7 @@ TEST_F(VerticalValidGameBoardTests, IsWinner_InARowIs5_BordersChecked)
     ASSERT_TRUE(t_verticalValidGameBoard.isWinner(Position{Row{14}, Column{6}}, GameBoard::CONNECT_FIVE));
 }
 
+
 TEST_F(VerticalValidGameBoardTests, IsWinner_InARowIs6_BordersChecked)
 {
     ASSERT_FALSE(t_verticalValidGameBoard.isWinner(Position{Row{0}, Column{0}}, GameBoard::CONNECT_SIX));
@@ -1021,6 +1068,7 @@ TEST_F(VerticalValidGameBoardTests, IsWinner_InARowIs6_BordersChecked)
     ASSERT_FALSE(t_verticalValidGameBoard.isWinner(Position{Row{14}, Column{5}}, GameBoard::CONNECT_SIX));
     ASSERT_FALSE(t_verticalValidGameBoard.isWinner(Position{Row{14}, Column{6}}, GameBoard::CONNECT_SIX));
 }
+
 
 TEST_F(VerticalValidGameBoardTests, IsWinner_InARowIs4_GridInternalsChecked)
 {
@@ -1049,6 +1097,7 @@ TEST_F(VerticalValidGameBoardTests, IsWinner_InARowIs4_GridInternalsChecked)
     ASSERT_TRUE(t_verticalValidGameBoard.isWinner(Position{Row{13}, Column{6}}, GameBoard::CONNECT_FOUR));
 }
 
+
 TEST_F(VerticalValidGameBoardTests, IsWinner_InARowIs5_GridInternalsChecked)
 {
     ASSERT_TRUE(t_verticalValidGameBoard.isWinner(Position{Row{1}, Column{0}}, GameBoard::CONNECT_FIVE));
@@ -1076,6 +1125,7 @@ TEST_F(VerticalValidGameBoardTests, IsWinner_InARowIs5_GridInternalsChecked)
     ASSERT_TRUE(t_verticalValidGameBoard.isWinner(Position{Row{13}, Column{6}}, GameBoard::CONNECT_FIVE));
 }
 
+
 TEST_F(VerticalValidGameBoardTests, IsWinner_InARowIs6_GridInternalsChecked)
 {
     ASSERT_FALSE(t_verticalValidGameBoard.isWinner(Position{Row{1}, Column{0}}, GameBoard::CONNECT_SIX));
@@ -1102,6 +1152,7 @@ TEST_F(VerticalValidGameBoardTests, IsWinner_InARowIs6_GridInternalsChecked)
     ASSERT_FALSE(t_verticalValidGameBoard.isWinner(Position{Row{13}, Column{5}}, GameBoard::CONNECT_SIX));
     ASSERT_FALSE(t_verticalValidGameBoard.isWinner(Position{Row{13}, Column{6}}, GameBoard::CONNECT_SIX));
 }
+
 
 TEST_F(VerticalValidGameBoardTests, IsWinner_InARowIs4_InternalBordersChecked)
 {
@@ -1138,6 +1189,7 @@ TEST_F(VerticalValidGameBoardTests, IsWinner_InARowIs4_InternalBordersChecked)
     ASSERT_TRUE(t_verticalValidGameBoard.isWinner(Position{Row{10}, Column{6}}, GameBoard::CONNECT_FOUR));
 }
 
+
 TEST_F(VerticalValidGameBoardTests, IsWinner_InARowIs5_InternalBordersChecked)
 {
     ASSERT_TRUE(t_verticalValidGameBoard.isWinner(Position{Row{4}, Column{6}}, GameBoard::CONNECT_FIVE));
@@ -1173,6 +1225,7 @@ TEST_F(VerticalValidGameBoardTests, IsWinner_InARowIs5_InternalBordersChecked)
     ASSERT_TRUE(t_verticalValidGameBoard.isWinner(Position{Row{10}, Column{6}}, GameBoard::CONNECT_FIVE));
 }
 
+
 TEST_F(VerticalValidGameBoardTests, IsWinner_InARowIs6_InternalBordersChecked)
 {
     ASSERT_FALSE(t_verticalValidGameBoard.isWinner(Position{Row{4}, Column{6}}, GameBoard::CONNECT_SIX));
@@ -1207,6 +1260,7 @@ TEST_F(VerticalValidGameBoardTests, IsWinner_InARowIs6_InternalBordersChecked)
     ASSERT_FALSE(t_verticalValidGameBoard.isWinner(Position{Row{10}, Column{6}}, GameBoard::CONNECT_SIX));
     ASSERT_FALSE(t_verticalValidGameBoard.isWinner(Position{Row{10}, Column{6}}, GameBoard::CONNECT_SIX));
 }
+
 
 class UpwardValidGameBoardTests : public GameBoardTests
 {
@@ -1340,6 +1394,7 @@ public:
     }
 };
 
+
 TEST_F(UpwardValidGameBoardTests, IsWinner_InARowIs4_CornersChecked)
 {
 
@@ -1386,6 +1441,7 @@ TEST_F(UpwardValidGameBoardTests, IsWinner_InARowIs4_CornersChecked)
     ASSERT_TRUE(t_upwardValidGameBoard.isWinner(Position{Row{2}, Column{9}}, GameBoard::CONNECT_FOUR));
     ASSERT_TRUE(t_upwardValidGameBoard.isWinner(Position{Row{3}, Column{10}}, GameBoard::CONNECT_FOUR));
 }
+
 
 TEST_F(UpwardValidGameBoardTests, IsWinner_InARowIs5_CornersChecked)
 {
@@ -1434,6 +1490,7 @@ TEST_F(UpwardValidGameBoardTests, IsWinner_InARowIs5_CornersChecked)
     ASSERT_FALSE(t_upwardValidGameBoard.isWinner(Position{Row{3}, Column{10}}, GameBoard::CONNECT_FIVE));
 }
 
+
 TEST_F(UpwardValidGameBoardTests, IsWinner_InARowIs6_CornersChecked)
 {
 
@@ -1481,6 +1538,7 @@ TEST_F(UpwardValidGameBoardTests, IsWinner_InARowIs6_CornersChecked)
         ASSERT_FALSE(t_upwardValidGameBoard.isWinner(Position{Row{3}, Column{10}}, GameBoard::CONNECT_SIX));
 }
 
+
 TEST_F(UpwardValidGameBoardTests, IsWinner_InARowIs4_BordersChecked)
 {
 
@@ -1522,6 +1580,7 @@ TEST_F(UpwardValidGameBoardTests, IsWinner_InARowIs4_BordersChecked)
     ASSERT_TRUE(t_upwardValidGameBoard.isWinner(Position{Row{5}, Column{8}}, GameBoard::CONNECT_FOUR));
     ASSERT_TRUE(t_upwardValidGameBoard.isWinner(Position{Row{7}, Column{10}}, GameBoard::CONNECT_FOUR));
 }
+
 
 TEST_F(UpwardValidGameBoardTests, IsWinner_InARowIs5_BordersChecked)
 {
@@ -1565,6 +1624,7 @@ TEST_F(UpwardValidGameBoardTests, IsWinner_InARowIs5_BordersChecked)
     ASSERT_TRUE(t_upwardValidGameBoard.isWinner(Position{Row{7}, Column{10}}, GameBoard::CONNECT_FIVE));
 }
 
+
 TEST_F(UpwardValidGameBoardTests, IsWinner_InARowIs6_BordersChecked)
 {
 
@@ -1606,6 +1666,7 @@ TEST_F(UpwardValidGameBoardTests, IsWinner_InARowIs6_BordersChecked)
     ASSERT_FALSE(t_upwardValidGameBoard.isWinner(Position{Row{5}, Column{8}}, GameBoard::CONNECT_SIX));
     ASSERT_FALSE(t_upwardValidGameBoard.isWinner(Position{Row{7}, Column{10}}, GameBoard::CONNECT_SIX));
 }
+
 
 class DownwardValidGameBoardTests : public GameBoardTests
 {
@@ -1751,6 +1812,7 @@ public:
     }
 };
 
+
 TEST_F(DownwardValidGameBoardTests, IsWinner_InARowIs4_CornersChecked)
 {
 
@@ -1794,6 +1856,7 @@ TEST_F(DownwardValidGameBoardTests, IsWinner_InARowIs4_CornersChecked)
     ASSERT_TRUE(t_downwardValidGameBoard.isWinner(Position{Row{9}, Column{9}}, GameBoard::CONNECT_FOUR));
     ASSERT_TRUE(t_downwardValidGameBoard.isWinner(Position{Row{8}, Column{10}}, GameBoard::CONNECT_FOUR));
 }
+
 
 TEST_F(DownwardValidGameBoardTests, IsWinner_InARowIs5_CornersChecked)
 {
@@ -1839,6 +1902,7 @@ TEST_F(DownwardValidGameBoardTests, IsWinner_InARowIs5_CornersChecked)
     ASSERT_FALSE(t_downwardValidGameBoard.isWinner(Position{Row{8}, Column{10}}, GameBoard::CONNECT_FIVE));
 }
 
+
 TEST_F(DownwardValidGameBoardTests, IsWinner_InARowIs6_CornersChecked)
 {
 
@@ -1883,6 +1947,7 @@ TEST_F(DownwardValidGameBoardTests, IsWinner_InARowIs6_CornersChecked)
     ASSERT_FALSE(t_downwardValidGameBoard.isWinner(Position{Row{8}, Column{10}}, GameBoard::CONNECT_SIX));
 }
 
+
 TEST_F(DownwardValidGameBoardTests, IsWinner_InARowIs4_BordersChecked)
 {
 
@@ -1917,6 +1982,7 @@ TEST_F(DownwardValidGameBoardTests, IsWinner_InARowIs4_BordersChecked)
     ASSERT_TRUE(t_downwardValidGameBoard.isWinner(Position{Row{4}, Column{10}}, GameBoard::CONNECT_FOUR));
 }
 
+
 TEST_F(DownwardValidGameBoardTests, IsWinner_InARowIs5_BordersChecked)
 {
 
@@ -1950,6 +2016,7 @@ TEST_F(DownwardValidGameBoardTests, IsWinner_InARowIs5_BordersChecked)
     ASSERT_TRUE(t_downwardValidGameBoard.isWinner(Position{Row{6}, Column{8}}, GameBoard::CONNECT_FIVE));
     ASSERT_TRUE(t_downwardValidGameBoard.isWinner(Position{Row{4}, Column{10}}, GameBoard::CONNECT_FIVE));
 }
+
 
 TEST_F(DownwardValidGameBoardTests, IsWinner_InARowIs6_BordersChecked)
 {

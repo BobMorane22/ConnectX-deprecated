@@ -51,8 +51,12 @@ class Row : public cxutil::Coordinate <int>
 public:
 
 ///@{ @name Object construction and destruction.
-    Row()           = delete;
-    virtual ~Row()  = default;
+
+    /*******************************************************************************************//**
+     * Default destructor.
+     *
+     **********************************************************************************************/
+    virtual ~Row();
 
 
     /*******************************************************************************************//**
@@ -61,7 +65,8 @@ public:
      * @param[in] p_row An integer containing the wanted Row value.
      *
      **********************************************************************************************/
-    Row(int p_row): cxutil::Coordinate<int>{p_row} {};
+    Row(int p_row): cxutil::Coordinate<int>{p_row} {}
+
 ///@}
 
 };
@@ -79,8 +84,12 @@ class Column : public cxutil::Coordinate<int>
 public:
 
 ///@{ @name Object construction and destruction.
-    Column()            = delete;
-    virtual ~Column()   = default;
+
+    /*******************************************************************************************//**
+     * Default destructor.
+     *
+     **********************************************************************************************/
+    virtual ~Column();
 
 
     /*******************************************************************************************//**
@@ -89,7 +98,8 @@ public:
      * @param[in] p_column An integer containing the wanted Column value.
      *
      **********************************************************************************************/
-    Column(int p_column): cxutil::Coordinate<int>{p_column} {};
+    Column(int p_column): cxutil::Coordinate<int>{p_column} {}
+
 ///@}
 
 };
@@ -111,8 +121,13 @@ class Position
 public:
 
 ///@{ @name Object construction and destruction
-    Position()  = delete;
-    ~Position() = default;
+
+    /*******************************************************************************************//**
+     * Default destructor.
+     *
+     **********************************************************************************************/
+    virtual ~Position();
+
 
     /*******************************************************************************************//**
      * Constructor with parameters.
@@ -126,16 +141,18 @@ public:
      *
      **********************************************************************************************/
     Position(const Row& p_row, const Column& p_column);
+
 ///@}
 
 ///@{ @name Data access
+
     /*******************************************************************************************//**
      * Row accessor.
      *
      * @return The Position's Row element.
      *
      **********************************************************************************************/
-    Row row() const { return m_row; }
+    Row row() const {return m_row;}
 
 
     /*******************************************************************************************//**
@@ -144,7 +161,7 @@ public:
      * @return The Position's Column element.
      *
      **********************************************************************************************/
-    Column column() const { return m_column; }
+    Column column() const {return m_column;}
 
 
     /*******************************************************************************************//**
@@ -153,7 +170,7 @@ public:
      * @return The Position's Row element integer value.
      *
      **********************************************************************************************/
-    int rowValue() const { return m_row.value(); }
+    int rowValue() const {return m_row.value();}
 
 
     /*******************************************************************************************//**
@@ -162,10 +179,12 @@ public:
      * @return The Position's Column element integer value.
      *
      **********************************************************************************************/
-    int columnValue() const { return m_column.value(); }
+    int columnValue() const {return m_column.value();}
+
 ///@}
 
 ///@{ @name Operators
+
     /*******************************************************************************************//**
      * Equal-to operator.
      *
@@ -175,7 +194,7 @@ public:
      * @param[in] p_position The Position to compare with.
      *
      **********************************************************************************************/
-    bool operator==(const Position& p_position) const { return (m_row == p_position.m_row) && (m_column == p_position.m_column); }
+    bool operator==(const Position& p_position) const {return (m_row == p_position.m_row) && (m_column == p_position.m_column);}
 
 
     /*******************************************************************************************//**
@@ -187,7 +206,8 @@ public:
      * @param[in] p_position The Position to compare with.
      *
      **********************************************************************************************/
-    bool operator!=(const Position& p_position) const { return !(*this == p_position); };
+    bool operator!=(const Position& p_position) const {return !(*this == p_position);}
+
 ///@}
 
 private:

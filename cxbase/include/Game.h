@@ -72,7 +72,8 @@ class Game : public cxutil::IEnforceContract
 public:
 
 ///@{ @name Object construction and destruction
-    virtual ~Game() = default;
+
+    virtual ~Game();
 
 
     /*******************************************************************************************//**
@@ -93,10 +94,12 @@ public:
      *
      **********************************************************************************************/
     Game(const std::vector<std::shared_ptr<Player>>& p_players, const std::shared_ptr<GameBoard>& p_gameboard, int p_inARow);
+
 ///@}
 
 
 ///@{ @name Data access
+
     /*******************************************************************************************//**
      * Active Player accessor.
      *
@@ -133,9 +136,11 @@ public:
      *
      **********************************************************************************************/
     int nbOfTurnsPlayed() const {return m_nbTurns;}
+    
 ///@}
 
 ///@{ @name Game utilities
+
     /*******************************************************************************************//**
      * Checks if a Game is a draw.
      *
@@ -216,6 +221,7 @@ public:
      *
      **********************************************************************************************/
     void nextTurn();
+
 ///@}
 
 protected:

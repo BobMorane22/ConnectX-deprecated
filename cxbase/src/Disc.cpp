@@ -47,6 +47,7 @@ const Disc Disc::YELLOW_DISC    {Color::YELLOW     };
 const Disc Disc::BLUE_DISC      {Color::BLUE       };
 
 
+Disc::~Disc() = default;
 
 bool Disc::operator==(const Disc& p_disc) const
 {
@@ -63,10 +64,12 @@ bool Disc::operator==(const Disc& p_disc) const
     return isEqual;
 }
 
+
 bool Disc::operator!=(const Disc& p_disc) const
 {
     return !(*this == p_disc);
 }
+
 
 void Disc::print(std::ostream& p_stream) const
 {

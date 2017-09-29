@@ -107,7 +107,7 @@ TEST_F(GameTests, Constructor_InARowTooLarge_ExceptionThrown)
 {
     const int InARowTooLarge {std::min(CLASSIC_GAMEBOARD->nbRows(), CLASSIC_GAMEBOARD->nbColumns()) + 1};
 
-    ASSERT_THROW((Game {THREE_PLAYERS, CLASSIC_GAMEBOARD, InARowTooLarge}), PreconditionException);
+    ASSERT_THROW((Game{THREE_PLAYERS, CLASSIC_GAMEBOARD, InARowTooLarge}), PreconditionException);
 }
 
 
@@ -118,7 +118,7 @@ TEST_F(GameTests, Constructor_InvalidPlayerAddress_ExceptionThrown)
     t_players.push_back(nullptr);
     t_players.push_back(THIRD_PLAYER);
 
-    ASSERT_THROW((Game {t_players, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR}), PreconditionException);
+    ASSERT_THROW((Game{t_players, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR}), PreconditionException);
 }
 
 
@@ -127,7 +127,7 @@ TEST_F(GameTests, Constructor_InvalidGameboardAddress_ExceptionThrown)
     std::shared_ptr<GameBoard> gameboard{std::make_shared<GameBoard>()};
     gameboard.reset();
 
-    ASSERT_THROW((Game {THREE_PLAYERS, gameboard, GameBoard::CONNECT_FOUR}), PreconditionException);
+    ASSERT_THROW((Game{THREE_PLAYERS, gameboard, GameBoard::CONNECT_FOUR}), PreconditionException);
 }
 
 

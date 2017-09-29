@@ -35,6 +35,9 @@
 
 using namespace cxbase;
 
+
+AsciiColorCode::~AsciiColorCode() = default;
+
 AsciiColorCode::AsciiColorCode(char p_asciiColorCode): m_asciiColorCode{p_asciiColorCode}
 {
     PRECONDITION((p_asciiColorCode >= 65 && p_asciiColorCode < 91) ||

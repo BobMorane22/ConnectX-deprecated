@@ -62,7 +62,6 @@ class Color : public cxutil::IEnforceContract
 public:
 
 ///@{ @name Object construction and destruction
-    virtual ~Color() = default;
 
 
     /*******************************************************************************************//**
@@ -71,7 +70,7 @@ public:
      * Constructs a black color with complete opacity. The AsciiColorCode is a space (' ').
      *
      **********************************************************************************************/
-    Color() = default;
+    Color();
 
 
     /*******************************************************************************************//**
@@ -87,7 +86,14 @@ public:
     Color(int p_red, int p_green, int p_blue, int p_alpha, AsciiColorCode p_asciiColorCode);
 
 
+    /*******************************************************************************************//**
+     * Default destructor.
+     *
+     **********************************************************************************************/
+    virtual ~Color();
+
 ///@{ @name Data access
+
     /*******************************************************************************************//**
      * Red component accessor.
      *
@@ -95,6 +101,7 @@ public:
      *
      **********************************************************************************************/
     int red() const {return m_red;}
+
 
     /*******************************************************************************************//**
      * Green component accessor.
@@ -104,6 +111,7 @@ public:
      **********************************************************************************************/
     int green() const {return m_green;}
 
+
     /*******************************************************************************************//**
      * Blue component accessor.
      *
@@ -111,6 +119,7 @@ public:
      *
      **********************************************************************************************/
     int blue() const {return m_blue;}
+
 
     /*******************************************************************************************//**
      * Alpha component accessor.
@@ -120,6 +129,7 @@ public:
      **********************************************************************************************/
     int alpha() const {return m_alpha;}
 
+
     /*******************************************************************************************//**
      * AsciiColorCode accessor.
      *
@@ -127,6 +137,7 @@ public:
      *
      **********************************************************************************************/
     AsciiColorCode asciiColorCode() const {return m_asciiColorCode;}
+
 ///@}
 
 
@@ -155,9 +166,11 @@ public:
      *
      **********************************************************************************************/
     virtual bool operator!=(const Color& p_color) const;
+
 ///@}
 
 ///@{ @name Predefined Colors
+
     static const Color TRANSPARENT;
     static const Color WHITE;
     static const Color BLACK;
@@ -166,9 +179,11 @@ public:
     static const Color RED;
     static const Color YELLOW;
     static const Color BLUE;
+
 ///@}
 
 protected:
+
     virtual void checkInvariant() const override;
 
 private:

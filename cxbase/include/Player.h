@@ -52,8 +52,8 @@ namespace cxbase
  * A Player object is a Name and Disc pair.
  *
  * @invariant A Player's Disc cannot have @c TRANSPARENT and the space (@c ' ') character as their
- * Color attributes. In other words, a Player cannot possess a @c TRANSPARENT Disc, which is seen
- * as no disc.
+ *            Color attributes. In other words, a Player cannot possess a @c TRANSPARENT Disc, 
+ *            which is seen as no disc.
  *
  * @see cxutil::Name
  * @see Disc
@@ -65,8 +65,12 @@ class Player : public cxutil::IEnforceContract, public cxutil::ICliObject
 public:
 
 ///@{ @name Object construction and destruction
-    Player()            = delete;
-    virtual ~Player()   = default;
+
+    /*******************************************************************************************//**
+     * Default destructor.
+     *
+     **********************************************************************************************/
+    virtual ~Player();
 
 
     /*******************************************************************************************//**
@@ -81,10 +85,12 @@ public:
      *
      **********************************************************************************************/
     Player(const cxutil::Name& p_name, const Disc& p_disc);
+
 ///@}
 
 
 ///@{ @name Data access
+
     /*******************************************************************************************//**
      * Name accessor.
      *
@@ -101,10 +107,12 @@ public:
      *
      **********************************************************************************************/
     Disc disc() const {return m_disc;}
+
 ///@}
 
 
 ///@{ @name Operators
+
     /*******************************************************************************************//**
      * Equal-to operator.
      *
@@ -127,6 +135,7 @@ public:
      *
      **********************************************************************************************/
     virtual bool operator!=(const Player& p_player) const;
+
 ///@}
 
 private:
@@ -143,8 +152,6 @@ private:
      **********************************************************************************************/
     virtual void print(std::ostream& p_stream) const override;
 
-
-    const Disc NO_DISC{Color::TRANSPARENT};
 
     cxutil::Name m_name;    ///< The Player's Name.
     Disc         m_disc;    ///< The Player's Disc.

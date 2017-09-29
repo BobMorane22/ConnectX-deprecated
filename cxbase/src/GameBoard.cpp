@@ -46,6 +46,8 @@ const int GameBoard::CONNECT_SEVEN  {7};
 const int GameBoard::CONNECT_EIGHT  {8};
 const int GameBoard::CONNECT_NINE   {9};
 
+GameBoard::~GameBoard() = default;
+
 GameBoard::GameBoard(): m_grid(NB_ROWS_MIN, std::vector<Disc>(NB_COLUMNS_MIN, Disc())),
                         m_nbRows{NB_ROWS_MIN}, m_nbColumns{NB_COLUMNS_MIN}
 
@@ -69,6 +71,7 @@ GameBoard::GameBoard(): m_grid(NB_ROWS_MIN, std::vector<Disc>(NB_COLUMNS_MIN, Di
 
     INVARIANTS();
 }
+
 
 GameBoard::GameBoard(int p_nbRows, int p_nbColumns): m_grid(p_nbRows, std::vector<Disc>(p_nbColumns, Disc::NO_DISC)),
                                                      m_nbRows{p_nbRows}, m_nbColumns{p_nbColumns}
@@ -100,25 +103,30 @@ GameBoard::GameBoard(int p_nbRows, int p_nbColumns): m_grid(p_nbRows, std::vecto
     INVARIANTS();
 }
 
+
 GameBoard::Grid GameBoard::grid() const
 {
     return m_grid;
 }
+
 
 int GameBoard::nbColumns() const
 {
     return m_nbColumns;
 }
 
+
 int GameBoard::nbRows() const
 {
     return m_nbRows;
 }
 
+
 int GameBoard::nbPositions() const
 {
     return m_nbColumns * m_nbRows;
 }
+
 
 Disc GameBoard::discAtPosition(const Position& p_case) const
 {
@@ -130,6 +138,7 @@ Disc GameBoard::discAtPosition(const Position& p_case) const
 
     return m_grid[p_case.rowValue()][p_case.columnValue()];
 }
+
 
 Position GameBoard::placeDisc(const Column& p_column, const Disc& p_disc)
 {
@@ -155,6 +164,7 @@ Position GameBoard::placeDisc(const Column& p_column, const Disc& p_disc)
     return Position{Row{rowSubscript}, p_column};
 }
 
+
 bool GameBoard::isColumnFull(const Column& p_column) const
 {
     PRECONDITION(p_column >= Column{0});
@@ -177,6 +187,7 @@ bool GameBoard::isColumnFull(const Column& p_column) const
     return !isPlayable;
 }
 
+
 bool GameBoard::isWinner(const Position& p_positionLastPlacedDisc, int p_inARow) const
 {
     PRECONDITION(p_positionLastPlacedDisc.row() >= Row{0});
@@ -197,6 +208,7 @@ bool GameBoard::isWinner(const Position& p_positionLastPlacedDisc, int p_inARow)
 
     return isWinner;
 }
+
 
 bool GameBoard::operator==(const GameBoard &p_gameBoard) const
 {
@@ -232,6 +244,7 @@ bool GameBoard::operator==(const GameBoard &p_gameBoard) const
     return isEqual;
 }
 
+
 bool GameBoard::operator!=(const GameBoard &p_gameBoard) const
 {
     PRECONDITION(m_nbColumns == p_gameBoard.m_nbColumns);
@@ -239,6 +252,7 @@ bool GameBoard::operator!=(const GameBoard &p_gameBoard) const
 
     return !(*this == p_gameBoard);
 }
+
 
 void GameBoard::checkInvariant() const
 {
@@ -248,6 +262,7 @@ void GameBoard::checkInvariant() const
     INVARIANT(m_nbColumns >= NB_COLUMNS_MIN);
     INVARIANT(m_nbColumns < NB_COLUMNS_MAX + 1);
 }
+
 
 void GameBoard::print(std::ostream& p_stream) const
 {
@@ -292,6 +307,7 @@ void GameBoard::print(std::ostream& p_stream) const
     p_stream << std::endl;
 }
 
+
 int GameBoard::leftValidationLimit(Position p_positionLastPlacedDisc, int p_inARow, GridValidationType validationType) const
 {
     int lastPlayedRow{p_positionLastPlacedDisc.rowValue()};
@@ -323,6 +339,7 @@ int GameBoard::leftValidationLimit(Position p_positionLastPlacedDisc, int p_inAR
 
     return leftSubscript;
 }
+
 
 int GameBoard::rightValidationLimit(Position p_positionLastPlacedDisc, int p_inARow, GridValidationType validationType) const
 
@@ -357,6 +374,7 @@ int GameBoard::rightValidationLimit(Position p_positionLastPlacedDisc, int p_inA
     return rightSubscript;
 }
 
+
 int GameBoard::upperValidationLimit(Position p_positionLastPlacedDisc, int p_inARow, GridValidationType validationType) const
 {
     int lastPlayedRow{p_positionLastPlacedDisc.rowValue()};
@@ -390,6 +408,7 @@ int GameBoard::upperValidationLimit(Position p_positionLastPlacedDisc, int p_inA
 
 }
 
+
 int GameBoard::lowerValidationLimit(Position p_positionLastPlacedDisc, int p_inARow, GridValidationType validationType) const
 {
     int lastPlayedRow{p_positionLastPlacedDisc.rowValue()};
@@ -422,6 +441,7 @@ int GameBoard::lowerValidationLimit(Position p_positionLastPlacedDisc, int p_inA
     return lowerSubscript;
 }
 
+
 int GameBoard::nbOfValidations(int p_minValidationLimit, int p_maxValidationLimit, int p_inARow) const
 {
     int nbCombinationsToCheck{abs(p_maxValidationLimit - p_minValidationLimit) + 1};
@@ -429,6 +449,7 @@ int GameBoard::nbOfValidations(int p_minValidationLimit, int p_maxValidationLimi
 
     return nbCombinationsToCheck;
 }
+
 
 int GameBoard::horizontalNbOfAdjacentDiscs(Position p_positionLastPlacedDisc, int p_inARow) const
 {
@@ -468,6 +489,7 @@ int GameBoard::horizontalNbOfAdjacentDiscs(Position p_positionLastPlacedDisc, in
     return nbIdenticalDiscs;
 }
 
+
 int GameBoard::verticalNbOfAdjacentDiscs(Position p_positionLastPlacedDisc, int p_inARow) const
 {
     int upperLimit{upperValidationLimit(p_positionLastPlacedDisc, p_inARow)};
@@ -504,6 +526,7 @@ int GameBoard::verticalNbOfAdjacentDiscs(Position p_positionLastPlacedDisc, int 
 
     return nbIdenticalDiscs;
 }
+
 
 int GameBoard::upwardNbOfAdjacentDiscs(Position p_positionLastPlacedDisc, int p_inARow) const
 {
@@ -544,6 +567,7 @@ int GameBoard::upwardNbOfAdjacentDiscs(Position p_positionLastPlacedDisc, int p_
 
     return nbIdenticalDiscs;
 }
+
 
 int GameBoard::downwardNbOfAdjacentDiscs(Position p_positionLastPlacedDisc, int p_inARow) const
 {
@@ -586,12 +610,14 @@ int GameBoard::downwardNbOfAdjacentDiscs(Position p_positionLastPlacedDisc, int 
     return nbIdenticalDiscs;
 }
 
+
 bool GameBoard::checkHorizontalWinner(Position p_positionLastPlacedDisc, int p_inARow) const
 {
     int nbAdjacentIdenticalDiscs{horizontalNbOfAdjacentDiscs(p_positionLastPlacedDisc, p_inARow)};
 
     return nbAdjacentIdenticalDiscs == p_inARow;
 }
+
 
 bool GameBoard::checkVerticalWinner(Position p_positionLastPlacedDisc, int p_inARow) const
 {
@@ -600,12 +626,14 @@ bool GameBoard::checkVerticalWinner(Position p_positionLastPlacedDisc, int p_inA
         return nbAdjacentIdenticalDiscs == p_inARow;
 }
 
+
 bool GameBoard::checkUpwardWinner(Position p_positionLastPlacedDisc, int p_inARow) const
 {
     int nbAdjacentIdenticalDiscs{upwardNbOfAdjacentDiscs(p_positionLastPlacedDisc, p_inARow)};
 
         return nbAdjacentIdenticalDiscs == p_inARow;
 }
+
 
 bool GameBoard::checkDownwardWinner(Position p_positionLastPlacedDisc, int p_inARow) const
 {

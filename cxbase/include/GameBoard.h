@@ -78,7 +78,12 @@ private:
 public:
 
 ///@{ @name Object construction and destruction
-    virtual ~GameBoard() = default;
+
+    /*******************************************************************************************//**
+     * Default destructor.
+     *
+     **********************************************************************************************/
+    virtual ~GameBoard();
 
 
     /*******************************************************************************************//**
@@ -105,10 +110,12 @@ public:
      *
      **********************************************************************************************/
     GameBoard(int p_nbRows, int p_nbColumns);
+
 ///@}
 
 
 ///@{ @name Data access
+
     /*******************************************************************************************//**
      * Accessor for the grid.
      *
@@ -156,10 +163,12 @@ public:
      *
      **********************************************************************************************/
     Disc discAtPosition(const Position& p_position) const;
+
 ///@}
 
 
 ///@{ @name Gameboard checks and actions
+
     /*******************************************************************************************//**
      * Places a Disc in a specific Column.
      *
@@ -257,10 +266,11 @@ public:
      *
      **********************************************************************************************/
     bool isWinner(const Position& p_positionLastDiscPlaced, int p_inARow) const;
+
 ///@}
 
-
 ///@{ @name Operators
+
     /*******************************************************************************************//**
      * Equal-to operator.
      *
@@ -283,9 +293,11 @@ public:
      *
      **********************************************************************************************/
     bool operator!=(const GameBoard &p_gameBoard) const;
+
 ///@}
 
 ///@{ @name Predefined values
+
     static const int CONNECT_THREE;
     static const int CONNECT_FOUR;
     static const int CONNECT_FIVE;
@@ -293,6 +305,7 @@ public:
     static const int CONNECT_SEVEN;
     static const int CONNECT_EIGHT;
     static const int CONNECT_NINE;
+
 ///@}
 
 protected:
