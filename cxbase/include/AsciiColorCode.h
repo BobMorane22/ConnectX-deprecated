@@ -85,7 +85,7 @@ public:
      * @post        @c m_asciiColorCode is a letter (lower or upper case) or a space.
      *
      **********************************************************************************************/
-    AsciiColorCode(char p_asciiColorCode);
+    explicit AsciiColorCode(char p_asciiColorCode);
 
 ///@}
 

@@ -65,7 +65,7 @@ public:
      * @param[in] p_row An integer containing the wanted Row value.
      *
      **********************************************************************************************/
-    Row(int p_row): cxutil::Coordinate<int>{p_row} {}
+    explicit Row(int p_row): cxutil::Coordinate<int>{p_row} {}
 
 ///@}
 
@@ -98,7 +98,7 @@ public:
      * @param[in] p_column An integer containing the wanted Column value.
      *
      **********************************************************************************************/
-    Column(int p_column): cxutil::Coordinate<int>{p_column} {}
+    explicit Column(int p_column): cxutil::Coordinate<int>{p_column} {}
 
 ///@}
 

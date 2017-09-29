@@ -82,7 +82,7 @@ public:
      * @param[in] p_color The Color with which to create the Disc.
      *
      **********************************************************************************************/
-    Disc(const Color& p_color) : m_color{p_color} {}
+    explicit Disc(const Color& p_color) : m_color{p_color} {}
 
 ///@}
 
