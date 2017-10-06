@@ -61,7 +61,7 @@ namespace cxbase
  * @see Color
  *
  **************************************************************************************************/
-class AsciiColorCode : public cxutil::IEnforceContract, public cxutil::ICliObject
+class AsciiColorCode : public cxutil::IEnforceContract, public cxutil::ICliObject final
 {
 
 public:
@@ -72,7 +72,7 @@ public:
      * Default destructor.
      *
      **********************************************************************************************/
-    virtual ~AsciiColorCode();
+    ~AsciiColorCode();
 
 
     /*******************************************************************************************//**
