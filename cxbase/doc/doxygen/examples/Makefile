@@ -17,6 +17,8 @@
 #--------------------------------------------------------------------------------------------------#
 
 
+include $(CX_SRC_ROOT)/init.mk
+
 CPPFLAGS = $(OPT_FLAGS) $(DEBUG_FLAGS) $(STANDARD_FLAGS) \
            $(WARN_AS_ERRORS_FLAGS)
 
@@ -46,12 +48,12 @@ all: $(MAIN)
 
 $(MAIN): $(OBJS)
 	@echo Invoquing GCC...
-	g++ $(LIBINCLUDES) -o $(OUT_DIR)/$(MAIN) $(OBJS) $(LIBS)
+	g++ $(CPPFLAGS) $(LIBINCLUDES) -o $(OUT_DIR)/$(MAIN) $(OBJS) $(LIBS)
 	@echo $(MAIN) created!
 
 $(OBJ_DIR)/%.o: %.cpp
 	@echo Invoquing GCC...
-	g++ $(CPPFLAGS) $(INCLUDES) -c $< -o $@
+	$(CPPC) $(CPPFLAGS) $(INCLUDES) -c $< -o $@
 	@echo Object files created!
 
 clean:

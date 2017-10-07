@@ -20,12 +20,12 @@ export BIN_ROOT = $(CX_BUILD_ROOT)
 export CPPC                 = g++
 export STANDARD_FLAGS       = -std=c++0x
 
-ifeq ($(DEBUG), 1)
-	export DEBUG_FLAGS          = -g3
-	export OPT_FLAGS            =
-else
+ifdef NDEBUG
 	export DEBUG_FLAGS          =
 	export OPT_FLAGS            = -O0
+else
+	export DEBUG_FLAGS          = -g3
+	export OPT_FLAGS            = 
 endif
 
 export NO_LINKER_FLAGS      = -c

@@ -64,7 +64,7 @@ $(MAIN): $(OBJS)
 
 $(OBJ_DIR)/%.o: %.cpp
 	@echo Invoquing GCC...
-	$(CPPC) $(CPPFLAGS) $(INCLUDES) -c $< -o $@
+	$(CPPC) $(CPPFLAGS) $(INCLUDES) $< -o $@
 	@echo Object files created!
 
 make_dir:
