@@ -58,7 +58,7 @@ namespace cxbase
  * @see AsciiColorCode
  *
  **************************************************************************************************/
-class Color : public cxutil::IEnforceContract final
+class Color final : public cxutil::IEnforceContract
 {
 
 public:
@@ -154,7 +154,7 @@ public:
      * @param[in] p_color The Color to compare with.
      *
      **********************************************************************************************/
-    virtual bool operator==(const Color& p_color) const;
+    bool operator==(const Color& p_color) const;
 
 
     /*******************************************************************************************//**
@@ -167,7 +167,7 @@ public:
      * @param[in] p_color The Color to compare with.
      *
      **********************************************************************************************/
-    virtual bool operator!=(const Color& p_color) const;
+    bool operator!=(const Color& p_color) const;
 
 ///@}
 

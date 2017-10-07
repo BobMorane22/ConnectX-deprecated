@@ -45,7 +45,7 @@ namespace cxbase
  * @brief An integer coordinate representing a row.
  *
  **************************************************************************************************/
-class Row : public cxutil::Coordinate <int> final
+class Row final : public cxutil::Coordinate <int>
 {
 
 public:
@@ -78,7 +78,7 @@ public:
  * @brief An integer coordinate representing a column.
  *
  **************************************************************************************************/
-class Column : public cxutil::Coordinate<int> final
+class Column final : public cxutil::Coordinate<int>
 {
 
 public:

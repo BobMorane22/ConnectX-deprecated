@@ -56,6 +56,9 @@ namespace cxbase
  *
  * @invariant All Player addresses are valid.
  *
+ * @invariant The number of players is always at least two (2) and at most the number of positions 
+ *            in the GameBoard divided by the @a inARow value.
+ *
  * @invariant The @a inARow value must be bigger or equal to two (2) and smaller or equal to the
  *            minimum between the Grid width and length.
  *
@@ -64,8 +67,6 @@ namespace cxbase
  *
  * @invariant The current turn is always between 0 and the total numbers of Players minus one.
  *
- * @invariant The number of players is always at least two (2) and at most the number of positions 
- *            in the GameBoard divided by the @a inARow value.
  *
  **************************************************************************************************/
 class Game : public cxutil::IEnforceContract
@@ -88,11 +89,10 @@ public:
      *
      * @pre The Gameboard address passed as an argument is valid.
      * @pre All Player addresses passed as arguments (contained in a @c std::vector)are valid.
-     * @pre @c p_players has at least two players.
-     * @pre @c p_inARow is bigger than two (2) and smaller than the minimum between the Grid
-     *      width and length.
      * @pre The number of players is always at least two (2) and at most the number of positions 
      *      in the GameBoard divided by the @a inARow value.
+     * @pre @c p_inARow is bigger than two (2) and smaller than the minimum between the Grid
+     *      width and length.
      *
      **********************************************************************************************/
     Game(const std::vector<std::shared_ptr<Player>>& p_players, const std::shared_ptr<GameBoard>& p_gameboard, int p_inARow);
@@ -231,10 +231,12 @@ protected:
     virtual void checkInvariant() const override;
 
 
-private:
-
     std::vector<std::shared_ptr<Player>>  m_players;                               ///< List of Players for the Game.
     std::shared_ptr<GameBoard>            m_gameboard;                             ///< The GameGoard used.
+
+private:
+
+
     int                                   m_inARow;                                ///< The @a inARow for the Game.
     int                                   m_nbTurns          {0};                  ///< Total number of turns for the GameBoard.
     int                                   m_turn             {0};                  ///< The current turn (first turn is 0).

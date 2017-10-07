@@ -503,9 +503,9 @@ TEST(GameBoard, StreamInsertionOperator_12x14GameBoardAsParameter_PrintsCorrectF
 
 TEST_F(GameBoardTests, IsWinner_RowUnderLimit_ExceptionThrown)
 {
-    Position rowUnderLimitRow{{-1}, Column{0}};
+    Position rowUnderLimit{Row{-1}, Column{0}};
 
-    ASSERT_THROW(t_gameBoard.isWinner(rowUnderLimitRow, GameBoard::CONNECT_FOUR), PreconditionException);
+    ASSERT_THROW(t_gameBoard.isWinner(rowUnderLimit, GameBoard::CONNECT_FOUR), PreconditionException);
 }
 
 

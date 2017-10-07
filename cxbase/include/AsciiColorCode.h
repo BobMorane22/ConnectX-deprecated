@@ -61,7 +61,7 @@ namespace cxbase
  * @see Color
  *
  **************************************************************************************************/
-class AsciiColorCode : public cxutil::IEnforceContract, public cxutil::ICliObject final
+class AsciiColorCode final : public cxutil::IEnforceContract, public cxutil::ICliObject
 {
 
 public:

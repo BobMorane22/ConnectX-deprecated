@@ -54,10 +54,9 @@ Game::Game(const std::vector<std::shared_ptr<Player>>& p_players, const std::sha
                  );
 
     PRECONDITION(p_players.size() >= 2);
+    PRECONDITION(p_players.size() <= cxutil::narrow_cast<unsigned int>(p_gameboard->nbPositions() / p_inARow));
     PRECONDITION(p_inARow >= 2);
     PRECONDITION(p_inARow < std::min(p_gameboard->nbColumns(), p_gameboard->nbRows()));
-    PRECONDITION(p_players.size() > 2);
-    PRECONDITION(p_players.size() <= cxutil::narrow_cast<unsigned int>(p_gameboard->nbPositions() / p_inARow));
 
     INVARIANTS();
 }
@@ -104,6 +103,9 @@ void Game::checkInvariant() const
                  })
              );
 
+    INVARIANT(m_players.size() >= 2);
+    INVARIANT(m_players.size() <= cxutil::narrow_cast<unsigned int>(m_gameboard->nbPositions() / m_inARow));
+
     INVARIANT(m_inARow >= 2);
     INVARIANT(m_inARow < std::min(m_gameboard->nbColumns(), m_gameboard->nbRows()));
 
@@ -112,7 +114,4 @@ void Game::checkInvariant() const
 
     INVARIANT(m_turn >= 0);
     INVARIANT(cxutil::narrow_cast<unsigned int>(m_turn) < m_players.size());
-
-    INVARIANT(m_players.size() > 2);
-    INVARIANT(m_players.size() <= cxutil::narrow_cast<unsigned int>(m_gameboard->nbPositions() / m_inARow));
 }
