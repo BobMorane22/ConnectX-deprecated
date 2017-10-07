@@ -32,67 +32,66 @@
 
 #include "Connect4Game.h" // Custom Game class
 
-using namespace std;
 using namespace cxbase;
 
 int main()
 {
-	const int IN_A_ROW {4};
+    const int IN_A_ROW{4};
 
-	// Create players:
-	string nameP1, nameP2;
+    // Create players:
+    std::string nameP1, nameP2;
 
-	cout << "Enter the players' names:" << endl;
+    std::cout << "Enter the players' names:" << std::endl;
 
-	cout << "First player: ";
-	getline(cin, nameP1);
+    std::cout << "First player: ";
+    std::getline(std::cin, nameP1);
 
-	cout << "Second player: ";
-	getline(cin, nameP2);
+    std::cout << "Second player: ";
+    std::getline(std::cin, nameP2);
 
-	shared_ptr<Player> player1{new Player{nameP1, Disc::RED_DISC}};
-	shared_ptr<Player> player2{new Player{nameP2, Disc::YELLOW_DISC}};
+    std::shared_ptr<Player> player1{std::make_shared<Player>(nameP1, Disc::RED_DISC)   };
+    std::shared_ptr<Player> player2{std::make_shared<Player>(nameP2, Disc::YELLOW_DISC)};
 
-	// Create gameboard:
-	shared_ptr<GameBoard> classicGameBoard{new GameBoard};
+    // Create gameboard:
+    std::shared_ptr<GameBoard> classicGameBoard{std::make_shared<GameBoard>()};
 
-	// Create game:
-    vector< shared_ptr<Player> >   players   {player1, player2};
-	Connect4Game                   game      {players, classicGameBoard, IN_A_ROW};
+    // Create game:
+    std::vector<std::shared_ptr<Player>>   players   {player1, player2};
+    Connect4Game                           game      {players, classicGameBoard, IN_A_ROW};
 
-	int chosenColumn {0};
+    int chosenColumn{0};
 
-	// Game loop:
-	while(!game.isWon() && !game.isDraw())
-	{
-		cout << "Select column to play: ";
-		cin >> chosenColumn;
+    // Game loop:
+    while(!game.isWon() && !game.isDraw())
+    {
+        std::cout << "Select column to play: ";
+        std::cin  >> chosenColumn;
 
-		game.playTurn(chosenColumn);
-        cout << game;
+        game.playTurn(Column{chosenColumn});
+        std::cout << game;
 
         game.nextTurn();
-	}
+    }
 
-	// Game ending:
-	if(game.isWon())
-	{
-		Player winner {game.activePlayer()};
+    // Game ending:
+    if(game.isWon())
+    {
+        Player winner{game.activePlayer()};
 
-		// Active player is not the winner:
-		if(*players[0] == game.activePlayer())
-		{
-			cout <<  *players[1] << " has won!" << endl;
-		}
-		else
-		{
-		    cout << *players[0] << " has won!" << endl;
-		}
-	}
-	else
-	{
-		cout << "It's a tie!" << endl;
-	}
+        // Active player is not the winner:
+        if(*players[0] == game.activePlayer())
+        {
+            std::cout <<  *players[1] << " has won!" << std::endl;
+        }
+        else
+        {
+            std::cout << *players[0] << " has won!" << std::endl;
+        }
+    }
+    else
+    {
+        std::cout << "It's a tie!" << std::endl;
+    }
 
-	return 0;
+    return 0;
 }
