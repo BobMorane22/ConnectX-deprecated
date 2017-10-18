@@ -23,7 +23,7 @@
  * @file    GameBoard.h
  * @author  Eric Poirier
  * @date    December 2016
- * @version 0.1
+ * @version 1.0
  *
  * Interface for a GameBoard utility.
  *
@@ -151,18 +151,6 @@ public:
      **********************************************************************************************/
     int  nbPositions() const;
 
-
-    /*******************************************************************************************//**
-     * Accessor for a specific Disc in the GameBoard.
-     *
-     * Returns the Disc located at a specific Position in the GameBoard
-     *
-     * @param[in] p_position The position of the seeked Disc.
-     * @pre The position passed as an argument exists on the GameBoard, i.e. both Coordinates
-     * respect the dimensions.
-     *
-     **********************************************************************************************/
-    Disc discAtPosition(const Position& p_position) const;
 
 ///@}
 
@@ -293,6 +281,30 @@ public:
      *
      **********************************************************************************************/
     bool operator!=(const GameBoard &p_gameBoard) const;
+
+    
+    /*******************************************************************************************//**
+     * Function operator.
+     *
+     * Gives access to the Disc located at the needed Position on the GameBoard's grid. Positions
+     * on the grid follow a cartesian-like convention. The correct way to visualize a grid is as
+     * follow:
+     *
+     * @verbatim
+     *
+     *    Columns up
+     *        ^
+     *        |
+     *        |
+     *    | (0,1) |
+     *    | (0,0) | (1,0) | --> Rows up
+     *
+     * @endverbatim
+     *
+     * @param[in] p_position The Position at which the needed Disc is located on the grid.
+     *
+     **********************************************************************************************/
+    Disc operator()(const Position& p_position) const;
 
 ///@}
 

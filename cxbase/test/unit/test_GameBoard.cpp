@@ -23,7 +23,7 @@
  * @file    test_GameBoard.cpp
  * @author  Eric Poirier
  * @date    December 2016
- * @version 0.1
+ * @version 1.0
  *
  * Unit tests for a the GameBoard class.
  *
@@ -136,54 +136,12 @@ TEST_F(GameBoardTests, NbPositionsAccessor_ValidGameBoard_ReturnsNbPositions)
 }
 
 
-TEST_F(GameBoardTests, SpecificPositionAccessor_ExistingPositionAsParameter_ReturnsPosition)
-{
-    Position thisPosition{Row{0}, Column{2}};
-
-    t_gameBoard.placeDisc(Column{2}, Disc::BLACK_DISC);
-
-    ASSERT_EQ(Disc::BLACK_DISC, t_gameBoard.discAtPosition(thisPosition));
-}
-
-
-TEST_F(GameBoardTests, SpecificPositionAccessor_RowTooLargeInPositionParameter_ExceptionThrown)
-{
-    Position invalidPosition{Row{NB_ROWS_MAX + 1}, Column{4}};
-
-    ASSERT_THROW(t_gameBoard.discAtPosition(invalidPosition), PreconditionException);
-}
-
-
-TEST_F(GameBoardTests, SpecificPositionAccessor_ColumnTooLargeInPositionParameter_ExceptionThrown)
-{
-    Position invalidPosition{Row{4}, Column{NB_ROWS_MAX + 1}};
-
-    ASSERT_THROW(t_gameBoard.discAtPosition(invalidPosition), PreconditionException);
-}
-
-
-TEST_F(GameBoardTests, SpecificPositionAccessor_RowTooSmallInPositionParameter_ExceptionThrown)
-{
-    Position invalidPosition{Row{-1}, Column{4}};
-
-    ASSERT_THROW(t_gameBoard.discAtPosition(invalidPosition), PreconditionException);
-}
-
-
-TEST_F(GameBoardTests, SpecificPositionAccessor_ColumnTooSmallInPositionParameter_ExceptionThrown)
-{
-    Position invalidPosition{Row{5}, Column{-1}};
-
-    ASSERT_THROW(t_gameBoard.discAtPosition(invalidPosition), PreconditionException);
-}
-
-
 TEST_F(GameBoardTests, PlaceDisc_ValidDiscAsParameter_DiscInsertedInGameboard)
 {
     t_gameBoard.placeDisc(Column{0}, Disc::RED_DISC);
 
-    ASSERT_EQ(t_gameBoard.discAtPosition(Position{Row{0}, Column{0}}), Disc::RED_DISC);
-    ASSERT_EQ(t_gameBoard.discAtPosition(Position{Row{1}, Column{0}}), Disc::NO_DISC);
+    ASSERT_EQ(t_gameBoard(Position{Row{0}, Column{0}}), Disc::RED_DISC);
+    ASSERT_EQ(t_gameBoard(Position{Row{1}, Column{0}}), Disc::NO_DISC);
 }
 
 
@@ -192,9 +150,9 @@ TEST_F(GameBoardTests, PlaceDisc_ValidDiscAsParameter_DiscInsertedInGameboardOve
     t_gameBoard.placeDisc(Column{0}, Disc::RED_DISC);
     t_gameBoard.placeDisc(Column{0}, Disc::BLACK_DISC);
 
-    ASSERT_EQ(t_gameBoard.discAtPosition(Position{Row{0}, Column{0}}), Disc::RED_DISC);
-    ASSERT_EQ(t_gameBoard.discAtPosition(Position{Row{1}, Column{0}}), Disc::BLACK_DISC);
-    ASSERT_EQ(t_gameBoard.discAtPosition(Position{Row{2}, Column{0}}), Disc::NO_DISC);
+    ASSERT_EQ(t_gameBoard(Position{Row{0}, Column{0}}), Disc::RED_DISC);
+    ASSERT_EQ(t_gameBoard(Position{Row{1}, Column{0}}), Disc::BLACK_DISC);
+    ASSERT_EQ(t_gameBoard(Position{Row{2}, Column{0}}), Disc::NO_DISC);
 }
 
 
@@ -210,10 +168,10 @@ TEST_F(GameBoardTests, PlaceDisc_ValidDiscAsParameter_DiscInsertedInGameboardOve
     t_gameBoard.placeDisc(Column{0}, Disc::BLACK_DISC);
     t_gameBoard.placeDisc(Column{0}, Disc::RED_DISC);
 
-    ASSERT_EQ(t_gameBoard.discAtPosition(Position{Row{0}, Column{0}}), Disc::RED_DISC);
-    ASSERT_EQ(t_gameBoard.discAtPosition(Position{Row{1}, Column{0}}), Disc::BLACK_DISC);
-    ASSERT_EQ(t_gameBoard.discAtPosition(Position{Row{2}, Column{0}}), Disc::RED_DISC);
-    ASSERT_EQ(t_gameBoard.discAtPosition(Position{Row{3}, Column{0}}), Disc::NO_DISC);
+    ASSERT_EQ(t_gameBoard(Position{Row{0}, Column{0}}), Disc::RED_DISC);
+    ASSERT_EQ(t_gameBoard(Position{Row{1}, Column{0}}), Disc::BLACK_DISC);
+    ASSERT_EQ(t_gameBoard(Position{Row{2}, Column{0}}), Disc::RED_DISC);
+    ASSERT_EQ(t_gameBoard(Position{Row{3}, Column{0}}), Disc::NO_DISC);
 }
 
 
@@ -224,11 +182,11 @@ TEST_F(GameBoardTests, PlaceDisc_ValidDiscAsParameter_DiscInsertedInGameboardOve
     t_gameBoard.placeDisc(Column{0}, Disc::RED_DISC);
     t_gameBoard.placeDisc(Column{0}, Disc::BLACK_DISC);
 
-    ASSERT_EQ(t_gameBoard.discAtPosition(Position{Row{0}, Column{0}}), Disc::RED_DISC);
-    ASSERT_EQ(t_gameBoard.discAtPosition(Position{Row{1}, Column{0}}), Disc::BLACK_DISC);
-    ASSERT_EQ(t_gameBoard.discAtPosition(Position{Row{2}, Column{0}}), Disc::RED_DISC);
-    ASSERT_EQ(t_gameBoard.discAtPosition(Position{Row{3}, Column{0}}), Disc::BLACK_DISC);
-    ASSERT_EQ(t_gameBoard.discAtPosition(Position{Row{4}, Column{0}}), Disc::NO_DISC);
+    ASSERT_EQ(t_gameBoard(Position{Row{0}, Column{0}}), Disc::RED_DISC);
+    ASSERT_EQ(t_gameBoard(Position{Row{1}, Column{0}}), Disc::BLACK_DISC);
+    ASSERT_EQ(t_gameBoard(Position{Row{2}, Column{0}}), Disc::RED_DISC);
+    ASSERT_EQ(t_gameBoard(Position{Row{3}, Column{0}}), Disc::BLACK_DISC);
+    ASSERT_EQ(t_gameBoard(Position{Row{4}, Column{0}}), Disc::NO_DISC);
 }
 
 
@@ -240,12 +198,12 @@ TEST_F(GameBoardTests, PlaceDisc_ValidDiscAsParameter_DiscInsertedInGameboardOve
     t_gameBoard.placeDisc(Column{0}, Disc::BLACK_DISC);
     t_gameBoard.placeDisc(Column{0}, Disc::RED_DISC);
 
-    ASSERT_EQ(t_gameBoard.discAtPosition(Position{Row{0}, Column{0}}), Disc::RED_DISC);
-    ASSERT_EQ(t_gameBoard.discAtPosition(Position{Row{1}, Column{0}}), Disc::BLACK_DISC);
-    ASSERT_EQ(t_gameBoard.discAtPosition(Position{Row{2}, Column{0}}), Disc::RED_DISC);
-    ASSERT_EQ(t_gameBoard.discAtPosition(Position{Row{3}, Column{0}}), Disc::BLACK_DISC);
-    ASSERT_EQ(t_gameBoard.discAtPosition(Position{Row{4}, Column{0}}), Disc::RED_DISC);
-    ASSERT_EQ(t_gameBoard.discAtPosition(Position{Row{5}, Column{0}}), Disc::NO_DISC);
+    ASSERT_EQ(t_gameBoard(Position{Row{0}, Column{0}}), Disc::RED_DISC);
+    ASSERT_EQ(t_gameBoard(Position{Row{1}, Column{0}}), Disc::BLACK_DISC);
+    ASSERT_EQ(t_gameBoard(Position{Row{2}, Column{0}}), Disc::RED_DISC);
+    ASSERT_EQ(t_gameBoard(Position{Row{3}, Column{0}}), Disc::BLACK_DISC);
+    ASSERT_EQ(t_gameBoard(Position{Row{4}, Column{0}}), Disc::RED_DISC);
+    ASSERT_EQ(t_gameBoard(Position{Row{5}, Column{0}}), Disc::NO_DISC);
 }
 
 
@@ -258,12 +216,12 @@ TEST_F(GameBoardTests, PlaceDisc_ValidDiscAsParameter_DiscInsertedInGameboardOve
     t_gameBoard.placeDisc(Column{0}, Disc::RED_DISC);
     t_gameBoard.placeDisc(Column{0}, Disc::BLACK_DISC);
 
-    ASSERT_EQ(t_gameBoard.discAtPosition(Position{Row{0}, Column{0}}), Disc::RED_DISC);
-    ASSERT_EQ(t_gameBoard.discAtPosition(Position{Row{1}, Column{0}}), Disc::BLACK_DISC);
-    ASSERT_EQ(t_gameBoard.discAtPosition(Position{Row{2}, Column{0}}), Disc::RED_DISC);
-    ASSERT_EQ(t_gameBoard.discAtPosition(Position{Row{3}, Column{0}}), Disc::BLACK_DISC);
-    ASSERT_EQ(t_gameBoard.discAtPosition(Position{Row{4}, Column{0}}), Disc::RED_DISC);
-    ASSERT_EQ(t_gameBoard.discAtPosition(Position{Row{5}, Column{0}}), Disc::BLACK_DISC);
+    ASSERT_EQ(t_gameBoard(Position{Row{0}, Column{0}}), Disc::RED_DISC);
+    ASSERT_EQ(t_gameBoard(Position{Row{1}, Column{0}}), Disc::BLACK_DISC);
+    ASSERT_EQ(t_gameBoard(Position{Row{2}, Column{0}}), Disc::RED_DISC);
+    ASSERT_EQ(t_gameBoard(Position{Row{3}, Column{0}}), Disc::BLACK_DISC);
+    ASSERT_EQ(t_gameBoard(Position{Row{4}, Column{0}}), Disc::RED_DISC);
+    ASSERT_EQ(t_gameBoard(Position{Row{5}, Column{0}}), Disc::BLACK_DISC);
 }
 
 
@@ -279,12 +237,12 @@ TEST_F(GameBoardTests, PlaceDisc_ValidDiscAsParameter_DiscInsertedInGameboardOve
     // An extra disc:
     t_gameBoard.placeDisc(Column{0}, Disc::RED_DISC);
 
-    ASSERT_EQ(t_gameBoard.discAtPosition(Position{Row{0}, Column{0}}), Disc::RED_DISC);
-    ASSERT_EQ(t_gameBoard.discAtPosition(Position{Row{1}, Column{0}}), Disc::BLACK_DISC);
-    ASSERT_EQ(t_gameBoard.discAtPosition(Position{Row{2}, Column{0}}), Disc::RED_DISC);
-    ASSERT_EQ(t_gameBoard.discAtPosition(Position{Row{3}, Column{0}}), Disc::BLACK_DISC);
-    ASSERT_EQ(t_gameBoard.discAtPosition(Position{Row{4}, Column{0}}), Disc::RED_DISC);
-    ASSERT_EQ(t_gameBoard.discAtPosition(Position{Row{5}, Column{0}}), Disc::BLACK_DISC);
+    ASSERT_EQ(t_gameBoard(Position{Row{0}, Column{0}}), Disc::RED_DISC);
+    ASSERT_EQ(t_gameBoard(Position{Row{1}, Column{0}}), Disc::BLACK_DISC);
+    ASSERT_EQ(t_gameBoard(Position{Row{2}, Column{0}}), Disc::RED_DISC);
+    ASSERT_EQ(t_gameBoard(Position{Row{3}, Column{0}}), Disc::BLACK_DISC);
+    ASSERT_EQ(t_gameBoard(Position{Row{4}, Column{0}}), Disc::RED_DISC);
+    ASSERT_EQ(t_gameBoard(Position{Row{5}, Column{0}}), Disc::BLACK_DISC);
 }
 
 
@@ -292,8 +250,8 @@ TEST_F(GameBoardTests, PlaceDisc_ValidDiscAsParameter_DiscInsertedInGameboardOve
 {
     t_gameBoard.placeDisc(Column{NB_COLUMNS_MIN - 1}, Disc::RED_DISC);
 
-    ASSERT_EQ(t_gameBoard.discAtPosition(Position{Row{0}, Column{NB_COLUMNS_MIN - 1}}), Disc::RED_DISC);
-    ASSERT_EQ(t_gameBoard.discAtPosition(Position{Row{1}, Column{NB_COLUMNS_MIN - 1}}), Disc::NO_DISC);
+    ASSERT_EQ(t_gameBoard(Position{Row{0}, Column{NB_COLUMNS_MIN - 1}}), Disc::RED_DISC);
+    ASSERT_EQ(t_gameBoard(Position{Row{1}, Column{NB_COLUMNS_MIN - 1}}), Disc::NO_DISC);
 }
 
 
@@ -436,6 +394,48 @@ TEST_F(GameBoardTests, NoEqualToOperator_TwoDifferentSizeGameBoardsAsParameters_
     GameBoard t_gameBoard2{8,8};
 
     ASSERT_THROW(t_gameBoard != t_gameBoard2, PreconditionException);
+}
+
+
+TEST_F(GameBoardTests, FunctionOperator_ExistingPositionAsParameter_ReturnsPosition)
+{
+    Position thisPosition{Row{0}, Column{2}};
+
+    t_gameBoard.placeDisc(Column{2}, Disc::BLACK_DISC);
+
+    ASSERT_EQ(Disc::BLACK_DISC, t_gameBoard(thisPosition));
+}
+
+
+TEST_F(GameBoardTests, FunctionOperator_RowTooLargeInPositionParameter_ExceptionThrown)
+{
+    Position invalidPosition{Row{NB_ROWS_MAX + 1}, Column{4}};
+
+    ASSERT_THROW(t_gameBoard(invalidPosition), PreconditionException);
+}
+
+
+TEST_F(GameBoardTests, FunctionOperator_ColumnTooLargeInPositionParameter_ExceptionThrown)
+{
+    Position invalidPosition{Row{4}, Column{NB_ROWS_MAX + 1}};
+
+    ASSERT_THROW(t_gameBoard(invalidPosition), PreconditionException);
+}
+
+
+TEST_F(GameBoardTests, FunctionOperator_RowTooSmallInPositionParameter_ExceptionThrown)
+{
+    Position invalidPosition{Row{-1}, Column{4}};
+
+    ASSERT_THROW(t_gameBoard(invalidPosition), PreconditionException);
+}
+
+
+TEST_F(GameBoardTests, FunctionOperator_ColumnTooSmallInPositionParameter_ExceptionThrown)
+{
+    Position invalidPosition{Row{5}, Column{-1}};
+
+    ASSERT_THROW(t_gameBoard(invalidPosition), PreconditionException);
 }
 
 
