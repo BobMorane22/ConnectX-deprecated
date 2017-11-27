@@ -144,6 +144,22 @@ public:
 ///@{ @name Game utilities
 
     /*******************************************************************************************//**
+     * Checks if the Game can be considered a tie.
+     *
+     * A tie occurs when, for any chosen Player, the possibility of winning the Game no longer
+     * exists. As opposed to the @c isDraw() method, which requires a GameBoard to be completely
+     * filled before deciding anything, the @c isTie() method can make a decision at any point
+     * in the Game, even if the Game is not finished yet.
+     *
+     * @return A boolean indicating if the Game will eventually be a draw.
+     *
+     * @see isWon()
+     * @see isTie()
+     *
+     **********************************************************************************************/
+     bool isTie() const;
+
+    /*******************************************************************************************//**
      * Checks if a Game is a draw.
      *
      * A Game is considered a draw if the number of turns for the Game exceeds by one (1) the
@@ -154,6 +170,7 @@ public:
      * @return A boolean indicating if the Game is a draw.
      *
      * @see isWon()
+     * @see isTie()
      *
      **********************************************************************************************/
     bool isDraw() const {return (m_nbTurns == m_gameboard->nbPositions());}
@@ -238,9 +255,29 @@ private:
 
 
     int                                   m_inARow;                                ///< The @a inARow for the Game.
-    int                                   m_nbTurns          {0};                  ///< Total number of turns for the GameBoard.
+    int                                   m_nbTurns          {0};                  ///< Total number of turns played.
     int                                   m_turn             {0};                  ///< The current turn (first turn is 0).
     Position                              m_currentPosition  {Row{0}, Column{0}};  ///< The Position where the active player places a Disc.
+
+public:
+
+    // isTie() cases:
+    bool canPlayerWinHorizontal(const Player& p_player) const;
+    bool canPlayerWinVertical(const Player& p_player) const;
+    bool canPlayerWinDiagonalUpward(const Player& p_player) const;
+    bool canPlayerWinDiagonalDownward(const Player& p_player) const;
+    
+    // Horizontal:
+    int nbRemainingMoves(const Player& p_player, const int p_nbOfTurnsPlayed) const;
+    int nbRemainingMoves(const Player& p_player) const;
+
+    // Vertical:
+    int maxVerticalPositionForPlayerInColumn(const Player& p_player, const Column& p_column) const;
+    int nbOfMovesSinceLastPlay(const Player& p_player) const;
+    bool isPlayerPresentInColumn(const Player& p_player, const Column& p_column) const;
+    int playerTurn(const Player& p_player) const;
+
+    // Diagonal upward:
 
 };
  

@@ -259,189 +259,453 @@ TEST_F(GameTests, NextTurn_ExceedsAllTurns_TurnIs43)
 }
 
 
-TEST_F(GameTests, DISABLED_IsDraw_TieClassicGameBoardWithInARowOf4With5PlacesLeft_ReturnsTrue)
+TEST_F(GameTests, /*DISABLED_*/IsDraw_TieClassicGameBoardEmpty_ReturnsFalse)
+{
+    Game t_game{TWO_PLAYERS, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR};
+
+    ASSERT_FALSE(t_game.isTie());
+}
+
+
+TEST_F(GameTests, /*DISABLED_*/IsDraw_TieClassicGameBoardEdgeCaseHorizontal_ReturnsTrue)
 {
     Game t_game{TWO_PLAYERS, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR};
 
     t_game.playTurn(Column{0});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
     t_game.playTurn(Column{1});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
     t_game.playTurn(Column{2});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
     t_game.playTurn(Column{3});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
     t_game.playTurn(Column{4});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
     t_game.playTurn(Column{5});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
     t_game.playTurn(Column{6});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
     t_game.playTurn(Column{0});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
     t_game.playTurn(Column{1});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
     t_game.playTurn(Column{2});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
     t_game.playTurn(Column{3});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
     t_game.playTurn(Column{4});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{5});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{6});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{1});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{0});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{3});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{2});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{5});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{4});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{0});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{6});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{2});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{1});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{4});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{3});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{6});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{5});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{0});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{1});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{2});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{3});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{4});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
     t_game.playTurn(Column{5});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
     t_game.playTurn(Column{6});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
 
+    t_game.playTurn(Column{1});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
     t_game.playTurn(Column{0});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
 
-    ASSERT_FALSE(t_game.isDraw());
+    t_game.playTurn(Column{3});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{2});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
 
+    t_game.playTurn(Column{5});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{4});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
+    t_game.playTurn(Column{0});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{6});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
+    t_game.playTurn(Column{2});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
     t_game.playTurn(Column{1});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    
-    std::cout << *CLASSIC_GAMEBOARD << std::endl;
-    
+
+    t_game.playTurn(Column{4});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{3});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
+    t_game.playTurn(Column{6});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{5});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
+    t_game.playTurn(Column{0});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{1});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
+    t_game.playTurn(Column{2});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{3});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
+    t_game.playTurn(Column{4});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{5});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
+    t_game.playTurn(Column{6});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{0});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_FALSE(t_game.isTie());
+
+    // Form this point on, the game should report a tie on every move, until completion:
+    t_game.playTurn(Column{1});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_TRUE(t_game.isTie());
+
+    t_game.playTurn(Column{2});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_TRUE(t_game.isTie());
+
+    t_game.playTurn(Column{3});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_TRUE(t_game.isTie());
+
+    t_game.playTurn(Column{4});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_TRUE(t_game.isTie());
+
+    t_game.playTurn(Column{5});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_TRUE(t_game.isTie());
+
+    // All these ties should lead to a draw upon game completion:
+    t_game.playTurn(Column{6});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
     ASSERT_TRUE(t_game.isDraw());
 }
 
 
-TEST_F(GameTests, DISABLED_IsDraw_TieClassicGameBoardWithInARowOf3With5PlacesLeft_ReturnsTrue)
+TEST_F(GameTests, /*DISABLED_*/IsDraw_Tie9by8GameBoardConnect7ThreePlayersEdgeCaseHorizontal_ReturnsTrue)
 {
-    Game t_game{TWO_PLAYERS, CLASSIC_GAMEBOARD, GameBoard::CONNECT_THREE};
+    const std::shared_ptr<GameBoard> t_8by9Gameboard{std::make_shared<GameBoard>(9, 8)};
+
+    Game t_game{THREE_PLAYERS, t_8by9Gameboard, GameBoard::CONNECT_SEVEN};
 
     t_game.playTurn(Column{0});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
     t_game.playTurn(Column{1});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
     t_game.playTurn(Column{2});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
     t_game.playTurn(Column{3});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
     t_game.playTurn(Column{4});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
     t_game.playTurn(Column{5});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
     t_game.playTurn(Column{6});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{7});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{2});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
+    t_game.playTurn(Column{0});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{1});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{5});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
+    t_game.playTurn(Column{3});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{4});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{2});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
+    t_game.playTurn(Column{6});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{7});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{5});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
     t_game.playTurn(Column{0});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
     t_game.playTurn(Column{1});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
     t_game.playTurn(Column{2});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
     t_game.playTurn(Column{3});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
     t_game.playTurn(Column{4});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
     t_game.playTurn(Column{5});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
     t_game.playTurn(Column{6});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{7});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{0});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
     t_game.playTurn(Column{1});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{0});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
     t_game.playTurn(Column{3});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{2});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{5});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
     t_game.playTurn(Column{4});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{0});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
     t_game.playTurn(Column{6});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{2});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{1});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{4});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{3});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{6});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{5});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{7});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
     t_game.playTurn(Column{0});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
     t_game.playTurn(Column{1});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
     t_game.playTurn(Column{2});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
     t_game.playTurn(Column{3});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
     t_game.playTurn(Column{4});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
     t_game.playTurn(Column{5});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
     t_game.playTurn(Column{6});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
+    t_game.playTurn(Column{7});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
     t_game.playTurn(Column{0});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
     t_game.playTurn(Column{1});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
     t_game.playTurn(Column{2});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
     t_game.playTurn(Column{3});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
     t_game.playTurn(Column{4});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
 
-    ASSERT_FALSE(t_game.isDraw());
+    t_game.playTurn(Column{5});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{6});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{7});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
+    t_game.playTurn(Column{0});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{1});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{2});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
+    t_game.playTurn(Column{0});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{1});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_FALSE(t_game.isTie());
+
+    // Form this point on, the game should report a tie on every move, until completion:
+    t_game.playTurn(Column{2});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_TRUE(t_game.isTie());
+
+    t_game.playTurn(Column{0});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_TRUE(t_game.isTie());
+
+    t_game.playTurn(Column{1});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_TRUE(t_game.isTie());
+
+    t_game.playTurn(Column{2});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_TRUE(t_game.isTie());
+
+    t_game.playTurn(Column{3});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_TRUE(t_game.isTie());
+
+    t_game.playTurn(Column{4});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_TRUE(t_game.isTie());
 
     t_game.playTurn(Column{5});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_TRUE(t_game.isTie());
 
+    t_game.playTurn(Column{3});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_TRUE(t_game.isTie());
+
+    t_game.playTurn(Column{4});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_TRUE(t_game.isTie());
+
+    t_game.playTurn(Column{5});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_TRUE(t_game.isTie());
+
+    t_game.playTurn(Column{3});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_TRUE(t_game.isTie());
+
+    t_game.playTurn(Column{4});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_TRUE(t_game.isTie());
+
+    t_game.playTurn(Column{5});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_TRUE(t_game.isTie());
+
+    t_game.playTurn(Column{6});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_TRUE(t_game.isTie());
+
+    t_game.playTurn(Column{6});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_TRUE(t_game.isTie());
+
+    t_game.playTurn(Column{6});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_TRUE(t_game.isTie());
+
+    t_game.playTurn(Column{7});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_TRUE(t_game.isTie());
+
+    t_game.playTurn(Column{7});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_TRUE(t_game.isTie());
+
+    t_game.playTurn(Column{7});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_TRUE(t_game.isTie());
+
+    // All these ties should lead to a draw upon game completion:
     ASSERT_TRUE(t_game.isDraw());
 }
 
 
-TEST_F(GameTests, DISABLED_IsDraw_Tie9By9cGameBoardWithInARowOf5With12PlacesLeft_ReturnsTrue)
+TEST_F(GameTests, /*DISABLED*/_IsDraw_TieClassicGameBoardEdgeCaseVertical_ReturnsTrue)
 {
-    Game t_game{THREE_PLAYERS, A_9_BY_9_GAMEBOARD, GameBoard::CONNECT_FIVE};
+    Game t_game{TWO_PLAYERS, CLASSIC_GAMEBOARD, GameBoard::CONNECT_FOUR};
+    
+    t_game.playTurn(Column{0});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{1});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
+    t_game.playTurn(Column{1});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{0});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
+    t_game.playTurn(Column{0});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{1});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
+    t_game.playTurn(Column{1});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{0});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
+    t_game.playTurn(Column{0});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{1});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
+    t_game.playTurn(Column{1});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{0});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
 
     t_game.playTurn(Column{2});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{1});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{0});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{2});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
+    t_game.playTurn(Column{2});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{2});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
+    t_game.playTurn(Column{2});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{2});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
+    t_game.playTurn(Column{3});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{3});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
+    t_game.playTurn(Column{3});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{3});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
+    t_game.playTurn(Column{3});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{3});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
     t_game.playTurn(Column{5});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
     t_game.playTurn(Column{4});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{3});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{8});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{7});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
+    t_game.playTurn(Column{4});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{5});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
+    t_game.playTurn(Column{5});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{4});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
+    t_game.playTurn(Column{4});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{5});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
     t_game.playTurn(Column{6});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{6});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
+    t_game.playTurn(Column{6});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{4});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_FALSE(t_game.isTie());
+
+    // Form this point on, the game should report a tie on every move, until completion:
+    t_game.playTurn(Column{4});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_TRUE(t_game.isTie());
+
+    t_game.playTurn(Column{5});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_TRUE(t_game.isTie());
+
+    t_game.playTurn(Column{5});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_TRUE(t_game.isTie());
+
+    t_game.playTurn(Column{6});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_TRUE(t_game.isTie());
+
+    t_game.playTurn(Column{6});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_TRUE(t_game.isTie());
+
+    t_game.playTurn(Column{6});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_TRUE(t_game.isTie());
+
+    // All these ties should lead to a draw upon game completion:
+    ASSERT_TRUE(t_game.isDraw());
+}
+
+
+TEST_F(GameTests, /*DISABLED*/_IsDraw_Tie9by8GameBoardConnect7ThreePlayersEdgeCaseVertical_ReturnsTrue)
+{
+    const std::shared_ptr<GameBoard> t_8by9Gameboard{std::make_shared<GameBoard>(9, 8)};
+
+    Game t_game{THREE_PLAYERS, t_8by9Gameboard, GameBoard::CONNECT_SEVEN};
+
     t_game.playTurn(Column{0});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
     t_game.playTurn(Column{1});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{0});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
+    t_game.playTurn(Column{1});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{0});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{1});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
+    t_game.playTurn(Column{0});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{1});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{0});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
+    t_game.playTurn(Column{1});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{0});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{1});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
+    t_game.playTurn(Column{0});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{1});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{0});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
+    t_game.playTurn(Column{1});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{0});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{1});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
     t_game.playTurn(Column{2});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
     t_game.playTurn(Column{3});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{4});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{5});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{6});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{7});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{8});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
     t_game.playTurn(Column{2});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{0});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{1});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{5});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
     t_game.playTurn(Column{3});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{4});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{8});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{6});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{7});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{2});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{1});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{0});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{5});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{4});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{3});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{8});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{7});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{6});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{0});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{2});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{1});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{3});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{5});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{4});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{6});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{8});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{7});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{0});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{1});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
     t_game.playTurn(Column{2});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
     t_game.playTurn(Column{3});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{4});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{5});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{6});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{7});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{8});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{1});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{0});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
     t_game.playTurn(Column{2});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{4});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
     t_game.playTurn(Column{3});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{5});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{7});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{6});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{8});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{0});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
-    t_game.playTurn(Column{1});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{2});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
+    t_game.playTurn(Column{3});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{2});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{3});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
+    t_game.playTurn(Column{2});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{3});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{2});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
+    t_game.playTurn(Column{3});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
     t_game.playTurn(Column{2});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
     t_game.playTurn(Column{3});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
 
     t_game.playTurn(Column{4});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{4});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{4});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
 
-    ASSERT_FALSE(t_game.isDraw());
+    t_game.playTurn(Column{4});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{4});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{4});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
+    t_game.playTurn(Column{4});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{4});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{4});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
 
     t_game.playTurn(Column{5});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{6});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{7});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
 
+    t_game.playTurn(Column{7});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{5});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{6});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
+    t_game.playTurn(Column{5});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{6});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    t_game.playTurn(Column{7});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+
+    t_game.playTurn(Column{7});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_FALSE(t_game.isTie());
+
+    // Form this point on, the game should report a tie on every move, until completion:
+    t_game.playTurn(Column{5});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_TRUE(t_game.isTie());
+
+    t_game.playTurn(Column{5});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_TRUE(t_game.isTie());
+
+    t_game.playTurn(Column{5});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_TRUE(t_game.isTie());
+
+    t_game.playTurn(Column{5});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_TRUE(t_game.isTie());
+
+    t_game.playTurn(Column{5});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_TRUE(t_game.isTie());
+
+    t_game.playTurn(Column{5});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_TRUE(t_game.isTie());
+
+    t_game.playTurn(Column{6});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_TRUE(t_game.isTie());
+
+    t_game.playTurn(Column{6});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_TRUE(t_game.isTie());
+
+    t_game.playTurn(Column{6});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_TRUE(t_game.isTie());
+
+    t_game.playTurn(Column{6});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_TRUE(t_game.isTie());
+
+    t_game.playTurn(Column{6});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_TRUE(t_game.isTie());
+
+    t_game.playTurn(Column{6});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_TRUE(t_game.isTie());
+
+    t_game.playTurn(Column{7});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_TRUE(t_game.isTie());
+
+    t_game.playTurn(Column{7});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_TRUE(t_game.isTie());
+
+    t_game.playTurn(Column{7});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_TRUE(t_game.isTie());
+
+    t_game.playTurn(Column{7});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_TRUE(t_game.isTie());
+
+    t_game.playTurn(Column{7});     t_game.nextTurn();     ASSERT_FALSE(t_game.isWon());
+    ASSERT_TRUE(t_game.isTie());
+
+    // All these ties should lead to a draw upon game completion:
     ASSERT_TRUE(t_game.isDraw());
 }
 
