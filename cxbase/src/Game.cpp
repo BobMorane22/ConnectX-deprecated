@@ -474,13 +474,15 @@ bool Game::canPlayerWinHorizontal(const Player& p_player) const
  *
  * @verbatim
  *
- *   5  | B | A | B | B |   |   |   |
- *   4  | A | B | A | A | B |   |   |
- *   3  | B | A | B | B | A | B |   |
- *   2  | A | B | A | A | B | A | A |
- *   1  | B | A | B | B | A | B | B |
- *   0  | A | B | A | A | B | A | A |
- *        0   1   2   3   4   5   6
+ *                           |
+ *                           v
+ *   5 | B | A | B | B |   |   |   |
+ *   4 | A | B | A | A | B |   |   |
+ *   3 | B | A | B | B | A | B |   |
+ *   2 | A | B | A | A | B | A | A |
+ *   1 | B | A | B | B | A | B | B |
+ *   0 | A | B | A | A | B | A | A |
+ *       0   1   2   3   4   5   6
  *
  * @endverbatim
  *
@@ -490,13 +492,13 @@ bool Game::canPlayerWinHorizontal(const Player& p_player) const
  *
  * @verbatim
  *
- *   5  | B | A | B | B |   |   |   |
- *   4  | A | B | A | A | B |   |   |
- *   3  | B | A | B | B | A | B |   |
- *   2  | A | B | A | A | B | A | A |
- *   1  | B | A | B | B | A | B | B |
- *   0  | A | B | A | A | B | A | A |
- *        0   1   2   3   4   5   6
+ *   5 | B | A | B | B | B |   | A | ***
+ *   4 | A | B | A | A | B | B | A | WIN
+ *   3 | B | A | B | B | A | B | A |
+ *   2 | A | B | A | A | B | A | A | ***
+ *   1 | B | A | B | B | A | B | B |
+ *   0 | A | B | A | A | B | A | A |
+ *       0   1   2   3   4   5   6
  *
  * @endverbatim
  *
@@ -566,14 +568,43 @@ bool Game::canPlayerWinVertical(const Player& p_player) const
 
 
 /***************************************************************************************************
+ * This method checks for any remaining winnable upward diagonal combinations for a Player on a 
+ * GameBoard. For example, consider this GameBoard, where Player A just made a move:
  *
+ * @verbatim
  *
+ *                                |
+ *                                v
+ *    5 | B | B | A | B |   |   |   |
+ *    4 | A | A | B | A | A | B | A |
+ *    3 | B | B | A | B | B | B | A |
+ *    2 | A | A | B | A | A | A | B |
+ *    1 | B | B | A | B | B | B | A |
+ *    0 | A | A | B | A | A | B | A |
+ *        0   1   2   3   4   5   6
  *
+ * @endverbatim
  *
+ * If you call this method on Player B, it will return @c false since Player B has no more 
+ * upward diagonal and winnable moves ahead. However, if you call it in Player A, it will return 
+ * @c true since Player A has one last possibility for a win:
  *
+ * @verbatim
  *
+ *          ***   WIN    ***
+ *    5 | B | B | A | B | A | B |   |
+ *    4 | A | A | B | A | A | B | A |
+ *    3 | B | B | A | B | B | B | A |
+ *    2 | A | A | B | A | A | A | B |
+ *    1 | B | B | A | B | B | B | A |
+ *    0 | A | A | B | A | A | B | A |
+ *        0   1   2   3   4   5   6
  *
+ * @endverbatim
  *
+ * @param[in] p_player The Player we want to know if he/she can still win upward diagonally.
+ *
+ * @return @c true if the player can still win upward diagonally, @c false otherwise.
  *
  **************************************************************************************************/
 bool Game::canPlayerWinDiagonalUpward(const Player& p_player) const
@@ -625,14 +656,43 @@ bool Game::canPlayerWinDiagonalUpward(const Player& p_player) const
 
 
 /***************************************************************************************************
+ * This method checks for any remaining winnable downward diagonal combinations for a Player on a 
+ * GameBoard. For example, consider this GameBoard, where Player A just made a move:
  *
+ * @verbatim
  *
+ *        |
+ *        v
+ *    5 |   |   |   | B | A | B | B |
+ *    4 | A | B | A | A | B | A | A |
+ *    3 | A | B | B | B | A | B | B |
+ *    2 | B | A | A | A | B | A | A |
+ *    1 | A | B | B | B | A | B | B |
+ *    0 | A | B | A | A | B | A | A |
+ *        0   1   2   3   4   5   6
  *
+ * @endverbatim
  *
+ * If you call this method on Player B, it will return @c false since Player B has no more 
+ * downward diagonal and winnable moves ahead. However, if you call it in Player A, it will return 
+ * @c true since Player A has one last possibility for a win:
  *
+ * @verbatim
  *
+ *              ***   WIN    ***
+ *    5 |   | B | A | B | A | B | B |
+ *    4 | A | B | A | A | B | A | A |
+ *    3 | A | B | B | B | A | B | B |
+ *    2 | B | A | A | A | B | A | A |
+ *    1 | A | B | B | B | A | B | B |
+ *    0 | A | B | A | A | B | A | A |
+ *        0   1   2   3   4   5   6
  *
+ * @endverbatim
  *
+ * @param[in] p_player The Player we want to know if he/she can still win downward diagonally.
+ *
+ * @return @c true if the player can still win downward diagonally @c false otherwise.
  *
  **************************************************************************************************/
 bool Game::canPlayerWinDiagonalDownward(const Player& p_player) const

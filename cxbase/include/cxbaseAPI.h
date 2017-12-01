@@ -36,9 +36,9 @@
 #include "AsciiColorCode.h"
 #include "Color.h"
 #include "Disc.h"
-#include "Game.h"
 #include "GameBoard.h"
 #include "Player.h"
+#include "Game.h"
 
 #endif /* CXBASEAPI_H_4CE91685_F206_49F2_AEBE_5CE420E5E72F */
 

@@ -159,6 +159,7 @@ public:
      **********************************************************************************************/
      bool isTie() const;
 
+
     /*******************************************************************************************//**
      * Checks if a Game is a draw.
      *
@@ -253,31 +254,26 @@ protected:
 
 private:
 
+///@{ @name isEarlyDraw implementation
+
+    bool canPlayerWinHorizontal              (const Player& p_player                             ) const;
+    bool canPlayerWinVertical                (const Player& p_player                             ) const;
+    bool canPlayerWinDiagonalUpward          (const Player& p_player                             ) const;
+    bool canPlayerWinDiagonalDownward        (const Player& p_player                             ) const;
+    
+    int  nbRemainingMoves                    (const Player& p_player, const int p_nbOfTurnsPlayed) const;
+    int  nbRemainingMoves                    (const Player& p_player                             ) const;
+    int  maxVerticalPositionForPlayerInColumn(const Player& p_player, const Column& p_column     ) const;
+    int  nbOfMovesSinceLastPlay              (const Player& p_player                             ) const;
+    bool isPlayerPresentInColumn             (const Player& p_player, const Column& p_column     ) const;
+    int  playerTurn                          (const Player& p_player                             ) const;
+
+///@}
 
     int                                   m_inARow;                                ///< The @a inARow for the Game.
     int                                   m_nbTurns          {0};                  ///< Total number of turns played.
     int                                   m_turn             {0};                  ///< The current turn (first turn is 0).
     Position                              m_currentPosition  {Row{0}, Column{0}};  ///< The Position where the active player places a Disc.
-
-public:
-
-    // isTie() cases:
-    bool canPlayerWinHorizontal(const Player& p_player) const;
-    bool canPlayerWinVertical(const Player& p_player) const;
-    bool canPlayerWinDiagonalUpward(const Player& p_player) const;
-    bool canPlayerWinDiagonalDownward(const Player& p_player) const;
-    
-    // Horizontal:
-    int nbRemainingMoves(const Player& p_player, const int p_nbOfTurnsPlayed) const;
-    int nbRemainingMoves(const Player& p_player) const;
-
-    // Vertical:
-    int maxVerticalPositionForPlayerInColumn(const Player& p_player, const Column& p_column) const;
-    int nbOfMovesSinceLastPlay(const Player& p_player) const;
-    bool isPlayerPresentInColumn(const Player& p_player, const Column& p_column) const;
-    int playerTurn(const Player& p_player) const;
-
-    // Diagonal upward:
 
 };
  

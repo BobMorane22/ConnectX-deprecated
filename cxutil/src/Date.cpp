@@ -51,6 +51,8 @@ cxutil::Date::Date()
     m_year  = timeInfo.tm_year + 1900;
     m_month = timeInfo.tm_mon + 1;
     m_day   = timeInfo.tm_mday;
+    
+    print(std::cout);
 
     INVARIANTS();
 }
@@ -156,10 +158,11 @@ bool cxutil::Date::isValid(int p_year, int p_month, int p_day) const
 
     if(isLeap(p_year))
     {
-        ++daysPerMonths[Date::Months::FEBRUARY];
+        const int february{1};
+        ++daysPerMonths[february];
     }
 
-    const bool monthRangeGood {p_month > Date::Months::JANUARY && p_month <= Date::Months::DECEMBER};
+    const bool monthRangeGood {p_month >= Date::Months::JANUARY && p_month <= Date::Months::DECEMBER};
     const bool yearRangeGood  {p_year >= Date::YEAR_BEGINNING && p_year <= Date::YEAR_END};
 
     if(monthRangeGood && yearRangeGood)
