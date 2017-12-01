@@ -69,10 +69,20 @@ bool Game::isTie() const
     for(auto& player : m_players)
     {
         validPlaysAreStillAvailable |= canPlayerWinHorizontal(*player);
-        
+
         if(!validPlaysAreStillAvailable)
         {
             validPlaysAreStillAvailable |= canPlayerWinVertical(*player);
+        }
+
+        if(!validPlaysAreStillAvailable)
+        {
+            validPlaysAreStillAvailable |= canPlayerWinDiagonalUpward(*player);
+        }
+        
+        if(!validPlaysAreStillAvailable)
+        {
+            validPlaysAreStillAvailable |= canPlayerWinDiagonalDownward(*player);
         }
     }
 
@@ -568,8 +578,49 @@ bool Game::canPlayerWinVertical(const Player& p_player) const
  **************************************************************************************************/
 bool Game::canPlayerWinDiagonalUpward(const Player& p_player) const
 {
-    (void)p_player;
-    return false;
+    bool canPlayerWin{false};
+
+    // Row to check:
+    for(int rowIndex{0}; rowIndex < (m_gameboard->nbRows() - m_inARow) + 1; ++rowIndex)
+    {
+        // Use these columns for starting point of the checks:
+        for(int columnIndex{0}; columnIndex < (m_gameboard->nbColumns() - m_inARow) + 1; ++columnIndex)
+        {
+            bool isPlayFree{true};
+            int nbOfEmptyDiscsInDiagonal{0};
+
+            // Check only for the good inARow value:
+            for(int offset{0}; offset < m_inARow; ++offset)
+            {
+                isPlayFree &= (*m_gameboard)(Position{Row{rowIndex + offset}, Column{columnIndex + offset}}) == p_player.disc() ||
+                              (*m_gameboard)(Position{Row{rowIndex + offset}, Column{columnIndex + offset}}) == Disc::NO_DISC;
+
+                // If the space is free, we record it for later checks:
+                if((*m_gameboard)(Position{Row{rowIndex + offset}, Column{columnIndex + offset}}) == Disc::NO_DISC)
+                {
+                    ++nbOfEmptyDiscsInDiagonal;
+                }
+            }
+
+            // Make sure there is enough space left for the current player to win:
+            isPlayFree &= (nbOfEmptyDiscsInDiagonal <= nbRemainingMoves(p_player));
+
+            // As soon as one play is still free for a win, we record it:
+            canPlayerWin |= isPlayFree;
+
+            if(canPlayerWin)
+            {
+                break;
+            }
+        }
+
+        if(canPlayerWin)
+        {
+            break;
+        }
+    }
+
+    return canPlayerWin;
 }
 
 
@@ -586,6 +637,47 @@ bool Game::canPlayerWinDiagonalUpward(const Player& p_player) const
  **************************************************************************************************/
 bool Game::canPlayerWinDiagonalDownward(const Player& p_player) const
 {
-    (void)p_player;
-    return false;
+    bool canPlayerWin{false};
+
+    // Row to check:
+    for(int rowIndex{0}; rowIndex < (m_gameboard->nbRows()) - (m_inARow - 1); ++rowIndex)
+    {
+        // Use these columns for starting point of the checks:
+        for(int columnIndex{m_inARow - 1}; columnIndex < m_gameboard->nbColumns() - 1; ++columnIndex)
+        {
+            bool isPlayFree{true};
+            int nbOfEmptyDiscsInDiagonal{0};
+
+            // Check only for the good inARow value:
+            for(int offset{0}; offset < m_inARow; ++offset)
+            {
+                isPlayFree &= (*m_gameboard)(Position{Row{rowIndex + offset}, Column{columnIndex - offset}}) == p_player.disc() ||
+                              (*m_gameboard)(Position{Row{rowIndex + offset}, Column{columnIndex - offset}}) == Disc::NO_DISC;
+
+                // If the space is free, we record it for later checks:
+                if((*m_gameboard)(Position{Row{rowIndex + offset}, Column{columnIndex - offset}}) == Disc::NO_DISC)
+                {
+                    ++nbOfEmptyDiscsInDiagonal;
+                }
+            }
+
+            // Make sure there is enough space left for the current player to win:
+            isPlayFree &= (nbOfEmptyDiscsInDiagonal <= nbRemainingMoves(p_player));
+
+            // As soon as one play is still free for a win, we record it:
+            canPlayerWin |= isPlayFree;
+
+            if(canPlayerWin)
+            {
+                break;
+            }
+        }
+
+        if(canPlayerWin)
+        {
+            break;
+        }
+    }
+
+    return canPlayerWin;
 }
