@@ -39,7 +39,7 @@ using namespace cxbase;
 GameBoard::~GameBoard() = default;
 
 
-GameBoard::GameBoard(): m_grid(NB_ROWS_MIN, std::vector<Disc>(NB_COLUMNS_MIN, Disc())),
+GameBoard::GameBoard(): m_grid(NB_ROWS_MIN, std::vector<std::shared_ptr<Disc>>(NB_COLUMNS_MIN, std::make_shared<Disc>())),
                         m_nbRows{NB_ROWS_MIN}, m_nbColumns{NB_COLUMNS_MIN}
 
 {
@@ -49,7 +49,7 @@ GameBoard::GameBoard(): m_grid(NB_ROWS_MIN, std::vector<Disc>(NB_COLUMNS_MIN, Di
     {
         for(auto& disc : row)
         {
-            if(disc == Disc::NO_DISC)
+            if(*disc == Disc::NO_DISC)
             {
                 ++nbPositionsGameBoard;
             }
@@ -64,7 +64,7 @@ GameBoard::GameBoard(): m_grid(NB_ROWS_MIN, std::vector<Disc>(NB_COLUMNS_MIN, Di
 }
 
 
-GameBoard::GameBoard(int p_nbRows, int p_nbColumns): m_grid(p_nbRows, std::vector<Disc>(p_nbColumns, Disc::NO_DISC)),
+GameBoard::GameBoard(int p_nbRows, int p_nbColumns): m_grid(p_nbRows, std::vector<std::shared_ptr<Disc>>(p_nbColumns, std::make_shared<Disc>())),
                                                      m_nbRows{p_nbRows}, m_nbColumns{p_nbColumns}
 
 {
@@ -80,7 +80,7 @@ GameBoard::GameBoard(int p_nbRows, int p_nbColumns): m_grid(p_nbRows, std::vecto
     {
         for(auto& disc : row)
         {
-            if(disc == Disc::NO_DISC)
+            if(*disc == Disc::NO_DISC)
             {
                 ++nbPositionsGameBoard;
             }
@@ -92,12 +92,6 @@ GameBoard::GameBoard(int p_nbRows, int p_nbColumns): m_grid(p_nbRows, std::vecto
     ASSERTION(nbPositionsGameBoard == m_nbRows * m_nbColumns);
 
     INVARIANTS();
-}
-
-
-std::vector<std::vector<Disc>> GameBoard::grid() const
-{
-    return m_grid;
 }
 
 
@@ -129,9 +123,11 @@ Position GameBoard::placeDisc(const Column& p_column, const Disc& p_disc)
 
     for(auto row = m_grid.begin(); row != m_grid.end(); ++row)
     {
-        if((*this)(Position{Row{rowSubscript}, p_column}) == Disc::NO_DISC)
+        std::shared_ptr<Disc> currentDiscAddress{std::make_shared<Disc>((*this)(Position{Row{rowSubscript}, p_column}))};
+        
+        if(*currentDiscAddress == Disc::NO_DISC)
         {
-            m_grid[rowSubscript][p_column.value()] = p_disc;
+            m_grid[rowSubscript][p_column.value()] = std::make_shared<Disc>(p_disc);
             break;
         }
 
@@ -149,12 +145,14 @@ bool GameBoard::isColumnFull(const Column& p_column) const
     PRECONDITION(p_column >= Column{0});
     PRECONDITION(p_column < Column{NB_COLUMNS_MAX});
 
-    bool       isPlayable{false};
-    int        rowSubscript{m_nbRows - 1};
+    bool isPlayable{false};
+    int  rowSubscript{m_nbRows - 1};
 
     for(auto row = m_grid.rbegin(); row != m_grid.rend(); ++row)
     {
-        if((*this)(Position{Row{rowSubscript}, p_column}) == Disc::NO_DISC)
+        std::shared_ptr<Disc> currentDiscAddress{std::make_shared<Disc>((*this)(Position{Row{rowSubscript}, p_column}))};
+    
+        if(*currentDiscAddress == Disc::NO_DISC)
         {
             isPlayable = true;
             break;
@@ -167,7 +165,7 @@ bool GameBoard::isColumnFull(const Column& p_column) const
 }
 
 
-bool GameBoard::operator==(const GameBoard &p_gameBoard) const
+bool GameBoard::operator==(const GameBoard& p_gameBoard) const
 {
     PRECONDITION(m_nbColumns == p_gameBoard.m_nbColumns);
     PRECONDITION(m_nbRows == p_gameBoard.m_nbRows);
@@ -176,11 +174,11 @@ bool GameBoard::operator==(const GameBoard &p_gameBoard) const
     int rowSubscript{0};
     int columnSubscript{0};
 
-    for(auto& row :m_grid)
+    for(auto& row : m_grid)
     {
-        for(auto& position :row)
+        for(auto& disc :row)
         {
-            if(position != p_gameBoard(Position{Row{rowSubscript}, Column{columnSubscript}}))
+            if(*disc != p_gameBoard(Position{Row{rowSubscript}, Column{columnSubscript}}))
             {
                 isEqual = false;
                 break;
@@ -219,7 +217,7 @@ Disc GameBoard::operator()(const Position& p_position) const
     PRECONDITION(p_position.row()    < Row{m_nbRows}      );
     PRECONDITION(p_position.column() < Column{m_nbColumns});
 
-    return m_grid[p_position.rowValue()][p_position.columnValue()];
+    return *m_grid[p_position.rowValue()][p_position.columnValue()];
 }
 
 
@@ -250,7 +248,7 @@ void GameBoard::print(std::ostream& p_stream) const
 
         for(auto& disc : *row)
         {
-            p_stream << disc;
+            p_stream << *disc;
 
             if(columnSubscript >= 10)
                 p_stream << " ";

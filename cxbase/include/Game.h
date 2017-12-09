@@ -32,10 +32,6 @@
 #ifndef GAME_H_2D56E7FC_5FA9_4841_B204_05ADCF2DCE07
 #define GAME_H_2D56E7FC_5FA9_4841_B204_05ADCF2DCE07
 
-#include <memory>
-#include <vector>
-
-#include <cxutil/include/IEnforceContract.h>
 
 #include "GameBoard.h"
 #include "Player.h"

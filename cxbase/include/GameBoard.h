@@ -32,6 +32,7 @@
 #ifndef GAMEBOARD_H_59F7D710_94EA_491A_9C14_94AE5C014E9A
 #define GAMEBOARD_H_59F7D710_94EA_491A_9C14_94AE5C014E9A
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -107,19 +108,11 @@ public:
      **********************************************************************************************/
     GameBoard(int p_nbRows, int p_nbColumns);
 
+
 ///@}
 
 
 ///@{ @name Data access
-
-    /*******************************************************************************************//**
-     * Accessor for the grid.
-     *
-     * @return The Gameboard grid.
-     *
-     **********************************************************************************************/
-    std::vector<std::vector<Disc>> grid() const;
-
 
     /*******************************************************************************************//**
      * Accessor for the number of rows in the Gameboard.
@@ -146,7 +139,6 @@ public:
      *
      **********************************************************************************************/
     int nbPositions() const;
-
 
 ///@}
 
@@ -231,6 +223,7 @@ public:
 ///@}
 
 ///@{ @name Operators
+
 
     /*******************************************************************************************//**
      * Equal-to operator.
@@ -346,9 +339,9 @@ private:
     static const int   NB_COLUMNS_MIN   {7};
     static const int   NB_ROWS_MIN      {6};
 
-    std::vector<std::vector<Disc>>  m_grid;       ///< The GameBoard's grid.
-    int                             m_nbRows;     ///< The GameBoard grid's number of rows.
-    int                             m_nbColumns;  ///< The GameBoard grid's number of columns.
+    std::vector<std::vector<std::shared_ptr<Disc>>>  m_grid;       ///< The GameBoard's grid (holds the Discs).
+    int                                              m_nbRows;     ///< The GameBoard grid's number of rows.
+    int                                              m_nbColumns;  ///< The GameBoard grid's number of columns.
 
 };
 

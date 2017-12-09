@@ -60,11 +60,11 @@ TEST_F(GameBoardTests, Constructor_Default_CreatesStandardAndEmptyC4Board)
     ASSERT_EQ(t_gameBoard.nbRows(), NB_ROWS_MIN);
     ASSERT_EQ(t_gameBoard.nbColumns(), NB_COLUMNS_MIN);
 
-    for (auto& row : t_gameBoard.grid())
+    for(int row{0}; row < t_gameBoard.nbRows(); ++row)
     {
-        for (auto& disc : row)
+        for(int column{0}; column < t_gameBoard.nbColumns(); ++column)
         {
-            ASSERT_EQ(disc, Disc::Disc::NO_DISC);
+            ASSERT_EQ(t_gameBoard(Position{Row{row}, Column{column}}), Disc::NO_DISC);
         }
     }
 }
@@ -76,11 +76,11 @@ TEST_F(GameBoardTests, Constructor_TwoValidParameters_NoExceptionThrown)
     ASSERT_EQ(t_gameBoard10x10.nbColumns(), 10);
     ASSERT_EQ(t_gameBoard10x10.nbRows(), 10);
 
-    for (auto& row : t_gameBoard10x10.grid())
+    for(int row{0}; row < t_gameBoard.nbRows(); ++row)
     {
-        for (auto& disc : row)
+        for(int column{0}; column < t_gameBoard.nbColumns(); ++column)
         {
-            ASSERT_EQ(disc, Disc::Disc::NO_DISC);
+            ASSERT_EQ(t_gameBoard10x10(Position{Row{row}, Column{column}}), Disc::NO_DISC);
         }
     }
 }
@@ -107,14 +107,6 @@ TEST(GameBoard, Constructor_RowParameterTooSmall_ExceptionThrown)
 TEST(GameBoard, Constructor_RowParameterTooLarge_ExceptionThrown)
 {
     ASSERT_THROW((GameBoard{65, 10}), PreconditionException);
-}
-
-
-TEST_F(GameBoardTests, GridAccessor_ValidGameBoard_ReturnsGrid)
-{
-    std::vector < std::vector < Disc > > t_defaultGrid(NB_ROWS_MIN, std::vector<Disc>(NB_COLUMNS_MIN, Disc::NO_DISC));
-
-    ASSERT_EQ(t_defaultGrid, t_gameBoard.grid());
 }
 
 
