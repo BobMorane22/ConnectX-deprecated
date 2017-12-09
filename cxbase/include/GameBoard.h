@@ -71,10 +71,6 @@ namespace cxbase
 class GameBoard : public cxutil::IEnforceContract, public cxutil::ICliObject
 {
 
-private:
-
-    typedef std::vector< std::vector<Disc> > Grid;
-
 public:
 
 ///@{ @name Object construction and destruction
@@ -122,7 +118,7 @@ public:
      * @return The Gameboard grid.
      *
      **********************************************************************************************/
-    Grid grid() const;
+    std::vector<std::vector<Disc>> grid() const;
 
 
     /*******************************************************************************************//**
@@ -131,7 +127,7 @@ public:
      * @return The number of rows in the GameBoard.
      *
      **********************************************************************************************/
-    int  nbRows() const;
+    int nbRows() const;
 
 
     /*******************************************************************************************//**
@@ -140,7 +136,7 @@ public:
      * @return The number of columns in the GameBoard.
      *
      **********************************************************************************************/
-    int  nbColumns() const;
+    int nbColumns() const;
 
 
     /*******************************************************************************************//**
@@ -149,7 +145,7 @@ public:
      * @return The number of positions (total) in the GameBoard.
      *
      **********************************************************************************************/
-    int  nbPositions() const;
+    int nbPositions() const;
 
 
 ///@}
@@ -232,29 +228,6 @@ public:
      **********************************************************************************************/
     bool isColumnFull(const Column& p_column) const;
 
-
-    /*******************************************************************************************//**
-     * Checks for a win at a specified Position.
-     *
-     * Checks from the specified Position if a combination of @c p_inARow consecutive Discs
-     * matching the Disc at @c p_positionLastDiscPlaced is present either horizontally, vertically
-     * or diagonally. Be aware that it is @b NOT the responsablity of this method to know who
-     * won. In other words, it only checks if @a someone won.
-     *
-     * @param[in] p_positionLastDiscPlaced  Position from which to look for a winner combination
-     *                                      (usually where the last Player placed a Disc).
-     *
-     * @param[in] p_inARow                  Number of consecutive equal Discs neccessary to win
-     *                                      the game.
-     *
-     * @pre The position passed as an argument exists on the GameBoard, i.e. both Coordinates
-     * respect the dimensions.
-     *
-     * @return @c true if someone won, @c false otherwise.
-     *
-     **********************************************************************************************/
-    bool isWinner(const Position& p_positionLastDiscPlaced, int p_inARow) const;
-
 ///@}
 
 ///@{ @name Operators
@@ -308,17 +281,6 @@ public:
 
 ///@}
 
-///@{ @name Predefined values
-
-    static const int CONNECT_THREE;
-    static const int CONNECT_FOUR;
-    static const int CONNECT_FIVE;
-    static const int CONNECT_SIX;
-    static const int CONNECT_SEVEN;
-    static const int CONNECT_EIGHT;
-    static const int CONNECT_NINE;
-
-///@}
 
 protected:
 
@@ -384,37 +346,9 @@ private:
     static const int   NB_COLUMNS_MIN   {7};
     static const int   NB_ROWS_MIN      {6};
 
-    enum class GridValidationType: int
-    {
-        Straight,
-        Horizontal,
-        Vertical,
-        Oblique,
-        ObliqueIncreasing,
-        ObliqueDecreasing
-    };
-
-    Grid      m_grid;       ///< The GameBoard's grid.
-    int       m_nbRows;     ///< The GameBoard grid's number of rows.
-    int       m_nbColumns;  ///< The GameBoard grid's number of columns.
-
-
-    int leftValidationLimit  (Position p_positionLastPlacedDisc, int p_inARow, GridValidationType validationType = GridValidationType::Straight) const;
-    int rightValidationLimit (Position p_positionLastPlacedDisc, int p_inARow, GridValidationType validationType = GridValidationType::Straight) const;
-    int upperValidationLimit (Position p_positionLastPlacedDisc, int p_inARow, GridValidationType validationType = GridValidationType::Straight) const;
-    int lowerValidationLimit (Position p_positionLastPlacedDisc, int p_inARow, GridValidationType validationType = GridValidationType::Straight) const;
-
-    int nbOfValidations(int p_minValidationLimit, int p_maxValidationLimit, int p_inARow) const;
-
-    int horizontalNbOfAdjacentDiscs  (Position p_positionLastPlacedDisc, int p_inARow) const;
-    int verticalNbOfAdjacentDiscs    (Position p_positionLastPlacedDisc, int p_inARow) const;
-    int upwardNbOfAdjacentDiscs      (Position p_positionLastPlacedDisc, int p_inARow) const;
-    int downwardNbOfAdjacentDiscs    (Position p_positionLastPlacedDisc, int p_inARow) const;
-
-    bool checkHorizontalWinner (Position p_positionLastPlacedDisc, int p_inARow) const;
-    bool checkVerticalWinner   (Position p_positionLastPlacedDisc, int p_inARow) const;
-    bool checkUpwardWinner     (Position p_positionLastPlacedDisc, int p_inARow) const;
-    bool checkDownwardWinner   (Position p_positionLastPlacedDisc, int p_inARow) const;
+    std::vector<std::vector<Disc>>  m_grid;       ///< The GameBoard's grid.
+    int                             m_nbRows;     ///< The GameBoard grid's number of rows.
+    int                             m_nbColumns;  ///< The GameBoard grid's number of columns.
 
 };
 

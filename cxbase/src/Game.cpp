@@ -38,6 +38,15 @@
 using namespace cxbase;
 
 
+const int Game::CONNECT_THREE  {3};
+const int Game::CONNECT_FOUR   {4};
+const int Game::CONNECT_FIVE   {5};
+const int Game::CONNECT_SIX    {6};
+const int Game::CONNECT_SEVEN  {7};
+const int Game::CONNECT_EIGHT  {8};
+const int Game::CONNECT_NINE   {9};
+
+
 Game::~Game() = default;
 
 
@@ -57,12 +66,13 @@ Game::Game(const std::vector<std::shared_ptr<Player>>& p_players, const std::sha
     PRECONDITION(p_players.size() <= cxutil::narrow_cast<unsigned int>(p_gameboard->nbPositions() / p_inARow));
     PRECONDITION(p_inARow >= 2);
     PRECONDITION(p_inARow < std::min(p_gameboard->nbColumns(), p_gameboard->nbRows()));
+    PRECONDITION((p_gameboard->nbColumns() * p_gameboard->nbRows()) % m_players.size() == 0);
 
     INVARIANTS();
 }
 
 // Source: https://stackoverflow.com/questions/46921528/detect-early-tie-in-connect-4/46928055#46928055
-bool Game::isTie() const
+bool Game::isEarlyDraw() const
 {
     bool validPlaysAreStillAvailable{false};
 
@@ -87,6 +97,19 @@ bool Game::isTie() const
     }
 
     return !validPlaysAreStillAvailable;
+}
+
+
+bool Game::isWon() const
+{
+    bool isWinner{false};
+
+    if(checkHorizontalWinner() || checkVerticalWinner() || checkUpwardWinner()|| checkDownwardWinner())
+    {
+        isWinner = true;
+    }
+
+    return isWinner;
 }
 
 
@@ -124,6 +147,7 @@ void Game::nextTurn()
 void Game::checkInvariant() const
 {
     INVARIANT(m_gameboard != nullptr);
+
     INVARIANT(std::none_of(m_players.begin(), m_players.end(), 
               [](const std::shared_ptr<Player>& p_player)
                  {
@@ -142,12 +166,32 @@ void Game::checkInvariant() const
 
     INVARIANT(m_turn >= 0);
     INVARIANT(cxutil::narrow_cast<unsigned int>(m_turn) < m_players.size());
+
+    INVARIANT((m_gameboard->nbColumns() * m_gameboard->nbRows()) % m_players.size() == 0);
 }
 
 
-/***************************************************************************************************
+/***********************************************************************************************//**
+ * Checks wether the specified Player is part of the current Game or not.
+ *
+ * @param[in] p_player The Player we wich to check for.
+ *
+ * @return    @c true is the Player is part of the current Game, @c false otherwise.
+ *
+ **************************************************************************************************/
+bool Game::isPlayerInGame(const Player& p_player) const
+{
+    const auto player{std::find(m_players.begin(), m_players.end(), std::make_shared<Player>(p_player))};
+    
+    return player != m_players.end();
+}
+
+
+/***********************************************************************************************//**
  * Calculates the remaining possible moves number for a Player from the numbers of moves already
  * consluded in the Game. 
+ *
+ * @pre The Player specified as an argument is registered in the Game.
  *
  * @param[in] p_player          The Player which we want to know the current count of remaining
  *                              actual moves available.
@@ -203,7 +247,7 @@ int Game::nbRemainingMoves(const Player& p_player, const int p_nbOfTurnsPlayed) 
 }
 
 
-/***************************************************************************************************
+/***********************************************************************************************//**
  * Calculates the remaining possible moves number for a Player from the current configuration. For 
  * example, consider this classic Connect 4 gameboard, where the Player A made the last move:
  *
@@ -223,6 +267,8 @@ int Game::nbRemainingMoves(const Player& p_player, const int p_nbOfTurnsPlayed) 
  *
  * In this situation, Player A has at most two more moves.
  *
+ * @pre The Player specified as an argument is registered in the Game.
+ *
  * @param[in] p_player The Player which we want to know the current count of remaining actual 
  *                     moves available.
  *
@@ -238,7 +284,7 @@ int Game::nbRemainingMoves(const Player& p_player) const
 }
 
 
-/***************************************************************************************************
+/***********************************************************************************************//**
  * Finds the turn of a specific player.
  *
  * @param[in] p_player The Player whose turn is needed.
@@ -271,7 +317,7 @@ int Game::playerTurn(const Player& p_player) const
 }
 
 
-/***************************************************************************************************
+/***********************************************************************************************//**
  * Finds the number of turns that took place since a Player last successfully placed a disc.
  *
  * param[in] p_player The Player for which the number of turn since last sucessful move is
@@ -311,7 +357,7 @@ int Game::nbOfMovesSinceLastPlay(const Player& p_player) const
 }
 
 
-/***************************************************************************************************
+/***********************************************************************************************//**
  * Checks if a Column contains at least one Disc from a specific Player.
  *
  * @pre p_column is valid on the GameBoard.
@@ -325,8 +371,6 @@ int Game::nbOfMovesSinceLastPlay(const Player& p_player) const
  **************************************************************************************************/
 bool Game::isPlayerPresentInColumn(const Player& p_player, const Column& p_column) const
 {
-    PRECONDITION(p_column.value() <= m_gameboard->nbColumns());
-
     bool isPlayerPresent{false};
 
     for(int rowIndex{0}; rowIndex < m_gameboard->nbRows(); ++rowIndex)
@@ -342,7 +386,7 @@ bool Game::isPlayerPresentInColumn(const Player& p_player, const Column& p_colum
 }
 
 
-/***************************************************************************************************
+/***********************************************************************************************//**
  * Finds the Player' Disc Position that is the furthest away from the bottom of the GameBoard in 
  * the specified column.
  *
@@ -361,8 +405,6 @@ bool Game::isPlayerPresentInColumn(const Player& p_player, const Column& p_colum
  **************************************************************************************************/
 int Game::maxVerticalPositionForPlayerInColumn(const Player& p_player, const Column& p_column) const
 {
-    PRECONDITION(isPlayerPresentInColumn(p_player, p_column));
-
     int maxPosition{0};
 
     for(int rowIndex{0}; rowIndex < m_gameboard->nbRows(); ++rowIndex)
@@ -373,14 +415,11 @@ int Game::maxVerticalPositionForPlayerInColumn(const Player& p_player, const Col
         }
     }
 
-    POSTCONDITION(maxPosition <  m_gameboard->nbRows());
-    POSTCONDITION(maxPosition >= 0);
-
     return maxPosition;
 }
 
 
-/***************************************************************************************************
+/***********************************************************************************************//**
  * This method checks for any remaining winnable horizontal combinations for a Player on a 
  * GameBoard. For example, consider this GameBoard, where Player A just made a move:
  *
@@ -468,7 +507,7 @@ bool Game::canPlayerWinHorizontal(const Player& p_player) const
 }
 
 
-/***************************************************************************************************
+/***********************************************************************************************//**
  * This method checks for any remaining winnable vertical combinations for a Player on a 
  * GameBoard. For example, consider this GameBoard, where Player B just made a move:
  *
@@ -567,7 +606,7 @@ bool Game::canPlayerWinVertical(const Player& p_player) const
 }
 
 
-/***************************************************************************************************
+/***********************************************************************************************//**
  * This method checks for any remaining winnable upward diagonal combinations for a Player on a 
  * GameBoard. For example, consider this GameBoard, where Player A just made a move:
  *
@@ -655,7 +694,7 @@ bool Game::canPlayerWinDiagonalUpward(const Player& p_player) const
 }
 
 
-/***************************************************************************************************
+/***********************************************************************************************//**
  * This method checks for any remaining winnable downward diagonal combinations for a Player on a 
  * GameBoard. For example, consider this GameBoard, where Player A just made a move:
  *
@@ -740,4 +779,450 @@ bool Game::canPlayerWinDiagonalDownward(const Player& p_player) const
     }
 
     return canPlayerWin;
+}
+
+
+/***********************************************************************************************//**
+ * Computes the left-most limit needed for validation.
+ *
+ * @param[in] p_validationType The type of validation.
+ *
+ * @return The index of the left-most column to consider in the validation.
+ *
+ **************************************************************************************************/
+int Game::leftValidationLimit(GridValidationType p_validationType) const
+{
+    const int lastPlayedRow{m_currentPosition.rowValue()};
+    const int lastPlayedColumn{m_currentPosition.columnValue()};
+
+    int leftSubscript{lastPlayedColumn - (m_inARow - 1)};
+    leftSubscript = std::max(leftSubscript, 0);
+
+    if(p_validationType == GridValidationType::DiagonalDownward)
+    {
+        int lowerSubscript{lastPlayedRow + (m_inARow - 1)};
+        lowerSubscript = std::min(m_gameboard->nbRows() - 1, lowerSubscript);
+
+        if(lastPlayedColumn - leftSubscript > lowerSubscript - lastPlayedRow)
+        {
+            leftSubscript = lastPlayedColumn - (lowerSubscript - lastPlayedRow);
+        }
+    }
+    else if(p_validationType == GridValidationType::DiagonalUpward)
+    {
+        int upperSubscript{lastPlayedRow - (m_inARow - 1)};
+        upperSubscript = std::max(0, upperSubscript);
+
+        if(lastPlayedColumn - leftSubscript > lastPlayedRow - upperSubscript)
+        {
+            leftSubscript = lastPlayedColumn - (lastPlayedRow - upperSubscript);
+        }
+    }
+
+    return leftSubscript;
+}
+
+
+/***********************************************************************************************//**
+ * Computes the right-most limit needed for validation.
+ *
+ * @param[in] p_validationType The type of validation.
+ *
+ * @return The index of the right-most column to consider in the validation.
+ *
+ **************************************************************************************************/
+int Game::rightValidationLimit(GridValidationType p_validationType) const
+
+{
+    const int lastPlayedRow{m_currentPosition.rowValue()};
+    const int lastPlayedColumn{m_currentPosition.columnValue()};
+
+    int rightSubscript{lastPlayedColumn + (m_inARow - 1)};
+    rightSubscript = std::min(rightSubscript, m_gameboard->nbColumns() - 1);
+
+    if(p_validationType == GridValidationType::DiagonalDownward)
+    {
+        int upperSubscript{(lastPlayedRow) - (m_inARow - 1)};
+        upperSubscript = std::max(0, upperSubscript);
+
+        if(rightSubscript - lastPlayedColumn > lastPlayedRow - upperSubscript)
+        {
+            rightSubscript = lastPlayedColumn + (lastPlayedRow - upperSubscript);
+        }
+    }
+    else if(p_validationType == GridValidationType::DiagonalUpward)
+    {
+        int lowerSubscript{lastPlayedRow + (m_inARow - 1)};
+        lowerSubscript = std::min(m_gameboard->nbRows() - 1, lowerSubscript);
+
+        if(rightSubscript - lastPlayedColumn > lowerSubscript - lastPlayedRow)
+        {
+            rightSubscript = lastPlayedColumn + (lowerSubscript - lastPlayedRow);
+        }
+    }
+
+    return rightSubscript;
+}
+
+
+/***********************************************************************************************//**
+ * Computes the upper-most limit needed for validation.
+ *
+ * @param[in] p_validationType The type of validation.
+ *
+ * @return The index of the upper-most row to consider in the validation.
+ *
+ **************************************************************************************************/
+int Game::upperValidationLimit(GridValidationType p_validationType) const
+{
+    const int lastPlayedRow{m_currentPosition.rowValue()};
+    const int lastPlayedColumn{m_currentPosition.columnValue()};
+
+    int upperSubscript{lastPlayedRow + (m_inARow - 1)};
+    upperSubscript = std::min(m_gameboard->nbRows() - 1, upperSubscript);
+
+    if(p_validationType == GridValidationType::DiagonalDownward)
+    {
+        int leftSubscript{lastPlayedColumn - (m_inARow - 1)};
+        leftSubscript = std::max(leftSubscript, 0);
+
+        if(upperSubscript - lastPlayedRow > lastPlayedColumn - leftSubscript)
+        {
+            upperSubscript = lastPlayedRow + (lastPlayedColumn - leftSubscript);
+        }
+    }
+    else if(p_validationType == GridValidationType::DiagonalUpward)
+    {
+        int rightSubscript{lastPlayedColumn + (m_inARow - 1)};
+        rightSubscript = std::min(rightSubscript, m_gameboard->nbColumns() - 1);
+
+        if(upperSubscript - lastPlayedRow > rightSubscript - lastPlayedColumn)
+        {
+            upperSubscript = lastPlayedRow + (rightSubscript - lastPlayedColumn);
+        }
+    }
+
+    return upperSubscript;
+}
+
+
+/***********************************************************************************************//**
+ * Computes the lower-most limit needed for validation.
+ *
+ * @param[in] p_validationType The type of validation.
+ *
+ * @return The index of the lower-most row to consider in the validation.
+ *
+ **************************************************************************************************/
+int Game::lowerValidationLimit(GridValidationType p_validationType) const
+{
+    const int lastPlayedRow{m_currentPosition.rowValue()};
+    const int lastPlayedColumn{m_currentPosition.columnValue()};
+
+    int lowerSubscript{lastPlayedRow - (m_inARow - 1)};
+    lowerSubscript = std::max(0, lowerSubscript);
+
+    if(p_validationType == GridValidationType::DiagonalDownward)
+    {
+        int rightSubscript{lastPlayedColumn + (m_inARow - 1)};
+        rightSubscript = std::min(rightSubscript, m_gameboard->nbColumns() - 1);
+
+        if(lastPlayedRow - lowerSubscript > rightSubscript - lastPlayedColumn)
+        {
+            lowerSubscript = lastPlayedRow - (rightSubscript - lastPlayedColumn);
+        }
+    }
+    else if(p_validationType == GridValidationType::DiagonalUpward)
+    {
+        int leftSubscript = lastPlayedColumn - (m_inARow - 1);
+        leftSubscript = std::max(leftSubscript, 0);
+
+        if(lastPlayedRow - lowerSubscript > lastPlayedColumn - leftSubscript)
+        {
+            lowerSubscript = lastPlayedRow - (lastPlayedColumn - leftSubscript);
+        }
+    }
+
+    return lowerSubscript;
+}
+
+
+/***********************************************************************************************//**
+ * Computes the number of <em> in a row </em> Positions to check.
+ *
+ * @param[in] p_minValidationLimit The minimum index to check.
+ * @param[in] p_maxValidationLimit The maximum index to check.
+ *
+ * @return The number of Positions to check.
+ *
+ **************************************************************************************************/
+int Game::nbOfValidations(int p_minValidationLimit, int p_maxValidationLimit) const
+{
+    int nbCombinationsToCheck{abs(p_maxValidationLimit - p_minValidationLimit) + 1};
+    nbCombinationsToCheck = nbCombinationsToCheck - (m_inARow - 1);
+
+    return nbCombinationsToCheck;
+}
+
+
+/***********************************************************************************************//**
+ * Computes the number of adjacent, identical Discs that are horizontally alligned from the 
+ * current Position. The bounds for the computation are determined by the GameBoard geometry 
+ * and the <em> in a row </em> value for the Game. Note that the method filters empty Discs
+ * from the computation, as Players are not allow to use them.
+ *
+ * @return The number of adjacent, identical Discs that are horizontally alligned from the current
+ *         Position.
+ *
+ **************************************************************************************************/
+int Game::horizontalNbOfAdjacentDiscs() const
+{
+
+    const int leftLimit{leftValidationLimit()};
+    const int rightLimit{rightValidationLimit()};
+    const int nbValidations{nbOfValidations(leftLimit, rightLimit)};
+
+    int pairIdenticalDiscs{0};
+    int nbIdenticalDiscs{0};
+
+    Row rowLastPlacedDisc{m_currentPosition.row()};
+
+    for(int i{leftLimit}; i < leftLimit + nbValidations; ++i)
+    {
+        for(int j{0}; j < m_inARow - 1; ++j)
+        {
+            if(((*m_gameboard)(Position{rowLastPlacedDisc, Column{i + j}}) != Disc::NO_DISC) &&
+               ((*m_gameboard)(Position{rowLastPlacedDisc, Column{i + j}}) == (*m_gameboard)(Position{rowLastPlacedDisc, Column{i + j + 1}})))
+            {
+                pairIdenticalDiscs++;
+            }
+        }
+
+        if(pairIdenticalDiscs == m_inARow - 1)
+        {
+            nbIdenticalDiscs = pairIdenticalDiscs + 1;
+
+            break;
+        }
+        else
+        {
+            pairIdenticalDiscs = 0;
+        }
+    }
+
+    return nbIdenticalDiscs;
+}
+
+
+/***********************************************************************************************//**
+ * Computes the number of adjacent, identical Discs that are vertically alligned from the 
+ * current Position. The bounds for the computation are determined by the GameBoard geometry 
+ * and the <em> in a row </em> value for the Game. Note that the method filters empty Discs
+ * from the computation, as Players are not allow to use them.
+ *
+ * @return The number of adjacent, identical Discs that are vertically alligned from the current
+ *         Position.
+ *
+ **************************************************************************************************/
+int Game::verticalNbOfAdjacentDiscs() const
+{
+    const int lowerLimit{lowerValidationLimit()};
+    const int upperLimit{upperValidationLimit()};
+    const int nbValidations{nbOfValidations(lowerLimit, upperLimit)};
+
+    int pairIdenticalDiscs{0};
+    int nbIdenticalDiscs{0};
+
+    Column columnLastPlacedDisc{m_currentPosition.column()};
+
+    for(int i{lowerLimit}; i < lowerLimit + nbValidations; ++i)
+    {
+        for(int j{0}; j < m_inARow - 1; ++j)
+        {
+            if(((*m_gameboard)(Position{Row{i + j}, columnLastPlacedDisc}) != Disc::NO_DISC) &&
+               ((*m_gameboard)(Position{Row{i + j}, columnLastPlacedDisc}) == (*m_gameboard)(Position{Row{i + j + 1}, columnLastPlacedDisc})))
+            {
+                pairIdenticalDiscs++;
+            }
+        }
+
+        if(pairIdenticalDiscs == m_inARow - 1)
+        {
+            nbIdenticalDiscs = pairIdenticalDiscs + 1;
+
+            break;
+        }
+        else
+        {
+            pairIdenticalDiscs = 0;
+        }
+    }
+
+    return nbIdenticalDiscs;
+}
+
+
+/***********************************************************************************************//**
+ * Computes the number of adjacent, identical Discs that are diagonally upward alligned from the 
+ * current Position. The bounds for the computation are determined by the GameBoard geometry 
+ * and the <em> in a row </em> value for the Game. Note that the method filters empty Discs
+ * from the computation, as Players are not allow to use them.
+ *
+ * @return The number of adjacent, identical Discs that are diagonally upward alligned from the 
+ *         current Position.
+ *
+ **************************************************************************************************/
+int Game::upwardNbOfAdjacentDiscs() const
+{
+    const int lowerLimit{lowerValidationLimit(GridValidationType::DiagonalUpward)};
+    const int leftLimit{leftValidationLimit(GridValidationType::DiagonalUpward)};
+    const int rightLimit{rightValidationLimit(GridValidationType::DiagonalUpward)};
+    const int nbValidations{nbOfValidations(leftLimit, rightLimit)};
+
+    int pairIdenticalDiscs{0};
+    int nbIdenticalDiscs{0};
+    int counter{0};
+
+    for(int i{leftLimit}; i < leftLimit + nbValidations; ++i)
+    {
+        int k{lowerLimit + counter};
+
+        for(int j{0}; j < m_inARow - 1; ++j)
+        {
+            if(((*m_gameboard)(Position{Row{k}, Column{i + j}}) != Disc::NO_DISC) &&
+               ((*m_gameboard)(Position{Row{k}, Column{i + j}}) == (*m_gameboard)(Position{Row{k + 1}, Column{i + j + 1}})))
+            {
+                pairIdenticalDiscs++;
+            }
+
+            ++k;
+        }
+
+        if(pairIdenticalDiscs == m_inARow - 1)
+        {
+            nbIdenticalDiscs = pairIdenticalDiscs + 1;
+
+            break;
+        }
+
+        pairIdenticalDiscs = 0;
+        ++counter;
+    }
+
+    return nbIdenticalDiscs;
+}
+
+
+/***********************************************************************************************//**
+ * Computes the number of adjacent, identical Discs that are diagonally downward alligned from the 
+ * current Position. The bounds for the computation are determined by the GameBoard geometry 
+ * and the <em> in a row </em> value for the Game. Note that the method filters empty Discs
+ * from the computation, as Players are not allow to use them.
+ *
+ * @return The number of adjacent, identical Discs that are diagonally downward alligned from 
+ *         the current Position.
+ *
+ **************************************************************************************************/
+int Game::downwardNbOfAdjacentDiscs() const
+{
+    const int upperLimit{upperValidationLimit(GridValidationType::DiagonalDownward)};
+    const int leftLimit{leftValidationLimit(GridValidationType::DiagonalDownward)};
+    const int rightLimit{rightValidationLimit(GridValidationType::DiagonalDownward)};
+    const int nbValidations{nbOfValidations(leftLimit, rightLimit)};
+
+    int pairIdenticalDiscs{0};
+    int nbIdenticalDiscs{0};
+    int counter{0};
+
+    for(int i{leftLimit}; i < leftLimit + nbValidations; ++i)
+    {
+        int k{upperLimit - counter};
+
+        for(int j{0}; j < m_inARow - 1; ++j)
+        {
+            if(((*m_gameboard)(Position{Row{k}, Column{i + j}}) != Disc::NO_DISC) &&
+               ((*m_gameboard)(Position{Row{k}, Column{i + j}}) == (*m_gameboard)(Position{Row{k - 1}, Column{i + j + 1}})))
+            {
+                ++pairIdenticalDiscs;
+            }
+
+            --k;
+        }
+
+        if(pairIdenticalDiscs == m_inARow - 1)
+        {
+            nbIdenticalDiscs = pairIdenticalDiscs + 1;
+
+            break;
+        }
+
+        pairIdenticalDiscs = 0;
+        ++counter;
+    }
+
+    return nbIdenticalDiscs;
+}
+
+
+/***********************************************************************************************//**
+ * Checks in the number of adjacent, horizontally aligned Discs, is equal to the required 
+ * number of adjacent Discs for a win.
+ *
+ * @return @c true if the number of adjacent, horizontally aligned Discs, is equal to the required 
+ *         number of adjacent Discs for a win, @c false otherwhise.
+ *
+ **************************************************************************************************/
+bool Game::checkHorizontalWinner() const
+{
+    const int nbAdjacentIdenticalDiscs{horizontalNbOfAdjacentDiscs()};
+
+    return nbAdjacentIdenticalDiscs == m_inARow;
+}
+
+
+/***********************************************************************************************//**
+ * Checks in the number of adjacent, vertically aligned Discs, is equal to the required 
+ * number of adjacent Discs for a win.
+ *
+ * @return @c true if the number of adjacent, vertically aligned Discs, is equal to the required 
+ *         number of adjacent Discs for a win, @c false otherwhise.
+ *
+ **************************************************************************************************/
+bool Game::checkVerticalWinner() const
+{
+    const int nbAdjacentIdenticalDiscs{verticalNbOfAdjacentDiscs()};
+
+    return nbAdjacentIdenticalDiscs == m_inARow;
+}
+
+
+/***********************************************************************************************//**
+ * Checks in the number of adjacent, diagonally upward aligned Discs, is equal to the required 
+ * number of adjacent Discs for a win.
+ *
+ * @return @c true if the number of adjacent, diagonally upward aligned Discs, is equal to the 
+ *         required number of adjacent Discs for a win, @c false otherwhise.
+ *
+ **************************************************************************************************/
+bool Game::checkUpwardWinner() const
+{
+    const int nbAdjacentIdenticalDiscs{upwardNbOfAdjacentDiscs()};
+
+    return nbAdjacentIdenticalDiscs == m_inARow;
+}
+
+
+/***********************************************************************************************//**
+ * Checks in the number of adjacent, diagonally downward aligned Discs, is equal to the required 
+ * number of adjacent Discs for a win.
+ *
+ * @return @c true if the number of adjacent, diagonally downward aligned Discs, is equal to the 
+ *         required number of adjacent Discs for a win, @c false otherwhise.
+ *
+ **************************************************************************************************/
+bool Game::checkDownwardWinner() const
+{
+    const int nbAdjacentIdenticalDiscs{downwardNbOfAdjacentDiscs()};
+
+    return nbAdjacentIdenticalDiscs == m_inARow;
 }

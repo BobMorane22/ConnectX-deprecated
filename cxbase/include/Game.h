@@ -67,6 +67,8 @@ namespace cxbase
  *
  * @invariant The current turn is always between 0 and the total numbers of Players minus one.
  *
+ * @invariant The chosen GameBoard must allow every Player to have the same number of moves 
+ *            during the Game.
  *
  **************************************************************************************************/
 class Game : public cxutil::IEnforceContract
@@ -93,6 +95,8 @@ public:
      *      in the GameBoard divided by the @a inARow value.
      * @pre @c p_inARow is bigger than two (2) and smaller than the minimum between the Grid
      *      width and length.
+     * @pre The chosen GameBoard must allow every Player to have the same number of moves 
+     *      during the Game.
      *
      **********************************************************************************************/
     Game(const std::vector<std::shared_ptr<Player>>& p_players, const std::shared_ptr<GameBoard>& p_gameboard, int p_inARow);
@@ -157,7 +161,7 @@ public:
      * @see isTie()
      *
      **********************************************************************************************/
-     bool isTie() const;
+     bool isEarlyDraw() const;
 
 
     /*******************************************************************************************//**
@@ -212,7 +216,7 @@ public:
      * @see isDraw()
      *
      **********************************************************************************************/
-    bool isWon() const {return m_gameboard->isWinner(m_currentPosition, m_inARow);}
+    bool isWon() const;
 
 
     /*****************************************************************************************//**
@@ -244,6 +248,18 @@ public:
 
 ///@}
 
+///@{ @name Predefined values
+
+    static const int CONNECT_THREE;
+    static const int CONNECT_FOUR;
+    static const int CONNECT_FIVE;
+    static const int CONNECT_SIX;
+    static const int CONNECT_SEVEN;
+    static const int CONNECT_EIGHT;
+    static const int CONNECT_NINE;
+
+///@}
+
 protected:
 
     virtual void checkInvariant() const override;
@@ -253,6 +269,8 @@ protected:
     std::shared_ptr<GameBoard>            m_gameboard;                             ///< The GameGoard used.
 
 private:
+
+    bool isPlayerInGame(const Player& p_player) const;
 
 ///@{ @name isEarlyDraw implementation
 
@@ -270,10 +288,41 @@ private:
 
 ///@}
 
-    int                                   m_inARow;                                ///< The @a inARow for the Game.
-    int                                   m_nbTurns          {0};                  ///< Total number of turns played.
-    int                                   m_turn             {0};                  ///< The current turn (first turn is 0).
-    Position                              m_currentPosition  {Row{0}, Column{0}};  ///< The Position where the active player places a Disc.
+///{ @name isWon implementation
+
+    enum class GridValidationType: int
+    {
+        Straight,
+        Horizontal,
+        Vertical,
+        Oblique,
+        DiagonalUpward,
+        DiagonalDownward
+    };
+
+    int leftValidationLimit (GridValidationType validationType = GridValidationType::Straight) const;
+    int rightValidationLimit(GridValidationType validationType = GridValidationType::Straight) const;
+    int upperValidationLimit(GridValidationType validationType = GridValidationType::Straight) const;
+    int lowerValidationLimit(GridValidationType validationType = GridValidationType::Straight) const;
+
+    int nbOfValidations(int p_minValidationLimit, int p_maxValidationLimit) const;
+
+    int horizontalNbOfAdjacentDiscs() const;
+    int verticalNbOfAdjacentDiscs  () const;
+    int upwardNbOfAdjacentDiscs    () const;
+    int downwardNbOfAdjacentDiscs  () const;
+
+    bool checkHorizontalWinner() const;
+    bool checkVerticalWinner  () const;
+    bool checkUpwardWinner    () const;
+    bool checkDownwardWinner  () const;
+
+///@}
+
+    int       m_inARow;                                ///< The @a inARow for the Game.
+    int       m_nbTurns          {0};                  ///< Total number of turns played.
+    int       m_turn             {0};                  ///< The current turn (first turn is 0).
+    Position  m_currentPosition  {Row{0}, Column{0}};  ///< The Position where the active player places a Disc.
 
 };
  
