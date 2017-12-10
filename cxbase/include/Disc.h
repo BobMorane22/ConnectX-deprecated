@@ -71,7 +71,7 @@ public:
      * be seen as the absence of a Disc.
      *
      **********************************************************************************************/
-    Disc() : m_color{Color::TRANSPARENT} {}
+    Disc() : m_color{Color::transparent()} {}
 
 
     /*******************************************************************************************//**
@@ -138,14 +138,13 @@ public:
 
 ///@{ @name Predefined Discs
 
-    static const Disc NO_DISC;
-    static const Disc WHITE_DISC;
-    static const Disc BLACK_DISC;
-
-    static const Disc GREEN_DISC;
-    static const Disc RED_DISC;
-    static const Disc YELLOW_DISC;
-    static const Disc BLUE_DISC;
+    static const Disc& noDisc();
+    static const Disc& whiteDisc();
+    static const Disc& blackDisc();
+    static const Disc& greenDisc();
+    static const Disc& redDisc();
+    static const Disc& yellowDisc();
+    static const Disc& blueDisc();
 
 ///@}
 

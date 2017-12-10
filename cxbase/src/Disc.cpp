@@ -37,16 +37,6 @@
 using namespace cxbase;
 
 
-const Disc Disc::NO_DISC        {Color::TRANSPARENT};
-const Disc Disc::WHITE_DISC     {Color::WHITE      };
-const Disc Disc::BLACK_DISC     {Color::BLACK      };
-
-const Disc Disc::GREEN_DISC     {Color::GREEN      };
-const Disc Disc::RED_DISC       {Color::RED        };
-const Disc Disc::YELLOW_DISC    {Color::YELLOW     };
-const Disc Disc::BLUE_DISC      {Color::BLUE       };
-
-
 Disc::~Disc() = default;
 
 bool Disc::operator==(const Disc& p_disc) const
@@ -68,6 +58,62 @@ bool Disc::operator==(const Disc& p_disc) const
 bool Disc::operator!=(const Disc& p_disc) const
 {
     return !(*this == p_disc);
+}
+
+
+const Disc& Disc::noDisc()
+{
+    static const Disc NO_DISC{Color::transparent()};
+
+    return NO_DISC;
+}
+
+
+const Disc& Disc::whiteDisc()
+{
+    static const Disc WHITE_DISC{Color::white()};
+
+    return WHITE_DISC;
+}
+
+
+const Disc& Disc::blackDisc()
+{
+    static const Disc BLACK_DISC{Color::black()};
+
+    return BLACK_DISC;
+}
+
+
+const Disc& Disc::greenDisc()
+{
+    static const Disc GREEN_DISC{Color::green()};
+
+    return GREEN_DISC;
+}
+
+
+const Disc& Disc::redDisc()
+{
+    static const Disc RED_DISC{Color::red()};
+
+    return RED_DISC;
+}
+
+
+const Disc& Disc::yellowDisc()
+{
+    static const Disc YELLOW_DISC{Color::yellow()};
+
+    return YELLOW_DISC;
+}
+
+
+const Disc& Disc::blueDisc()
+{
+    static const Disc BLUE_DISC{Color::blue()};
+
+    return BLUE_DISC;
 }
 
 

@@ -34,16 +34,6 @@
 using namespace cxbase;
 
 
-const Color Color::TRANSPARENT    {255, 255, 255, 0  , AsciiColorCode{' '}};
-const Color Color::WHITE          {255, 255, 255, 255, AsciiColorCode{'W'}};
-const Color Color::BLACK          {0  , 0  , 0  , 255, AsciiColorCode{'K'}};
-
-const Color Color::GREEN          {0  , 128, 0  , 255, AsciiColorCode{'G'}};
-const Color Color::RED            {255, 0  , 0  , 255, AsciiColorCode{'R'}};
-const Color Color::YELLOW         {255, 255, 0  , 255, AsciiColorCode{'Y'}};
-const Color Color::BLUE           {0  , 0  , 255, 255, AsciiColorCode{'B'}};
-
-
 Color::Color() = default;
 
 
@@ -95,6 +85,62 @@ bool Color::operator==(const Color& p_color) const
 bool Color::operator!=(const Color& p_color) const
 {
     return !(*this == p_color);
+}
+
+
+const Color& Color::transparent()
+{
+    static const Color TRANSPARENT{255, 255, 255, 0  , AsciiColorCode{' '}};
+
+    return TRANSPARENT;
+}
+
+
+const Color& Color::white()
+{
+    static const Color WHITE{255, 255, 255, 255, AsciiColorCode{'W'}};
+
+    return WHITE;
+}
+
+
+const Color& Color::black()
+{
+    static const Color BLACK{0  , 0  , 0  , 255, AsciiColorCode{'K'}};
+
+    return BLACK;
+}
+
+
+const Color& Color::green()
+{
+    static const Color GREEN{0  , 128, 0  , 255, AsciiColorCode{'G'}};
+
+    return GREEN;
+}
+
+
+const Color& Color::red()
+{
+    static const Color RED{255, 0  , 0  , 255, AsciiColorCode{'R'}};
+
+    return RED;
+}
+
+
+const Color& Color::yellow()
+{
+    static const Color YELLOW{255, 255, 0  , 255, AsciiColorCode{'Y'}};
+
+    return YELLOW;
+}
+
+
+const Color& Color::blue()
+{
+    static const Color BLUE{0  , 0  , 255, 255, AsciiColorCode{'B'}};
+
+    return BLUE;
 }
 
 

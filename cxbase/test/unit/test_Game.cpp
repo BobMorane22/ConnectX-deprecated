@@ -49,9 +49,9 @@ public:
     const int                                   NB_COLUMNS_MIN    {7 };
     const int                                   NB_ROWS_MIN       {6 };
 
-    const std::shared_ptr<Player>               FIRST_PLAYER      {std::make_shared<Player>(cxutil::Name{"First Player" } ,  Disc::BLACK_DISC ) };
-    const std::shared_ptr<Player>               SECOND_PLAYER     {std::make_shared<Player>(cxutil::Name{"Second Player"} ,  Disc::RED_DISC   ) };
-    const std::shared_ptr<Player>               THIRD_PLAYER      {std::make_shared<Player>(cxutil::Name{"Third Player" } ,  Disc::YELLOW_DISC) };
+    const std::shared_ptr<Player>               FIRST_PLAYER      {std::make_shared<Player>(cxutil::Name{"First Player" } ,  Disc::blackDisc() ) };
+    const std::shared_ptr<Player>               SECOND_PLAYER     {std::make_shared<Player>(cxutil::Name{"Second Player"} ,  Disc::redDisc()   ) };
+    const std::shared_ptr<Player>               THIRD_PLAYER      {std::make_shared<Player>(cxutil::Name{"Third Player" } ,  Disc::yellowDisc()) };
 
     const std::vector<std::shared_ptr<Player>>  TWO_PLAYERS       {FIRST_PLAYER, SECOND_PLAYER              };
     const std::vector<std::shared_ptr<Player>>  THREE_PLAYERS     {FIRST_PLAYER, SECOND_PLAYER, THIRD_PLAYER};
@@ -88,14 +88,14 @@ TEST_F(GameTests, Constructor_TooManyPlayers_ExceptionThrown)
     t_players.push_back(FIRST_PLAYER);
     t_players.push_back(SECOND_PLAYER);
     t_players.push_back(THIRD_PLAYER);
-    t_players.push_back(std::make_shared<Player>(cxutil::Name{"Fourth Player"   } ,  Disc::YELLOW_DISC));
-    t_players.push_back(std::make_shared<Player>(cxutil::Name{"Fifth Player"    } ,  Disc::YELLOW_DISC));
-    t_players.push_back(std::make_shared<Player>(cxutil::Name{"Sixth Player"    } ,  Disc::YELLOW_DISC));
-    t_players.push_back(std::make_shared<Player>(cxutil::Name{"Seventh Player"  } ,  Disc::YELLOW_DISC));
-    t_players.push_back(std::make_shared<Player>(cxutil::Name{"Eight Player"    } ,  Disc::YELLOW_DISC));
-    t_players.push_back(std::make_shared<Player>(cxutil::Name{"Ninth Player"    } ,  Disc::YELLOW_DISC));
-    t_players.push_back(std::make_shared<Player>(cxutil::Name{"Tenth Player"    } ,  Disc::YELLOW_DISC));
-    t_players.push_back(std::make_shared<Player>(cxutil::Name{"Eleventh Player" } ,  Disc::YELLOW_DISC));
+    t_players.push_back(std::make_shared<Player>(cxutil::Name{"Fourth Player"   } ,  Disc::yellowDisc()));
+    t_players.push_back(std::make_shared<Player>(cxutil::Name{"Fifth Player"    } ,  Disc::yellowDisc()));
+    t_players.push_back(std::make_shared<Player>(cxutil::Name{"Sixth Player"    } ,  Disc::yellowDisc()));
+    t_players.push_back(std::make_shared<Player>(cxutil::Name{"Seventh Player"  } ,  Disc::yellowDisc()));
+    t_players.push_back(std::make_shared<Player>(cxutil::Name{"Eight Player"    } ,  Disc::yellowDisc()));
+    t_players.push_back(std::make_shared<Player>(cxutil::Name{"Ninth Player"    } ,  Disc::yellowDisc()));
+    t_players.push_back(std::make_shared<Player>(cxutil::Name{"Tenth Player"    } ,  Disc::yellowDisc()));
+    t_players.push_back(std::make_shared<Player>(cxutil::Name{"Eleventh Player" } ,  Disc::yellowDisc()));
 
     ASSERT_THROW((Game{t_players, CLASSIC_GAMEBOARD, Game::CONNECT_FOUR}), PreconditionException);
 }
@@ -141,7 +141,7 @@ TEST_F(GameTests, Constructor_NotAllPlayersHaveSameNumberOfMoves_ExceptionThrown
     t_players.push_back(FIRST_PLAYER);
     t_players.push_back(SECOND_PLAYER);
     t_players.push_back(THIRD_PLAYER);
-    t_players.push_back(std::make_shared<Player>(cxutil::Name{"Fourth Player"}, Disc::YELLOW_DISC));
+    t_players.push_back(std::make_shared<Player>(cxutil::Name{"Fourth Player"}, Disc::yellowDisc()));
 
     ASSERT_THROW((Game{t_players, CLASSIC_GAMEBOARD, Game::CONNECT_FOUR}), PreconditionException);
 }
@@ -234,7 +234,7 @@ TEST_F(GameTests, NextTurn_ToFirstTurn_TurnIsOneActivePlayerIsTwo)
 
     t_game.nextTurn();
 
-    Player t_player{cxutil::Name{"Second Player"}, Disc::RED_DISC};
+    Player t_player{cxutil::Name{"Second Player"}, Disc::redDisc()};
 
     ASSERT_EQ(t_game.currentTurn(), 1);
     ASSERT_EQ(t_game.activePlayer(), t_player);
@@ -250,7 +250,7 @@ TEST_F(GameTests, NextTurn_AllTurns_TurnIs42ActivePlayerIsFirst)
         t_game.nextTurn(); // 42 turns for a classic GameBoard.
     }
 
-    Player t_player{cxutil::Name{"Third Player"}, Disc::YELLOW_DISC};
+    Player t_player{cxutil::Name{"Third Player"}, Disc::yellowDisc()};
 
     ASSERT_EQ(t_game.nbOfTurnsPlayed(), CLASSIC_GAMEBOARD->nbPositions() - 1);
     ASSERT_EQ(t_game.activePlayer(), t_player);

@@ -41,7 +41,7 @@ Player::~Player() = default;
 
 Player::Player(const cxutil::Name& p_name, const Disc& p_disc): m_name{p_name}, m_disc{p_disc}
 {
-    PRECONDITION(p_disc != Disc::NO_DISC);
+    PRECONDITION(p_disc != Disc::noDisc());
 
     INVARIANTS();
 }
@@ -74,5 +74,5 @@ void Player::print(std::ostream& p_stream) const
 
 void Player::checkInvariant() const
 {
-    INVARIANT(m_disc != Disc::NO_DISC);
+    INVARIANT(m_disc != Disc::noDisc());
 }

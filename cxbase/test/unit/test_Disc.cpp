@@ -42,32 +42,32 @@ using namespace cxbase;
 TEST(Disc, Constructor_Default_SetsNoColor)
 {
     Disc t_disc;
-    ASSERT_EQ(t_disc.color(), Color::TRANSPARENT);
+    ASSERT_EQ(t_disc.color(), Color::transparent());
 }
 
 TEST(Disc, Constructor_RedColor_SetsRedComponentsAndRedAsciiColorCode)
 {
-    Disc t_disc{Color::RED};
-    ASSERT_EQ(t_disc.color(), Color::RED);
+    Disc t_disc{Color::red()};
+    ASSERT_EQ(t_disc.color(), Color::red());
 }
 
 TEST(Disc, ColorAccessor_Transparent_GetsTransparent)
 {
     Disc t_disc;
-    ASSERT_EQ(t_disc.color(), Color::TRANSPARENT);
+    ASSERT_EQ(t_disc.color(), Color::transparent());
 }
 
 TEST(Disc, EqualOperator_TwoEqualDiscs_ReturnsTrue)
 {
-    Disc t_disc1{Color::RED};
-    Disc t_disc2{Color::RED};
+    Disc t_disc1{Color::red()};
+    Disc t_disc2{Color::red()};
 
     ASSERT_TRUE(t_disc1 == t_disc2);
 }
 
 TEST(Disc, EqualOperator_TwoDifferentAsciiColorCodes_ReturnsFalse)
 {
-    Color t_red1{Color::RED};
+    Color t_red1{Color::red()};
     Color t_red2{255, 0, 0, 255, AsciiColorCode{'r'}};
 
     Disc t_disc1{t_red1};
@@ -78,23 +78,23 @@ TEST(Disc, EqualOperator_TwoDifferentAsciiColorCodes_ReturnsFalse)
 
 TEST(Disc, EqualOperator_TwoDifferentColorAndAsciiColorCode_ReturnsFalse)
 {
-    Disc t_discRed   {Color::RED};
-    Disc t_discBlack {Color::BLACK};
+    Disc t_discRed   {Color::red()};
+    Disc t_discBlack {Color::black()};
 
     ASSERT_FALSE(t_discRed == t_discBlack);
 }
 
 TEST(Disc, OperatorNotEqual_TwoDifferentColorAndAsciiColorCode_ReturnTrue)
 {
-    Disc t_discRed   {Color::RED};
-    Disc t_discBlack {Color::BLACK};
+    Disc t_discRed   {Color::red()};
+    Disc t_discBlack {Color::black()};
 
     ASSERT_TRUE(t_discRed != t_discBlack);
 }
 
 TEST(Disc, OperatorNotEqual_TwoEqualColorsButDifferentASCIICode_ReturnTrue)
 {
-    Color t_red1{Color::RED};
+    Color t_red1{Color::red()};
     Color t_red2{255, 0, 0, 255, AsciiColorCode{'r'}};
 
     Disc t_disc1{t_red1};
@@ -105,8 +105,8 @@ TEST(Disc, OperatorNotEqual_TwoEqualColorsButDifferentASCIICode_ReturnTrue)
 
 TEST(Disc, OperatorNotEqual_TwoEqualDiscs_ReturnFalse)
 {
-    Disc t_disc1{Color::RED};
-    Disc t_disc2{Color::RED};
+    Disc t_disc1{Color::red()};
+    Disc t_disc2{Color::red()};
 
     ASSERT_FALSE(t_disc1 != t_disc2);
 }
@@ -116,7 +116,7 @@ TEST(Disc, StreamInsertionOperator_StandardDisc_PrintsRightString)
     std::ostringstream t_flux;
     std::ostringstream t_asciiRepresentation;
 
-    Disc t_disc{Color::RED};
+    Disc t_disc{Color::red()};
 
     t_flux << t_disc;
     t_asciiRepresentation << " " << 'R' << " ";

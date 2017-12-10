@@ -476,10 +476,10 @@ bool Game::canPlayerWinHorizontal(const Player& p_player) const
             for(int offset{0}; offset < m_inARow; ++offset)
             {
                 isPlayFree &= (*m_gameboard)(Position{Row{rowIndex}, Column{columnIndex + offset}}) == p_player.disc() ||
-                              (*m_gameboard)(Position{Row{rowIndex}, Column{columnIndex + offset}}) == Disc::NO_DISC;
+                              (*m_gameboard)(Position{Row{rowIndex}, Column{columnIndex + offset}}) == Disc::noDisc();
 
                 // If the space is free, we record it for later checks:
-                if((*m_gameboard)(Position{Row{rowIndex}, Column{columnIndex + offset}}) == Disc::NO_DISC)
+                if((*m_gameboard)(Position{Row{rowIndex}, Column{columnIndex + offset}}) == Disc::noDisc())
                 {
                     ++nbOfEmptyDiscsInRow;
                 }
@@ -579,7 +579,7 @@ bool Game::canPlayerWinVertical(const Player& p_player) const
             for(int offset{0}; offset < m_inARow; ++offset)
             {
                 isPlayFree &= (*m_gameboard)(Position{Row{rowIndex + offset}, Column{columnIndex}}) == p_player.disc() ||
-                              (*m_gameboard)(Position{Row{rowIndex + offset}, Column{columnIndex}}) == Disc::NO_DISC;
+                              (*m_gameboard)(Position{Row{rowIndex + offset}, Column{columnIndex}}) == Disc::noDisc();
             }
 
                 // The following makes sure that even though a move is seen as free, there is 
@@ -663,10 +663,10 @@ bool Game::canPlayerWinDiagonalUpward(const Player& p_player) const
             for(int offset{0}; offset < m_inARow; ++offset)
             {
                 isPlayFree &= (*m_gameboard)(Position{Row{rowIndex + offset}, Column{columnIndex + offset}}) == p_player.disc() ||
-                              (*m_gameboard)(Position{Row{rowIndex + offset}, Column{columnIndex + offset}}) == Disc::NO_DISC;
+                              (*m_gameboard)(Position{Row{rowIndex + offset}, Column{columnIndex + offset}}) == Disc::noDisc();
 
                 // If the space is free, we record it for later checks:
-                if((*m_gameboard)(Position{Row{rowIndex + offset}, Column{columnIndex + offset}}) == Disc::NO_DISC)
+                if((*m_gameboard)(Position{Row{rowIndex + offset}, Column{columnIndex + offset}}) == Disc::noDisc())
                 {
                     ++nbOfEmptyDiscsInDiagonal;
                 }
@@ -751,10 +751,10 @@ bool Game::canPlayerWinDiagonalDownward(const Player& p_player) const
             for(int offset{0}; offset < m_inARow; ++offset)
             {
                 isPlayFree &= (*m_gameboard)(Position{Row{rowIndex + offset}, Column{columnIndex - offset}}) == p_player.disc() ||
-                              (*m_gameboard)(Position{Row{rowIndex + offset}, Column{columnIndex - offset}}) == Disc::NO_DISC;
+                              (*m_gameboard)(Position{Row{rowIndex + offset}, Column{columnIndex - offset}}) == Disc::noDisc();
 
                 // If the space is free, we record it for later checks:
-                if((*m_gameboard)(Position{Row{rowIndex + offset}, Column{columnIndex - offset}}) == Disc::NO_DISC)
+                if((*m_gameboard)(Position{Row{rowIndex + offset}, Column{columnIndex - offset}}) == Disc::noDisc())
                 {
                     ++nbOfEmptyDiscsInDiagonal;
                 }
@@ -991,7 +991,7 @@ int Game::horizontalNbOfAdjacentDiscs() const
     {
         for(int j{0}; j < m_inARow - 1; ++j)
         {
-            if(((*m_gameboard)(Position{rowLastPlacedDisc, Column{i + j}}) != Disc::NO_DISC) &&
+            if(((*m_gameboard)(Position{rowLastPlacedDisc, Column{i + j}}) != Disc::noDisc()) &&
                ((*m_gameboard)(Position{rowLastPlacedDisc, Column{i + j}}) == (*m_gameboard)(Position{rowLastPlacedDisc, Column{i + j + 1}})))
             {
                 pairIdenticalDiscs++;
@@ -1039,7 +1039,7 @@ int Game::verticalNbOfAdjacentDiscs() const
     {
         for(int j{0}; j < m_inARow - 1; ++j)
         {
-            if(((*m_gameboard)(Position{Row{i + j}, columnLastPlacedDisc}) != Disc::NO_DISC) &&
+            if(((*m_gameboard)(Position{Row{i + j}, columnLastPlacedDisc}) != Disc::noDisc()) &&
                ((*m_gameboard)(Position{Row{i + j}, columnLastPlacedDisc}) == (*m_gameboard)(Position{Row{i + j + 1}, columnLastPlacedDisc})))
             {
                 pairIdenticalDiscs++;
@@ -1089,7 +1089,7 @@ int Game::upwardNbOfAdjacentDiscs() const
 
         for(int j{0}; j < m_inARow - 1; ++j)
         {
-            if(((*m_gameboard)(Position{Row{k}, Column{i + j}}) != Disc::NO_DISC) &&
+            if(((*m_gameboard)(Position{Row{k}, Column{i + j}}) != Disc::noDisc()) &&
                ((*m_gameboard)(Position{Row{k}, Column{i + j}}) == (*m_gameboard)(Position{Row{k + 1}, Column{i + j + 1}})))
             {
                 pairIdenticalDiscs++;
@@ -1140,7 +1140,7 @@ int Game::downwardNbOfAdjacentDiscs() const
 
         for(int j{0}; j < m_inARow - 1; ++j)
         {
-            if(((*m_gameboard)(Position{Row{k}, Column{i + j}}) != Disc::NO_DISC) &&
+            if(((*m_gameboard)(Position{Row{k}, Column{i + j}}) != Disc::noDisc()) &&
                ((*m_gameboard)(Position{Row{k}, Column{i + j}}) == (*m_gameboard)(Position{Row{k - 1}, Column{i + j + 1}})))
             {
                 ++pairIdenticalDiscs;

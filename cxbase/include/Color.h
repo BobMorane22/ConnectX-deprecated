@@ -102,7 +102,7 @@ public:
      * @return The Color's red component value (8 bits).
      *
      **********************************************************************************************/
-    int red() const {return m_red;}
+    int r() const {return m_red;}
 
 
     /*******************************************************************************************//**
@@ -111,7 +111,7 @@ public:
      * @return The Color's green component value (8 bits).
      *
      **********************************************************************************************/
-    int green() const {return m_green;}
+    int g() const {return m_green;}
 
 
     /*******************************************************************************************//**
@@ -120,7 +120,7 @@ public:
      * @return The Color's blue component value (8 bits).
      *
      **********************************************************************************************/
-    int blue() const {return m_blue;}
+    int b() const {return m_blue;}
 
 
     /*******************************************************************************************//**
@@ -129,7 +129,7 @@ public:
      * @return The Color's alpha component value (8 bits).
      *
      **********************************************************************************************/
-    int alpha() const {return m_alpha;}
+    int a() const {return m_alpha;}
 
 
     /*******************************************************************************************//**
@@ -173,14 +173,14 @@ public:
 
 ///@{ @name Predefined Colors
 
-    static const Color TRANSPARENT;
-    static const Color WHITE;
-    static const Color BLACK;
+    static const Color& transparent();
+    static const Color& white();
+    static const Color& black();
 
-    static const Color GREEN;
-    static const Color RED;
-    static const Color YELLOW;
-    static const Color BLUE;
+    static const Color& green();
+    static const Color& red();
+    static const Color& yellow();
+    static const Color& blue();
 
 ///@}
 
@@ -191,13 +191,13 @@ protected:
 private:
 
     // RGB definition:
-    int             m_red               {0};     ///< The Color's red component.
-    int             m_green             {0};     ///< The Color's green component.
-    int             m_blue              {0};     ///< The Color's blue component.
-    int             m_alpha             {255};   ///< The Color's alpha (opacity) component.
+    int m_red    {0};     ///< The Color's red component.
+    int m_green  {0};     ///< The Color's green component.
+    int m_blue   {0};     ///< The Color's blue component.
+    int m_alpha  {255};   ///< The Color's alpha (opacity) component.
 
     // Terminal representation:
-    AsciiColorCode      m_asciiColorCode    {'K'};
+    AsciiColorCode  m_asciiColorCode{'K'};
 
 };
 

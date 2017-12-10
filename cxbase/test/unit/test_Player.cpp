@@ -46,22 +46,22 @@ public:
 
     const cxutil::Name  NAME1     {"John Doe"};
     const cxutil::Name  NAME2     {"Johnny Doe"};
-    Player              t_player1 {NAME1, Disc::RED_DISC};
-    Player              t_player2 {NAME2, Disc::BLACK_DISC};
+    Player              t_player1 {NAME1, Disc::redDisc()};
+    Player              t_player2 {NAME2, Disc::blackDisc()};
 
 };
 
 TEST_F(PlayerTests, Constructor_TwoValidParameters_NoExceptionThrown)
 {
-    Player t_player{NAME1, Disc::RED_DISC};
+    Player t_player{NAME1, Disc::redDisc()};
 
     ASSERT_EQ(t_player.name(), NAME1);
-    ASSERT_EQ(t_player.disc(), Disc::RED_DISC);
+    ASSERT_EQ(t_player.disc(), Disc::redDisc());
 }
 
 TEST_F(PlayerTests, Constructor_NoDiscAsParameter_ExceptionThrown)
 {
-    ASSERT_THROW(Player t_player(NAME1, Disc::NO_DISC), PreconditionException);
+    ASSERT_THROW(Player t_player(NAME1, Disc::noDisc()), PreconditionException);
 }
 
 TEST_F(PlayerTests, NameAccessor_ValidPlayer_ReturnsName)
@@ -71,13 +71,13 @@ TEST_F(PlayerTests, NameAccessor_ValidPlayer_ReturnsName)
 
 TEST_F(PlayerTests, DiscAccessor_ValidPlayer_ReturnsDisc)
 {
-    ASSERT_EQ(t_player1.disc(), Disc::RED_DISC);
+    ASSERT_EQ(t_player1.disc(), Disc::redDisc());
 }
 
 TEST_F(PlayerTests, EqualOperator_TwoEqualPlayers_ReturnsTrue)
 {
     cxutil::Name sameName{NAME1};
-    Disc sameDisc{Disc::RED_DISC};
+    Disc sameDisc{Disc::redDisc()};
     Player t_player3{sameName, sameDisc};
 
     ASSERT_TRUE(t_player1 == t_player3);
@@ -90,16 +90,16 @@ TEST_F(PlayerTests, EqualOperator_TwoDifferentPlayers_ReturnsFalse)
 
 TEST_F(PlayerTests, EqualOperator_TwoEqualNamesButDifferentDiscs_ReturnsFalse)
 {
-    Player t_player3{NAME1, Disc::RED_DISC};
-    Player t_player4{NAME1, Disc::BLACK_DISC};
+    Player t_player3{NAME1, Disc::redDisc()};
+    Player t_player4{NAME1, Disc::blackDisc()};
 
     ASSERT_FALSE(t_player3 == t_player4);
 }
 
 TEST_F(PlayerTests, EqualOperator_TwoDifferentNamesButEqualDiscs_ReturnsFalse)
 {
-    Player t_player3{NAME1, Disc::RED_DISC};
-    Player t_player4{NAME2, Disc::RED_DISC};
+    Player t_player3{NAME1, Disc::redDisc()};
+    Player t_player4{NAME2, Disc::redDisc()};
 
     ASSERT_FALSE(t_player1 == t_player2);
 }
@@ -111,23 +111,23 @@ TEST_F(PlayerTests, NotEqualOperator_TwoDifferentPlayers_ReturnsTrue)
 
 TEST_F(PlayerTests, NotEqualOperator_TwoEqualNamesButDifferentDiscs_ReturnsTrue)
 {
-    Player t_player3{NAME1, Disc::RED_DISC};
-    Player t_player4{NAME1, Disc::BLACK_DISC};
+    Player t_player3{NAME1, Disc::redDisc()};
+    Player t_player4{NAME1, Disc::blackDisc()};
 
     ASSERT_TRUE(t_player3 != t_player4);
 }
 
 TEST_F(PlayerTests, NotEqualOperator_TwoDifferentNamesButEqualDiscs_ReturnsTrue)
 {
-    Player t_player3{NAME1, Disc::RED_DISC};
-    Player t_player4{NAME2, Disc::RED_DISC};
+    Player t_player3{NAME1, Disc::redDisc()};
+    Player t_player4{NAME2, Disc::redDisc()};
 
     ASSERT_TRUE(t_player3 != t_player4);
 }
 
 TEST_F(PlayerTests, NotEqualOperator_TwoEqualPlayers_ReturnsFalse)
 {
-    Player t_player3{NAME1, Disc::RED_DISC};
+    Player t_player3{NAME1, Disc::redDisc()};
 
     ASSERT_FALSE(t_player1 != t_player3);
 }

@@ -44,7 +44,7 @@ public:
     Color t_defaultColor;
 
     Color t_colorRed         {255, 0, 0, 255, AsciiColorCode{'R'}};
-    Color t_transparentColor {Color::TRANSPARENT};
+    Color t_transparentColor {Color::transparent()};
 };
 
 TEST_F(ColorTests, Constructor_Default_Black)
@@ -101,22 +101,22 @@ TEST(Color, ConstructorParam_AlphaOver255_ThrowsException)
 
 TEST_F(ColorTests, RedAccessor_Default_ReturnsRedComponent)
 {
-    ASSERT_EQ(255, t_colorRed.red());
+    ASSERT_EQ(255, t_colorRed.r());
 }
 
 TEST_F(ColorTests, GreenAccessor_Default_ReturnsGreenComponent)
 {
-    ASSERT_EQ(0, t_colorRed.green());
+    ASSERT_EQ(0, t_colorRed.g());
 }
 
 TEST_F(ColorTests, BlueAccessor_Default_ReturnsBlueComponent)
 {
-    ASSERT_EQ(0, t_colorRed.blue());
+    ASSERT_EQ(0, t_colorRed.b());
 }
 
 TEST_F(ColorTests, AlphaAccessor_Default_ReturnsAlphaComponent)
 {
-    ASSERT_EQ(255, t_colorRed.alpha());
+    ASSERT_EQ(255, t_colorRed.a());
 }
 
 TEST_F(ColorTests, AsciiColorCodeAccessor_Default_ReturnsNoColor)

@@ -49,7 +49,7 @@ GameBoard::GameBoard(): m_grid(NB_ROWS_MIN, std::vector<std::shared_ptr<Disc>>(N
     {
         for(auto& disc : row)
         {
-            if(*disc == Disc::NO_DISC)
+            if(*disc == Disc::noDisc())
             {
                 ++nbPositionsGameBoard;
             }
@@ -80,7 +80,7 @@ GameBoard::GameBoard(int p_nbRows, int p_nbColumns): m_grid(p_nbRows, std::vecto
     {
         for(auto& disc : row)
         {
-            if(*disc == Disc::NO_DISC)
+            if(*disc == Disc::noDisc())
             {
                 ++nbPositionsGameBoard;
             }
@@ -115,7 +115,7 @@ int GameBoard::nbPositions() const
 
 Position GameBoard::placeDisc(const Column& p_column, const Disc& p_disc)
 {
-    PRECONDITION(p_disc != Disc::NO_DISC);
+    PRECONDITION(p_disc != Disc::noDisc());
     PRECONDITION(p_column >= Column{0});
     PRECONDITION(p_column < Column{m_nbColumns});
 
@@ -125,7 +125,7 @@ Position GameBoard::placeDisc(const Column& p_column, const Disc& p_disc)
     {
         std::shared_ptr<Disc> currentDiscAddress{std::make_shared<Disc>((*this)(Position{Row{rowSubscript}, p_column}))};
         
-        if(*currentDiscAddress == Disc::NO_DISC)
+        if(*currentDiscAddress == Disc::noDisc())
         {
             m_grid[rowSubscript][p_column.value()] = std::make_shared<Disc>(p_disc);
             break;
@@ -152,7 +152,7 @@ bool GameBoard::isColumnFull(const Column& p_column) const
     {
         std::shared_ptr<Disc> currentDiscAddress{std::make_shared<Disc>((*this)(Position{Row{rowSubscript}, p_column}))};
     
-        if(*currentDiscAddress == Disc::NO_DISC)
+        if(*currentDiscAddress == Disc::noDisc())
         {
             isPlayable = true;
             break;
