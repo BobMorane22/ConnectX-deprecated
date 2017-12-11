@@ -246,9 +246,6 @@ bool Game::isPlayerInGame(const Player& p_player) const
  **************************************************************************************************/
 int Game::nbRemainingMoves(const Player& p_player, const int p_nbOfTurnsPlayed) const
 {
-    // Note: as of now, I assume that nextTurn() is called prior to this. nextTurn()
-    // should be encapsulated before next release to make sure the user cannot misuse it
-    // and invalidate the algorithms of this class.
     const int nbMovesLeft{m_gameboard->nbPositions() - p_nbOfTurnsPlayed};//
     const int remainingMovesQuotient{nbMovesLeft / cxutil::narrow_cast<int>(m_players.size())};
     const int remainingMovesRest{nbMovesLeft % cxutil::narrow_cast<int>(m_players.size())};
