@@ -110,7 +110,7 @@ public:
      * @return The active player.
      *
      **********************************************************************************************/
-    Player activePlayer() const {return *(m_players[m_turn]);}
+    Player activePlayer() const;
 
 
     /*******************************************************************************************//**
@@ -137,7 +137,7 @@ public:
      * @return The current number of turns played in the Game.
      *
      **********************************************************************************************/
-    int nbOfTurnsPlayed() const {return m_nbTurns;}
+    int nbOfTurnsPlayed() const {return m_nbOfCompletedMoves;}
     
 ///@}
 
@@ -174,7 +174,7 @@ public:
      * @see isTie()
      *
      **********************************************************************************************/
-    bool isDraw() const {return (m_nbTurns == m_gameboard->nbPositions());}
+    bool isDraw() const;
 
 
     /*******************************************************************************************//**
@@ -230,18 +230,6 @@ public:
     bool playTurn(const Column& p_column);
 
 
-    /*******************************************************************************************//**
-     * Updates the Game's internal data for the next turn.
-     *
-     * Update the Game's internal data to make the next turn available. This method should be
-     * called after a turn is considered done. It will, for example, increment the current turn.
-     * If this method is not called at the end of a turn, you can still fill in the GameBoard
-     * and check for a winning combination, but the Game will loose track of the current
-     * turn information.
-     *
-     **********************************************************************************************/
-    void nextTurn();
-
 ///@}
 
 ///@{ @name Predefined values
@@ -266,7 +254,10 @@ protected:
 
 private:
 
-    bool isPlayerInGame(const Player& p_player) const;
+    bool     isPlayerInGame(const Player& p_player) const;
+
+    Player   previousPlayer() const;
+    Position positionOfLastSuccessFullMove() const;
 
 ///@{ @name isEarlyDraw implementation
 
@@ -315,10 +306,11 @@ private:
 
 ///@}
 
-    int       m_inARow;                                ///< The @a inARow for the Game.
-    int       m_nbTurns          {0};                  ///< Total number of turns played.
-    int       m_turn             {0};                  ///< The current turn (first turn is 0).
-    Position  m_currentPosition  {Row{0}, Column{0}};  ///< The Position where the active player places a Disc.
+    int                   m_inARow;                       ///< The @a inARow for the Game.
+    int                   m_turn                    {0};  ///< The current turn (first turn is 0).
+    int                   m_nbOfCompletedMoves      {0};  ///< The total number of completed moves.
+    std::vector<Position> m_completedMovePositions;       ///< A list of all Positions successfully used 
+                                                          ///< by the Players to complete a move.
 
 };
  

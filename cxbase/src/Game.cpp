@@ -71,6 +71,13 @@ Game::Game(const std::vector<std::shared_ptr<Player>>& p_players, const std::sha
     INVARIANTS();
 }
 
+
+Player Game::activePlayer() const
+{
+    return *(m_players[m_turn]);
+}
+
+
 // Source: https://stackoverflow.com/questions/46921528/detect-early-tie-in-connect-4/46928055#46928055
 bool Game::isEarlyDraw() const
 {
@@ -100,13 +107,25 @@ bool Game::isEarlyDraw() const
 }
 
 
+bool Game::isDraw() const
+{
+     return m_nbOfCompletedMoves == m_gameboard->nbPositions();
+}
+
+
 bool Game::isWon() const
 {
     bool isWinner{false};
 
-    if(checkHorizontalWinner() || checkVerticalWinner() || checkUpwardWinner()|| checkDownwardWinner())
+    const int nbOfSucessfulMoves{cxutil::narrow_cast<int>(m_completedMovePositions.size())};
+    const int nbOfPlayers{cxutil::narrow_cast<int>(m_players.size())};
+
+    if(nbOfSucessfulMoves >= nbOfPlayers * (m_inARow - 1) + 1)
     {
-        isWinner = true;
+        if(checkHorizontalWinner() || checkVerticalWinner() || checkUpwardWinner()|| checkDownwardWinner())
+        {
+            isWinner = true;
+        }
     }
 
     return isWinner;
@@ -122,25 +141,23 @@ bool Game::playTurn(const Column& p_column)
 
     if(!m_gameboard->isColumnFull(p_column))
     {
-        m_currentPosition = m_gameboard->placeDisc(p_column, m_players[m_turn]->disc());
+        // The move is good, we make it:
+        Position completedMovePosition{m_gameboard->placeDisc(p_column, m_players[m_turn]->disc())};
+
+        // Then, we register its position:
+        m_completedMovePositions.push_back(completedMovePosition);
+
+        // And the number of completed moves:
+        m_nbOfCompletedMoves = cxutil::narrow_cast<int>(m_completedMovePositions.size());
+        //std::cout << m_nbOfCompletedMoves << std::endl;
+
+        // Finally, next player is up:
+        m_turn = (m_turn + 1) % cxutil::narrow_cast<int>(m_players.size());
+
         success = true;
     }
 
     return success;
-}
-
-
-void Game::nextTurn()
-{
-    // One more turn done:
-    if(m_nbTurns < m_gameboard->nbPositions())
-    {
-        m_nbTurns++;
-    }
-
-    // Next Player is up:
-    m_turn = (m_turn + 1) % cxutil::narrow_cast<int>(m_players.size()); // Cast is OK because this vector is always small.
-
 }
 
 
@@ -161,13 +178,39 @@ void Game::checkInvariant() const
     INVARIANT(m_inARow >= 2);
     INVARIANT(m_inARow < std::min(m_gameboard->nbColumns(), m_gameboard->nbRows()));
 
-    INVARIANT(m_nbTurns >= 0);
-    INVARIANT(m_nbTurns < m_gameboard->nbPositions());
+    INVARIANT(m_nbOfCompletedMoves >= 0);
+    INVARIANT(m_nbOfCompletedMoves < m_gameboard->nbPositions());
 
     INVARIANT(m_turn >= 0);
     INVARIANT(cxutil::narrow_cast<unsigned int>(m_turn) < m_players.size());
 
     INVARIANT((m_gameboard->nbColumns() * m_gameboard->nbRows()) % m_players.size() == 0);
+}
+
+
+/***********************************************************************************************//**
+ * Finds the last Player to have successfully placed a Disc in the GameBoard.
+ *
+ * @return The last Player to have successfully placed a Disc in the GameBoard.
+ *
+ **************************************************************************************************/
+Player Game::previousPlayer() const
+{
+    const int nbPlayers{cxutil::narrow_cast<int>(m_players.size())};
+
+    return *(m_players[(m_turn + (nbPlayers - 1)) % nbPlayers]);
+}
+
+
+/***********************************************************************************************//**
+ * Finds the last Position where a Disc was successfully placed in the GameBoard.
+ *
+ * @return The last Position where a Disc was successfully placed in the GameBoard.
+ *
+ **************************************************************************************************/
+Position Game::positionOfLastSuccessFullMove() const
+{
+    return m_completedMovePositions.back();
 }
 
 
@@ -792,8 +835,10 @@ bool Game::canPlayerWinDiagonalDownward(const Player& p_player) const
  **************************************************************************************************/
 int Game::leftValidationLimit(GridValidationType p_validationType) const
 {
-    const int lastPlayedRow{m_currentPosition.rowValue()};
-    const int lastPlayedColumn{m_currentPosition.columnValue()};
+    const Position lastMovePosition{positionOfLastSuccessFullMove()};
+
+    const int lastPlayedRow{lastMovePosition.rowValue()};
+    const int lastPlayedColumn{lastMovePosition.columnValue()};
 
     int leftSubscript{lastPlayedColumn - (m_inARow - 1)};
     leftSubscript = std::max(leftSubscript, 0);
@@ -834,8 +879,10 @@ int Game::leftValidationLimit(GridValidationType p_validationType) const
 int Game::rightValidationLimit(GridValidationType p_validationType) const
 
 {
-    const int lastPlayedRow{m_currentPosition.rowValue()};
-    const int lastPlayedColumn{m_currentPosition.columnValue()};
+    const Position lastMovePosition{positionOfLastSuccessFullMove()};
+
+    const int lastPlayedRow{lastMovePosition.rowValue()};
+    const int lastPlayedColumn{lastMovePosition.columnValue()};
 
     int rightSubscript{lastPlayedColumn + (m_inARow - 1)};
     rightSubscript = std::min(rightSubscript, m_gameboard->nbColumns() - 1);
@@ -875,8 +922,10 @@ int Game::rightValidationLimit(GridValidationType p_validationType) const
  **************************************************************************************************/
 int Game::upperValidationLimit(GridValidationType p_validationType) const
 {
-    const int lastPlayedRow{m_currentPosition.rowValue()};
-    const int lastPlayedColumn{m_currentPosition.columnValue()};
+    const Position lastMovePosition{positionOfLastSuccessFullMove()};
+
+    const int lastPlayedRow{lastMovePosition.rowValue()};
+    const int lastPlayedColumn{lastMovePosition.columnValue()};
 
     int upperSubscript{lastPlayedRow + (m_inARow - 1)};
     upperSubscript = std::min(m_gameboard->nbRows() - 1, upperSubscript);
@@ -916,8 +965,10 @@ int Game::upperValidationLimit(GridValidationType p_validationType) const
  **************************************************************************************************/
 int Game::lowerValidationLimit(GridValidationType p_validationType) const
 {
-    const int lastPlayedRow{m_currentPosition.rowValue()};
-    const int lastPlayedColumn{m_currentPosition.columnValue()};
+    const Position lastMovePosition{positionOfLastSuccessFullMove()};
+
+    const int lastPlayedRow{lastMovePosition.rowValue()};
+    const int lastPlayedColumn{lastMovePosition.columnValue()};
 
     int lowerSubscript{lastPlayedRow - (m_inARow - 1)};
     lowerSubscript = std::max(0, lowerSubscript);
@@ -985,7 +1036,9 @@ int Game::horizontalNbOfAdjacentDiscs() const
     int pairIdenticalDiscs{0};
     int nbIdenticalDiscs{0};
 
-    Row rowLastPlacedDisc{m_currentPosition.row()};
+    const Position lastMovePosition{positionOfLastSuccessFullMove()};
+
+    Row rowLastPlacedDisc{lastMovePosition.row()};
 
     for(int i{leftLimit}; i < leftLimit + nbValidations; ++i)
     {
@@ -1033,7 +1086,9 @@ int Game::verticalNbOfAdjacentDiscs() const
     int pairIdenticalDiscs{0};
     int nbIdenticalDiscs{0};
 
-    Column columnLastPlacedDisc{m_currentPosition.column()};
+    const Position lastMovePosition{positionOfLastSuccessFullMove()};
+
+    Column columnLastPlacedDisc{lastMovePosition.column()};
 
     for(int i{lowerLimit}; i < lowerLimit + nbValidations; ++i)
     {
