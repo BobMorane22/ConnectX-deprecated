@@ -23,16 +23,19 @@
  * @file    main.cpp
  * @author  Eric Poirier
  * @date    April 2017
- * @version 0.1
+ * @version 1.0
  *
  * Connect 4 minimal example.
  *
  **************************************************************************************************/
 
 
+///! [Minimal Connect 4 example]
+
 #include "Connect4Game.h" // Custom Game class
 
 using namespace cxbase;
+
 
 int main()
 {
@@ -49,8 +52,8 @@ int main()
     std::cout << "Second player: ";
     std::getline(std::cin, nameP2);
 
-    std::shared_ptr<Player> player1{std::make_shared<Player>(nameP1, Disc::RED_DISC)   };
-    std::shared_ptr<Player> player2{std::make_shared<Player>(nameP2, Disc::YELLOW_DISC)};
+    std::shared_ptr<Player> player1{std::make_shared<Player>(nameP1, Disc::redDisc())  };
+    std::shared_ptr<Player> player2{std::make_shared<Player>(nameP2, Disc::blackDisc())};
 
     // Create gameboard:
     std::shared_ptr<GameBoard> classicGameBoard{std::make_shared<GameBoard>()};
@@ -60,17 +63,24 @@ int main()
     Connect4Game                           game      {players, classicGameBoard, IN_A_ROW};
 
     int chosenColumn{0};
+    bool isMoveCompleted{false};
 
     // Game loop:
-    while(!game.isWon() && !game.isDraw())
+    while(!game.isWon() && !game.isEarlyDraw() && !game.isDraw())
     {
-        std::cout << "Select column to play: ";
-        std::cin  >> chosenColumn;
+        isMoveCompleted = false;
 
-        game.playTurn(Column{chosenColumn});
+        // Make a move until successfull:
+        while(!isMoveCompleted)
+        {
+            std::cout << "Select column to play: ";
+            std::cin  >> chosenColumn;
+
+            isMoveCompleted = game.makeMove(Column{chosenColumn});
+        }
+
+        // Show the board in ASCII:
         std::cout << game;
-
-        game.nextTurn();
     }
 
     // Game ending:
@@ -78,7 +88,8 @@ int main()
     {
         Player winner{game.activePlayer()};
 
-        // Active player is not the winner:
+        // Active player is not the winner, the the player that comes
+        // before him that won:
         if(*players[0] == game.activePlayer())
         {
             std::cout <<  *players[1] << " has won!" << std::endl;
@@ -90,8 +101,11 @@ int main()
     }
     else
     {
-        std::cout << "It's a tie!" << std::endl;
+        std::cout << "It's a draw!" << std::endl;
     }
 
     return 0;
 }
+
+///! [Minimal Connect 4 example]
+

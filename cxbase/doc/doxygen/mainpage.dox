@@ -45,14 +45,27 @@
  *
  * @section example Example
  *
- * "Classic Connect 4 minimal implementation" Example of an implementation to build a classic 2 
- * players Connect 4 game. First, a custom Game class:
  *
- *  @include Connect4Game.h
+ * "Classic Connect 4 minimal implementation" This is an example of an implementation to build a 
+ * classic two (2) players Connect 4 game. The @c cxbase library can be used directly to create
+ * such a game using the Game class. The reason we have created our own specialized class here is
+ * that the @c cxbase does not provide ASCII printing facilities to look at the board, which we 
+ * we would like to provide for this example. Here is the class interface:
  *
- * Then the game loop:
+ *  @snippet Connect4Game.h Custom Connect 4 class
  *
- *  @include main.cpp
+ * We can use facilities from the GameBoard class to build our stream insertion operator, like 
+ * this, for example:
+ *
+ *  @snippet Connect4Game.h Personalized ASCII printing
+ *
+ * We can now write our executable. The reader should note that only checks related to the 
+ * @c cxbase facilities (like the check for a winner) have been done here. This is because 
+ * including other checks would cloud the hearth of this example. Note, though that if you build
+ * this example with the @c NDEBUG flag disabled and enter junk as the Column to place the Disc 
+ * in, the program execution will be stopped by a @c PRECONDITION error. Here is the code:
+ *
+ *  @snippet main.cpp Minimal Connect 4 example
  *
  * This will give the following console outputs. First, when there is a winner:
  *

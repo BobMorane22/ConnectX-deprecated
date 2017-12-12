@@ -1,6 +1,6 @@
 /***************************************************************************************************
  * 
- * Copyright (C) 2016 Connect X team
+ * Copyright (C) 2017 Connect X team
  *
  * This file is part of Connect X.
  *
@@ -23,10 +23,10 @@
  * @file    Connect4Game.h
  * @author  Eric Poirier
  * @date    April 2017
- * @version 0.1
+ * @version 1.0
  *
  * Interface and implementation for a customized Connect 4 Game object. This object is a 
- * specialization of the cXbase::Game object.
+ * specialization of the cxbase::Game object.
  *
  **************************************************************************************************/
 
@@ -36,6 +36,8 @@
 #include <iostream>
 
 #include <cxbaseAPI.h>
+
+///! [Custom Connect 4 class]
 
 // Connect4Game class: needed to customize th game... 
 class Connect4Game : public cxbase::Game
@@ -48,17 +50,71 @@ public:
                  int p_inARow):
                  Game(p_players, p_gameboard, p_inARow) {}
 
-    // Stream operator specific for this particular game:
-	friend std::ostream& operator<<(std::ostream& p_flux, const Connect4Game& p_game);
+    // Stream operator to make the Game printable:
+	friend std::ostream& operator<<(std::ostream& p_stream, const Connect4Game& p_game);
 
 };
 
-std::ostream& operator<<(std::ostream& p_flux, const Connect4Game& p_game)
+///! [Custom Connect 4 class]
+
+///! [Personalized ASCII printing]
+
+std::ostream& operator<<(std::ostream& p_stream, const Connect4Game& p_game)
 {
-    // In this case, only the board is printed:
-    p_flux << *(p_game.m_gameboard) << std::endl;
-	
-	return p_flux;
+    using namespace cxbase;
+
+    std::shared_ptr<GameBoard> gameboard = p_game.m_gameboard;
+
+    int rowSubscript     {gameboard->nbRows() - 1};
+    int columnSubscript  {0};
+
+    for(int row{gameboard->nbRows() - 1}; row >= 0; --row)
+    {
+        p_stream << rowSubscript << " ";
+
+        if(rowSubscript < 10)
+            p_stream << " ";
+
+        p_stream << "|";
+
+        for(int col{0}; col < gameboard->nbColumns(); ++col)
+        {
+            if((*gameboard)(Position{Row{row}, Column{col}}) == Disc::redDisc())
+            {
+                p_stream << " R ";
+            }
+            else if((*gameboard)(Position{Row{row}, Column{col}}) == Disc::blackDisc())
+            {
+                p_stream << " B ";
+            }
+            else
+            {
+                p_stream << "   ";
+            }
+
+            p_stream << "|";
+
+            ++columnSubscript;
+        }
+
+        p_stream << std::endl;
+
+        columnSubscript = 0;
+        --rowSubscript;
+    }
+
+    p_stream << "  ";
+
+    for(int columnSubscript{0}; columnSubscript < gameboard->nbColumns(); ++columnSubscript)
+    {
+        p_stream << "   " << columnSubscript;
+    }
+
+    p_stream << std::endl;
+
+    return p_stream;
 }
+
+///! [Personalized ASCII printing]
 
 #endif /* CONNECT4GAME_H */
