@@ -23,7 +23,7 @@
  * @file    Disc.h
  * @author  Eric Poirier
  * @date    October 2016
- * @version 0.1
+ * @version 1.0
  *
  * Interface for a Disc utility.
  *

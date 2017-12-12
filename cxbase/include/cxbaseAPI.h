@@ -23,7 +23,7 @@
  * @file    cxbaseAPI.h
  * @author  Eric Poirier
  * @date    April 2017
- * @version 0.1
+ * @version 1.0
  *
  * Interface for the cxbase library public API
  *

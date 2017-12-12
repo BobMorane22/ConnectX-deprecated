@@ -40,7 +40,6 @@
 namespace cxbase
 {
 
-
 /***********************************************************************************************//**
  * @class Game
  *
@@ -52,14 +51,14 @@ namespace cxbase
  *
  * @invariant All Player addresses are valid.
  *
- * @invariant The number of players is always at least two (2) and at most the number of positions 
+ * @invariant The number of Players is always at least two (2) and at most the number of Positions 
  *            in the GameBoard divided by the @a inARow value.
  *
  * @invariant The @a inARow value must be bigger or equal to two (2) and smaller or equal to the
- *            minimum between the Grid width and length.
+ *            minimum between the grid width and length.
  *
- * @invariant The current number of turns is always between 0 (GameBoard is empty) and the total
- *            number of positions in the Grid plus one (1).
+ * @invariant The current number of completed moves is always between 0 (GameBoard is empty) and 
+ *            the total number of positions in the grid plus one (1).
  *
  * @invariant The current turn is always between 0 and the total numbers of Players minus one.
  *
@@ -74,6 +73,10 @@ public:
 
 ///@{ @name Object construction and destruction
 
+    /*******************************************************************************************//**
+     * Default destructor.
+     *
+     **********************************************************************************************/
     virtual ~Game();
 
 
@@ -86,8 +89,8 @@ public:
      *                          adjacent to consider a combination a win.
      *
      * @pre The Gameboard address passed as an argument is valid.
-     * @pre All Player addresses passed as arguments (contained in a @c std::vector)are valid.
-     * @pre The number of players is always at least two (2) and at most the number of positions 
+     * @pre All Player addresses passed as arguments (contained in a @c std::vector) are valid.
+     * @pre The number of Players is always at least two (2) and at most the number of Positions 
      *      in the GameBoard divided by the @a inARow value.
      * @pre @c p_inARow is bigger than two (2) and smaller than the minimum between the Grid
      *      width and length.
@@ -105,7 +108,7 @@ public:
     /*******************************************************************************************//**
      * Active Player accessor.
      *
-     * Gives access to the Player whose current turn it is.
+     * Gives access to the Player whose current turn it is to make a move.
      *
      * @return The active player.
      *
@@ -132,29 +135,31 @@ public:
 
 
     /*******************************************************************************************//**
-     * Number of turns accessor.
+     * Number of completed moves accessor.
      *
-     * @return The current number of turns played in the Game.
+     * @return The current number of completed moves for the Game.
      *
      **********************************************************************************************/
-    int nbOfTurnsPlayed() const {return m_nbOfCompletedMoves;}
+    int nbOfCompletedMoves() const {return m_nbOfCompletedMoves;}
     
 ///@}
 
 ///@{ @name Game utilities
 
     /*******************************************************************************************//**
-     * Checks if the Game can be considered a tie.
+     * Checks if the Game can be considered an early draw.
      *
-     * A tie occurs when, for any chosen Player, the possibility of winning the Game no longer
-     * exists. As opposed to the @c isDraw() method, which requires a GameBoard to be completely
-     * filled before deciding anything, the @c isTie() method can make a decision at any point
-     * in the Game, even if the Game is not finished yet.
+     * An early draw occurs when, for any chosen Player, the possibility of winning the Game no 
+     * longer exists. As opposed to the @c isDraw() method, which requires a GameBoard to be 
+     * completely filled with Discs before deciding anything, the @c isEarlyDraw() method can make 
+     * a decision at any point in the Game, even if the Game is not finished yet. Note that no 
+     * check is run as to wether the GameBoard is exempt of a winning combination. It is the user's 
+     * responsability to call the @c isWon() method to make sure of it.
      *
      * @return A boolean indicating if the Game will eventually be a draw.
      *
      * @see isWon()
-     * @see isTie()
+     * @see isDraw()
      *
      **********************************************************************************************/
      bool isEarlyDraw() const;
@@ -163,15 +168,15 @@ public:
     /*******************************************************************************************//**
      * Checks if a Game is a draw.
      *
-     * A Game is considered a draw if the number of turns for the Game exceeds by one (1) the
-     * total number of positions in the Grid. Note that no check is run as to wether the GameBoard
-     * is exempt of a winning combination. It is the user's responsability to call the isWon()
-     * method to make sure of it.
+     * A Game is considered a draw if the number of completed moves for the Game exceeds by one 
+     * (1) the total number of positions in the grid. Note that no check is run as to wether the 
+     * GameBoard is exempt of a winning combination. It is the user's responsability to call the 
+     * @c isWon() method to make sure of it.
      *
      * @return A boolean indicating if the Game is a draw.
      *
      * @see isWon()
-     * @see isTie()
+     * @see isEarlyDraw()
      *
      **********************************************************************************************/
     bool isDraw() const;
@@ -181,11 +186,11 @@ public:
      * Checks if a Game is won.
      *
      * A Game is considered won if it contains a @a inARow number of adjacent equal Discs. This
-     * string of equal Disc can be either horizontal, vertical or diagonal.
+     * string of equal Discs can be either horizontal, vertical or diagonal.
      *
      * This method checks, <em> for the current Position only, </em> if such a winning string of
      * adjacent Discs exists. Here is an example where a Disc with AsciiColorCode @c R,
-     * represents the current Position, i.e. the Position where the last activePlayer placed a
+     * represents the current Position, i.e. the Position where the last active Player dropped a
      * Disc. The Positions considered for the winner check by this method (other than the
      * active one) are shown with the ASCII code @c x. Note that this example uses an
      * @a inARow value of four (4).
@@ -203,44 +208,47 @@ public:
      * In other words, all Positions that are not marked by either @c R or @c x in this example are
      * not taken into account by this method.
      *
-     * Note that this method does not check for draws. It is the user's responsability to check
-     * for those using the @c isDray() method.
+     * Note that this method does not check for [early] draws. It is the user's responsability to 
+     * check for those using the @c isEarlyDraw() and @c isDraw() methods.
      *
      * @return A boolean indicating if a winning string of Discs has been found from the
      *         current Position.
      *
+     * @see isEarlyDraw()
      * @see isDraw()
      *
      **********************************************************************************************/
     bool isWon() const;
 
 
-    /*****************************************************************************************//**
-     * Plays a turn.
+    /*******************************************************************************************//**
+     * Make a move.
      *
-     * If possible, places a Disc at the specified Column, otherwise, does nothing.
+     * If possible, places a Disc at the specified Column for the active Player, otherwise, 
+     * does nothing. The active Player must try again until a successfull move occurs. Most of
+     * the time, a move will fail because the chosen Column is already full.
      *
      * @param p_column The Column where to place the active Player's Disc.
      *
-     * @pre p_column is inside the Grid.
+     * @pre p_column is inside the grid.
      *
-     * @return A boolean indicating if the Disc has been placed successfully.
+     * @return @true if the Disc has been placed successfully, @c false otherwise.
      *
      **********************************************************************************************/
-    bool playTurn(const Column& p_column);
+    bool makeMove(const Column& p_column);
 
 
 ///@}
 
 ///@{ @name Predefined values
 
-    static const int CONNECT_THREE;
-    static const int CONNECT_FOUR;
-    static const int CONNECT_FIVE;
-    static const int CONNECT_SIX;
-    static const int CONNECT_SEVEN;
-    static const int CONNECT_EIGHT;
-    static const int CONNECT_NINE;
+    static const int& connectThree();
+    static const int& connectFour();
+    static const int& connectFive();
+    static const int& connectSix();
+    static const int& connectSeven();
+    static const int& connectEight();
+    static const int& connectNine();
 
 ///@}
 
@@ -248,9 +256,12 @@ protected:
 
     virtual void checkInvariant() const override;
 
+///{ @name private data
 
-    std::vector<std::shared_ptr<Player>>  m_players;                               ///< List of Players for the Game.
-    std::shared_ptr<GameBoard>            m_gameboard;                             ///< The GameGoard used.
+    std::vector<std::shared_ptr<Player>>  m_players;    ///< List of Players for the Game.
+    std::shared_ptr<GameBoard>            m_gameboard;  ///< The GameGoard used.
+
+///}
 
 private:
 
@@ -304,13 +315,15 @@ private:
     bool checkUpwardWinner    () const;
     bool checkDownwardWinner  () const;
 
-///@}
+///{ @name private data
 
     int                   m_inARow;                       ///< The @a inARow for the Game.
     int                   m_turn                    {0};  ///< The current turn (first turn is 0).
     int                   m_nbOfCompletedMoves      {0};  ///< The total number of completed moves.
     std::vector<Position> m_completedMovePositions;       ///< A list of all Positions successfully used 
                                                           ///< by the Players to complete a move.
+
+///}
 
 };
  

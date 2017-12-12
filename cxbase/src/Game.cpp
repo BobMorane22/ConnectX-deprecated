@@ -38,15 +38,6 @@
 using namespace cxbase;
 
 
-const int Game::CONNECT_THREE  {3};
-const int Game::CONNECT_FOUR   {4};
-const int Game::CONNECT_FIVE   {5};
-const int Game::CONNECT_SIX    {6};
-const int Game::CONNECT_SEVEN  {7};
-const int Game::CONNECT_EIGHT  {8};
-const int Game::CONNECT_NINE   {9};
-
-
 Game::~Game() = default;
 
 
@@ -132,7 +123,7 @@ bool Game::isWon() const
 }
 
 
-bool Game::playTurn(const Column& p_column)
+bool Game::makeMove(const Column& p_column)
 {
     PRECONDITION(p_column.value() >= 0);
     PRECONDITION(p_column.value() < m_gameboard->nbColumns());
@@ -158,6 +149,62 @@ bool Game::playTurn(const Column& p_column)
     }
 
     return success;
+}
+
+
+const int& Game::connectThree()
+{
+    static const int CONNECT_THREE{3};
+
+    return CONNECT_THREE;
+}
+
+
+const int& Game::connectFour()
+{
+    static const int CONNECT_FOUR{4};
+
+    return CONNECT_FOUR;
+}
+
+
+const int& Game::connectFive()
+{
+    static const int CONNECT_FIVE{5};
+
+    return CONNECT_FIVE;
+}
+
+
+const int& Game::connectSix()
+{
+    static const int CONNECT_SIX{6};
+
+    return CONNECT_SIX;
+}
+
+
+const int& Game::connectSeven()
+{
+    static const int CONNECT_SEVEN{7};
+
+    return CONNECT_SEVEN;
+}
+
+
+const int& Game::connectEight()
+{
+    static const int CONNECT_EIGHT{8};
+
+    return CONNECT_EIGHT;
+}
+
+
+const int& Game::connectNine()
+{
+    static const int CONNECT_NINE{9};
+
+    return CONNECT_NINE;
 }
 
 
@@ -238,15 +285,15 @@ bool Game::isPlayerInGame(const Player& p_player) const
  *
  * @param[in] p_player          The Player which we want to know the current count of remaining
  *                              actual moves available.
- * @param[in] p_nbOfTurnsPlayed The number of moves completed at the point in the Game for which 
+ * @param[in] p_nbOfCompletedMoves The number of moves completed at the point in the Game for which 
  *                              the number of remaining moves needs to be known.
  *
  * @return The number of actual moves remaining for the Player.
  *
  **************************************************************************************************/
-int Game::nbRemainingMoves(const Player& p_player, const int p_nbOfTurnsPlayed) const
+int Game::nbRemainingMoves(const Player& p_player, const int p_nbOfCompletedMoves) const
 {
-    const int nbMovesLeft{m_gameboard->nbPositions() - p_nbOfTurnsPlayed};//
+    const int nbMovesLeft{m_gameboard->nbPositions() - p_nbOfCompletedMoves};//
     const int remainingMovesQuotient{nbMovesLeft / cxutil::narrow_cast<int>(m_players.size())};
     const int remainingMovesRest{nbMovesLeft % cxutil::narrow_cast<int>(m_players.size())};
 
@@ -320,7 +367,7 @@ int Game::nbRemainingMoves(const Player& p_player, const int p_nbOfTurnsPlayed) 
  **************************************************************************************************/
 int Game::nbRemainingMoves(const Player& p_player) const
 {
-    return nbRemainingMoves(p_player, nbOfTurnsPlayed());
+    return nbRemainingMoves(p_player, nbOfCompletedMoves());
 }
 
 
@@ -600,7 +647,7 @@ bool Game::canPlayerWinVertical(const Player& p_player) const
     {
         if(playerTurn != inspectedPlayerTurn)
         {
-            const int nbOfTurnsRemainingFromLastMove{nbOfTurnsPlayed() - nbOfMovesSinceLastPlay(*m_players[playerTurn])};
+            const int nbOfTurnsRemainingFromLastMove{nbOfCompletedMoves() - nbOfMovesSinceLastPlay(*m_players[playerTurn])};
             nbRemainingMovesOtherPlayers += nbRemainingMoves(*m_players[playerTurn], nbOfTurnsRemainingFromLastMove);
         }
     }
@@ -626,7 +673,7 @@ bool Game::canPlayerWinVertical(const Player& p_player) const
                 // enough free positions and remaining moves for the current player.
                 if(isPlayFree)
                 {
-                    const int  nbRemainingMovesTotal          {(m_gameboard->nbRows() * m_gameboard->nbColumns()) - nbOfTurnsPlayed()};
+                    const int  nbRemainingMovesTotal          {(m_gameboard->nbRows() * m_gameboard->nbColumns()) - nbOfCompletedMoves()};
                     const bool isPlayerInColumn               {isPlayerPresentInColumn(p_player, Column{columnIndex})};
                     const int  maxVerticalPositionForPlayer   {isPlayerInColumn ? maxVerticalPositionForPlayerInColumn(p_player, Column{columnIndex}): -1};
                     const int  nbRemainingMovesInOtherColumns {nbRemainingMovesTotal - (m_gameboard->nbRows() - (maxVerticalPositionForPlayer + 1))};

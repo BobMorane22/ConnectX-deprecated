@@ -23,7 +23,7 @@
  * @file    Color.h
  * @author  Eric Poirier
  * @date    April 2017
- * @version 0.2
+ * @version 1.0
  *
  * Interface for a RGBA color utility.
  *
