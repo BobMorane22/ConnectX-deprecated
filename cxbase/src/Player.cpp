@@ -23,7 +23,7 @@
  * @file    Player.cpp
  * @author  Eric Poirier
  * @date    November 2016
- * @version 0.1
+ * @version 1.0
  *
  * Implementation for a Player utility.
  *
@@ -63,12 +63,6 @@ bool Player::operator==(const Player& p_player) const
 bool Player::operator!=(const Player& p_player) const
 {
     return !(*this == p_player);
-}
-
-
-void Player::print(std::ostream& p_stream) const
-{
-    p_stream << m_name.toString();
 }
 
 

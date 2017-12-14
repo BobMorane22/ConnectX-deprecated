@@ -36,7 +36,6 @@
 #include <string>
 #include <vector>
 
-#include <cxutil/include/ICliObject.h>
 #include <cxutil/include/IEnforceContract.h>
 
 #include "Disc.h"
@@ -69,7 +68,7 @@ namespace cxbase
  * @note 3D GameBoards are not supported.
  *
  **************************************************************************************************/
-class GameBoard : public cxutil::IEnforceContract, public cxutil::ICliObject
+class GameBoard : public cxutil::IEnforceContract
 {
 
 public:
@@ -276,59 +275,6 @@ public:
 
 
 protected:
-
-    /*******************************************************************************************//**
-     * Insert text into stream.
-     *
-     * A GameBoard can be inserted into a stream to text-mode using this method. Only the grid 
-     * and its underlying Discs are printed with Row and Column numbers. The character @c "|" is 
-     * used to separate different columns.
-     *
-     * For example:
-     *
-     *   @code{.cpp}
-     *
-     *      // A classic Connect 4 board:
-     *      GameBoard   aBoard;
-     *
-     *      // Fill first Column:
-     *      aBoard.placeDisc(Column{0}, Disc::RED_DISC);
-     *      aBoard.placeDisc(Column{0}, Disc::RED_DISC);
-     *      aBoard.placeDisc(Column{0}, Disc::RED_DISC);
-     *      aBoard.placeDisc(Column{0}, Disc::RED_DISC);
-     *      aBoard.placeDisc(Column{0}, Disc::RED_DISC);
-     *      aBoard.placeDisc(Column{0}, Disc::RED_DISC);
-     *      aBoard.placeDisc(Column{0}, Disc::RED_DISC); // Oops! No effect: already full!
-     *
-     *      // Put three Discs in second:
-     *      aBoard.placeDisc(Column{1}, Disc::RED_DISC);
-     *      aBoard.placeDisc(Column{1}, Disc::RED_DISC);
-     *      aBoard.placeDisc(Column{1}, Disc::RED_DISC);
-     *
-     *      // Print it to console:
-     *      std::cout << aBoard;
-     *
-     *   @endcode
-     *
-     *   will result in the following text string inserted:
-     *
-     *     @verbatim
-     *
-     *       5 | R |   |   |   |   |   |   |
-     *       4 | R |   |   |   |   |   |   |
-     *       3 | R |   |   |   |   |   |   |
-     *       2 | R | R |   |   |   |   |   |
-     *       1 | R | R |   |   |   |   |   |
-     *       0 | R | R |   |   |   |   |   |
-     *           0   1   2   3   4   5   6
-     *
-     *     @endverbatim
-     *
-     * @param[in] p_stream        The stream in which to insert.
-     *
-     **********************************************************************************************/
-    virtual void print(std::ostream& p_stream) const override;
-
 
     virtual void checkInvariant() const override;
 

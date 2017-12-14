@@ -34,7 +34,6 @@
 
 #include <string>
 
-#include <cxutil/include/ICliObject.h>
 #include <cxutil/include/IEnforceContract.h>
 #include <cxutil/include/Name.h>
 
@@ -59,7 +58,7 @@ namespace cxbase
  * @see Disc
  *
  **************************************************************************************************/
-class Player : public cxutil::IEnforceContract, public cxutil::ICliObject
+class Player : public cxutil::IEnforceContract
 {
 
 public:
@@ -138,20 +137,11 @@ public:
 
 ///@}
 
-private:
+protected:
 
     void checkInvariant() const override;
 
-    /*******************************************************************************************//**
-     * Insert text into stream.
-     *
-     * Inserts the Player's Name into a stream.
-     *
-     * @param[in] p_stream    The stream in which to insert.
-     *
-     **********************************************************************************************/
-    virtual void print(std::ostream& p_stream) const override;
-
+private:
 
     cxutil::Name m_name;    ///< The Player's Name.
     Disc         m_disc;    ///< The Player's Disc.

@@ -33,8 +33,6 @@
 #define DISC_H_97C4FDCA_4FD8_4DB4_B111_6F80F62266FA
 
 
-#include <cxutil/include/ICliObject.h>
-
 #include "Color.h"
 
 namespace cxbase
@@ -45,12 +43,13 @@ namespace cxbase
  *
  * @brief A colored Disc object.
  *
- * A Disc can be seen as a kind of colored token. It's only data member is a Color.
+ * A Disc can be seen as a kind of colored token. It represents what Players use to make a move 
+ * on the GameBoard.
  *
  * @see Color
  *
  **************************************************************************************************/
-class Disc : public cxutil::ICliObject
+class Disc
 {
 
 public:
@@ -96,15 +95,6 @@ public:
      **********************************************************************************************/
     Color color() const {return m_color;}
 
-
-    /*******************************************************************************************//**
-     * ASCII color code accessor.
-     *
-     * @return The Disc's Color's AsciiColorCode.
-     *
-     **********************************************************************************************/
-    AsciiColorCode asciiColorCode() const {return m_color.asciiColorCode();}
-
 ///@}
 
 
@@ -114,7 +104,7 @@ public:
      * Equal-to operator.
      *
      * Two discs are compared for equality by Color. Two discs are considered equal <em> if and
-     * only if </em> both their Colors are equal and their ASCII Color code is equal.
+     * only if </em> their Colors are equal.
      *
      * @see Color::operator==().
      *
@@ -126,8 +116,7 @@ public:
      * Not-equal-to operator.
      *
      * Two discs are compared for non-equality by Color. Two discs are considered @b NOT equal
-     * <em> if and only if </em> either their Colors are @b NOT equal, or their ASCII color code
-     * (or both).
+     * <em> if and only if </em> their Colors are @b NOT equal.
      *
      * @see Color::operator!=().
      *
@@ -147,43 +136,6 @@ public:
     static const Disc& blueDisc();
 
 ///@}
-
-protected:
-
-    /*******************************************************************************************//**
-     * Text to stream.
-     *
-     * Inserts the Disc formatted in text mode into a stream. To do so, it uses the Disc Color's
-     * AsciiColorCode. It adds one space character to the left and one space character to the right
-     * of the AsciiColorCode @c char value. For example, if you define a Disc as such:
-     *
-     *  @verbatim
-     *    Disc aDisc{Color{Name{"Red"}, AsciiColorCode{'R'}}};
-     *  @endverbatim
-     *
-     * You will get the following string inserted into the stream:
-     *
-     *  @verbatim
-     *     R       // With spaces on both sides.
-     *  @endverbatim
-     *
-     * So if you write this:
-     *
-     *  @verbatim
-     *    std::cout << "|" << aDisc << "|";
-     *  @endverbatim
-     *
-     * You will see this to the console:
-     *
-     *  @verbatim
-     *    | R |
-     *  @endverbatim
-     *
-     * @param[in] p_stream  The stream in which to insert.
-     *
-     **********************************************************************************************/
-    virtual void print(std::ostream& p_stream) const override;
-
 
 private:
 

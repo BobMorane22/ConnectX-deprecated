@@ -23,7 +23,7 @@
  * @file    Disc.cpp
  * @author  Eric Poirier
  * @date    October 2016
- * @version 0.1
+ * @version 1.0
  *
  * Implementation for a Disc utility.
  *
@@ -39,16 +39,14 @@ using namespace cxbase;
 
 Disc::~Disc() = default;
 
+
 bool Disc::operator==(const Disc& p_disc) const
 {
     bool isEqual = false;
 
     if(m_color == p_disc.m_color)
     {
-        if(asciiColorCode() == p_disc.asciiColorCode())
-        {
-            isEqual = true;
-        }
+        isEqual = true;
     }
 
     return isEqual;
@@ -116,8 +114,3 @@ const Disc& Disc::blueDisc()
     return BLUE_DISC;
 }
 
-
-void Disc::print(std::ostream& p_stream) const
-{
-    p_stream << " " << asciiColorCode() << " ";
-}

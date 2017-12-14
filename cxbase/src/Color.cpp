@@ -23,7 +23,7 @@
  * @file    Color.cpp
  * @author  Eric Poirier
  * @date    April 2017
- * @version 0.2
+ * @version 1.0
  *
  * Implementation for a color utility.
  *
@@ -37,14 +37,7 @@ using namespace cxbase;
 Color::Color() = default;
 
 
-Color::Color(int p_red,  int p_green,
-             int p_blue, int p_alpha,
-             AsciiColorCode p_asciiColorCode) :
-                                               m_red{p_red},
-                                               m_green{p_green},
-                                               m_blue{p_blue},
-                                               m_alpha{p_alpha},
-                                               m_asciiColorCode{p_asciiColorCode}
+Color::Color(int p_red,  int p_green, int p_blue, int p_alpha) : m_red{p_red}, m_green{p_green}, m_blue{p_blue}, m_alpha{p_alpha}
 {
     PRECONDITION(p_red   >= 0);
     PRECONDITION(p_green >= 0);
@@ -90,7 +83,7 @@ bool Color::operator!=(const Color& p_color) const
 
 const Color& Color::transparent()
 {
-    static const Color TRANSPARENT{255, 255, 255, 0  , AsciiColorCode{' '}};
+    static const Color TRANSPARENT{255, 255, 255, 0};
 
     return TRANSPARENT;
 }
@@ -98,7 +91,7 @@ const Color& Color::transparent()
 
 const Color& Color::white()
 {
-    static const Color WHITE{255, 255, 255, 255, AsciiColorCode{'W'}};
+    static const Color WHITE{255, 255, 255, 255};
 
     return WHITE;
 }
@@ -106,7 +99,7 @@ const Color& Color::white()
 
 const Color& Color::black()
 {
-    static const Color BLACK{0  , 0  , 0  , 255, AsciiColorCode{'K'}};
+    static const Color BLACK{0  , 0  , 0  , 255};
 
     return BLACK;
 }
@@ -114,7 +107,7 @@ const Color& Color::black()
 
 const Color& Color::green()
 {
-    static const Color GREEN{0  , 128, 0  , 255, AsciiColorCode{'G'}};
+    static const Color GREEN{0  , 128, 0  , 255};
 
     return GREEN;
 }
@@ -122,7 +115,7 @@ const Color& Color::green()
 
 const Color& Color::red()
 {
-    static const Color RED{255, 0  , 0  , 255, AsciiColorCode{'R'}};
+    static const Color RED{255, 0  , 0  , 255};
 
     return RED;
 }
@@ -130,7 +123,7 @@ const Color& Color::red()
 
 const Color& Color::yellow()
 {
-    static const Color YELLOW{255, 255, 0  , 255, AsciiColorCode{'Y'}};
+    static const Color YELLOW{255, 255, 0  , 255};
 
     return YELLOW;
 }
@@ -138,7 +131,7 @@ const Color& Color::yellow()
 
 const Color& Color::blue()
 {
-    static const Color BLUE{0  , 0  , 255, 255, AsciiColorCode{'B'}};
+    static const Color BLUE{0  , 0  , 255, 255};
 
     return BLUE;
 }

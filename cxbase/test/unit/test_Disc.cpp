@@ -23,7 +23,7 @@
  * @file    test_Disc.cpp
  * @author  Eric Poirier
  * @date    October 2016
- * @version 0.1
+ * @version 1.0
  *
  * Unit tests for a the Disc class.
  *
@@ -45,17 +45,20 @@ TEST(Disc, Constructor_Default_SetsNoColor)
     ASSERT_EQ(t_disc.color(), Color::transparent());
 }
 
-TEST(Disc, Constructor_RedColor_SetsRedComponentsAndRedAsciiColorCode)
+
+TEST(Disc, Constructor_RedColor_SetsRedComponents)
 {
     Disc t_disc{Color::red()};
     ASSERT_EQ(t_disc.color(), Color::red());
 }
+
 
 TEST(Disc, ColorAccessor_Transparent_GetsTransparent)
 {
     Disc t_disc;
     ASSERT_EQ(t_disc.color(), Color::transparent());
 }
+
 
 TEST(Disc, EqualOperator_TwoEqualDiscs_ReturnsTrue)
 {
@@ -65,43 +68,6 @@ TEST(Disc, EqualOperator_TwoEqualDiscs_ReturnsTrue)
     ASSERT_TRUE(t_disc1 == t_disc2);
 }
 
-TEST(Disc, EqualOperator_TwoDifferentAsciiColorCodes_ReturnsFalse)
-{
-    Color t_red1{Color::red()};
-    Color t_red2{255, 0, 0, 255, AsciiColorCode{'r'}};
-
-    Disc t_disc1{t_red1};
-    Disc t_disc2{t_red2};
-
-    ASSERT_FALSE(t_disc1 == t_disc2);
-}
-
-TEST(Disc, EqualOperator_TwoDifferentColorAndAsciiColorCode_ReturnsFalse)
-{
-    Disc t_discRed   {Color::red()};
-    Disc t_discBlack {Color::black()};
-
-    ASSERT_FALSE(t_discRed == t_discBlack);
-}
-
-TEST(Disc, OperatorNotEqual_TwoDifferentColorAndAsciiColorCode_ReturnTrue)
-{
-    Disc t_discRed   {Color::red()};
-    Disc t_discBlack {Color::black()};
-
-    ASSERT_TRUE(t_discRed != t_discBlack);
-}
-
-TEST(Disc, OperatorNotEqual_TwoEqualColorsButDifferentASCIICode_ReturnTrue)
-{
-    Color t_red1{Color::red()};
-    Color t_red2{255, 0, 0, 255, AsciiColorCode{'r'}};
-
-    Disc t_disc1{t_red1};
-    Disc t_disc2{t_red2};
-
-    ASSERT_TRUE(t_disc1 != t_disc2);
-}
 
 TEST(Disc, OperatorNotEqual_TwoEqualDiscs_ReturnFalse)
 {
@@ -111,15 +77,3 @@ TEST(Disc, OperatorNotEqual_TwoEqualDiscs_ReturnFalse)
     ASSERT_FALSE(t_disc1 != t_disc2);
 }
 
-TEST(Disc, StreamInsertionOperator_StandardDisc_PrintsRightString)
-{
-    std::ostringstream t_flux;
-    std::ostringstream t_asciiRepresentation;
-
-    Disc t_disc{Color::red()};
-
-    t_flux << t_disc;
-    t_asciiRepresentation << " " << 'R' << " ";
-
-    ASSERT_EQ(t_flux.str(), t_asciiRepresentation.str());
-}

@@ -28,15 +28,13 @@ LIBINCLUDES  = -L$(CX_BUILD_ROOT)/connectx/libs
 VPATH        = unit
 
 SRCS      = cxbaseTest.cpp          \
-            test_AsciiColorCode.cpp \
             test_Color.cpp          \
             test_Disc.cpp           \
             test_Player.cpp         \
             test_GameBoard.cpp      \
             test_Game.cpp
 
-OBJS      = test_AsciiColorCode.o \
-            test_Color.o          \
+OBJS      = test_Color.o          \
             test_Disc.o           \
             test_Player.o         \
             test_GameBoard.o      \

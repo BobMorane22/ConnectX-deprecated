@@ -34,24 +34,21 @@
 
 #include <cxutil/include/IEnforceContract.h>
 
-#include "AsciiColorCode.h"
-
 
 namespace cxbase
 {
-
 
 /***********************************************************************************************//**
  * @class Color
  *
  * @brief An HTML compliant color class.
  *
- * A Color object is composed of 32 bits defining its position on the RGBA spectrum and an
- * AsciiColorCode (optional) to display in text mode. Of the 32 bits, 8 are for the red component,
- * 8 are for the green component, 8 are for the blue component and 8 are for the alpha component,
- * which defines opacity. The absence of color is reesented as the Color object for which all four 
- * RGBA components are set to 0. See https://www.w3schools.com/colors/colors_hex.asp for more 
- * information.
+ * A Color object is composed of 32 bits defining its position on the RGBA spectrum. Of the 32 
+ * bits, 8 are for the red component, 8 are for the green component, 8 are for the blue component 
+ * and 8 are for the alpha component, which defines opacity. The absence of color is reesented as 
+ * the Color object for which all four RGBA components are set to 0. 
+ * 
+ * See https://www.w3schools.com/colors/colors_hex.asp for more information.
  *
  * @invariant All RBGA values are set between 0 and 255 inclusively.
  *
@@ -65,11 +62,10 @@ public:
 
 ///@{ @name Object construction and destruction
 
-
     /*******************************************************************************************//**
      * Default constructor.
      *
-     * Constructs a black color with complete opacity. The AsciiColorCode is a space (' ').
+     * Constructs a black color with complete opacity.
      *
      **********************************************************************************************/
     Color();
@@ -82,10 +78,9 @@ public:
      * @param[in] p_green           The green component.
      * @param[in] p_blue            The blue component.
      * @param[in] p_alpha           The alpha (opacity) component.
-     * @param[in] p_asciiColorCode  The Color's AsciiColorCode.
      *
      **********************************************************************************************/
-    Color(int p_red, int p_green, int p_blue, int p_alpha, AsciiColorCode p_asciiColorCode);
+    Color(int p_red, int p_green, int p_blue, int p_alpha);
 
 
     /*******************************************************************************************//**
@@ -93,6 +88,7 @@ public:
      *
      **********************************************************************************************/
     ~Color();
+
 
 ///@{ @name Data access
 
@@ -131,19 +127,11 @@ public:
      **********************************************************************************************/
     int a() const {return m_alpha;}
 
-
-    /*******************************************************************************************//**
-     * AsciiColorCode accessor.
-     *
-     * @return The Color's asciiColorCode.
-     *
-     **********************************************************************************************/
-    AsciiColorCode asciiColorCode() const {return m_asciiColorCode;}
-
 ///@}
 
 
 ///@{ @name Operators
+
     /*******************************************************************************************//**
      * Equal-to operator.
      *
@@ -190,14 +178,10 @@ protected:
 
 private:
 
-    // RGB definition:
     int m_red    {0};     ///< The Color's red component.
     int m_green  {0};     ///< The Color's green component.
     int m_blue   {0};     ///< The Color's blue component.
     int m_alpha  {255};   ///< The Color's alpha (opacity) component.
-
-    // Terminal representation:
-    AsciiColorCode  m_asciiColorCode{'K'};
 
 };
 

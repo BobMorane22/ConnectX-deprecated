@@ -31,8 +31,7 @@ LIBS_INCLUDE = -static -L$(LIBS_OUT)
 INCLUDES     = -I$(MAKEFILE_LOC)/src -I$(MAKEFILE_LOC)/include -I$(CX_SRC_ROOT)
 VPATH        = src
 
-SRCS     = AsciiColorCode.cpp\
-           Color.cpp\
+SRCS     = Color.cpp\
            Disc.cpp\
            Game.cpp\
            GameBoard.cpp\
@@ -40,8 +39,7 @@ SRCS     = AsciiColorCode.cpp\
            Position.cpp
            
 
-OBJS     = $(OBJ_DIR)/AsciiColorCode.o\
-           $(OBJ_DIR)/Color.o\
+OBJS     = $(OBJ_DIR)/Color.o\
            $(OBJ_DIR)/Disc.o\
            $(OBJ_DIR)/Game.o\
            $(OBJ_DIR)/GameBoard.o\

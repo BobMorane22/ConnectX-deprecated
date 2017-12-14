@@ -23,7 +23,7 @@
  * @file    test_Player.cpp
  * @author  Eric Poirier
  * @date    November 2016
- * @version 0.1
+ * @version 1.0
  *
  * Unit tests for a the Player class.
  *
@@ -132,11 +132,3 @@ TEST_F(PlayerTests, NotEqualOperator_TwoEqualPlayers_ReturnsFalse)
     ASSERT_FALSE(t_player1 != t_player3);
 }
 
-TEST_F(PlayerTests, StreamInsertionOperator_ValidPlayerAsParameter_InsertsName)
-{
-    std::ostringstream flux;
-
-    flux << t_player1;
-
-    ASSERT_EQ(flux.str(), "John Doe");
-}
