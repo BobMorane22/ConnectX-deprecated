@@ -12,11 +12,11 @@
 #
 #   2. Moving to the directory containing the script 'software.sh'.
 #
-#   2. Giving execution rights to the file (requires root privileges):
+#   3. Giving execution rights to the file (requires root privileges):
 #
 #        >> sudo chmod +x softwares.sh
 #
-#   3. Running the script:
+#   4. Running the script:
 #
 #        >> sudo ./software.sh
 #
