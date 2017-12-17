@@ -21,10 +21,10 @@ CPPFLAGS = $(OPT_FLAGS) $(DEBUG_FLAGS) $(STANDARD_FLAGS) \
            $(WARN_AS_ERRORS_FLAGS)
 
 # Source files, headers, etc.:
-OBJ_DIR      = $(CX_BUILD_ROOT)/tests/unit
-OUT_DIR      = $(CX_BUILD_ROOT)/tests/unit
-INCLUDES     = -I$(CX_SRC_ROOT)/cxbase -I$(CX_SRC_ROOT)
-LIBINCLUDES  = -L$(CX_BUILD_ROOT)/connectx/libs
+OBJ_DIR      = $(BIN_ROOT)/tests/unit
+OUT_DIR      = $(BIN_ROOT)/tests/unit
+INCLUDES     = -I$(SRC_ROOT)/cxbase -I$(SRC_ROOT)
+LIBINCLUDES  = -L$(BIN_ROOT)/connectx/libs
 VPATH        = unit
 
 SRCS      = cxbaseTest.cpp          \

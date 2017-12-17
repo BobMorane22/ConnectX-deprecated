@@ -23,12 +23,12 @@ CPPFLAGS             = $(OPT_FLAGS) $(DEBUG_FLAGS) $(NO_LINKER_FLAGS) $(STANDARD
                        $(WARN_AS_ERRORS_FLAGS)
 
 # Source files, headers, etc.:
-MAKEFILE_LOC = $(CX_SRC_ROOT)/cxbase
-OBJ_DIR      = $(CX_BUILD_ROOT)/connectx
-OUT_DIR      = $(CX_BUILD_ROOT)/connectx
-LIBS_OUT     = $(CX_BUILD_ROOT)/connectx/libs
+MAKEFILE_LOC = $(SRC_ROOT)/cxbase
+OBJ_DIR      = $(BIN_ROOT)/connectx
+OUT_DIR      = $(BIN_ROOT)/connectx
+LIBS_OUT     = $(BIN_ROOT)/connectx/libs
 LIBS_INCLUDE = -static -L$(LIBS_OUT)
-INCLUDES     = -I$(MAKEFILE_LOC)/src -I$(MAKEFILE_LOC)/include -I$(CX_SRC_ROOT)
+INCLUDES     = -I$(MAKEFILE_LOC)/src -I$(MAKEFILE_LOC)/include -I$(SRC_ROOT)
 VPATH        = src
 
 SRCS     = Color.cpp\

@@ -15,7 +15,7 @@
 #
 #--------------------------------------------------------------------------------------------------#
 
-MAKEFILE_LOC = $(CX_SRC_ROOT)/cxbase/doc
+MAKEFILE_LOC = $(SRC_ROOT)/cxbase/doc
 
 # Doxygen:
 DOXYDIR  = $(MAKEFILE_LOC)/doxygen

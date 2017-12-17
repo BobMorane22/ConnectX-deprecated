@@ -12,9 +12,8 @@
 
 # File location:
 # --------------------------------------------------------------------------------------------------
-export SRC_ROOT = /home/morane/Programming/cpp/ConnectX
-export BIN_ROOT = /home/morane/Programming/cpp/bin
-
+export SRC_ROOT = # Insert your own source directory here
+export BIN_ROOT = # Insert your own build directory here
 
 # Compilation:
 # --------------------------------------------------------------------------------------------------
@@ -26,7 +25,7 @@ ifdef NDEBUG
 	export OPT_FLAGS            = -O0
 else
 	export DEBUG_FLAGS          = -g3
-	export OPT_FLAGS            =
+	export OPT_FLAGS            = 
 endif
 
 export NO_LINKER_FLAGS      = -c
@@ -35,18 +34,16 @@ export WARN_AS_ERRORS_FLAGS = -pedantic-errors\
                               -Wextra\
                               -Werror\
                               -Wconversion
-
-
+  
 # Shell:
 # --------------------------------------------------------------------------------------------------
 
 export SHELL := /bin/bash
 
-
+       
 # Cleaning:
 # --------------------------------------------------------------------------------------------------
 export RM = rm -fd
-
 
 # Google tests:
 #---------------------------------------------------------------------------------------------------

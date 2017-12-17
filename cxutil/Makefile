@@ -23,10 +23,10 @@ CPPFLAGS             = $(OPT_FLAGS) $(DEBUG_FLAGS) $(NO_LINKER_FLAGS) $(STANDARD
                        $(WARN_AS_ERRORS_FLAGS)
 
 # Source files, headers, etc.:
-MAKEFILE_LOC = $(CX_SRC_ROOT)/cxutil
-OBJ_DIR      = $(CX_BUILD_ROOT)/connectx
-OUT_DIR      = $(CX_BUILD_ROOT)/connectx
-LIBS_OUT     = $(CX_BUILD_ROOT)/connectx/libs
+MAKEFILE_LOC = $(SRC_ROOT)/cxutil
+OBJ_DIR      = $(BIN_ROOT)/connectx
+OUT_DIR      = $(BIN_ROOT)/connectx
+LIBS_OUT     = $(BIN_ROOT)/connectx/libs
 INCLUDES     = -I$(MAKEFILE_LOC)/src -I$(MAKEFILE_LOC)/include
 VPATH        = src
 
