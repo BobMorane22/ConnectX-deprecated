@@ -2,7 +2,7 @@
 #coding=utf-8
 
 #***************************************************************************************************
- # 
+ #
  # Copyright (C) 2016 Connect X team
  #
  # This file is part of Connect X.
@@ -59,29 +59,29 @@ ERROR_DOXYINTRO_NOT_CREATED          = 10
 # Classes:
 class HeaderInformation:
     """
-    Utility data structure holding information about comments' 
+    Utility data structure holding information about comments'
     headers.
-    
+
     Members:
-        userName: The username as defined by the USER environment 
+        userName: The username as defined by the USER environment
                   variable (*NIX systems).
-        date:     The date at which the structure is constructed in 
+        date:     The date at which the structure is constructed in
                   the form \"Month, AAAA\".
     """
 
     def __init__(self):
         """
         Data structure constructor.
-        
+
         Args:
             self: The data structure about to be constructed.
         """
         self.userName = getpass.getuser()
-        
+
         year  = datetime.datetime.now().year
         month = time.strftime("%B")
         date  = month + ", " + str(year)
-        
+
         self.date = date
 
 
@@ -221,13 +221,13 @@ def generateLibraryMakefile(p_path, p_libName, p_headerInfo):
 
     makefile.write("# Compiler:\n"                                                                                           )
     makefile.write("CPPFLAGS             = $(OPT_FLAGS) $(DEBUG_FLAGS) $(NO_LINKER_FLAGS) $(STANDARD_FLAGS) \\\n"            )
-    makefile.write("                       $(WARN_AS_ERRORS_FLAGS)\n\n"                                                                          )
+    makefile.write("                       $(WARN_AS_ERRORS_FLAGS)\n\n"                                                      )
 
     makefile.write("# Source files, headers, etc.:\n"                                                                        )
-    makefile.write("MAKEFILE_LOC = $(CX_SRC_ROOT)/" + p_libName + "\n"                                                       )
-    makefile.write("OBJ_DIR      = $(CX_BUILD_ROOT)/connectx\n"                                                              )
-    makefile.write("OUT_DIR      = $(CX_BUILD_ROOT)/connectx\n"                                                              )
-    makefile.write("LIBS_OUT     = $(CX_BUILD_ROOT)/connectx/libs\n"                                                         )
+    makefile.write("MAKEFILE_LOC = $(SRC_ROOT)/" + p_libName + "\n"                                                          )
+    makefile.write("OBJ_DIR      = $(BIN_ROOT)/connectx\n"                                                                   )
+    makefile.write("OUT_DIR      = $(BIN_ROOT)/connectx\n"                                                                   )
+    makefile.write("LIBS_OUT     = $(BIN_ROOT)/connectx/libs\n"                                                              )
     makefile.write("INCLUDES     = -I$(MAKEFILE_LOC)/src -I$(MAKEFILE_LOC)/include\n"                                        )
     makefile.write("VPATH        = src\n\n"                                                                                  )
 
@@ -286,7 +286,7 @@ def generateTestMakefile(p_path, p_libName, p_headerInfo):
     """
     Generates the Makefile necessary to build the library's unit tests 
     executable.
-    
+
     Args:
         p_path:     The path on disc where to create the structure.
         p_libName:  The name of the library (in lowercase).
@@ -318,10 +318,10 @@ def generateTestMakefile(p_path, p_libName, p_headerInfo):
     makefile.write("           $(WARN_AS_ERRORS_FLAGS)\n\n"                                                                  )
 
     makefile.write("# Source files, headers, etc.:\n"                                                                        )
-    makefile.write("OBJ_DIR      = $(CX_BUILD_ROOT)/tests/unit\n"                                                            )
-    makefile.write("OUT_DIR      = $(CX_BUILD_ROOT)/tests/unit\n"                                                            )
-    makefile.write("INCLUDES     = -I$(CX_SRC_ROOT)/" + p_libName + "\n"                                                     )
-    makefile.write("LIBINCLUDES  = -L$(CX_BUILD_ROOT)/connectx/libs\n"                                                       )
+    makefile.write("OBJ_DIR      = $(BIN_ROOT)/tests/unit\n"                                                            )
+    makefile.write("OUT_DIR      = $(BIN_ROOT)/tests/unit\n"                                                            )
+    makefile.write("INCLUDES     = -I$(SRC_ROOT)/" + p_libName + "\n"                                                     )
+    makefile.write("LIBINCLUDES  = -L$(BIN_ROOT)/connectx/libs\n"                                                       )
     makefile.write("VPATH        = unit\n\n"                                                                                )
 
     makefile.write("SRCS      = " + p_libName + "Test.cpp\\\n\n"                                                            )
@@ -411,11 +411,11 @@ def generateDoxygenMakefile(p_path, p_libName, p_headerInfo):
     makefile.write("#\n"                                                                                                   )
     makefile.write("#--------------------------------------------------------------------------------------------------#\n\n")
 
-    makefile.write("MAKEFILE_LOC = $(CX_SRC_ROOT)/" + p_libName + "/doc\n\n"                                               )
+    makefile.write("MAKEFILE_LOC = $(SRC_ROOT)/" + p_libName + "/doc\n\n"                                                  )
 
     makefile.write("# Doxygen:\n"                                                                                          )
     makefile.write("DOXYDIR  = $(MAKEFILE_LOC)/doxygen\n"                                                                  )
-    makefile.write("DOXYFILE = $(DOXYDIR)/Doxyfile\n\n"                                                             )
+    makefile.write("DOXYFILE = $(DOXYDIR)/Doxyfile\n\n"                                                                    )
 
     makefile.write(".PHONY: doxygen clean\n\n"                                                                             )
 
@@ -430,7 +430,7 @@ def generateDoxygenMakefile(p_path, p_libName, p_headerInfo):
     makefile.write("\t@echo Deleting Doxygen documentation...\n"                                                           )
     makefile.write("\t$(RM) -r $(DOXYDIR)/html\n"                                                                          )
     makefile.write("\t@echo Doxygen documentation deleted!\n\n"                                                            )
-    
+
     makefile.close()
 
     if not os.path.exists(makefilePath):
@@ -441,9 +441,9 @@ def generateDoxygenMakefile(p_path, p_libName, p_headerInfo):
 
 def generateMakefiles(p_path, p_libName, p_headerInfo):
     """
-    Generates all required Makefiles required to build the library and 
+    Generates all required Makefiles required to build the library and
     its documentation.
-    
+
     Args:
         p_path:     The path on disc where to create the library structure.
         p_libName:  The name of the library (in lowercase).
@@ -459,14 +459,14 @@ def generateUnitTestMain(p_path, p_libName):
     """
     Generates the file for the library unit tests which contains
     the main() function.
-    
+
     Args:
         p_path:     The path on disc where to create the library structure.
         p_libName:  The name of the library (in lowercase).
     """
 
     testFilePath = p_path + p_libName + "/test/" + p_libName + "Test.cpp"
-    
+
     testFile = open(testFilePath, "w+")
 
     # Populate the file:

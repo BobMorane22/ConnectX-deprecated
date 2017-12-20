@@ -29,7 +29,7 @@
 
 include init.mk
 
-TESTS_RUNNER            = $(SRC_ROOT)/cxPythonTools/RunUnitTests.py
+TESTS_RUNNER            = $(SRC_ROOT)/cxscripts/python/RunUnitTests.py
 
 CXUTIL_UNIT_TESTS_EXEC  = -t $(BIN_ROOT)/tests/unit/cxutilTest.out
 CXBASE_UNIT_TESTS_EXEC  = -t $(BIN_ROOT)/tests/unit/cxbaseTest.out

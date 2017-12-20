@@ -17,18 +17,18 @@
 #--------------------------------------------------------------------------------------------------#
 
 
-include $(CX_SRC_ROOT)/init.mk
+include ../../../../init.mk
 
 CPPFLAGS = $(OPT_FLAGS) $(DEBUG_FLAGS) $(STANDARD_FLAGS) \
            $(WARN_AS_ERRORS_FLAGS)
 
 # Source files, headers, etc.:
-MAKEFILE_LOC = $(CX_SRC_ROOT)/cxbase/doc/doxygen/examples
-OBJ_DIR      = $(CX_SRC_ROOT)/cxbase/doc/doxygen/examples/out
-OUT_DIR      = $(CX_SRC_ROOT)/cxbase/doc/doxygen/examples/out
-INCLUDES     = -I$(CX_SRC_ROOT)/cxbase/include\
-               -I$(CX_SRC_ROOT)
-LIBINCLUDES  = -L$(CX_BUILD_ROOT)/connectx/libs
+MAKEFILE_LOC = $(SRC_ROOT)/cxbase/doc/doxygen/examples
+OBJ_DIR      = $(SRC_ROOT)/cxbase/doc/doxygen/examples/out
+OUT_DIR      = $(SRC_ROOT)/cxbase/doc/doxygen/examples/out
+INCLUDES     = -I$(SRC_ROOT)/cxbase/include\
+               -I$(SRC_ROOT)
+LIBINCLUDES  = -L$(BIN_ROOT)/connectx/libs
 VPATH        = examples
 
 SRCS      = main.cpp

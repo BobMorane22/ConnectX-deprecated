@@ -123,7 +123,7 @@ public:
 
 private:
 
-    std::list<IObserver* const> m_observers; ///< A collection of all registered observers.
+    std::list<IObserver*> m_observers; ///< A collection of all registered observers.
 };
 
 } // namespace cxutil

@@ -92,11 +92,11 @@ int main()
         // before him that won:
         if(*players[0] == game.activePlayer())
         {
-            std::cout <<  *players[1] << " has won!" << std::endl;
+            std::cout << players[1]->name().toString() << " has won!" << std::endl;
         }
         else
         {
-            std::cout << *players[0] << " has won!" << std::endl;
+            std::cout << players[0]->name().toString() << " has won!" << std::endl;
         }
     }
     else

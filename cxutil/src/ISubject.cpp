@@ -40,7 +40,7 @@
 cxutil::ISubject::~ISubject()
 {
     m_observers.clear();
-    
+
     CX_ASSERT(m_observers.empty());
 }
 
@@ -48,7 +48,7 @@ void cxutil::ISubject::registerObserver(cxutil::IObserver* p_observer)
 {
     CX_ASSERT(p_observer != nullptr);
 
-    std::list<IObserver* const>::const_iterator position;
+    std::list<IObserver*>::const_iterator position;
 
     // First, we check if the observer is already registered:
     position = std::find(m_observers.begin(), m_observers.end(), p_observer);
@@ -67,7 +67,7 @@ void cxutil::ISubject::removeObserver(cxutil::IObserver* p_observer)
 {
     CX_ASSERT(p_observer != nullptr);
 
-    std::list<IObserver* const>::const_iterator position;
+    std::list<IObserver*>::const_iterator position;
 
     // First, we check if the observer is registered:
     position = std::find(m_observers.begin(), m_observers.end(), p_observer);

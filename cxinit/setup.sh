@@ -28,7 +28,7 @@
 #-----------------------------------------------------------------------------------#
 
 
-# SYSTEM UPDATE
+# REPOSITORY UPDATE
 # ----------------------------------------------------------------------------------#
 sudo apt-get update
 sudo apt-get upgrade
@@ -37,30 +37,40 @@ sudo apt-get upgrade
 # REQUIRED PACKAGES
 # ----------------------------------------------------------------------------------#
 build=(
-    build-essentials  # gcc/g++, make
-    cmake             # cmake (necessary to buils libgtest)
+    build-essential         # gcc/g++, make
+    cmake                   # Build tool (Google Tests)
 )
 
 tools=(
-    git               # Git
-    python            # Python
+    git                     # Version control
+    python                  # Cross plateform scripting
 )
 
 tests=(
-    libgtest-dev      # Google Tests (unit testing)
+    libgtest-dev            # Google Tests (unit testing)
+)
+
+ui=(
+    #libncurses5-dev         # Developer libraries for ncurses
+    #libncursesw5-dev        # Developer libraries for ncursesw
+    #libgtkmm-3.0-dev        # C++ wrapper for Gtk
+    #libgstreamermm-1.0-dev  # C++ wrapper library for GStreamer
 )
 
 doc=(
-    doxygen           # Doxygen
-    doxygen-gui       # Doxygen gui-wizzard
-    dia               # Dia (UML)
-    texlive-full      # LaTeX
+    doxygen                 # Self-documenting tool for C/C++
+    doxygen-gui             # GUI for Doxygen
+    dia                     # Create schematic and UML
+    texlive-full            # Write scientific documents
+    #libgtkmm-3.0-doc
+    #libgstreamermm-1.0-doc
+    devhelp                 # Read documentation offline
 )
 
 
 # INSTALL
 # ----------------------------------------------------------------------------------#
-sudo apt-get -y install ${build[@]} ${tools[@]} ${doc[@]}
+sudo apt-get -y install ${build[@]} ${tools[@]} ${tests[@]} ${ui[@]} ${doc[@]}
 
 # Some additionnal steps for Google Tests:
 cd /usr/src/gtest

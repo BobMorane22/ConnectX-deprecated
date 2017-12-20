@@ -37,7 +37,7 @@ SRCS     = Color.cpp\
            GameBoard.cpp\
            Player.cpp\
            Position.cpp
-           
+
 
 OBJS     = $(OBJ_DIR)/Color.o\
            $(OBJ_DIR)/Disc.o\
