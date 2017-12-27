@@ -42,6 +42,7 @@ build=(
 )
 
 tools=(
+    auctex                  # LaTeX in emacs
     git                     # Version control
     python                  # Cross plateform scripting
 )
