@@ -1,0 +1,97 @@
+% ------------------------------------------------------------------------------
+% Connect X project's GUI specification LaTeX document preambule.
+%
+% @file     preambule.tex
+% @author   Éric Poirier
+% @date     December, 2017
+% @version  1.0
+% ------------------------------------------------------------------------------
+
+% ------------------------------------------------------------------------------
+% Copyright (C) 2017 Connect X team.
+%
+% This file is part of Connect X.
+%
+% Connect X is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or
+% (at your option) any later version.
+%
+% Connect X is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+%
+% You should have received a copy of the GNU General Public License
+% along with Connect X.  If not, see <http://www.gnu.org/licenses/>.
+% ------------------------------------------------------------------------------
+
+% PACKAGES:
+
+  % General document properties:
+  \usepackage[titletoc, title]{appendix}
+  \usepackage[colorlinks=true, allcolors=black, plainpages=false,pdfpagelabels]{hyperref}
+  \usepackage[nottoc]{tocbibind}
+  \usepackage[margin = 1.25in]{geometry}
+  \usepackage{setspace} \onehalfspacing
+  \usepackage{multicol}
+
+
+  % Language options:
+  \usepackage{lmodern}
+  \usepackage[utf8]{inputenc}
+  \usepackage[T1]{fontenc}
+  \usepackage[main = english, french]{babel}
+
+  % Figures options:
+  \usepackage{graphicx}
+  \usepackage{wrapfig}
+  \usepackage[font = small]{caption}
+  \usepackage{subcaption}
+  \usepackage{tikz}
+  \usepackage{floatrow}
+  \usepackage{pdfpages}
+  \usepackage{cleveref}
+
+
+  % Math options:
+  \usepackage{amsmath}
+    \numberwithin{equation}{section}
+
+  % Source code options:
+  \usepackage{xcolor}
+  \usepackage{listingsutf8}
+  \renewcommand{\lstlistingname}{Source}
+  \renewcommand{\lstlistlistingname}{Liste des \lstlistingname s}
+
+    % Source code formatting:
+    \definecolor{forestgreen}{rgb}{0.15,0.42,0.16}
+
+    \lstset{
+           backgroundcolor = \color{lightgray},
+           basicstyle = \footnotesize\ttfamily\color{black}\bfseries,
+           breakatwhitespace = false,
+           breaklines = true,
+           captionpos = b,
+           commentstyle = \color{forestgreen},
+           deletekeywords = {...},
+           escapeinside = {\%*}{*)},
+           extendedchars = true,
+           frame = single,
+           inputencoding = utf8/latin1,
+           keepspaces = true,
+           keywordstyle = \color{blue},
+           otherkeywords = {*,...},
+           numbers = left,
+           numbersep = 5pt,
+           numberstyle = \tiny\color{black},
+           rulecolor = \color{black},
+           showspaces = false,
+           showstringspaces = false,
+           showtabs = false,
+           stepnumber = 1,
+           stringstyle = \color{black},
+           tabsize = 4,
+           %title = \lstname
+           literate={à}{{\`a}}1 {è}{{\`e}}1 {é}{{\'e}}1 {ê}{{\^e}}1 {ù}{{\`u}}1
+           }

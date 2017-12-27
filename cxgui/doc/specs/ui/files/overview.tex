@@ -1,0 +1,41 @@
+  The \ttt{Connect X} grahical user interface will consist of four main dialogs,
+  which will be briefly described here, and of other second order dialogs like
+  information or warning dialogs, where appropriate. The dialog where the players
+  will spend most of their time will be the main window dialog, or the game
+  dialog:
+
+  \begin{figure}[H]
+    \includegraphics[width = 0.5\textwidth]{\proto MainWindow.png}
+    \caption{A game dialog prototype}
+  \end{figure}
+
+  This dialog contains most of the game features: the game board and the discs,
+  information on the players and the game, player actions, such as placing a
+  disc and creating a new game. It is also from this dialog that all the other
+  d ialogs can be invoked.
+
+  The second most important dialog is the new game dialog:
+
+  \begin{figure}[H]
+    \includegraphics[width = 0.4\textwidth]{\proto NewGame.png}
+    \caption{A new game dialog prototype}
+  \end{figure}
+
+  This dialog is needed to create a new game. A new game must be created upon
+  starting up Connect X and if some game parameters must be changed (i.e if
+  a new player wants to join or the in-a-row value must be changed). Another
+  helpful dialog is the help dialog (!):
+
+  \begin{figure}[H]
+    \includegraphics[width = 0.4\textwidth]{\proto Help.png}
+    \caption{A help dialog prototype}
+  \end{figure}
+
+  All this dialog does is redirect the user to the online help for \ttt{Connect X}.
+  You can also take a look at the about dialog, which gives some more technical
+  information on the software, such as the developper credits and the licencing:
+
+  \begin{figure}[H]
+    \includegraphics[width = 0.3\textwidth]{\proto About.png}
+    \caption{An about dialog prototype}
+  \end{figure}
