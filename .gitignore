@@ -460,6 +460,9 @@ cxbase/doc/doxygen/examples/out
 
 ### cx_cpp_norm ###
 cx_cpp_norme/versions/
-cx_cpp_norme/cx_cpp_norme.pdf
+cx_cpp_norme/cx_cpp_norm.pdf
+
+### cxgui ###
+cxgui/doc/specs/ui/cx_gui_spec.pdf
 
 # End of https://www.gitignore.io/api/c++,python,eclipse,latex, emacs
