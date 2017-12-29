@@ -1,0 +1,157 @@
+\section{The \ttt{Connect X} Game dialog} \label{dlg:Game}
+It is in this dialog that most of the interesting action happens. The following
+explain how a user can interract with the \ttt{Connect X} main window:
+
+  \subsection{Menu bar} \label{ssec:MenuBar}
+  The menu bar consists of two menus: \ttt{Game} and \ttt{Help}. Both these menus
+  are accessible both by clicking on them using the mouse or by using the mnemonics
+  \ttt{<ALT>g} and \ttt{<ALT>h} respectively (i.e. pressing both the \ttt{<ALT>}
+  and the \ttt{g} or \ttt{h} keys simultaneously). Each menu contains the following
+  elements. First, the \ttt{Game} menu:
+
+  \begin{description}
+    \item[New game]          Brings up the New game dialog (see \cref{dlg:NewGame}).
+    \item[Reinitialize game] Reinitializes the current game.
+    \item[Quit]              Quits \ttt{Connect X}.
+  \end{description}
+
+  \noindent Then, the \ttt{Help} menu:
+
+  \begin{description}
+    \item[Show help]         Brings up the Help dialog (see \cref{dlg:Help})
+    \item[About Connect X]   Brings up the About \ttt{Connect X} dialog
+                             (see  \cref{dlg:AboutCX}).
+  \end{description}
+
+  \subsection{Game information area}
+  The game information area consists of the part of the dialog (above the game
+  board) where information on the game and the current turn is displayed. in this
+  section, the following items are displayed\footnote{note that numbers refer
+  to the line at which the mentionned item is displayed. Also, items are listed in
+  the horizontal order at which they appear on the screen}:
+
+  \begin{enumerate}
+    \item[1.] \ttt{Section}, readonly : displays the constant string
+                                        'Game information'.
+    \item[2.] \ttt{Label},   readonly : displays the constant string
+                                        'Active player:'.
+    \item[2.] \ttt{Label},   readonly : displays the name of the active
+                                        player. This string will change
+                                        from turn to turn to adapt to
+                                        the new active player.
+    \item[2.] \ttt{Label},   readonly : displays the disc color for the
+                                        active player.
+    \item[3.] \ttt{Label},   readonly : displays the constant string
+                                        'Next player:'.
+    \item[3.] \ttt{Label},   readonly : displays the name of the next
+                                        player. This string will change
+                                        from turn to turn to adapt to
+                                        the new next player.
+    \item[3.] \ttt{Label},   readonly : displays the disc color for the
+                                        next player.
+    \item[4.] \ttt{Label},   readonly : displays the constant string
+                                        'In-a-row value:'.
+    \item[4.] \ttt{Label},   readonly : displays the game's in-a-row value
+                                        in arabic numerals.
+    \item[5.] \ttt{Label},   readonly : displays the constant string
+                                        'Number of moves left:'.
+    \item[5.] \ttt{Label},   readonly : displays the number of moves left
+                                        for the current game in arabic
+                                        numerals.
+  \end{enumerate}
+
+  \noindent See \cref{fig:Game} to see how these elements should be located in
+  the dialog.
+
+  \subsection{Game board area}
+  The game board area contains the neccessary tools to play a \ttt{Connect X}
+  game. This area can be further divided into subsections (listed in order
+  from top to bottom):
+
+  \begin{enumerate}
+    \item the section title;
+    \item the next disc dropping area;
+    \item the game board (sometimes referred as the grid);
+    \item the reinitialize button.
+  \end{enumerate}
+
+    \subsubsection{The section title}
+	The section title is a readonly \ttt{label} that displays the constant string
+    'Game board'.
+
+    \subsubsection{The next disc dropping area}
+	This section is an horizontal readonly array which is invisible to the
+    players and holds either no disc (i.e. before a game is started) or one
+    disc: the activeplayer's disc. The array has as many cells as there are
+	columns in the game board and sits directly on top (vertically) of the game
+    board.
+
+    \subsubsection{The game board}
+	The game board is a readonly array for which cells are visible to the players
+    and in which discs are stored.
+
+    \subsubsection{The reinitialize button}
+	The reinitialize button is a clickable button displaying the constant string
+    'reinitialize' before game start, the button is disactivated and unclickable.
+    As soon as a game is initialized, it is activated and clickable.
+
+  \subsection{Behaviour} \label{ssec:GameBoardDlgBehaviour}
+  The required behaviours for the different elements in this dialog \footnote{The
+  behaviour for the menu items has already been described in the
+  \cref{ssec:MenuBar} section and have not been repeated here, unless another
+  element triggers the same action.} are the following:
+
+  \begin{description}
+    \item[Move next disc]  Using the left and right arrow keys (\LArrow and
+                           \RArrow), the active player can move the next disc
+                           to be dropped (located in the next disc dropping
+                           area) to the desired column. This action can also
+                           be accomplished using the mouse, by dragging the disc
+                           to the disered column, either on the disc dropping
+                           area or directly on the gameboard. Note that when a
+                           disc is moved, the column it is aligned with is
+                           highighted.
+
+    \item[Drop next disc]  Using the down arrow key (\DArrow), the active player
+                           can drop a disc from the next disc dropping area to
+                           the gameboard. The disc then leaves from the next
+                           disc dropping area (it is replaced by the next player's
+                           disc) and moves in the gameboard, in column below,
+                           just like when a disc is dropped in a Connect 4 game.
+                           The players can also use the mouse to drop a disc by
+                           releasing the draggued disc in the wanted column. Once
+                           the disc has been dropped, the chosen column is no
+                           longer highlighted.
+
+    \item[Reinitialize]    To reinitialize the dialog, the user can use the
+                           Reinitialize button, or the \ttt{Game->Reinitialize}
+                           menu item. Reinitializing a dialog puts the dialog
+                           back to the exact same state at which it was set
+                           at the game creation (i.e. after a New game dialog
+                           was populated with valid parameters and the start
+                           button was pressed. See \cref{dlg:NewGame} for more
+                           information).
+
+    \item[Close dialog]    To close the dialog, the user can use the standard
+                           close dialog button, or use the \ttt{Game->Close}
+                           menu item.
+
+    \item[Minimize dialog] To minimize this dialog, the user uses the standard
+                           dialog minimize button.
+
+    \item[Maximize dialog] To maximize this dialog, the user uses the standard
+                           dialog mmaximize button.
+  \end{description}
+
+
+\section{The new game dialog} \label{dlg:NewGame}
+  \subsection{The game board area}
+  \subsection{The player registration area} \label{dlg:PlayerReg}
+\section{The help dialog} \label{dlg:Help}
+\section{The about \ttt{Connect X} dialog} \label{dlg:AboutCX}
+\section{The message dialogs} \label{dlg::message}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../cx_gui_spec"
+%%% End:
