@@ -65,3 +65,8 @@ and if I only want the documentation for that library, I can invoke:
 make cxbasedoc
 ```
 Refer to the repository's main `Makefile` to know all the module names.
+
+
+## Help manual
+
+See the [help manual](connectx/doc/help/help.md).
