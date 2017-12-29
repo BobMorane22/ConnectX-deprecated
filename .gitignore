@@ -464,5 +464,7 @@ cx_cpp_norme/cx_cpp_norm.pdf
 
 ### cxgui ###
 cxgui/doc/specs/ui/cx_gui_spec.pdf
+cxgui/doc/specs/ui/auto/
+cxgui/doc/specs/ui/files/auto/
 
 # End of https://www.gitignore.io/api/c++,python,eclipse,latex, emacs
