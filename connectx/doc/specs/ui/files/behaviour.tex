@@ -2,12 +2,13 @@
 It is in this dialog that most of the interesting action happens. The following
 explain how a user can interract with the \ttt{Connect X} main window:
 
+
   \subsection{Menu bar} \label{ssec:MenuBar}
   The menu bar consists of two menus: \ttt{Game} and \ttt{Help}. Both these menus
   are accessible both by clicking on them using the mouse or by using the mnemonics
-  \Alt\ttt{ + g} and \Alt\ttt{ + h} respectively (i.e. pressing both the \Alt
-  and the \ttt{g} or \ttt{h} keys simultaneously). Each menu contains the following
-  elements. First, the \ttt{Game} menu:
+  \Alt\ttt{+g} and \Alt\ttt{+h} respectively (i.e. pressing both the \Alt and the
+  \ttt{g} or \ttt{h} keys simultaneously). Each menu contains the following elements.
+  First, the \ttt{Game} menu:
 
   \begin{description}
     \item[New game]          Brings up the New game dialog (see \cref{dlg:NewGame}).
@@ -22,6 +23,7 @@ explain how a user can interract with the \ttt{Connect X} main window:
     \item[About Connect X]   Brings up the About \ttt{Connect X} dialog
                              (see  \cref{dlg:AboutCX}).
   \end{description}
+
 
   \subsection{Game information area}
   The game information area consists of the part of the dialog (above the game
@@ -63,6 +65,7 @@ explain how a user can interract with the \ttt{Connect X} main window:
   \noindent See \cref{fig:Game} to see how these elements should be located in
   the dialog.
 
+
   \subsection{Game board area}
   The game board area contains the neccessary tools to play a \ttt{Connect X}
   game. This area can be further divided into subsections (listed in order
@@ -75,9 +78,11 @@ explain how a user can interract with the \ttt{Connect X} main window:
     \item the reinitialize button.
   \end{enumerate}
 
+
     \subsubsection{The section title}
 	The section title is a readonly \ttt{label} that displays the constant string
     'Game board'.
+
 
     \subsubsection{The next disc dropping area}
 	This section is an horizontal readonly array which is invisible to the
@@ -86,14 +91,17 @@ explain how a user can interract with the \ttt{Connect X} main window:
 	columns in the game board and sits directly on top (vertically) of the game
     board.
 
+
     \subsubsection{The game board}
 	The game board is a readonly array for which cells are visible to the players
     and in which discs are stored.
+
 
     \subsubsection{The reinitialize button}
 	The reinitialize button is a clickable button displaying the constant string
     'reinitialize' before game start, the button is disactivated and unclickable.
     As soon as a game is initialized, it is activated and clickable.
+
 
   \subsection{Behaviour} \label{ssec:GameBoardDlgBehaviour}
   The required behaviours for the different elements in this dialog \footnote{The
@@ -150,24 +158,116 @@ importance to ensure game parameters are set properly. In other words, it is her
 that we make sure that class preconditions for the various objects needed in the
 backend are respected and that valid objects are created. If those are not met,
 the backend behaviour is undefined and all sorts of problems can occur. Refer to
-the `cxbase` library documentation for more information.
+the `cxbase` library documentation for more information. Note that this dialog
+should be modal, since game can start before it is completed.
 
-  \subsection{The game board area}
-  The first dialog area is the game board area, where players define the game
-  board parameters for the game they are about to create.
 
   \subsection{The game area}
-  The next dialog area lets players define game parameters. 
+  The first dialog area lets players define game parameters. For now, only one game
+  parameter exists: the in-a-row value. So the game area is composed of one line
+  containing (in horizontal order from left to right):
+
+  \begin{enumerate}
+    \item \ttt{Label}   , readonly : displays the constant string 'In-a-row value:'.
+    \item \ttt{Edit box}, editable : Takes an integer in the range $[3, 64]$.
+  \end{enumerate}
+
+
+  \subsection{The game board area}
+  The second dialog area is the game board area, where players define the game
+  board parameters for the game they are about to create. Two parameters define
+  a game board: its height and its width. The game board area is then composed
+  of two lines, each containing a parameter. They are presented here from top
+  to bottom and from left to right:
+
+  \begin{enumerate}
+    \item[1.] \ttt{Label}   , readonly : displays the constant string 'Number of
+                                         rows:'.
+    \item[1.] \ttt{Edit box}, editable : Takes an integer in the range $[6, 64]$.
+    \item[2.] \ttt{Label}   , readonly : displays the constant string 'Number of
+                                         columns:'.
+    \item[2.] \ttt{Edit box}, editable : Takes an integer in the range $[7, 64]$.
+  \end{enumerate}
 
 
   \subsection{The player registration area} \label{dlg:PlayerReg}
-  The third dialog area is meant for players to register themselves.
+  The third dialog area is meant for players to register themselves. The area is
+  composed of a table showing registered players entries and a button to add
+  more players.
+
+  The table is an array of dimension 3 by $n + 1$, where $n$ represents
+  the number of registered players. There must be a minimum of 2 players
+  registered and a maximum of 10. The first row of the array should the
+  three readonly column titles: 'No.', 'Name', 'Disc'.
+
+  At dialog start, there should already be two rows in the array in addition to
+  the title row, both with a string representing the name of the player
+  (to be modified if needed, of course) and a color representing their
+  respective disc color. For the two first players, the colors red and black
+  should be chosen by default.
+
+  Except for the title row, each row in the registered players table should
+  be composed of the following elements (from left to right):
+
+  \begin{enumerate}
+    \item \ttt{Text field},     readonly : The player number, an integer in the
+                                           interval $[1, 10]$.
+    \item \ttt{Text field},     editable : The player name, a text string.
+    \item \ttt{Drop down list}, editable : Displays a color (not in text) or
+                                           the constant string 'Color...' for
+                                           newly added players who have not been
+                                           able to choose a color yet. There
+                                           should be a pool of at least 10
+                                           unambiguous colors to choose from.
+                                           Furthermore, each time a player
+                                           picks a color, it should no longer
+                                           be displayed in the list. If a
+                                           player releases a color, it should
+                                           re-appear in the list.
+  \end{enumerate}
+
+  Each row in the table should be selectable by clicking on the first column
+  element for the wanted row. This should highlight the selected row. By hitting
+  \Del, a user should be able to unregister a player. The player No. should
+  always be updated accordinly. Another way to unregister a player would be to
+  right-click anywhere on the row and select 'Remove player' from the menu.
+
+  To register a player, one should use the Add player button. This button should
+  be located right below the registered players table and display the constant
+  string 'Add player'. This button should be desactivated when a total of 10
+  players have been registered. It can be reactivated if players are removed,
+  of course.
+
 
   \subsection{The start game area}
   The last dialog area is the start game area. From here, players can start the
   game they have just defined, \textit{but only if all parameters in the dialog
-  fields are valid}. This is of crucial importance.
+  fields are valid}. This is of crucial importance. The button displays the
+  constant readonly string 'Start'. It is deactivated until all fields from the
+  dialog have been populated.
+
+  In addition to the fied checks already mentionned, this button must perform the
+  following checks before starting a new game:
+
+  \begin{enumerate}
+    \item The number of players must be smaller or equal to the number of positions
+          in the game board divided by the in-a-row value.
+    \item The in-a-row value is greater than 2 and smaller than the minimum between
+          the number of rows and the number of columns in the gameboard.
+    \item The game board dimensions must allow every player to have the possibility
+          to play the same amount of moves. In other words, if a draw occurs, all
+          players must have placed the same amount of discs.
+  \end{enumerate}
+
+  \noindent See the \cref{fig:NewGame} for an example layout. In this example, all
+  field conditions are respected.
+
 
 \section{The help dialog} \label{dlg:Help}
 \section{The about \ttt{Connect X} dialog} \label{dlg:AboutCX}
 \section{The message dialogs} \label{dlg::message}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../connectXGuiSpec"
+%%% End:
