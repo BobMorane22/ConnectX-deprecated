@@ -10,15 +10,15 @@
 #
 #   1. Opening a terminal.
 #
-#   2. Moving to the directory containing the script 'software.sh'.
+#   2. Moving to the directory containing the script 'setup.sh'.
 #
 #   3. Giving execution rights to the file (requires root privileges):
 #
-#        >> sudo chmod +x softwares.sh
+#        >> sudo chmod +x setup.sh
 #
 #   4. Running the script:
 #
-#        >> sudo ./software.sh
+#        >> sudo ./setup.sh
 #
 #
 # @author   Eric Poirier
@@ -30,6 +30,8 @@
 
 # REPOSITORY UPDATE
 # ----------------------------------------------------------------------------------#
+echo "Updating repository..."
+
 sudo apt-get update
 sudo apt-get upgrade
 
@@ -52,29 +54,37 @@ tests=(
 )
 
 ui=(
-    #libncurses5-dev         # Developer libraries for ncurses
-    #libncursesw5-dev        # Developer libraries for ncursesw
-    #libgtkmm-3.0-dev        # C++ wrapper for Gtk
-    #libgstreamermm-1.0-dev  # C++ wrapper library for GStreamer
+    libncurses5-dev         # Developer libraries for ncurses
+    libncursesw5-dev        # Developer libraries for ncursesw
+    libgtkmm-3.0-dev        # C++ wrapper for Gtk
+    libgstreamermm-1.0-dev  # C++ wrapper library for GStreamer
 )
 
 doc=(
+
     doxygen                 # Self-documenting tool for C/C++
     doxygen-gui             # GUI for Doxygen
     dia                     # Create schematic and UML
     texlive-full            # Write scientific documents
-    #libgtkmm-3.0-doc
-    #libgstreamermm-1.0-doc
+    libgtkmm-3.0-doc        # Offline documentation for Gtkmm library
+    libgstreamermm-1.0-doc  # Offline documentation for GStreamer library
     devhelp                 # Read documentation offline
 )
 
 
 # INSTALL
 # ----------------------------------------------------------------------------------#
+echo "Installing required software (this may take some time)..."
+
 sudo apt-get -y install ${build[@]} ${tools[@]} ${tests[@]} ${ui[@]} ${doc[@]}
 
-# Some additionnal steps for Google Tests:
-cd /usr/src/gtest
-sudo cmake CMakeLists.txt
-sudo make
-sudo cp *.a /usr/lib
+# Some additionnal steps for Google Tests (only if not already installed):
+if ([ -f /usr/lib/libgtest.a ] && [ -f libgtest_main.a ]); then
+    echo "Setuping Google Tests on your machine..."
+    cd /usr/src/gtest
+    sudo cmake CMakeLists.txt
+    sudo make
+    sudo cp *.a /usr/lib
+fi
+
+echo "Your system is up to date, you can now build Connect X!"
