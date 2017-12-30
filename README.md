@@ -30,8 +30,9 @@ The following softwares are needed to perform a complete build:
   7. `Google Tests`
   8. `bash`
   9. `python`
+  10. `Gtkmm` (C++ wrapper for `Gtk`)
 
-In `cxinit`, a bash script name `setup.sh` can be run to install everything that
+In `cxinit`, a bash script named `setup.sh` can be run to install everything that
 is nedded plus some extra goodies (Ubuntu only).
 
 ### Building
