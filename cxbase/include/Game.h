@@ -51,18 +51,18 @@ namespace cxbase
  *
  * @invariant All Player addresses are valid.
  *
- * @invariant The number of Players is always at least two (2) and at most the number of Positions 
+ * @invariant The number of Players is always at least two (2) and at most the number of Positions
  *            in the GameBoard divided by the @a inARow value.
  *
  * @invariant The @a inARow value must be bigger or equal to two (2) and smaller or equal to the
  *            minimum between the grid width and length.
  *
- * @invariant The current number of completed moves is always between 0 (GameBoard is empty) and 
+ * @invariant The current number of completed moves is always between 0 (GameBoard is empty) and
  *            the total number of positions in the grid plus one (1).
  *
  * @invariant The current turn is always between 0 and the total numbers of Players minus one.
  *
- * @invariant The chosen GameBoard must allow every Player to have the same number of moves 
+ * @invariant The chosen GameBoard must allow every Player to have the same number of moves
  *            during the Game.
  *
  **************************************************************************************************/
@@ -90,11 +90,11 @@ public:
      *
      * @pre The Gameboard address passed as an argument is valid.
      * @pre All Player addresses passed as arguments (contained in a @c std::vector) are valid.
-     * @pre The number of Players is always at least two (2) and at most the number of Positions 
+     * @pre The number of Players is always at least two (2) and at most the number of Positions
      *      in the GameBoard divided by the @a inARow value.
      * @pre @c p_inARow is bigger than two (2) and smaller than the minimum between the Grid
      *      width and length.
-     * @pre The chosen GameBoard must allow every Player to have the same number of moves 
+     * @pre The chosen GameBoard must allow every Player to have the same number of moves
      *      during the Game.
      *
      **********************************************************************************************/
@@ -141,7 +141,7 @@ public:
      *
      **********************************************************************************************/
     int nbOfCompletedMoves() const {return m_nbOfCompletedMoves;}
-    
+
 ///@}
 
 ///@{ @name Game utilities
@@ -149,11 +149,11 @@ public:
     /*******************************************************************************************//**
      * Checks if the Game can be considered an early draw.
      *
-     * An early draw occurs when, for any chosen Player, the possibility of winning the Game no 
-     * longer exists. As opposed to the @c isDraw() method, which requires a GameBoard to be 
-     * completely filled with Discs before deciding anything, the @c isEarlyDraw() method can make 
-     * a decision at any point in the Game, even if the Game is not finished yet. Note that no 
-     * check is run as to wether the GameBoard is exempt of a winning combination. It is the user's 
+     * An early draw occurs when, for any chosen Player, the possibility of winning the Game no
+     * longer exists. As opposed to the @c isDraw() method, which requires a GameBoard to be
+     * completely filled with Discs before deciding anything, the @c isEarlyDraw() method can make
+     * a decision at any point in the Game, even if the Game is not finished yet. Note that no
+     * check is run as to wether the GameBoard is exempt of a winning combination. It is the user's
      * responsability to call the @c isWon() method to make sure of it.
      *
      * @return A boolean indicating if the Game will eventually be a draw.
@@ -168,9 +168,9 @@ public:
     /*******************************************************************************************//**
      * Checks if a Game is a draw.
      *
-     * A Game is considered a draw if the number of completed moves for the Game exceeds by one 
-     * (1) the total number of positions in the grid. Note that no check is run as to wether the 
-     * GameBoard is exempt of a winning combination. It is the user's responsability to call the 
+     * A Game is considered a draw if the number of completed moves for the Game exceeds by one
+     * (1) the total number of positions in the grid. Note that no check is run as to wether the
+     * GameBoard is exempt of a winning combination. It is the user's responsability to call the
      * @c isWon() method to make sure of it.
      *
      * @return A boolean indicating if the Game is a draw.
@@ -208,7 +208,7 @@ public:
      * In other words, all Positions that are not marked by either @c R or @c x in this example are
      * not taken into account by this method.
      *
-     * Note that this method does not check for [early] draws. It is the user's responsability to 
+     * Note that this method does not check for [early] draws. It is the user's responsability to
      * check for those using the @c isEarlyDraw() and @c isDraw() methods.
      *
      * @return A boolean indicating if a winning string of Discs has been found from the
@@ -224,7 +224,7 @@ public:
     /*******************************************************************************************//**
      * Make a move.
      *
-     * If possible, places a Disc at the specified Column for the active Player, otherwise, 
+     * If possible, places a Disc at the specified Column for the active Player, otherwise,
      * does nothing. The active Player must try again until a successfull move occurs. Most of
      * the time, a move will fail because the chosen Column is already full.
      *
@@ -276,7 +276,7 @@ private:
     bool canPlayerWinVertical                (const Player& p_player                             ) const;
     bool canPlayerWinDiagonalUpward          (const Player& p_player                             ) const;
     bool canPlayerWinDiagonalDownward        (const Player& p_player                             ) const;
-    
+
     int  nbRemainingMoves                    (const Player& p_player, const int p_nbOfTurnsPlayed) const;
     int  nbRemainingMoves                    (const Player& p_player                             ) const;
     int  maxVerticalPositionForPlayerInColumn(const Player& p_player, const Column& p_column     ) const;
@@ -320,13 +320,13 @@ private:
     int                   m_inARow;                       ///< The @a inARow for the Game.
     int                   m_turn                    {0};  ///< The current turn (first turn is 0).
     int                   m_nbOfCompletedMoves      {0};  ///< The total number of completed moves.
-    std::vector<Position> m_completedMovePositions;       ///< A list of all Positions successfully used 
+    std::vector<Position> m_completedMovePositions;       ///< A list of all Positions successfully used.
                                                           ///< by the Players to complete a move.
 
 ///}
 
 };
- 
+
 } // namespace cxbase
 
 #endif /* GAME_H_2D56E7FC_5FA9_4841_B204_05ADCF2DCE07_ */
