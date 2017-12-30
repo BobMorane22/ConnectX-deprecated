@@ -5,7 +5,7 @@ explain how a user can interract with the \ttt{Connect X} main window:
   \subsection{Menu bar} \label{ssec:MenuBar}
   The menu bar consists of two menus: \ttt{Game} and \ttt{Help}. Both these menus
   are accessible both by clicking on them using the mouse or by using the mnemonics
-  \ttt{<ALT>g} and \ttt{<ALT>h} respectively (i.e. pressing both the \ttt{<ALT>}
+  \Alt\ttt{ + g} and \Alt\ttt{ + h} respectively (i.e. pressing both the \Alt
   and the \ttt{g} or \ttt{h} keys simultaneously). Each menu contains the following
   elements. First, the \ttt{Game} menu:
 
@@ -145,13 +145,29 @@ explain how a user can interract with the \ttt{Connect X} main window:
 
 
 \section{The new game dialog} \label{dlg:NewGame}
+This is the dialog where players can initialize a game. This dialog is of critical
+importance to ensure game parameters are set properly. In other words, it is here
+that we make sure that class preconditions for the various objects needed in the
+backend are respected and that valid objects are created. If those are not met,
+the backend behaviour is undefined and all sorts of problems can occur. Refer to
+the `cxbase` library documentation for more information.
+
   \subsection{The game board area}
+  The first dialog area is the game board area, where players define the game
+  board parameters for the game they are about to create.
+
+  \subsection{The game area}
+  The next dialog area lets players define game parameters. 
+
+
   \subsection{The player registration area} \label{dlg:PlayerReg}
+  The third dialog area is meant for players to register themselves.
+
+  \subsection{The start game area}
+  The last dialog area is the start game area. From here, players can start the
+  game they have just defined, \textit{but only if all parameters in the dialog
+  fields are valid}. This is of crucial importance.
+
 \section{The help dialog} \label{dlg:Help}
 \section{The about \ttt{Connect X} dialog} \label{dlg:AboutCX}
 \section{The message dialogs} \label{dlg::message}
-
-%%% Local Variables:
-%%% mode: latex
-%%% TeX-master: "../cx_gui_spec"
-%%% End:

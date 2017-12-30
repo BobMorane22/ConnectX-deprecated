@@ -9,8 +9,8 @@
 #
 #------------------------------------------------------------------------------#
 
-SRC  = cxgui_spec.tex
-OUT  = cxgui_spec.pdf
+SRC  = connectXGuiSpec.tex
+OUT  = connectXGuiSpec.pdf
 SPEC = spec
 CC   = latexmk
 

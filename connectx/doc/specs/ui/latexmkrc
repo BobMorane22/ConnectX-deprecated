@@ -6,7 +6,7 @@
 # @version	1.0
 #
 # This file provides option for the automated building process of the LaTeX file
-# cxgui_spec.tex. For more information, check this link:
+# connectXGuiSpec.tex. For more information, check this link:
 #
 #                      http://mg.readthedocs.io/latexmk.html
 #
