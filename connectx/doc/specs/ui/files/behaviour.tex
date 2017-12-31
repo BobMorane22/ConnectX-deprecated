@@ -164,8 +164,12 @@ should be modal, since game can start before it is completed.
 
   \subsection{The game area}
   The first dialog area lets players define game parameters. For now, only one game
-  parameter exists: the in-a-row value. So the game area is composed of one line
-  containing (in horizontal order from left to right):
+  parameter exists: the in-a-row value. So the game area is composed of a section
+  title and of one line for the parameter input.
+
+  The section title is a readonly \ttt{Label} displaying the constant string 'Game'.
+
+  The parameter input line is composed of (in horizontal order from left to right):
 
   \begin{enumerate}
     \item \ttt{Label}   , readonly : displays the constant string 'In-a-row value:'.
@@ -177,8 +181,13 @@ should be modal, since game can start before it is completed.
   The second dialog area is the game board area, where players define the game
   board parameters for the game they are about to create. Two parameters define
   a game board: its height and its width. The game board area is then composed
-  of two lines, each containing a parameter. They are presented here from top
-  to bottom and from left to right:
+  of a section title and of two lines, each containing a parameter.
+
+  The section title is a readonly \ttt{Label} displaying the constant string
+  'Game board'.
+
+  The two lines for parameter input are presented here from top to bottom and
+  from left to right:
 
   \begin{enumerate}
     \item[1.] \ttt{Label}   , readonly : displays the constant string 'Number of
@@ -192,8 +201,11 @@ should be modal, since game can start before it is completed.
 
   \subsection{The player registration area} \label{dlg:PlayerReg}
   The third dialog area is meant for players to register themselves. The area is
-  composed of a table showing registered players entries and a button to add
-  more players.
+  composed of a section title, a table showing registered players entries and a
+  button to add more players.
+
+  The section title is a readonly \ttt{Label} that displays the constant string
+  'Players'.
 
   The table is an array of dimension 3 by $n + 1$, where $n$ represents
   the number of registered players. There must be a minimum of 2 players
@@ -264,6 +276,27 @@ should be modal, since game can start before it is completed.
 
 
 \section{The help dialog} \label{dlg:Help}
+The help dialog is essentially a portal to an online documentation page. It is
+composed of four items:
+
+\begin{enumerate}
+  \item \ttt{Label},  readonly : Displays the constant string 'Do you want
+                                 to read the manual online?'.
+  \item \ttt{Label},  readonly : Displays the constant string 'You will be
+                                 redirected to the documentation webpage
+                                 where help pages are mainained for every
+                                 release.'.
+  \item \ttt{Button}, readonly : Displays the constant string 'Cancel'.
+                                 Clicking on this button closes the dialog
+                                 and no help page is accessed.
+  \item \ttt{Button}, readonly : Displays the constant string 'Read online'.
+                                 Clicking on this button opens a browser
+                                 and loads an external help page from the web.
+\end{enumerate}
+
+See \cref{fig:Help} for an example layout.
+
+
 \section{The about \ttt{Connect X} dialog} \label{dlg:AboutCX}
 \section{The message dialogs} \label{dlg::message}
 
