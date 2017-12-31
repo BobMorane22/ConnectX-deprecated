@@ -10,8 +10,9 @@
     '("includecode" 1)
     "versionNumber"
     "snippets"
-    "files"
-    "proto")
+    "proto"
+    "img"
+    "files")
    (LaTeX-add-bibliographies
     "connectXGuiSpec.bib"))
  :latex)

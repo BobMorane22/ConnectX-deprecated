@@ -33,6 +33,7 @@
     "floatrow"
     "pdfpages"
     "cleveref"
+    "longtable"
     "amsmath"
     "xcolor"
     "listingsutf8"

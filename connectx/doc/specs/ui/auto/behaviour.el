@@ -9,6 +9,9 @@
     "dlg:PlayerReg"
     "dlg:Help"
     "dlg:AboutCX"
-    "dlg::message"))
+    "dlg:Credits"
+    "dlg:Licence"
+    "dlg::message"
+    "tab:MessageDialogs"))
  :latex)
 
