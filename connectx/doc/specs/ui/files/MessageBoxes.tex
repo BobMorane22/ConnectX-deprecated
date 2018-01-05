@@ -1,0 +1,77 @@
+Some actions in the \ttt{Connect X} application trigger message boxes:
+small dialogs intended to give the user some additionnal information, or a
+warning/error message. Their contents should be small (1-2 sentences maximum)
+and clear. Here is a list of all the GUI message box that will appear in the
+\ttt{Connect X} application, how they are triggered and the message they
+contain:
+
+\begin{table}[H]
+  \centering
+  \begin{longtable}{|p{0.4\textwidth}
+                    |p{0.07\textwidth}
+                    |p{0.4\textwidth}|}
+    \hline
+    \textbf{Trigger} & \textbf{Type} & \textbf{Message} \\
+    \hline
+    \hline
+
+    A player has won.                                           &
+    \includegraphics[width = 0.03\textwidth]{\img question.png} &
+    Player <Player Name> has won! Play again?                   \\\hline
+
+    A game is a draw.                                           &
+    \includegraphics[width = 0.03\textwidth]{\img question.png} &
+    The game is a draw! Play again?                             \\\hline
+
+    A game is an early draw.                                    &
+    \includegraphics[width = 0.03\textwidth]{\img question.png} &
+    The game is going to be a draw! Play again?                 \\\hline
+
+    The Reinitialize button is clicked.                            &
+    \includegraphics[width = 0.03\textwidth]{\img question.png}    &
+    Do you really want to reinitialize the game? This will cancel
+    all your current moves.                                        \\\hline
+
+    The Start button is clicked: the in-a-row value is out of range. &
+    \includegraphics[width = 0.03\textwidth]{\img warning.png}       &
+    The value you selected is out of range. Please enter a value
+    between 3 and 64.                                                \\\hline
+
+    The Start button is clicked: the number of column is out of range.  &
+    \includegraphics[width = 0.03\textwidth]{\img warning.png}          &
+    The number of columns is out of range. Please enter a value between
+    7 and 64.                                                           \\\hline
+
+    The Start button is clicked: the number of rows is out of range. &
+    \includegraphics[width = 0.03\textwidth]{\img warning.png}       &
+    The number of rows is out of range. Please enter a value between
+    6 and 64.                                                        \\\hline
+
+    The Start button is clicked: the gameboard dimensions do not
+    agree with the in-a-row value.                                 &
+    \includegraphics[width = 0.03\textwidth]{\img warning.png}     &
+    The game board dimensions do not agree with the in-a-row value
+    you have chosen. Please enter new game board dimensions or a
+    new in-a-row value.                                            \\\hline
+
+    The Start button is clicked: not all players have the same amount
+    of moves available.                                                &
+    \includegraphics[width = 0.03\textwidth]{\img warning.png}         &
+    The game board dimensions you have chosen do not allow all players
+    the same amount of moves. Please enter new values.                 \\\hline
+
+    One or more players are unregistered: there were only two
+    registered players.                                        &
+    \includegraphics[width = 0.03\textwidth]{\img warning.png} &
+    You cannot unregister any more players: you need at least
+    two players registered!                                    \\\hline
+
+  \end{longtable}
+  \caption{The \ttt{Connect X} message box dialogs}
+  \label{tab:MessageDialogs}
+\end{table}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../connectXGuiSpec"
+%%% End:

@@ -1,0 +1,243 @@
+Here is the layout for the new game dialog:
+
+\begin{figure}[H]
+  \includegraphics[width = 0.4\textwidth]{\proto NewGame.png}
+  \caption{The new game dialog layout}
+  \label{fig:NewGameDlgLayout}
+\end{figure}
+
+The dialog shall contain the following elements:
+
+\begin{enumerate}
+
+    \item \texttt{Dialog}
+              \begin{description}
+                  \item[Title] New game
+                  \item[Close button] Yes
+                  \item[Minimize button] Yes
+                  \item[Resize button] Yes
+                  \item[Modal] Yes
+              \end{description}
+
+    \item \texttt{Section}
+              \begin{description}
+                  \item[Label] Game
+                  \item[Readonly] Yes
+                  \item[Folding] No
+                  \item[Visible] Yes
+                  \item[Tooltip] No
+              \end{description}
+
+    \item \texttt{Label}
+              \begin{description}
+                  \item[Label] In-a-row value:
+                  \item[Readonly] Yes
+                  \item[Visible] Yes
+                  \item[Tooltip] No
+              \end{description}
+
+    \item \texttt{Edit box} \label{enum:InARowEditBox}
+              \begin{description}
+                  \item[Default value] 4
+                  \item[Value limits] Integer between three and the minimum between
+                                      the number of rows for the game board and the
+                                      number of columns in the game board.
+                  \item[Readonly] No
+                  \item[Enabled] Yes
+                  \item[Visible] Yes
+                  \item[Tooltip] Yes: \textit{The in-a-row value must be at least 3
+                                      and fit in the game board for all orientations.}
+                  \item[Events] No
+                  \item[Misc] The edit box is only validated when the start button is
+                              pressed. See \cref{enum:StartButton}.
+              \end{description}
+
+    \item \texttt{Section}
+              \begin{description}
+                  \item[Label] Game board
+                  \item[Readonly] Yes
+                  \item[Folding] No
+                  \item[Visible] Yes
+                  \item[Tooltip] No
+              \end{description}
+
+    \item \texttt{Label}
+              \begin{description}
+                  \item[Label] Number of rows:
+                  \item[Readonly] Yes
+                  \item[Visible] Yes
+                  \item[Tooltip] No
+              \end{description}
+
+    \item \texttt{Edit box} \label{enum:RowEditBox}
+              \begin{description}
+                  \item[Default value] 6
+                  \item[Value limits] Integer between 6 and 64 included.
+                  \item[Readonly] No
+                  \item[Enabled] Yes
+                  \item[Visible] Yes
+                  \item[Tooltip] Yes: \textit{The number of rows must be at least 6
+                                              and must not exceed 64.}
+                  \item[Events] No
+                  \item[Misc] The edit box is only validated when the start button is
+                              pressed. See \cref{enum:StartButton}.
+              \end{description}
+
+    \item \texttt{Label}
+              \begin{description}
+                  \item[Label] Number of columns:
+                  \item[Readonly] Yes
+                  \item[Visible] Yes
+                  \item[Tooltip] No
+              \end{description}
+
+    \item \texttt{Edit box} \label{enum:ColumnEditBox}
+              \begin{description}
+                  \item[Default value] 7
+                  \item[Value limits] Integer between 7 and 64.
+                  \item[Readonly] No
+                  \item[Enabled] Yes
+                  \item[Visible] Yes
+                  \item[Tooltip] Yes: \textit{The number of columns must be at least 7
+                                              and must not exceed 64.}
+                  \item[Events] No
+                  \item[Misc] The edit box is only validated when the start button is
+                              pressed. See \cref{enum:StartButton}.
+              \end{description}
+
+    \item \texttt{Section}
+              \begin{description}
+                  \item[Label] Players
+                  \item[Readonly] Yes
+                  \item[Folding] No
+                  \item[Visible] Yes
+                  \item[Tooltip] No
+              \end{description}
+
+    \item \texttt{Player table} \label{enum:PlayerTable}
+              \begin{description}
+                  \item[General idea] The player table is a table containing three
+                                      columns titles respectively \ttt{No.},
+                                      \ttt{Name} and \ttt{Disc}. Each table line
+                                      is formed of three cells, each containing
+                                      respectively: the row number, the player's
+                                      name and the disc color for the player.
+                  \begin{description}
+                      \item[Row number]  The row number is an integer value from
+                                         1 to 10. It shall be readonly and visible.
+                      \item[Player name] The player name is a non-empty string value
+                                         with initial value "--Player~$n$--", where
+                                         $n$ represents the player's row number
+                                         value.
+                      \item[Disc color] The disc color cell shall be an edit box
+                                        showing initial value "Choose color..." and
+                                        proposing a choice of 10 different colors.
+                  \end{description}
+                  \item[Readonly] Yes, but entire lines can be deleted.
+                  \item[Default values] Here is how the initial table should look
+                                        like:
+
+                                        \begin{table}[H]
+                                            \centering
+                                            \begin{tabular}{|c|c|c|}
+                                                \hline
+                                                No. & Name & Disc \\ \hline\hline
+                                                1 & --Player 1-- & \fcolorbox{red}{red}{\textcolor{red}{mmmm}}       \\\hline
+                                                2 & --Player 2-- & \fcolorbox{black}{black}{\textcolor{black}{mmmm}} \\\hline
+                                            \end{tabular}
+                                            \caption{Default values for the
+                                                     \ttt{Player table}.}
+                                            \label{tab:DefaultValuesPlayerTable}
+                                        \end{table}
+
+                  \item[Limits] The table shall contain a minimum of 2 lines
+                                and a maximum of 10 lines.
+                  \item[Visible] Yes
+                  \item[Tooltip] No
+                  \item[Events] When a player is registered (see \cref{enum:AddPlayer})
+                                the table is automatically updated in the following
+                                way:
+                                \begin{enumerate}
+                                    \item A new row is added.
+                                    \item The row number cell contains the incremented
+                                          number of rows ($n$).
+                                    \item The "--Player $n$--" player name is added to the
+                                          name cell.
+                                    \item If $n = 10$, the add player button is deactivated.
+                                          (see \cref{enum:AddPlayer}).
+                                \end{enumerate}
+                                Players can be removed from the tables until two players
+                                are left. Clicking on the row number and hitting \Del
+                                shall remove a player. Alternatively, right clicking
+                                on the player row and choosing "remove" from the menu
+                                shall remove a player from the list. Once a player is
+                                removed, the player table shall be updated in the following
+                                way:
+                                \begin{enumerate}
+                                    \item If $n > 2$, the row disapears.
+                                    \item If the row is not the end row, all player numbers,
+                                          either in their default names or ther No column
+                                          are adjusted in such a way that they flow from top
+                                          top to bottom of the table from 1 to $n$. There
+                                          shall be no jumps.
+                                    \item The color that was chosen by the player who's
+                                          row is removed shall return to the pool of possible
+                                          disc colors to choose from.
+                                    \item If $n = 2$, selecting a row and pressing \Del
+                                          shall not remove a player.
+                                    \item If $n = 2$, the "delete" option from the right
+                                          click menu shall be deactivated.
+                                \end{enumerate}
+                                When a color is chosen by a registered player, the disc
+                                color selection edit box shall remove this color from
+                                the list of available colors to choose from.
+              \end{description}
+
+    \item \texttt{Button} \label{enum:AddPlayer}
+              \begin{description}
+                  \item[Label] Add player
+                  \item[Readonly] Yes
+                  \item[Enabled] If there are less than 10 registered players, the
+                                 button shall be enabled. Otherwise, it shall be disabled.
+                  \item[Visible] Yes
+                  \item[Tooltip] Yes: \textit{You can register a maximum of 10 players.}
+                  \item[Events] Triggering this button shall add an entry to the player
+                                table (see \cref{enum:PlayerTable}).
+              \end{description}
+
+    \item \texttt{Button}  \label{enum:StartButton}
+              \begin{description}
+                  \item[Label] Start
+                  \item[Readonly] Yes
+                  \item[Enabled] The button shall be enabled when all the following
+                                 conditions are met:
+                      \begin{itemize}
+                          \item There is a value in the in-a-row edit box
+                                (see \cref{enum:InARowEditBox}).
+                          \item There is a value in the number of rows edit box
+                                (see \cref{enum:RowEditBox}).
+                          \item There is a value in the number of columns edit box
+                                (see \cref{enum:ColumnEditBox}).
+                          \item All players have chosen a color
+                                (see \cref{enum:PlayerTable}).
+                      \end{itemize}
+                  \item[Visible] Yes
+                  \item[Tooltip] No
+                  \item[Alternate control] No
+                  \item[Events] The button shall validate all the fields from the dialog
+                                when clicked. This validation shall take place before any
+                                other action can be triggered. The following elements shall
+                                be validated according to their specifications:
+                                \cref{enum:InARowEditBox}, \cref{enum:RowEditBox} and
+                                \cref{enum:ColumnEditBox}. Furthermore, the following
+                                validation shall take place: the players must all have an
+                                equal amount of game moves at game start, according to the
+                                dialog parameters and the number of registered players.
+              \end{description}
+
+\end{enumerate}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../connectXGuiSpec"
+%%% End:

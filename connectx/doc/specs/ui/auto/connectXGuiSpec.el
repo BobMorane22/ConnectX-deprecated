@@ -12,8 +12,6 @@
     "snippets"
     "proto"
     "img"
-    "files")
-   (LaTeX-add-bibliographies
-    "connectXGuiSpec.bib"))
+    "files"))
  :latex)
 

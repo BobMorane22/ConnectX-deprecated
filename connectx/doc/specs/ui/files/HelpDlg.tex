@@ -1,0 +1,68 @@
+Here is the layout for the game dialog:
+
+\begin{figure}[H]
+  \includegraphics[width = 0.4\textwidth]{\proto Help.png}
+  \caption{The help dialog layout}
+  \label{fig:HelpDlgLayout}
+\end{figure}
+
+The help dialog shall contain the following elements:
+
+\begin{enumerate}
+
+    \item \texttt{Dialog}
+              \begin{description}
+                  \item[Title] Help
+                  \item[Close button] Yes
+                  \item[Minimize button] Yes
+                  \item[Resize button] Yes
+                  \item[Modal] No
+              \end{description}
+
+    \item \texttt{Label}
+              \begin{description}
+                  \item[Label] Do you want to read the manual online?
+                  \item[Readonly] Yes
+                  \item[Visible] Yes
+                  \item[Tooltip] No
+              \end{description}
+
+    \item \texttt{Label}
+              \begin{description}
+                  \item[Label] You will be redirected to the documentation webpage
+                               where help pages are maintained for every release.
+                  \item[Readonly] Yes
+                  \item[Visible] Yes
+                  \item[Tooltip] No
+              \end{description}
+
+    \item \texttt{Button}
+              \begin{description}
+                  \item[Label] Cancel
+                  \item[Readonly] Yes
+                  \item[Enabled] Yes
+                  \item[Visible] Yes
+                  \item[Tooltip] No
+                  \item[Alternate control] No
+                  \item[Events] When the button is clicked, the dialog is removed
+                                and no further action is taken.
+              \end{description}
+
+    \item \texttt{Button}
+              \begin{description}
+                  \item[Label] Read online
+                  \item[Readonly] Yes
+                  \item[Enabled] Yes
+                  \item[Visible] Yes
+                  \item[Alternate control] No
+                  \item[Events] When the button is clicked, a web browser is
+                                launched and the \ttt{Connect X} help webpage
+                                for the running version is opened.
+              \end{description}
+
+\end{enumerate}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../connectXGuiSpec"
+%%% End:

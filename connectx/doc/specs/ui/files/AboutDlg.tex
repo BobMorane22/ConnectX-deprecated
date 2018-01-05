@@ -1,0 +1,99 @@
+Here is the about dialog layout:
+
+\begin{figure}[H]
+  \includegraphics[width = 0.3\textwidth]{\proto About.png}
+  \caption{The about dialog layout}
+  \label{fig:AboutCXDlgLayout}
+\end{figure}
+
+The dialog shall contain the following elements:
+
+\begin{enumerate}
+
+    \item \texttt{Dialog}
+              \begin{description}
+                  \item[Title] About Connect X
+                  \item[Close button] Yes
+                  \item[Minimize button] Yes
+                  \item[Resize button] Yes
+                  \item[Modal] No
+              \end{description}
+
+    \item \texttt{Label}
+              \begin{description}
+                  \item[Label] <Connect X logo>
+                  \item[Readonly] Yes
+                  \item[Visible] Yes
+                  \item[Tooltip] No
+              \end{description}
+
+    \item \texttt{Label}
+              \begin{description}
+                  \item[Label] Connect X $XX:YY$
+                  \item[Readonly] Yes
+                  \item[Visible] Yes
+                  \item[Tooltip] No
+                  \item[Misc] $XX:YY$ represents the complete version number of
+                              \ttt{Connect X}
+              \end{description}
+
+    \item \texttt{Label}
+              \begin{description}
+                  \item[Label] Connect X is a multi-user scallable Fout-in-a-row
+                               game.
+                  \item[Readonly] Yes
+                  \item[Visible] Yes
+                  \item[Tooltip] No
+              \end{description}
+
+    \item \texttt{Label}
+              \begin{description}
+                  \item[Label] Copyright \copyright~AAAA-BBBB Éric Poirier
+                  \item[Readonly] Yes
+                  \item[Visible] Yes
+                  \item[Tooltip] No
+                  \item[Misc] AAAA-BBBB represents the year span for the copyright.
+              \end{description}
+
+    \item \texttt{Button}
+              \begin{description}
+                  \item[Label] Credits
+                  \item[Readonly] Yes
+                  \item[Enabled] Yes
+                  \item[Visible] Yes
+                  \item[Tooltip] No
+                  \item[Alternate control] No
+                  \item[Events] Brings up the credits dialog
+                                (see \cref{dlg:Credits}).
+              \end{description}
+
+    \item \texttt{Button}
+              \begin{description}
+                  \item[Label] Licence
+                  \item[Readonly] Yes
+                  \item[Enabled] Yes
+                  \item[Visible] Yes
+                  \item[Tooltip] No
+                  \item[Alternate control] No
+                  \item[Events] Brings up the licence dialog
+                                (see \cref{dlg:Licence}).
+              \end{description}
+
+    \item \texttt{Button}
+              \begin{description}
+                  \item[Label] Close
+                  \item[Readonly] Yes
+                  \item[Enabled] Yes
+                  \item[Visible] Yes
+                  \item[Tooltip] No
+                  \item[Alternate control] Does the same at using the top right
+                                           corner close button.
+                  \item[Events] Closes the dialog. No other action taken.
+              \end{description}
+
+\end{enumerate}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../connectXGuiSpec"
+%%% End:

@@ -1,0 +1,40 @@
+Here is the layout for the licence dialog:
+
+\begin{figure}[H]
+  \includegraphics[width = 0.42\textwidth]{\proto Licence.png}
+  \caption{The Licence dialog layout}
+  \label{fig:Licence}
+\end{figure}
+
+The dialog shall contain the following elements:
+
+\begin{enumerate}
+
+    \item \texttt{Dialog}
+              \begin{description}
+                  \item[Title] Licence
+                  \item[Close button] Yes
+                  \item[Minimize button] No
+                  \item[Resize button] Yes
+                  \item[Modal] No
+              \end{description}
+
+    \item \texttt{Text box}
+              \begin{description}
+                  \item[Label] <GNU GPL v3 licence>
+                  \item[Readonly] Yes
+                  \item[Enabled] Yes
+                  \item[Visible] Yes
+                  \item[Tooltip] No
+                  \item[Events] No
+                  \item[Misc] The text-box shall be scrollable for users to be
+                              able to inspect the whole licence even without
+                              resizing the dialog.
+              \end{description}
+
+\end{enumerate}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../connectXGuiSpec"
+%%% End:

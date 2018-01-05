@@ -1,0 +1,281 @@
+Here is the layout for the game dialog:
+
+\begin{figure}[H]
+  \includegraphics[width = 0.5\textwidth]{\proto MainWindow.png}
+  \caption{The game dialog layout}
+  \label{fig:GameDlgLayout}
+\end{figure}
+
+The dialog shall have the following elements:
+
+\begin{enumerate}
+
+    \item \texttt{Dialog}
+              \begin{description}
+                  \item[Title] Game
+                  \item[Close button] Yes
+                  \item[Minimize button] Yes
+                  \item[Resize button] Yes
+                  \item[Modal] No
+              \end{description}
+
+    \item\texttt{Menu}
+        \begin{description}
+        \item[Menu items] The following describe the menu elements for
+                          each menu section:
+            \begin{description}
+
+                \item[Game] ~
+                    \begin{description}
+                        \item[New game]
+                        \item[Reinitialize game]
+                        \item[Quit]
+                    \end{description}
+
+                \item[Help] ~
+                    \begin{description}
+                        \item[Show help]
+                        \item[About \ttt{Connect X}]
+                    \end{description}
+
+            \end{description}
+
+            \item[Alternate control] \Alt\ttt{ + g} for the \ttt{Game} menu
+                                     section. \Alt\ttt{+ h} for the \ttt{Help}
+                                     menu section.
+        \end{description}
+
+    \item \texttt{Menu item}
+        \begin{description}
+           \item[Label] New game
+           \item[Readonly] Yes
+           \item[Enabled] Yes
+           \item[Visible] Yes
+           \item[Tooltip] No
+           \item[Events] When triggered, brings up the new game dialog
+                         (see \cref{dlg:NewGame}).
+        \end{description}
+
+    \item \texttt{Menu item}
+        \begin{description}
+           \item[Label] Reinitialize game
+           \item[Readonly] Yes
+           \item[Enabled] Yes
+           \item[Visible] Yes
+           \item[Tooltip] No
+           \item[Events] When triggered, the game is reinitialized, which
+                         means that it is put in the exact same state as
+                         it was after the initialization (i.e. when it had
+                         just been created).
+           \item[Alternate control] \label{enum:ReinitializeMenuItem} The
+                                    Reinitialize button, at the bottom of
+                                    the dialog (see \cref{enum:ReinitializeButton}).
+        \end{description}
+
+    \item \texttt{Menu item}
+        \begin{description}
+           \item[Label] Quit
+           \item[Readonly] Yes
+           \item[Enabled] Yes
+           \item[Visible] Yes
+           \item[Tooltip] No
+           \item[Alternate control] The Close \ttt{Button} of the dialog.
+           \item[Events] When triggered, the application is closed.
+        \end{description}
+
+    \item \texttt{Menu item}
+        \begin{description}
+           \item[Label] Show help
+           \item[Readonly] Yes
+           \item[Enabled] Yes
+           \item[Visible] Yes
+           \item[Tooltip] No
+           \item[Events] When triggered, brings up the help dialog (see
+                         \cref{dlg:Help}).
+        \end{description}
+
+    \item \texttt{Menu item}
+        \begin{description}
+           \item[Label] About \ttt{Connect X}
+           \item[Readonly] Yes
+           \item[Enabled] Yes
+           \item[Visible] Yes
+           \item[Tooltip] No
+           \item[Events] When triggered, brings up the about \ttt{Connect X}
+                         dialog (see \cref{dlg:AboutCX}).
+        \end{description}
+
+    \item \texttt{Section}
+              \begin{description}
+                  \item[Label] Game information
+                  \item[Readonly] Yes
+                  \item[Folding] No
+                  \item[Visible] Yes
+                  \item[Tooltip] No
+              \end{description}
+
+    \item \texttt{Label}
+              \begin{description}
+                  \item[Label] Active player:
+                  \item[Readonly] Yes
+                  \item[Visible] Yes
+                  \item[Tooltip] No
+              \end{description}
+
+    \item \texttt{Label}
+               \begin{description}
+                   \item[Label] <Active player's name>
+                   \item[Readonly] Yes
+                   \item[Visible] Yes
+                   \item[Tooltip] No
+                   \item[Misc] Contents shall vary according to the player
+                               that is the active player. Each turn, this
+                               content will get updated. It shall also be
+                               updated when the game is reinitialized.
+               \end{description}
+
+    \item \texttt{Label}
+              \begin{description}
+                  \item[Label] <Active player's disc color>
+                  \item[Readonly] Yes
+                  \item[Visible] Yes
+                  \item[Tooltip] No
+                  \item[Misc] Contents shall vary according to the player
+                              that is the active player. Each turn, this
+                              content will get updated. It shall also be
+                              updated when the game is reinitialized.
+              \end{description}
+
+    \item \texttt{Label}
+              \begin{description}
+                  \item[Label] Next player:
+                  \item[Readonly] Yes
+                  \item[Visible] Yes
+                  \item[Tooltip] No
+              \end{description}
+
+    \item \texttt{Label}
+              \begin{description}
+                  \item[Label] <Next player's name>
+                  \item[Readonly] Yes
+                  \item[Visible] Yes
+                  \item[Tooltip] No
+                  \item[Misc] Contents shall vary according to the player
+                              that is the next player. Each turn, this
+                              content will get updated. It shall also be
+                              updated when the game is reinitialized.
+              \end{description}
+
+    \item \texttt{Label}
+              \begin{description}
+                  \item[Label] <Next player's disc color>
+                  \item[Readonly] Yes
+                  \item[Visible] Yes
+                  \item[Tooltip] No
+                  \item[Misc] Contents shall vary according to the player
+                              that is the next player. Each turn, this
+                              content will get updated. It shall also be
+                              updated when the game is reinitialized.
+              \end{description}
+
+    \item \texttt{Label}
+              \begin{description}
+                  \item[Label] In-a-row value:
+                  \item[Readonly] Yes
+                  \item[Visible] Yes
+                  \item[Tooltip] No
+              \end{description}
+
+    \item \texttt{Label}
+              \begin{description}
+                  \item[Label] <In-a-row value>
+                  \item[Readonly] Yes
+                  \item[Visible] Yes
+                  \item[Tooltip] No
+                  \item[Misc] This value does not change for a particular game.
+                              If a new game is defined, it is updated to the
+                              new game's in-a-row value.
+              \end{description}
+
+    \item \texttt{Label}
+              \begin{description}
+                  \item[Label] Number of moves left:
+                  \item[Readonly] Yes
+                  \item[Visible] Yes
+                  \item[Tooltip] No
+              \end{description}
+
+    \item \texttt{Label}
+              \begin{description}
+                  \item[Label] <Number of moves left>
+                  \item[Readonly] Yes
+                  \item[Visible] Yes
+                  \item[Tooltip] No
+                  \item[Misc] This value shall be updated at every turn change
+                              to reflet the actual number of remaining moves
+                              for the current game. It shall also be updated
+                              to show the total number of turn for the entire
+                              game when the game is reinitialized.
+              \end{description}
+
+    \item \texttt{Section}
+              \begin{description}
+                  \item[Label] Game board
+                  \item[Readonly] Yes
+                  \item[Folding] No
+                  \item[Visible] Yes
+                  \item[Tooltip] No
+              \end{description}
+
+    \item \texttt{Game board}
+              \begin{description}
+                  \item[General idea] The \ttt{Game board} element is included here
+                                      as an entity in itself, even though GUI frameworks
+                                      don't usually provide such a thing directly. This
+                                      means that the implementer as much liberty in the
+                                      way the \ttt{Game board} entity is implemented in
+                                      terms of GUI; only the following general specications
+                                      shall be met by the \ttt{Game board}.
+                  \item[Readonly] Yes
+                  \item[Next disc area] The game board shall contain an area where the next
+                                        disc to be placed in the game board is visible.
+                  \item[Next disc movement] \label{enum:GameBoardDiscMovement} The following
+                                            controls shall be available to choose where the
+                                            next disc will be placed. The disc shall be
+                                            movable left and right via the \LArrow and
+                                            \RArrow keys and by dragging it on the wanted
+                                            game board column.
+                  \item[Column highlighting] Each time the next disc is moved to a game board
+                                             column (either with the keyboard or the mouse),
+                                             the column shall be highlighted.
+                  \item[Disc placement] To place a disc in a column, you first move the disc
+                                        to that column (see \cref{enum:GameBoardDiscMovement}).
+                                        from there, the disc shall be placed\footnote{if
+                                        there is still room in the column, of course. Otherwise
+                                        nothing shall happen} if the \DArrow key is pressed or
+                                        the right mouse button is released (dropping).
+              \end{description}
+
+
+    \item \texttt{Button}
+              \begin{description}
+                  \item[Label] Reinitialize
+                  \item[Readonly] Yes
+                  \item[Enabled] Yes
+                  \item[Visible] Yes
+                  \item[Tooltip] No
+                  \item[Alternate control] \label{enum:ReinitializeButton} Through the
+                                           menu: \ttt{Game > Reinitialize Game}
+                                           (see \cref{enum:ReinitializeMenuItem}).
+                  \item[Events] When triggered, the game is reinitialized, which
+                                means that it is put in the exact same state as
+                                it was after the initialization (i.e. when it had
+                                just been created).
+              \end{description}
+
+\end{enumerate}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../connectXGuiSpec"
+%%% End:

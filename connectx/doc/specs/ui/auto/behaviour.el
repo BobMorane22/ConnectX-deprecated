@@ -1,17 +1,27 @@
 (TeX-add-style-hook
  "behaviour"
  (lambda ()
+   (TeX-run-style-hooks
+    "GameDlg"
+    "NewGameDlg"
+    "HelpDlg"
+    "AboutDlg"
+    "CreditsDlg"
+    "LicenceDlg"
+    "MessageBoxes")
    (LaTeX-add-labels
     "dlg:Game"
-    "ssec:MenuBar"
-    "ssec:GameBoardDlgBehaviour"
+    "fig:GameDlgLayout"
     "dlg:NewGame"
-    "dlg:PlayerReg"
+    "fig:NewGameDlgLayout"
     "dlg:Help"
+    "fig:HelpDlgLayout"
     "dlg:AboutCX"
+    "fig:AboutCXDlgLayout"
     "dlg:Credits"
+    "fig:CreditsDlgLayout"
     "dlg:Licence"
-    "dlg::message"
-    "tab:MessageDialogs"))
+    "fig:Licence"
+    "dlg::messageBox"))
  :latex)
 
