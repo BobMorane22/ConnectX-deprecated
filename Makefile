@@ -23,6 +23,7 @@
 #    5. Doxygen
 #    6. TeXLive
 #    7. Latexmke
+#    8. Gtkmm3
 #
 #--------------------------------------------------------------------------------------------------#
 
@@ -52,13 +53,7 @@ TARGETS  += cxutil     \
 all: $(MAIN)
 
 $(MAIN): $(TARGETS)
-
-cxutil:
-	$(MAKE) -C cxutil
-
-cxutiltest:
-	$(MAKE) -C cxutil/test
-	python $(TESTS_RUNNER) $(CXUTIL_UNIT_TESTS_EXEC) $(CXUTIL_UNIT_TESTS_LOG)
+	$(MAKE) -C connectx
 
 cxbase:
 	$(MAKE) -C cxbase
@@ -66,6 +61,13 @@ cxbase:
 cxbasetest:
 	$(MAKE) -C cxbase/test
 	python $(TESTS_RUNNER) $(CXBASE_UNIT_TESTS_EXEC) $(CXBASE_UNIT_TESTS_LOG)
+
+cxutil:
+	$(MAKE) -C cxutil
+
+cxutiltest:
+	$(MAKE) -C cxutil/test
+	python $(TESTS_RUNNER) $(CXUTIL_UNIT_TESTS_EXEC) $(CXUTIL_UNIT_TESTS_LOG)
 
 cxutildoc:
 	$(MAKE) -C cxutil/doc

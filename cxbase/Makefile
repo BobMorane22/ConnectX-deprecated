@@ -46,7 +46,7 @@ OBJS     = $(OBJ_DIR)/Color.o\
            $(OBJ_DIR)/Player.o\
            $(OBJ_DIR)/Position.o
 
-LIBS = -libcxutil.a
+LIBS = -lcxutil
 
 # Build output:
 

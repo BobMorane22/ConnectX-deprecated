@@ -19,38 +19,41 @@
 #--------------------------------------------------------------------------------------------------#
 
 # Compiler:
-CPPFLAGS             = $(OPT_FLAGS) $(DEBUG_FLAGS) $(NO_LINKER_FLAGS) $(STANDARD_FLAGS) \
-                       $(WARN_AS_ERRORS_FLAGS)
+CPPFLAGS = $(OPT_FLAGS) $(DEBUG_FLAGS) $(STANDARD_FLAGS) $(WARN_AS_ERRORS_FLAGS)
 
 # Source files, headers, etc.:
 MAKEFILE_LOC = $(SRC_ROOT)/connectx
 OBJ_DIR      = $(BIN_ROOT)/connectx
 OUT_DIR      = $(BIN_ROOT)/connectx
 LIBS_OUT     = $(BIN_ROOT)/connectx/libs
+LIBS_INCLUDE = -L$(LIBS_OUT)
 INCLUDES     = -I$(MAKEFILE_LOC)/src -I$(MAKEFILE_LOC)/include
 VPATH        = src
 
-SRCS     = \
-OBJS     = $(OBJ_DIR)/\
-LIBS =
+SRCS     = main.cpp
+
+OBJS     = $(OBJ_DIR)/main.o
+
+LIBS = -lcxbase   \
+       -lcxutil
 
 # Build output:
 
 # Product:
-MAIN = libconnectx.a # static library
+MAIN = connectx
 
 
 all: make_dir $(MAIN)
 	@echo $(MAIN) has been compiled!
 
 $(MAIN): $(OBJS)
-	@echo Invoquing GCC Archiver...
-	ar -r $(LIBS_OUT)/$(MAIN) $(OBJS)
-	@echo Static library $(MAIN) created!
+	@echo Invoquing GCC...
+	$(CPPC) $(CPPFLAGS) $(LIBS_INCLUDE) $(INCLUDES) -o $(OUT_DIR)/$(MAIN) $(OBJS) $(LIBS) `pkg-config gtkmm-3.0 --libs`
+	@echo $(MAIN) program created!
 
 $(OBJ_DIR)/%.o: %.cpp
 	@echo Invoquing GCC...
-	$(CPPC) $(CPPFLAGS) $(INCLUDES) -c $< -o $@
+	$(CPPC) $(CPPFLAGS) -c $(INCLUDES) $< -o $@ $(LIBS) $(LIBS_INCLUDE) `pkg-config gtkmm-3.0 --cflags`
 	@echo Object files created!
 
 make_dir:
