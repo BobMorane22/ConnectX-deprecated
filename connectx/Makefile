@@ -30,9 +30,11 @@ LIBS_INCLUDE = -L$(LIBS_OUT)
 INCLUDES     = -I$(MAKEFILE_LOC)/src -I$(MAKEFILE_LOC)/include
 VPATH        = src
 
-SRCS     = main.cpp
+SRCS     = GameWindow.cpp \
+           main.cpp
 
-OBJS     = $(OBJ_DIR)/main.o
+OBJS     = $(OBJ_DIR)/GameWindow.o \
+           $(OBJ_DIR)/main.o
 
 LIBS = -lcxbase   \
        -lcxutil
@@ -43,7 +45,7 @@ LIBS = -lcxbase   \
 MAIN = connectx
 
 
-all: make_dir $(MAIN)
+all: make_dir runtime_dependencies $(MAIN)
 	@echo $(MAIN) has been compiled!
 
 $(MAIN): $(OBJS)
@@ -59,6 +61,13 @@ $(OBJ_DIR)/%.o: %.cpp
 make_dir:
 	mkdir -p $(OBJ_DIR)
 	mkdir -p $(LIBS_OUT)
+	mkdir -p $(BIN_ROOT)/$(MAIN)/icons
+
+runtime_dependencies:
+	cp $(MAKEFILE_LOC)/img/icons/cxicon16.png $(BIN_ROOT)/$(MAIN)/icons
+	cp $(MAKEFILE_LOC)/img/icons/cxicon32.png $(BIN_ROOT)/$(MAIN)/icons
+	cp $(MAKEFILE_LOC)/img/icons/cxicon64.png $(BIN_ROOT)/$(MAIN)/icons
+	cp $(MAKEFILE_LOC)/img/icons/cxicon128.png $(BIN_ROOT)/$(MAIN)/icons
 
 clean:
 	@echo Removing object files...
