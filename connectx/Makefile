@@ -27,14 +27,19 @@ OBJ_DIR      = $(BIN_ROOT)/connectx
 OUT_DIR      = $(BIN_ROOT)/connectx
 LIBS_OUT     = $(BIN_ROOT)/connectx/libs
 LIBS_INCLUDE = -L$(LIBS_OUT)
-INCLUDES     = -I$(MAKEFILE_LOC)/src -I$(MAKEFILE_LOC)/include
+INCLUDES     = -I$(MAKEFILE_LOC)/src        \
+               -I$(MAKEFILE_LOC)/include    \
+               -I$(SRC_ROOT)/cxbase/include \
+               -I$(SRC_ROOT)/cxutil/include
 VPATH        = src
 
 SRCS     = GameWindow.cpp \
-           main.cpp
+           main.cpp       \
+           util.cpp
 
 OBJS     = $(OBJ_DIR)/GameWindow.o \
-           $(OBJ_DIR)/main.o
+           $(OBJ_DIR)/main.o       \
+           $(OBJ_DIR)/util.o
 
 LIBS = -lcxbase   \
        -lcxutil

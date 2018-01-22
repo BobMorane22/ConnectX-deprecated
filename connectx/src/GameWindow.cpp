@@ -1,10 +1,18 @@
+#include <iostream>
+
 #include "GameWindow.h"
+#include "util.h"
 
 GameWindow::GameWindow()
 {
     // Window setup:
     set_title("Connect X");
-    set_icon_from_file("./connectx/img/icons/cxicon16.png");
+
+    std::string iconPath{currentExecutablePath()};
+    iconPath.append("/icons/cxicon16.png");
+    std::cout << iconPath << std::endl;
+
+    set_icon_from_file(iconPath);
     set_position(Gtk::WIN_POS_CENTER);
 
     // Layouts registration:

@@ -1,3 +1,5 @@
+#include <string>
+
 #include <gtkmm/main.h>
 
 #include "GameWindow.h"

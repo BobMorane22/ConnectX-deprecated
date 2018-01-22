@@ -46,14 +46,16 @@ TARGETS  += cxutil     \
             cxbasetest \
             cxutildoc  \
             cxbasedoc  \
-            cxcppnorm
+            cxcppnorm  \
+            cxexec     \
+            cxexectest \
+            cxexecdoc
 
 .PHONY: cxutil cxbase
 
 all: $(MAIN)
 
 $(MAIN): $(TARGETS)
-	$(MAKE) -C connectx
 
 cxbase:
 	$(MAKE) -C cxbase
@@ -77,6 +79,15 @@ cxbasedoc:
 
 cxcppnorm:
 	$(MAKE) -C cx_cpp_norme
+
+cxexec:
+	$(MAKE) -C connectx
+
+cxexectest:
+	@echo Nothing available so far...
+
+cxexecdoc:
+	@echo Nothing available so far...
 
 mrproper:
 	@echo Cleaning ConnectX...
