@@ -34,7 +34,6 @@
 #define IENFORCECONTRACT_H_C97649B0_072C_4320_952D_D6E7DF1D98D0
 
 #include "ContractException.h"
-#include "../src/cxutilInternal.h"
 
 namespace cxutil
 {

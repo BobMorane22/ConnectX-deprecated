@@ -24,26 +24,24 @@ CPPFLAGS             = $(OPT_FLAGS) $(DEBUG_FLAGS) $(NO_LINKER_FLAGS) $(STANDARD
 
 # Source files, headers, etc.:
 MAKEFILE_LOC = $(SRC_ROOT)/cxbase
-OBJ_DIR      = $(BIN_ROOT)/connectx
+OBJ_DIR      = $(BIN_ROOT)/connectx/objects/cxbase
 OUT_DIR      = $(BIN_ROOT)/connectx
 LIBS_OUT     = $(BIN_ROOT)/connectx/libs
 LIBS_INCLUDE = -static -L$(LIBS_OUT)
-INCLUDES     = -I$(MAKEFILE_LOC)/src -I$(MAKEFILE_LOC)/include -I$(SRC_ROOT)
+INCLUDES     = -I$(SRC_ROOT)
 VPATH        = src
 
-SRCS     = Color.cpp\
-           Disc.cpp\
-           Game.cpp\
-           GameBoard.cpp\
-           Player.cpp\
+SRCS     = Disc.cpp      \
+           Game.cpp      \
+           GameBoard.cpp \
+           Player.cpp    \
            Position.cpp
 
 
-OBJS     = $(OBJ_DIR)/Color.o\
-           $(OBJ_DIR)/Disc.o\
-           $(OBJ_DIR)/Game.o\
-           $(OBJ_DIR)/GameBoard.o\
-           $(OBJ_DIR)/Player.o\
+OBJS     = $(OBJ_DIR)/Disc.o      \
+           $(OBJ_DIR)/Game.o      \
+           $(OBJ_DIR)/GameBoard.o \
+           $(OBJ_DIR)/Player.o    \
            $(OBJ_DIR)/Position.o
 
 LIBS = -lcxutil
@@ -79,7 +77,7 @@ clean:
 mrproper:
 	@echo Cleaning project...
 	$(RM) $(OBJ_DIR)/*.o
-	$(RM) $(OUT_DIR)/$(MAIN)
+	$(RM) $(LIBS_OUT)/$(MAIN)
 	@echo Project cleaned!
 
 depend: $(SRCS)

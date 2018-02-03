@@ -24,26 +24,28 @@ CPPFLAGS             = $(OPT_FLAGS) $(DEBUG_FLAGS) $(NO_LINKER_FLAGS) $(STANDARD
 
 # Source files, headers, etc.:
 MAKEFILE_LOC = $(SRC_ROOT)/cxutil
-OBJ_DIR      = $(BIN_ROOT)/connectx
+OBJ_DIR      = $(BIN_ROOT)/connectx/objects/cxutil
 OUT_DIR      = $(BIN_ROOT)/connectx
 LIBS_OUT     = $(BIN_ROOT)/connectx/libs
 INCLUDES     = -I$(MAKEFILE_LOC)/src -I$(MAKEFILE_LOC)/include
 VPATH        = src
 
-SRCS     = ContractException.cpp\
-           Date.cpp\
-           ISubject.cpp\
-           Logger.cpp\
-           Name.cpp\
-           ReturnCode.cpp\
+SRCS     = Color.cpp             \
+           ContractException.cpp \
+           Date.cpp              \
+           ISubject.cpp          \
+           Logger.cpp            \
+           Name.cpp              \
+           ReturnCode.cpp        \
            Time.cpp
 
-OBJS     = $(OBJ_DIR)/ContractException.o\
-           $(OBJ_DIR)/Date.o\
-           $(OBJ_DIR)/ISubject.o\
-           $(OBJ_DIR)/Logger.o\
-           $(OBJ_DIR)/Name.o\
-           $(OBJ_DIR)/ReturnCode.o\
+OBJS     = $(OBJ_DIR)/Color.o             \
+           $(OBJ_DIR)/ContractException.o \
+           $(OBJ_DIR)/Date.o              \
+           $(OBJ_DIR)/ISubject.o          \
+           $(OBJ_DIR)/Logger.o            \
+           $(OBJ_DIR)/Name.o              \
+           $(OBJ_DIR)/ReturnCode.o        \
            $(OBJ_DIR)/Time.o
 
 LIBS=
@@ -79,7 +81,7 @@ clean:
 mrproper:
 	@echo Cleaning project...
 	$(RM) $(OBJ_DIR)/*.o
-	$(RM) $(OUT_DIR)/$(MAIN)
+	$(RM) $(LIBS_OUT)/$(MAIN)
 	@echo Project cleaned!
 
 depend: $(SRCS)

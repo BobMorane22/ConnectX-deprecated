@@ -32,7 +32,7 @@
 
 #include <gtest/gtest.h>
 
-#include <include/Date.h>
+#include <cxutil/include/Date.h>
 
 
 TEST(Date, DefaultConstructor_TwoSubsequentCalls_SameDate)
@@ -56,7 +56,7 @@ TEST(Date, ConstructorWithParameters_ValidDate_DateSet)
 TEST(Date, ConstructorWithParameters_ValidLeapYearsDates_NoExceptionThrown)
 {
     using namespace cxutil;
-    
+
     ASSERT_NO_THROW((Date{1504, 2, 29}));
     ASSERT_NO_THROW((Date{1600, 2, 29}));
     ASSERT_NO_THROW((Date{1712, 2, 29}));
@@ -129,41 +129,45 @@ TEST_F(ValidDate, Print_ValidDateMonthOver10DayOver10_GoodFormatPrinted)
 {
     std::ostringstream stream;
     cxutil::Date t_date{1988, 11, 22};
-    
+
     stream << t_date;
 
     ASSERT_EQ("1988/11/22", stream.str());
 }
 
+
 TEST_F(ValidDate, Print_ValidDateMonthUnder10DayOver10_GoodFormatPrinted)
 {
     std::ostringstream stream;
     cxutil::Date t_date{1988, 1, 22};
-    
+
     stream << t_date;
 
     ASSERT_EQ("1988/01/22", stream.str());
 }
 
+
 TEST_F(ValidDate, Print_ValidDateMonthOver10DayUnder10_GoodFormatPrinted)
 {
     std::ostringstream stream;
     cxutil::Date t_date{1988, 11, 2};
-    
+
     stream << t_date;
 
     ASSERT_EQ("1988/11/02", stream.str());
 }
 
+
 TEST_F(ValidDate, Print_ValidDateMonthUnder10DayUnder10_GoodFormatPrinted)
 {
     std::ostringstream stream;
     cxutil::Date t_date{1988, 1, 2};
-    
+
     stream << t_date;
 
     ASSERT_EQ("1988/01/02", stream.str());
 }
+
 
 TEST(Date, OperatorEQ_TwoSubsequentSystemDates_ReturnsTrue)
 {

@@ -1,5 +1,5 @@
 /***************************************************************************************************
- * 
+ *
  * Copyright (C) 2017 Connect X team
  *
  * This file is part of Connect X.
@@ -33,7 +33,7 @@
 
 #include <gtest/gtest.h>
 
-#include <include/narrow_cast.h>
+#include <cxutil/include/narrow_cast.h>
 
 
 class DataToCast : public testing::Test
@@ -43,6 +43,7 @@ public:
     const int t_integerPositiveMedium { 0x01 << (7 * sizeof(short))     };
     const int t_integerPositiveHuge   { 0x01 << (7 * sizeof(short) + 1) };
 };
+
 
 TEST_F(DataToCast, NarrowCast_IntToShortWithinBound_NoAssertion)
 {

@@ -1,5 +1,5 @@
 /***************************************************************************************************
- * 
+ *
  * Copyright (C) 2017 Connect X team
  *
  * This file is part of Connect X.
@@ -35,8 +35,8 @@
 #define INCREMENTER_H_5270186B_C2DA_4DAA_AD38_51A070927F8B
 
 
-#include <include/IObserver.h>
-#include <include/ISubject.h>
+#include <cxutil/include/IObserver.h>
+#include <cxutil/include/ISubject.h>
 
 /***********************************************************************************************//**
  * @class Incrementer
@@ -53,19 +53,20 @@ public:
 
     Incrementer(){}
     ~Incrementer() = default;
-    
+
     void increment()
     {
         ++m_data;
         notifyObservers();
     }
-    
+
     int data() const {return m_data;}
-    
+
 private:
 
     int m_data{0};
 };
+
 
 /***********************************************************************************************//**
  * @class ChecksForIncrement
@@ -85,19 +86,20 @@ public:
 
     ChecksForIncrement(){}
     ~ChecksForIncrement() = default;
-    
+
     void update(cxutil::ISubject* p_subject)
     {
         (void)p_subject;
         m_hasBeenIncremented = true;
     }
-    
+
     bool hasBeenIncremented() const {return m_hasBeenIncremented;}
-    
+
 private:
 
     bool m_hasBeenIncremented{false};
 };
+
 
 /***********************************************************************************************//**
  * @class CopiesIncrementerData
@@ -117,17 +119,17 @@ public:
 
     CopiesIncrementerData(){}
     ~CopiesIncrementerData() = default;
-    
+
     void update(cxutil::ISubject* p_subject)
     {
         Incrementer* incrementer {dynamic_cast<Incrementer*>(p_subject)};
         CX_ASSERT(incrementer != nullptr);
-        
+
         m_data = incrementer->data();
     }
-    
+
     int data() const {return m_data;}
-    
+
 private:
 
     int m_data{0};

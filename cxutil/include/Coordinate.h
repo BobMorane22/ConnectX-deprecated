@@ -1,5 +1,5 @@
 /***************************************************************************************************
- * 
+ *
  * Copyright (C) 2016 Connect X team
  *
  * This file is part of Connect X.
@@ -31,9 +31,6 @@
 
 #ifndef COORDINATE_H_DCA364D9_C267_4BAC_9C3F_9FEE7C23F2D7
 #define COORDINATE_H_DCA364D9_C267_4BAC_9C3F_9FEE7C23F2D7
-
-#include "../src/cxutilInternal.h"
-
 
 namespace cxutil
 {

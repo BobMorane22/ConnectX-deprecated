@@ -61,7 +61,7 @@ bool Disc::operator!=(const Disc& p_disc) const
 
 const Disc& Disc::noDisc()
 {
-    static const Disc NO_DISC{Color::transparent()};
+    static const Disc NO_DISC{cxutil::Color::transparent()};
 
     return NO_DISC;
 }
@@ -69,7 +69,7 @@ const Disc& Disc::noDisc()
 
 const Disc& Disc::whiteDisc()
 {
-    static const Disc WHITE_DISC{Color::white()};
+    static const Disc WHITE_DISC{cxutil::Color::white()};
 
     return WHITE_DISC;
 }
@@ -77,7 +77,7 @@ const Disc& Disc::whiteDisc()
 
 const Disc& Disc::blackDisc()
 {
-    static const Disc BLACK_DISC{Color::black()};
+    static const Disc BLACK_DISC{cxutil::Color::black()};
 
     return BLACK_DISC;
 }
@@ -85,7 +85,7 @@ const Disc& Disc::blackDisc()
 
 const Disc& Disc::greenDisc()
 {
-    static const Disc GREEN_DISC{Color::green()};
+    static const Disc GREEN_DISC{cxutil::Color::green()};
 
     return GREEN_DISC;
 }
@@ -93,7 +93,7 @@ const Disc& Disc::greenDisc()
 
 const Disc& Disc::redDisc()
 {
-    static const Disc RED_DISC{Color::red()};
+    static const Disc RED_DISC{cxutil::Color::red()};
 
     return RED_DISC;
 }
@@ -101,7 +101,7 @@ const Disc& Disc::redDisc()
 
 const Disc& Disc::yellowDisc()
 {
-    static const Disc YELLOW_DISC{Color::yellow()};
+    static const Disc YELLOW_DISC{cxutil::Color::yellow()};
 
     return YELLOW_DISC;
 }
@@ -109,7 +109,7 @@ const Disc& Disc::yellowDisc()
 
 const Disc& Disc::blueDisc()
 {
-    static const Disc BLUE_DISC{Color::blue()};
+    static const Disc BLUE_DISC{cxutil::Color::blue()};
 
     return BLUE_DISC;
 }

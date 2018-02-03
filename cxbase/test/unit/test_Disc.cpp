@@ -33,7 +33,7 @@
 
 #include <gtest/gtest.h>
 
-#include <include/Disc.h>
+#include <cxbase/include/Disc.h>
 
 
 using namespace cxbase;
@@ -42,28 +42,28 @@ using namespace cxbase;
 TEST(Disc, Constructor_Default_SetsNoColor)
 {
     Disc t_disc;
-    ASSERT_EQ(t_disc.color(), Color::transparent());
+    ASSERT_EQ(t_disc.color(), cxutil::Color::transparent());
 }
 
 
 TEST(Disc, Constructor_RedColor_SetsRedComponents)
 {
-    Disc t_disc{Color::red()};
-    ASSERT_EQ(t_disc.color(), Color::red());
+    Disc t_disc{cxutil::Color::red()};
+    ASSERT_EQ(t_disc.color(), cxutil::Color::red());
 }
 
 
 TEST(Disc, ColorAccessor_Transparent_GetsTransparent)
 {
     Disc t_disc;
-    ASSERT_EQ(t_disc.color(), Color::transparent());
+    ASSERT_EQ(t_disc.color(), cxutil::Color::transparent());
 }
 
 
 TEST(Disc, EqualOperator_TwoEqualDiscs_ReturnsTrue)
 {
-    Disc t_disc1{Color::red()};
-    Disc t_disc2{Color::red()};
+    Disc t_disc1{cxutil::Color::red()};
+    Disc t_disc2{cxutil::Color::red()};
 
     ASSERT_TRUE(t_disc1 == t_disc2);
 }
@@ -71,8 +71,8 @@ TEST(Disc, EqualOperator_TwoEqualDiscs_ReturnsTrue)
 
 TEST(Disc, OperatorNotEqual_TwoEqualDiscs_ReturnFalse)
 {
-    Disc t_disc1{Color::red()};
-    Disc t_disc2{Color::red()};
+    Disc t_disc1{cxutil::Color::red()};
+    Disc t_disc2{cxutil::Color::red()};
 
     ASSERT_FALSE(t_disc1 != t_disc2);
 }

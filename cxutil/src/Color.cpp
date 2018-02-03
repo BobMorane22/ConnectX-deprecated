@@ -30,14 +30,13 @@
  **************************************************************************************************/
 
 #include "../include/Color.h"
-
-using namespace cxbase;
-
-
-Color::Color() = default;
+#include "../include/narrow_cast.h"
 
 
-Color::Color(int p_red,  int p_green, int p_blue, int p_alpha) : m_red{p_red}, m_green{p_green}, m_blue{p_blue}, m_alpha{p_alpha}
+cxutil::Color::Color() = default;
+
+
+cxutil::Color::Color(int p_red,  int p_green, int p_blue, int p_alpha) : m_red{p_red}, m_green{p_green}, m_blue{p_blue}, m_alpha{p_alpha}
 {
     PRECONDITION(p_red   >= 0);
     PRECONDITION(p_green >= 0);
@@ -58,10 +57,10 @@ Color::Color(int p_red,  int p_green, int p_blue, int p_alpha) : m_red{p_red}, m
 }
 
 
-Color::~Color() = default;
+cxutil::Color::~Color() = default;
 
 
-bool Color::operator==(const Color& p_color) const
+bool cxutil::Color::operator==(const cxutil::Color& p_color) const
 {
     bool sameColor{false};
 
@@ -75,69 +74,69 @@ bool Color::operator==(const Color& p_color) const
 }
 
 
-bool Color::operator!=(const Color& p_color) const
+bool cxutil::Color::operator!=(const cxutil::Color& p_color) const
 {
     return !(*this == p_color);
 }
 
 
-const Color& Color::transparent()
+const cxutil::Color& cxutil::Color::transparent()
 {
-    static const Color TRANSPARENT{255, 255, 255, 0};
+    static const cxutil::Color TRANSPARENT{255, 255, 255, 0};
 
     return TRANSPARENT;
 }
 
 
-const Color& Color::white()
+const cxutil::Color& cxutil::Color::white()
 {
-    static const Color WHITE{255, 255, 255, 255};
+    static const cxutil::Color WHITE{255, 255, 255, 255};
 
     return WHITE;
 }
 
 
-const Color& Color::black()
+const cxutil::Color& cxutil::Color::black()
 {
-    static const Color BLACK{0  , 0  , 0  , 255};
+    static const cxutil::Color BLACK{0  , 0  , 0  , 255};
 
     return BLACK;
 }
 
 
-const Color& Color::green()
+const cxutil::Color& cxutil::Color::green()
 {
-    static const Color GREEN{0  , 128, 0  , 255};
+    static const cxutil::Color GREEN{0  , 128, 0  , 255};
 
     return GREEN;
 }
 
 
-const Color& Color::red()
+const cxutil::Color& cxutil::Color::red()
 {
-    static const Color RED{255, 0  , 0  , 255};
+    static const cxutil::Color RED{255, 0  , 0  , 255};
 
     return RED;
 }
 
 
-const Color& Color::yellow()
+const cxutil::Color& cxutil::Color::yellow()
 {
-    static const Color YELLOW{255, 255, 0  , 255};
+    static const cxutil::Color YELLOW{255, 255, 0  , 255};
 
     return YELLOW;
 }
 
 
-const Color& Color::blue()
+const cxutil::Color& cxutil::Color::blue()
 {
-    static const Color BLUE{0  , 0  , 255, 255};
+    static const cxutil::Color BLUE{0  , 0  , 255, 255};
 
     return BLUE;
 }
 
 
-void Color::checkInvariant() const
+void cxutil::Color::checkInvariant() const
 {
     INVARIANT(m_red   >= 0);
     INVARIANT(m_green >= 0);
@@ -148,4 +147,26 @@ void Color::checkInvariant() const
     INVARIANT(m_green < 256);
     INVARIANT(m_blue  < 256);
     INVARIANT(m_alpha < 256);
+}
+
+
+void cxutil::normalize(const cxutil::Color& p_color,
+                       double& p_red,
+                       double& p_green,
+                       double& p_blue,
+                       double& p_alpha)
+{
+    p_red   = cxutil::narrow_cast<double>(p_color.r()) / 255.0;
+    p_green = cxutil::narrow_cast<double>(p_color.g()) / 255.0;
+    p_blue  = cxutil::narrow_cast<double>(p_color.b()) / 255.0;
+    p_alpha = cxutil::narrow_cast<double>(p_color.a()) / 255.0;
+
+    POSTCONDITION(p_red   >= 0.0);
+    POSTCONDITION(p_red   <= 1.0);
+    POSTCONDITION(p_green >= 0.0);
+    POSTCONDITION(p_green <= 1.0);
+    POSTCONDITION(p_blue  >= 0.0);
+    POSTCONDITION(p_blue  <= 1.0);
+    POSTCONDITION(p_alpha >= 0.0);
+    POSTCONDITION(p_alpha <= 1.0);
 }

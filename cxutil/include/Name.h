@@ -1,5 +1,5 @@
 /***************************************************************************************************
- * 
+ *
  * Copyright (C) 2016 Connect X team
  *
  * This file is part of Connect X.
@@ -32,7 +32,6 @@
 #ifndef NAME_H_2DA14333_B8DB_4500_93A3_12263270A65C
 #define NAME_H_2DA14333_B8DB_4500_93A3_12263270A65C
 
-#include "../src/cxutilInternal.h"
 #include "IEnforceContract.h"
 
 #include <string>

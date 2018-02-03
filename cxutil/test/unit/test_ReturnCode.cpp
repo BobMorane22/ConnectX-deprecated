@@ -1,5 +1,5 @@
 /***************************************************************************************************
- * 
+ *
  * Copyright (C) 2017 Connect X team
  *
  * This file is part of Connect X.
@@ -29,10 +29,9 @@
  *
  **************************************************************************************************/
 
-
 #include <gtest/gtest.h>
 
-#include <include/ReturnCode.h>
+#include <cxutil/include/ReturnCode.h>
 
 using namespace cxutil;
 
@@ -40,34 +39,38 @@ using namespace cxutil;
 TEST(ReturnCode, Constructor_Default_CodeOkIsSet)
 {
     ReturnCode t_returnCode;
-    
+
     ASSERT_TRUE(t_returnCode.isOk());
 }
+
 
 TEST(ReturnCode, Constructor_Default_MessageIsEmpty)
 {
     ReturnCode t_returnCode;
     t_returnCode.isOk(); // Otherwise assertions pop!
-    
+
     ASSERT_EQ(t_returnCode.message(), ReturnCode::NO_MESSAGE);
 }
+
 
 TEST(ReturnCode, Constructor_Default_ReturnCodeIsNotTested)
 {
     ReturnCode t_returnCode;
-    
+
     ASSERT_FALSE(t_returnCode.isTested());
-    
+
     t_returnCode.isOk();
 }
+
 
 TEST(ReturnCode, ConstructorWithParameters_ErrorAndMessage_CodeErrorIsSet)
 {
     ReturnCode t_returnCode{ReturnCode::Code::ERROR, "This in an error..."};
     t_returnCode.isOk();
-    
+
     ASSERT_TRUE(t_returnCode.isError());
 }
+
 
 TEST(ReturnCode, ConstructorWithParameters_ErrorAndMessage_MessageIsSet)
 {
@@ -75,9 +78,10 @@ TEST(ReturnCode, ConstructorWithParameters_ErrorAndMessage_MessageIsSet)
 
     ReturnCode t_returnCode{ReturnCode::Code::ERROR, theMessage};
     t_returnCode.isOk();
-    
+
     ASSERT_TRUE(t_returnCode.message() == theMessage);
 }
+
 
 TEST(ReturnCode, Destructor_CodeNotTested_AssertionThrown)
 {
@@ -92,110 +96,124 @@ TEST(ReturnCode, Destructor_CodeNotTested_AssertionThrown)
     t_returnCode.isOk(); // Object was not really destroyed: we must let the end of scope do it.
 }
 
+
 TEST(ReturnCode, IsOk_CodeIsOK_ReturnsTrue)
 {
     ReturnCode t_returnCode;
-    
+
     ASSERT_TRUE(t_returnCode.isOk());
 }
+
 
 TEST(ReturnCode, IsOk_CodeIsError_ReturnsFalse)
 {
     ReturnCode t_returnCode{ReturnCode::Code::ERROR, ReturnCode::NO_MESSAGE};
-    
+
     ASSERT_FALSE(t_returnCode.isOk());
 }
+
 
 TEST(ReturnCode, IsOk_NewReturnCode_ReturnCodeIsTested)
 {
     ReturnCode t_returnCode;
-    
+
     ASSERT_FALSE(t_returnCode.isTested());
     t_returnCode.isOk();
-    
+
     ASSERT_TRUE(t_returnCode.isTested());
 }
+
 
 TEST(ReturnCode, IsWarning_CodeIsWarning_ReturnsTrue)
 {
     ReturnCode t_returnCode{ReturnCode::Code::WARNING, ReturnCode::NO_MESSAGE};
     t_returnCode.isOk();
-    
+
     ASSERT_TRUE(t_returnCode.isWarning());
 }
+
 
 TEST(ReturnCode, IsWarning_CodeIsError_ReturnsFalse)
 {
     ReturnCode t_returnCode{ReturnCode::Code::ERROR, ReturnCode::NO_MESSAGE};
     t_returnCode.isOk();
-    
+
     ASSERT_FALSE(t_returnCode.isWarning());
 }
+
 
 TEST(ReturnCode, IsError_CodeIsError_ReturnsTrue)
 {
     ReturnCode t_returnCode{ReturnCode::Code::ERROR, ReturnCode::NO_MESSAGE};
     t_returnCode.isOk();
-    
+
     ASSERT_TRUE(t_returnCode.isError());
 }
+
 
 TEST(ReturnCode, IsError_CodeIsOK_ReturnsFalse)
 {
     ReturnCode t_returnCode;
     t_returnCode.isOk();
-    
+
     ASSERT_FALSE(t_returnCode.isError());
 }
+
 
 TEST(ReturnCode, IsCancelled_CodeIsCancel_ReturnsTrue)
 {
     ReturnCode t_returnCode{ReturnCode::Code::CANCEL, ReturnCode::NO_MESSAGE};
     t_returnCode.isOk();
-    
+
     ASSERT_TRUE(t_returnCode.isCancelled());
 }
+
 
 TEST(ReturnCode, IsCancelled_CodeIsError_ReturnsFalse)
 {
     ReturnCode t_returnCode{ReturnCode::Code::ERROR, ReturnCode::NO_MESSAGE};
     t_returnCode.isOk();
-    
+
     ASSERT_FALSE(t_returnCode.isCancelled());
 }
+
 
 TEST(ReturnCode, HoldsMessage_CodeHasNoMessage_ReturnsFalse)
 {
     ReturnCode t_returnCode;
     t_returnCode.isOk();
-    
+
     ASSERT_FALSE(t_returnCode.holdsMessage());
 }
+
 
 TEST(ReturnCode, HoldsMessage_CodeHasMessage_ReturnsTrue)
 {
     ReturnCode t_returnCode{ReturnCode::Code::OK, "A message!"};
     t_returnCode.isOk();
-    
+
     ASSERT_TRUE(t_returnCode.holdsMessage());
 }
+
 
 TEST(ReturnCode, IsTested_ReturnCodeIsNotTested_ReturnsFalse)
 {
     ReturnCode t_returnCode;
-    
+
     ASSERT_FALSE(t_returnCode.isTested());
-    
+
     t_returnCode.isOk(); // Shut assertion...
 }
+
 
 TEST(ReturnCode, IsTested_ReturnCodeIsTested_ReturnsTrue)
 {
     ReturnCode t_returnCode;
     t_returnCode.isOk();
-    
+
     ASSERT_TRUE(t_returnCode.isTested());
 }
+
 
 TEST(ReturnCode, Message_ReturnCodeHasMessage_ReturnsMessage)
 {
@@ -203,14 +221,15 @@ TEST(ReturnCode, Message_ReturnCodeHasMessage_ReturnsMessage)
 
     ReturnCode t_returnCode{ReturnCode::Code::OK, theMessage};
     t_returnCode.isOk();
-    
+
     ASSERT_TRUE(t_returnCode.message() == theMessage);
 }
+
 
 TEST(ReturnCode, Message_ReturnCodeHasNoMessage_ReturnsEmptyString)
 {
     ReturnCode t_returnCode;
     t_returnCode.isOk();
-    
+
     ASSERT_EQ(t_returnCode.message(), ReturnCode::NO_MESSAGE);
 }

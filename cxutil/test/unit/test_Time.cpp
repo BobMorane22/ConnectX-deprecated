@@ -32,7 +32,7 @@
 
 #include <gtest/gtest.h>
 
-#include <include/Time.h>
+#include <cxutil/include/Time.h>
 
 
 TEST(Time, DefaultConstructor_TwoSubsequentCalls_SameTime)
@@ -200,7 +200,7 @@ TEST(Time, OperatorEQ_HoursNotSame_ReturnsFalse)
 
 TEST(Time, OperatorEQ_MinutesNotSame_ReturnsFalse)
 {
-    cxutil::Time t_time1{5, 10, 15}; 
+    cxutil::Time t_time1{5, 10, 15};
     cxutil::Time t_time2{5, 11, 15};
 
     ASSERT_FALSE(t_time1 == t_time2);

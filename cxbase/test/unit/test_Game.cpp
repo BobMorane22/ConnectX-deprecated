@@ -59,7 +59,7 @@ public:
     const std::shared_ptr<GameBoard>            CLASSIC_GAMEBOARD   {std::make_shared<GameBoard>()      };
     const std::shared_ptr<GameBoard>            A_9_BY_9_GAMEBOARD  {std::make_shared<GameBoard>(9, 9)  };
     const std::shared_ptr<GameBoard>            A_6_BY_10_GAMEBOARD {std::make_shared<GameBoard>(6, 10) };
-    
+
 };
 
 

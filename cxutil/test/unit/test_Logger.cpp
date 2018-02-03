@@ -1,5 +1,5 @@
 /***************************************************************************************************
- * 
+ *
  * Copyright (C) 2017 Connect X team
  *
  * This file is part of Connect X.
@@ -35,7 +35,7 @@
 
 #include <gtest/gtest.h>
 
-#include <include/Logger.h>
+#include <cxutil/include/Logger.h>
 
 using namespace cxutil;
 
@@ -46,85 +46,96 @@ TEST(Logger, ConstructorWithParameters_GoodStream_NoExceptionThrown)
     ASSERT_NO_THROW(Logger{&t_stream});
 }
 
+
 TEST(Logger, ConstructorWithParameters_ReadWriteErrorStream_ExceptionThrown)
 {
     std::ostringstream t_stream;
     t_stream.setstate(std::ios::badbit);
-    
+
     ASSERT_THROW(Logger{&t_stream}, PreconditionException);
 }
+
 
 TEST(Logger, ConstructorWithParameters_LogicErrorStream_ExceptionThrown)
 {
     std::ostringstream t_stream;
     t_stream.setstate(std::ios::failbit);
-    
+
     ASSERT_THROW(Logger{&t_stream}, PreconditionException);
 }
+
 
 TEST(Logger, LogInfo_NonEmptyMessage_NoExceptionThrown)
 {
     std::ostringstream t_stream;
     Logger t_logger{&t_stream};
-    
+
     ASSERT_NO_THROW(t_logger.logInfo("A message!"));
 }
+
 
 TEST(Logger, LogInfo_EmptyMessage_ExceptionThrown)
 {
     std::ostringstream t_stream;
     Logger t_logger{&t_stream};
-    
+
     ASSERT_THROW(t_logger.logInfo(""), PreconditionException);
 }
+
 
 TEST(Logger, LogWarning_NonEmptyMessage_NoExceptionThrown)
 {
     std::ostringstream t_stream;
     Logger t_logger{&t_stream};
-    
+
     ASSERT_NO_THROW(t_logger.logWarning("A message!"));
 }
+
 
 TEST(Logger, LogWarning_EmptyMessage_ExceptionThrown)
 {
     std::ostringstream t_stream;
     Logger t_logger{&t_stream};
-    
+
     ASSERT_THROW(t_logger.logWarning(""), PreconditionException);
 }
+
 
 TEST(Logger, LogError_NonEmptyMessage_NoExceptionThrown)
 {
     std::ostringstream t_stream;
     Logger t_logger{&t_stream};
-    
+
     ASSERT_NO_THROW(t_logger.logError("A message!"));
 }
+
 
 TEST(Logger, LogError_EmptyMessage_ExceptionThrown)
 {
     std::ostringstream t_stream;
     Logger t_logger{&t_stream};
-    
+
     ASSERT_THROW(t_logger.logError(""), PreconditionException);
 }
+
 
 TEST(Logger, LogDebug_NonEmptyMessage_NoExceptionThrown)
 {
     std::ostringstream t_stream;
     Logger t_logger{&t_stream};
-    
+
     ASSERT_NO_THROW(t_logger.logDebug("A message!"));
 }
+
 
 TEST(Logger, LogDebug_EmptyMessage_ExceptionThrown)
 {
     std::ostringstream t_stream;
     Logger t_logger{&t_stream};
-    
+
     ASSERT_THROW(t_logger.logDebug(""), PreconditionException);
 }
+
 
 class LoggerTests : public::testing::Test
 {
@@ -145,13 +156,13 @@ public:
 
         std::string header        {"(" + info + "|" + warning + "|" + error + "|" + debug + ")"};
 
-        std::string oneLine       {lineNumber    + separator + 
-                                   executionTime + separator + 
-                                   date          + separator + 
-                                   time          + separator + 
+        std::string oneLine       {lineNumber    + separator +
+                                   executionTime + separator +
+                                   date          + separator +
+                                   time          + separator +
                                    header        + separator +
                                    message       + endOfLine   };
-        
+
         t_logFileFormat = "(" + oneLine + oneLine + oneLine + oneLine + ")+";
     };
 
@@ -162,6 +173,7 @@ private:
     std::regex t_logFileFormat;
 };
 
+
 TEST_F(LoggerTests, AllTypesMessages_ValidLogger_FormatGood)
 {
     std::ostringstream t_logStream;
@@ -169,12 +181,12 @@ TEST_F(LoggerTests, AllTypesMessages_ValidLogger_FormatGood)
     std::string messageWarning {"Something is weird..."};
     std::string messageError   {"Oops, that does not work!"};
     std::string messageDebug   {"Interesting..."};
-    
+
     Logger t_logger(&t_logStream);
-    
+
     silenceCout();
     t_logger.logInfo(messageInfo);
-    
+
     silenceCout();
     t_logger.logWarning(messageWarning);
 
@@ -183,8 +195,8 @@ TEST_F(LoggerTests, AllTypesMessages_ValidLogger_FormatGood)
 
     silenceCout();
     t_logger.logDebug(messageDebug);
-    
+
     std::string t_logContents{t_logStream.str()};
-    
+
     ASSERT_TRUE(std::regex_match(t_logContents, logFileFormat()));
 }

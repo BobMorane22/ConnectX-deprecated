@@ -1,5 +1,5 @@
 /***************************************************************************************************
- * 
+ *
  * Copyright (C) 2017 Connect X team
  *
  * This file is part of Connect X.
@@ -33,23 +33,24 @@
 #define CXUTILAPI_H_FCFC9F42_868C_4859_A16C_11D2013A3788
 
 // Classes:
-#include"Coordinate.h"
-#include"Date.h"
-#include"Logger.h"
-#include"Name.h"
-#include"ReturnCode.h"
+#include "Color.h"
+#include "Coordinate.h"
+#include "Date.h"
+#include "Logger.h"
+#include "Name.h"
+#include "ReturnCode.h"
 
 // Interfaces:
-#include"ICliObject.h"
-#include"IEnforceContract.h"
-#include"IObserver.h"
-#include"ISubject.h"
-#include"UnCopyable.h"
+#include "ICliObject.h"
+#include "IEnforceContract.h"
+#include "IObserver.h"
+#include "ISubject.h"
+#include "UnCopyable.h"
 
 // Other tools:
-#include"Assertion.h"
-#include"ContractException.h"
-#include"narrow_cast.h"
+#include "Assertion.h"
+#include "ContractException.h"
+#include "narrow_cast.h"
 
 #endif // CXUTILAPI_H_FCFC9F42_868C_4859_A16C_11D2013A3788
 

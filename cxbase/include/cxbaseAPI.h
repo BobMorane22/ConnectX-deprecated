@@ -1,5 +1,5 @@
 /***************************************************************************************************
- * 
+ *
  * Copyright (C) 2016 Connect X team
  *
  * This file is part of Connect X.
@@ -33,7 +33,6 @@
 #define CXBASEAPI_H_4CE91685_F206_49F2_AEBE_5CE420E5E72F
 
 #include "Position.h"
-#include "Color.h"
 #include "Disc.h"
 #include "GameBoard.h"
 #include "Player.h"

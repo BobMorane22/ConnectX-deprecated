@@ -1,7 +1,7 @@
 #--------------------------------------------------------------------------------------------------#
 #
 # @file    Makefile
-# @author  morane
+# @author  Éric Poirier
 # @date    December, 2017
 # @version 1
 #
@@ -33,13 +33,9 @@ INCLUDES     = -I$(MAKEFILE_LOC)/src        \
                -I$(SRC_ROOT)/cxutil/include
 VPATH        = src
 
-SRCS     = GameWindow.cpp \
-           main.cpp       \
-           util.cpp
+SRCS     = main.cpp
 
-OBJS     = $(OBJ_DIR)/GameWindow.o \
-           $(OBJ_DIR)/main.o       \
-           $(OBJ_DIR)/util.o
+OBJS     = $(OBJ_DIR)/main.o
 
 LIBS = -lcxbase   \
        -lcxutil

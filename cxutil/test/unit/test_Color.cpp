@@ -32,10 +32,10 @@
 
 #include <gtest/gtest.h>
 
-#include <include/Color.h>
+#include <cxutil/include/Color.h>
 
 
-using namespace cxbase;
+using namespace cxutil;
 
 
 class ColorTests: public::testing::Test
@@ -141,6 +141,7 @@ TEST_F(ColorTests, EqualOperator_SameColors_ReturnsTrue)
     ASSERT_TRUE(t_colorRed == t_colorOther);
 }
 
+
 TEST_F(ColorTests, EqualOperator_DifferentRedElementOnly_ReturnsFalse)
 {
     Color t_colorOther {254, 0, 0, 255};
@@ -183,11 +184,13 @@ TEST_F(ColorTests, NotEqualOperator_DifferentRedElementOnly_ReturnsTrue)
     ASSERT_TRUE(t_colorRed != t_colorOther);
 }
 
+
 TEST_F(ColorTests, NotEqualOperator_DifferentGreenElementOnly_ReturnsTrue)
 {
     Color t_colorOther {255, 1, 0, 255};
     ASSERT_TRUE(t_colorRed != t_colorOther);
 }
+
 
 TEST_F(ColorTests, NotEqualOperator_DifferentBlueElementOnly_ReturnsTrue)
 {
@@ -195,9 +198,49 @@ TEST_F(ColorTests, NotEqualOperator_DifferentBlueElementOnly_ReturnsTrue)
     ASSERT_TRUE(t_colorRed != t_colorOther);
 }
 
+
 TEST_F(ColorTests, NotEqualOperator_DifferentAlphaElementOnly_ReturnsTrue)
 {
     Color t_colorOther {255, 0, 0, 254};
     ASSERT_TRUE(t_colorRed != t_colorOther);
 }
 
+
+TEST(Color, Normalize_SemiTransparentGrey_RGBAOneHalf)
+{
+    const double t_rWanted{127.0 / 255.0};
+    const double t_gWanted{127.0 / 255.0};
+    const double t_bWanted{127.0 / 255.0};
+    const double t_aWanted{127.0 / 255.0};
+
+    const Color semiTransparentGrey{127, 127, 127, 127};
+
+    double t_rResult, t_gResult, t_bResult, t_aResult;
+
+    normalize(semiTransparentGrey, t_rResult, t_gResult, t_bResult, t_aResult);
+
+    ASSERT_EQ(t_rWanted, t_rResult);
+    ASSERT_EQ(t_gWanted, t_gResult);
+    ASSERT_EQ(t_bWanted, t_bResult);
+    ASSERT_EQ(t_aWanted, t_aResult);
+}
+
+
+TEST(Color, Normalize_OpaqueBlack_RGBOneAndAZero)
+{
+    const double t_rWanted{1.0};
+    const double t_gWanted{1.0};
+    const double t_bWanted{1.0};
+    const double t_aWanted{0.0};
+
+    const Color opaqueBlack{255, 255, 255, 0};
+
+    double t_rResult, t_gResult, t_bResult, t_aResult;
+
+    normalize(opaqueBlack, t_rResult, t_gResult, t_bResult, t_aResult);
+
+    ASSERT_EQ(t_rWanted, t_rResult);
+    ASSERT_EQ(t_gWanted, t_gResult);
+    ASSERT_EQ(t_bWanted, t_bResult);
+    ASSERT_EQ(t_aWanted, t_aResult);
+}

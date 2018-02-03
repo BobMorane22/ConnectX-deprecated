@@ -91,22 +91,22 @@ cxexecdoc:
 
 mrproper:
 	@echo Cleaning ConnectX...
-	cd cxutil && make mrproper
-	cd cxutil/test && mrproper
-	cd cxbase && make mrproper
-	cd cxbase/test && make mrproper
-	cd cxutil/doc && make mrproper
-	cd cXbase/doc && make mrproper
-	cd cx_cpp_norme && make mrproper
+	$(MAKE) mrproper -C cxutil
+	$(MAKE) mrproper -C cxutil/test
+	$(MAKE) mrproper -C cxutil/doc
+	$(MAKE) mrproper -C cxbase
+	$(MAKE) mrproper -C cxbase/test
+	$(MAKE) mrproper -C cxbase/doc
+	$(MAKE) mrproper -C cx_cpp_norme
 	@echo ConnectX cleaned!
 
 clean:
 	@echo Removing object files...
-	cd cxutil && make clean
-	cd cxutil/test && make clean
-	cd cxbase && make clean
-	cd cxbase/test && make clean
-	cd cxutil/doc && make clean
-	cd cxbase/doc && make clean
-	cd cx_cpp_norme && make clean
+	$(MAKE) clean -C cxutil
+	$(MAKE) clean -C cxutil/test
+	$(MAKE) clean -C cxbase
+	$(MAKE) clean -C cxbase/test
+	$(MAKE) clean -C cxutil/doc
+	$(MAKE) clean -C cxbase/doc
+	$(MAKE) clean -C cx_cpp_norme
 	@echo Object files removed!

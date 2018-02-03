@@ -1,18 +1,16 @@
-#include <string>
-
 #include <gtkmm/main.h>
-
-#include "GameWindow.h"
+#include <gtkmm/window.h>
 
 int main(int argc, char* argv[])
 {
+    (void)argc;
+    (void)argv;
+
     Gtk::Main app(argc, argv);
 
-    // Main window creation:
-    GameWindow mainWindow;
+    Gtk::Window w;
 
-    // Main loop:
-    Gtk::Main::run(mainWindow);
+    Gtk::Main::run(w);
 
     return 0;
 }

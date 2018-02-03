@@ -1,5 +1,5 @@
 /***************************************************************************************************
- * 
+ *
  * Copyright (C) 2017 Connect X team
  *
  * This file is part of Connect X.
@@ -32,9 +32,9 @@
 
 #include <gtest/gtest.h>
 
-#include <include/Assertion.h>
-#include <include/IObserver.h>
-#include <include/ISubject.h>
+#include <cxutil/include/Assertion.h>
+#include <cxutil/include/IObserver.h>
+#include <cxutil/include/ISubject.h>
 
 #include "Incrementer.h"
 
@@ -44,101 +44,106 @@ using namespace cxutil;
 TEST(ISubject, RegisterObserver_ObserverRegisteredTwice_RegistrationIgnored)
 {
     Incrementer t_subject;
-    
+
     ChecksForIncrement t_observer;
-    
+
     t_subject.registerObserver(&t_observer);
     t_subject.registerObserver(&t_observer);
-    
+
     t_subject.increment();
-    
+
     ASSERT_TRUE(t_observer.hasBeenIncremented());
 }
+
 
 TEST(ISubject, RemoveObserver_ObserverRegisteredTwice_RegistrationIgnored)
 {
     Incrementer t_subject;
-    
+
     ChecksForIncrement t_observer;
-    
+
     t_subject.registerObserver(&t_observer);
     t_subject.removeObserver(&t_observer);
     t_subject.removeObserver(&t_observer);
-    
+
     t_subject.increment();
-    
+
     ASSERT_FALSE(t_observer.hasBeenIncremented());
 }
+
 
 TEST(ISubject, NotifyObservers_TwoObserversNoAccess_ObserversNotified)
 {
     Incrementer t_subject;
-    
+
     ChecksForIncrement t_observer1;
     ChecksForIncrement t_observer2;
-    
+
     t_subject.registerObserver(&t_observer1);
     t_subject.registerObserver(&t_observer2);
-    
+
     t_subject.increment();
-    
+
     ASSERT_TRUE(t_observer1.hasBeenIncremented() && t_observer2.hasBeenIncremented());
 }
+
 
 TEST(ISubject, NotifyObservers_TwoObserversWithAccess_ObserversNotified)
 {
     Incrementer t_subject;
-    
+
     CopiesIncrementerData t_observer1;
     CopiesIncrementerData t_observer2;
-    
+
     t_subject.registerObserver(&t_observer1);
     t_subject.registerObserver(&t_observer2);
-    
+
     t_subject.increment();
-    
+
     ASSERT_TRUE(t_observer1.data() == 1 && t_observer2.data() == 1);
 }
 
 TEST(ISubject, NotifyObservers_TwoObserversOneUnregisteredNoAccess_RegisteredObserverNotifiedOnly)
 {
     Incrementer t_subject;
-    
+
     ChecksForIncrement t_observer1;
     ChecksForIncrement t_observer2;
-    
+
     t_subject.registerObserver(&t_observer1);
-    
+
     t_subject.increment();
-    
+
     ASSERT_TRUE(t_observer1.hasBeenIncremented() && !t_observer2.hasBeenIncremented());
 }
+
 
 TEST(ISubject, NotifyObservers_TwoObserversOneUnregisteredWithAccess_RegisteredObserverNotifiedOnly)
 {
     Incrementer t_subject;
-    
+
     CopiesIncrementerData t_observer1;
     CopiesIncrementerData t_observer2;
-    
+
     t_subject.registerObserver(&t_observer1);
-    
+
     t_subject.increment();
-    
+
     ASSERT_TRUE(t_observer1.data() == 1 && t_observer2.data() == 0);
 }
+
 
 TEST(ISubject, NotifyObservers_TwoObserversTwoKinds_ObserversNotified)
 {
     Incrementer t_subject;
-    
+
     ChecksForIncrement    t_observer1;
     CopiesIncrementerData t_observer2;
-    
+
     t_subject.registerObserver(&t_observer1);
     t_subject.registerObserver(&t_observer2);
-    
+
     t_subject.increment();
-    
+
     ASSERT_TRUE(t_observer1.hasBeenIncremented() && t_observer2.data() == 1);
 }

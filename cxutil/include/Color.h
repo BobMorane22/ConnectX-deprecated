@@ -32,10 +32,10 @@
 #ifndef COLOR_H_52B8DD85_78C2_40D9_9354_8BA481E96E38
 #define COLOR_H_52B8DD85_78C2_40D9_9354_8BA481E96E38
 
-#include <cxutil/include/IEnforceContract.h>
+#include "IEnforceContract.h"
 
 
-namespace cxbase
+namespace cxutil
 {
 
 /***********************************************************************************************//**
@@ -46,8 +46,8 @@ namespace cxbase
  * A Color object is composed of 32 bits defining its position on the RGBA spectrum. Of the 32 
  * bits, 8 are for the red component, 8 are for the green component, 8 are for the blue component 
  * and 8 are for the alpha component, which defines opacity. The absence of color is reesented as 
- * the Color object for which all four RGBA components are set to 0. 
- * 
+ * the Color object for which all four RGBA components are set to 0.
+ *
  * See https://www.w3schools.com/colors/colors_hex.asp for more information.
  *
  * @invariant All RBGA values are set between 0 and 255 inclusively.
@@ -185,6 +185,33 @@ private:
 
 };
 
-} // namespace cxbase
+/***********************************************************************************************//**
+ * @brief Normalize color components.
+ *
+ * Normalizes color components in the [0, 1] interval.
+ *
+ * @param[in]  p_color The color to normalize.
+ * @param[out] p_red   The normalized red component.
+ * @param[out] p_green The normalized green component.
+ * @param[out] p_blue  The normalized blue component.
+ * @param[out] p_alpha The normalized alpha component.
+ *
+ * @post p_red is at least 0.0.
+ * @post p_red is at most 1.0.
+ * @post p_green is at least 0.0.
+ * @post p_green is at most 1.0.
+ * @post p_blue is at least 0.0.
+ * @post p_blue is at most 1.0.
+ * @post p_alpha is at least 0.0.
+ * @post p_alpha is at most 1.0.
+ *
+ **************************************************************************************************/
+void normalize(const Color& p_color,
+               double& p_red,
+               double& p_green,
+               double& p_blue,
+               double& p_alpha);
+
+} // namespace cxutil
 
 #endif /* COLOR_H_52B8DD85_78C2_40D9-9354_8BA481E96E38 */

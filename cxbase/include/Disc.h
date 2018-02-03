@@ -33,7 +33,7 @@
 #define DISC_H_97C4FDCA_4FD8_4DB4_B111_6F80F62266FA
 
 
-#include "Color.h"
+#include <cxutil/include/Color.h>
 
 namespace cxbase
 {
@@ -70,7 +70,7 @@ public:
      * be seen as the absence of a Disc.
      *
      **********************************************************************************************/
-    Disc() : m_color{Color::transparent()} {}
+    Disc() : m_color{cxutil::Color::transparent()} {}
 
 
     /*******************************************************************************************//**
@@ -81,7 +81,7 @@ public:
      * @param[in] p_color The Color with which to create the Disc.
      *
      **********************************************************************************************/
-    explicit Disc(const Color& p_color) : m_color{p_color} {}
+    explicit Disc(const cxutil::Color& p_color) : m_color{p_color} {}
 
 ///@}
 
@@ -93,7 +93,7 @@ public:
      * @return The Disc's Color.
      *
      **********************************************************************************************/
-    Color color() const {return m_color;}
+    cxutil::Color color() const {return m_color;}
 
 ///@}
 
@@ -139,7 +139,7 @@ public:
 
 private:
 
-    Color m_color;  ///< The disc Color.
+    cxutil::Color m_color;  ///< The disc Color.
 
 };
 
