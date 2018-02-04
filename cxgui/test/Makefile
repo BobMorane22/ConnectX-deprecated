@@ -27,15 +27,15 @@ INCLUDES     = -I$(SRC_ROOT)/cxgui
 LIBINCLUDES  = -L$(BIN_ROOT)/connectx/libs
 VPATH        = unit
 
-SRCS      = cxguiTest.cpp\
+SRCS      = cxguiTest.cpp
 
-OBJS      =
+OBJS      = cxguiTest.o
 
 OBJS := $(addprefix $(OBJ_DIR)/,$(OBJS))
 
-LIBS      = -lgtest\
-            -lgtest_main\
-            -lpthread\
+LIBS      = -lgtest      \
+            -lgtest_main \
+            -lpthread    \
             -lcxgui
 
 # Product:

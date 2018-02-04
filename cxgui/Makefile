@@ -24,15 +24,16 @@ CPPFLAGS             = $(OPT_FLAGS) $(DEBUG_FLAGS) $(NO_LINKER_FLAGS) $(STANDARD
 
 # Source files, headers, etc.:
 MAKEFILE_LOC = $(SRC_ROOT)/cxgui
-OBJ_DIR      = $(BIN_ROOT)/connectx
+OBJ_DIR      = $(BIN_ROOT)/connectx/objects/cxgui
 OUT_DIR      = $(BIN_ROOT)/connectx
 LIBS_OUT     = $(BIN_ROOT)/connectx/libs
-INCLUDES     = -I$(MAKEFILE_LOC)/src -I$(MAKEFILE_LOC)/include
+INCLUDES     = -I$(SRC_ROOT)
 VPATH        = src
 
-SRCS     = \
-OBJS     = $(OBJ_DIR)/\
-LIBS =
+SRCS     = Disc.cpp \
+OBJS     = $(OBJ_DIR)/Disc.o \
+LIBS = -lcxbase \
+       -lcxutil \
 
 # Build output:
 
@@ -50,7 +51,7 @@ $(MAIN): $(OBJS)
 
 $(OBJ_DIR)/%.o: %.cpp
 	@echo Invoquing GCC...
-	$(CPPC) $(CPPFLAGS) $(INCLUDES) -c $< -o $@
+	$(CPPC) $(CPPFLAGS) $(INCLUDES) -c $< -o $@ $(LIBS) $(LIBS_INCLUDE) `pkg-config gtkmm-3.0 --cflags`
 	@echo Object files created!
 
 make_dir:

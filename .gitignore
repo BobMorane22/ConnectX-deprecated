@@ -463,6 +463,10 @@ cx_cpp_norme/versions/
 cx_cpp_norme/cx_cpp_norm.pdf
 
 ### cxgui ###
+cxgui/doc/doxygen/html/
+cxgui/doc/doxygen/latex/
+
+### connectx ###
 connectx/doc/specs/ui/connectXGuiSpec.pdf
 connectx/doc/specs/ui/auto/
 connectx/doc/specs/ui/files/auto/

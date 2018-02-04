@@ -34,35 +34,33 @@ TESTS_RUNNER            = $(SRC_ROOT)/cxscripts/python/RunUnitTests.py
 
 CXUTIL_UNIT_TESTS_EXEC  = -t $(BIN_ROOT)/tests/unit/cxutilTest.out
 CXBASE_UNIT_TESTS_EXEC  = -t $(BIN_ROOT)/tests/unit/cxbaseTest.out
+CXGUI_UNIT_TESTS_EXEC  = -t $(BIN_ROOT)/tests/unit/cxguiTest.out
 
 CXUTIL_UNIT_TESTS_LOG   = -l $(BIN_ROOT)/tests/unit/log/cxutilUnitTests.log
 CXBASE_UNIT_TESTS_LOG   = -l $(BIN_ROOT)/tests/unit/log/cxbaseUnitTests.log
+CXGUI_UNIT_TESTS_LOG   = -l $(BIN_ROOT)/tests/unit/log/cxguiUnitTests.log
 
 
 MAIN     = connectx
 TARGETS  += cxutil     \
             cxutiltest \
+            cxutildoc  \
             cxbase     \
             cxbasetest \
-            cxutildoc  \
             cxbasedoc  \
-            cxcppnorm  \
+            cxgui      \
+            cxguitest  \
+            cxguidoc   \
             cxexec     \
             cxexectest \
-            cxexecdoc
+            cxexecdoc  \
+            cxcppnorm
 
-.PHONY: cxutil cxbase
+.PHONY: cxutil cxbase cxgui
 
 all: $(MAIN)
 
 $(MAIN): $(TARGETS)
-
-cxbase:
-	$(MAKE) -C cxbase
-
-cxbasetest:
-	$(MAKE) -C cxbase/test
-	python $(TESTS_RUNNER) $(CXBASE_UNIT_TESTS_EXEC) $(CXBASE_UNIT_TESTS_LOG)
 
 cxutil:
 	$(MAKE) -C cxutil
@@ -74,11 +72,28 @@ cxutiltest:
 cxutildoc:
 	$(MAKE) -C cxutil/doc
 
+cxbase:
+	$(MAKE) -C cxbase
+
+cxbasetest:
+	$(MAKE) -C cxbase/test
+	python $(TESTS_RUNNER) $(CXBASE_UNIT_TESTS_EXEC) $(CXBASE_UNIT_TESTS_LOG)
+
 cxbasedoc:
 	$(MAKE) -C cxbase/doc
 
-cxcppnorm:
-	$(MAKE) -C cx_cpp_norme
+cxgui:
+	$(MAKE) -C cxgui
+
+cxguitest:
+	$(MAKE) -C cxgui/test
+	python $(TESTS_RUNNER) $(CXGUI_UNIT_TESTS_EXEC) $(CXGUI_UNIT_TESTS_LOG)
+
+cxguidoc:
+	$(MAKE) -C cxgui/doc
+
+cxdoc:
+	$(MAKE) -C cxgui/doc
 
 cxexec:
 	$(MAKE) -C connectx
@@ -88,6 +103,8 @@ cxexectest:
 
 cxexecdoc:
 	@echo Nothing available so far...
+cxcppnorm:
+	$(MAKE) -C cx_cpp_norme
 
 mrproper:
 	@echo Cleaning ConnectX...

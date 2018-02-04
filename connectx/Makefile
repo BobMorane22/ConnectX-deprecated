@@ -27,18 +27,16 @@ OBJ_DIR      = $(BIN_ROOT)/connectx
 OUT_DIR      = $(BIN_ROOT)/connectx
 LIBS_OUT     = $(BIN_ROOT)/connectx/libs
 LIBS_INCLUDE = -L$(LIBS_OUT)
-INCLUDES     = -I$(MAKEFILE_LOC)/src        \
-               -I$(MAKEFILE_LOC)/include    \
-               -I$(SRC_ROOT)/cxbase/include \
-               -I$(SRC_ROOT)/cxutil/include
+INCLUDES     = -I$(SRC_ROOT)
 VPATH        = src
 
 SRCS     = main.cpp
 
 OBJS     = $(OBJ_DIR)/main.o
 
-LIBS = -lcxbase   \
-       -lcxutil
+LIBS = -lcxbase \
+       -lcxutil \
+       -lcxgui
 
 # Build output:
 
