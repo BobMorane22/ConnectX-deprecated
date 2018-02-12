@@ -30,8 +30,12 @@ LIBS_OUT     = $(BIN_ROOT)/connectx/libs
 INCLUDES     = -I$(SRC_ROOT)
 VPATH        = src
 
-SRCS     = Disc.cpp \
-OBJS     = $(OBJ_DIR)/Disc.o \
+SRCS     = Disc.cpp          \
+           GeometricShape.cpp
+
+OBJS     = $(OBJ_DIR)/Disc.o          \
+           $(OBJ_DIR)/GeometricShape.o
+
 LIBS = -lcxbase \
        -lcxutil \
 

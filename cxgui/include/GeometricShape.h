@@ -20,19 +20,21 @@
  **************************************************************************************************/
 
 /***********************************************************************************************//**
- * @file    Disc.h
+ * @file    GeometricShape.h
  * @author  Eric Poirier
  * @date    February 2018
  * @version 1.0
  *
- * Interface for a disc widget utility.
+ * Interface for a geometric shape widget utility.
  *
  **************************************************************************************************/
 
-#ifndef DISC_H_533131F6_7FFA_4A0F_B794_8536167052AC
-#define DISC_H_533131F6_7FFA_4A0F_B794_8536167052AC
+#ifndef GEOMETRICSHAPE_H_312A51F3_19BC_48E4_BA7E_5DD0F0908D27
+#define GEOMETRICSHAPE_H_312A51F3_19BC_48E4_BA7E_5DD0F0908D27
 
-#include "GeometricShape.h"
+#include <gtkmm/drawingarea.h>
+
+#include <cxutil/include/Color.h>
 
 namespace cxgui
 {
@@ -42,10 +44,24 @@ namespace cxgui
  *
  *
  **************************************************************************************************/
-class Disc : public GeometricShape
+enum class BorderStyle : int
+{
+    SOLID,
+    DOTTED,
+    DASHED,
+};
+
+/***********************************************************************************************//**
+ * @brief
+ *
+ *
+ **************************************************************************************************/
+class GeometricShape : public Gtk::DrawingArea
 {
 
 public:
+
+///@{ @name Object construction and destruction
 
     /*******************************************************************************************//**
      *
@@ -57,33 +73,62 @@ public:
      * @param p_borderStyle
      *
      **********************************************************************************************/
-    Disc(const cxutil::Color& p_backgroundColor = cxutil::Color::blue() ,
-         const cxutil::Color& p_fillColor       = cxutil::Color::black(),
-         bool p_hasBorder                       = true                  ,
-         const cxutil::Color& p_borderColor     = cxutil::Color::black(),
-         double p_borderThickness               = 0.2                   ,
-         BorderStyle p_borderStyle              = BorderStyle::SOLID
-         );
-
+    GeometricShape(const cxutil::Color& p_backgroundColor ,
+                   const cxutil::Color& p_fillColor       ,
+                   bool p_hasBorder                       ,
+                   const cxutil::Color& p_borderColor     ,
+                   double p_borderThickness               ,
+                   BorderStyle p_borderStyle
+                   );
 
     /*******************************************************************************************//**
+     * @brief Default destructor.
      *
      **********************************************************************************************/
-    virtual ~Disc();
+    virtual ~GeometricShape();
+
+///@}
 
 
 protected:
 
+///@{ @name Visual representation
+
     /*******************************************************************************************//**
-     *
-     * @param p_context
+     * @brief
      *
      **********************************************************************************************/
-    void draw(const Cairo::RefPtr<Cairo::Context>& p_context) override;
+    virtual void draw(const Cairo::RefPtr<Cairo::Context>& p_context) = 0;
+
+
+    /*******************************************************************************************//**
+     * @brief
+     *
+     **********************************************************************************************/
+    bool on_draw(const Cairo::RefPtr<Cairo::Context>& p_context) override final;
+
+
+///@}
+
+
+///@{ @name Data members
+
+    // Background:
+    cxutil::Color m_backgroundColor;        ///<
+
+    // Body:
+    cxutil::Color m_fillColor;              ///<
+
+    // Border:
+    bool          m_hasBorder;              ///<
+    cxutil::Color m_borderColor;            ///<
+    double        m_borderThinkness;        ///<
+    BorderStyle   m_borderStyle;            ///<
+
+///@}
 
 };
 
 } // namespace cxgui
 
-
-#endif // DISC_H_533131F6_7FFA_4A0F_B794_8536167052AC
+#endif // IGEOMETRICSHAPE_H_312A51F3_19BC_48E4_BA7E_5DD0F0908D27
