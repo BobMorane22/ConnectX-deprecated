@@ -20,39 +20,55 @@
  **************************************************************************************************/
 
 /***********************************************************************************************//**
- * @file    GeometricShape.cpp
+ * @file    CXDisc.cpp
  * @author  Eric Poirier
  * @date    February 2018
  * @version 1.0
  *
- * Implementation for a geometric shape widget utility.
+ * Implementation for a Connect X GUI disc utility.
  *
  **************************************************************************************************/
 
-#include "../include/GeometricShape.h"
 
-cxgui::GeometricShape::GeometricShape(const cxutil::Color& p_fillColor       ,
-                                      const cxutil::Color& p_backgroundColor ,
-                                      const cxutil::Color& p_borderColor     ,
-                                      bool p_hasBorder                       ,
-                                      double p_borderThickness               ,
-                                      BorderStyle p_borderStyle
-                                      ): m_fillColor{p_fillColor},
-                                         m_backgroundColor{p_backgroundColor},
-                                         m_borderColor{p_borderColor},
-                                         m_hasBorder{p_hasBorder},
-                                         m_borderThinkness{p_borderThickness},
-                                         m_borderStyle{p_borderStyle}
+#include "../include/CXDisc.h"
+
+
+cx::CXDisc::CXDisc(const cxutil::Color& p_fillColor,
+                   const cxutil::Color& p_backgroundColor,
+                   const cxutil::Color& p_borderColor) :
+                       cxgui::Disc(p_fillColor,
+                                   p_backgroundColor,
+                                   p_borderColor)
 {
 }
 
 
-cxgui::GeometricShape::~GeometricShape() = default;
+cx::CXDisc::~CXDisc() = default;
 
 
-bool cxgui::GeometricShape::on_draw(const Cairo::RefPtr<Cairo::Context>& p_context)
+void cx::CXDisc::updateFillColor(const cxutil::Color& p_newFillColor)
 {
-    draw(p_context);
+    // If necessary, change the fill color:
+    if(m_fillColor != p_newFillColor)
+    {
+        m_fillColor = p_newFillColor;
+    }
+}
 
-    return true;
+
+void cx::CXDisc::showBorder()
+{
+    m_borderColor = cxutil::Color::black();
+}
+
+
+void cx::CXDisc::removeBorder()
+{
+    m_borderColor = cxutil::Color::transparent();
+}
+
+
+void cx::CXDisc::reDraw()
+{
+    DrawingArea::queue_draw();
 }

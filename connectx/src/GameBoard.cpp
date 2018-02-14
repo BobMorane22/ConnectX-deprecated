@@ -20,39 +20,56 @@
  **************************************************************************************************/
 
 /***********************************************************************************************//**
- * @file    GeometricShape.cpp
+ * @file    GameBoard.cpp
  * @author  Eric Poirier
  * @date    February 2018
  * @version 1.0
  *
- * Implementation for a geometric shape widget utility.
+ * Implementation for a Connect X GUI game board utility.
  *
  **************************************************************************************************/
 
-#include "../include/GeometricShape.h"
+#include <iostream>
 
-cxgui::GeometricShape::GeometricShape(const cxutil::Color& p_fillColor       ,
-                                      const cxutil::Color& p_backgroundColor ,
-                                      const cxutil::Color& p_borderColor     ,
-                                      bool p_hasBorder                       ,
-                                      double p_borderThickness               ,
-                                      BorderStyle p_borderStyle
-                                      ): m_fillColor{p_fillColor},
-                                         m_backgroundColor{p_backgroundColor},
-                                         m_borderColor{p_borderColor},
-                                         m_hasBorder{p_hasBorder},
-                                         m_borderThinkness{p_borderThickness},
-                                         m_borderStyle{p_borderStyle}
+#include "../include/GameBoard.h"
+
+
+cx::GameBoard::GameBoard()
 {
+    set_orientation(Gtk::Orientation::ORIENTATION_VERTICAL);
+
+    const int nbRows{6};
+    const int nbColumns{7};
+
+    // Setting up the next disc area first:
+    m_nextDiscArea.set_row_homogeneous(true);
+    m_nextDiscArea.set_column_homogeneous(true);
+
+    for(int col{0}; col < nbColumns; ++col)
+    {
+        NDADisc* noDisc{new NDADisc};
+        noDisc->set_size_request(40, 40);
+        m_nextDiscArea.attach(*noDisc, col, 0, 1, 1);
+    }
+
+    // Then the game board:
+    m_gameBoardGrid.set_row_homogeneous(true);
+    m_gameBoardGrid.set_column_homogeneous(true);
+
+    for(int row{0}; row < nbRows; ++row)
+    {
+        for(int col{0}; col < nbColumns; ++col)
+        {
+            GBDisc* noDisc{new GBDisc};
+            noDisc->set_size_request(40, 40);
+            m_gameBoardGrid.attach(*noDisc, col, row, 1, 1);
+        }
+    }
+
+    // Layout setup:
+    pack1(m_nextDiscArea, true, false);
+    pack2(m_gameBoardGrid, true, false);
 }
 
 
-cxgui::GeometricShape::~GeometricShape() = default;
-
-
-bool cxgui::GeometricShape::on_draw(const Cairo::RefPtr<Cairo::Context>& p_context)
-{
-    draw(p_context);
-
-    return true;
-}
+cx::GameBoard::~GameBoard() = default;

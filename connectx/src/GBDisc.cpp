@@ -20,39 +20,45 @@
  **************************************************************************************************/
 
 /***********************************************************************************************//**
- * @file    GeometricShape.cpp
+ * @file    GBDisc.cpp
  * @author  Eric Poirier
  * @date    February 2018
  * @version 1.0
  *
- * Implementation for a geometric shape widget utility.
+ * Implementation for a Connect X GUI gameboard disc utility.
  *
  **************************************************************************************************/
 
-#include "../include/GeometricShape.h"
+#include "../include/GBDisc.h"
 
-cxgui::GeometricShape::GeometricShape(const cxutil::Color& p_fillColor       ,
-                                      const cxutil::Color& p_backgroundColor ,
-                                      const cxutil::Color& p_borderColor     ,
-                                      bool p_hasBorder                       ,
-                                      double p_borderThickness               ,
-                                      BorderStyle p_borderStyle
-                                      ): m_fillColor{p_fillColor},
-                                         m_backgroundColor{p_backgroundColor},
-                                         m_borderColor{p_borderColor},
-                                         m_hasBorder{p_hasBorder},
-                                         m_borderThinkness{p_borderThickness},
-                                         m_borderStyle{p_borderStyle}
+
+cx::GBDisc::GBDisc() : cx::CXDisc(cxutil::Color::black(), cxutil::Color::blue())
 {
 }
 
 
-cxgui::GeometricShape::~GeometricShape() = default;
-
-
-bool cxgui::GeometricShape::on_draw(const Cairo::RefPtr<Cairo::Context>& p_context)
+cx::GBDisc::GBDisc(const cxbase::Disc& p_backEndDisc) : CXDisc(p_backEndDisc.color(),
+                                                               cxutil::Color::blue())
 {
-    draw(p_context);
-
-    return true;
 }
+
+
+cx::GBDisc::~GBDisc() = default;
+
+
+void cx::GBDisc::hide()
+{
+    updateFillColor(cxutil::Color::black());
+
+    reDraw();
+}
+
+
+void cx::GBDisc::update(const cxbase::Disc& p_newBackEndDisc)
+{
+    updateFillColor(p_newBackEndDisc.color());
+
+    reDraw();
+}
+
+

@@ -49,19 +49,12 @@ public:
 
     /*******************************************************************************************//**
      *
-     * @param p_backgroundColor
-     * @param p_fillColor
-     * @param p_hasBorder
-     * @param p_borderColor
-     * @param p_borderThickness
-     * @param p_borderStyle
-     *
      **********************************************************************************************/
-    Disc(const cxutil::Color& p_backgroundColor = cxutil::Color::blue() ,
-         const cxutil::Color& p_fillColor       = cxutil::Color::black(),
-         bool p_hasBorder                       = true                  ,
+    Disc(const cxutil::Color& p_fillColor       = cxutil::Color::black(),
+         const cxutil::Color& p_backgroundColor = cxutil::Color::blue() ,
          const cxutil::Color& p_borderColor     = cxutil::Color::black(),
-         double p_borderThickness               = 0.2                   ,
+         bool p_hasBorder                       = true                  ,
+         double p_borderThickness               = 0.02                  ,
          BorderStyle p_borderStyle              = BorderStyle::SOLID
          );
 
@@ -75,8 +68,6 @@ public:
 protected:
 
     /*******************************************************************************************//**
-     *
-     * @param p_context
      *
      **********************************************************************************************/
     void draw(const Cairo::RefPtr<Cairo::Context>& p_context) override;

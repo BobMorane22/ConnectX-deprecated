@@ -41,16 +41,16 @@
 #include "../include/Disc.h"
 
 
-cxgui::Disc::Disc(const cxutil::Color& p_backgroundColor,
-                  const cxutil::Color& p_fillColor,
-                  bool p_hasBorder,
+cxgui::Disc::Disc(const cxutil::Color& p_fillColor,
+                  const cxutil::Color& p_backgroundColor,
                   const cxutil::Color& p_borderColor,
+                  bool p_hasBorder,
                   double p_borderThickness,
                   cxgui::BorderStyle p_borderStyle
-                  ) : cxgui::GeometricShape(p_backgroundColor,
-                                            p_fillColor,
-                                            p_hasBorder,
+                  ) : cxgui::GeometricShape(p_fillColor,
+                                            p_backgroundColor,
                                             p_borderColor,
+                                            p_hasBorder,
                                             p_borderThickness,
                                             p_borderStyle)
 {

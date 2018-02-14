@@ -20,105 +20,73 @@
  **************************************************************************************************/
 
 /***********************************************************************************************//**
- * @file    GeometricShape.h
+ * @file    NDADisc.h
  * @author  Eric Poirier
  * @date    February 2018
  * @version 1.0
  *
- * Interface for a geometric shape widget utility.
+ * Interface for a Connect X GUI next disc area disc utility.
  *
  **************************************************************************************************/
 
-#ifndef GEOMETRICSHAPE_H_312A51F3_19BC_48E4_BA7E_5DD0F0908D27
-#define GEOMETRICSHAPE_H_312A51F3_19BC_48E4_BA7E_5DD0F0908D27
+#ifndef NDADISC_H_CB0208FC_FE9C_44BC_87CC_389C335CE6B7
+#define NDADISC_H_CB0208FC_FE9C_44BC_87CC_389C335CE6B7
 
-#include <gtkmm/drawingarea.h>
+#include <cxbase/include/Disc.h>
 
-#include <cxutil/include/Color.h>
+#include "CXDisc.h"
 
-namespace cxgui
+namespace cx
 {
 
 /***********************************************************************************************//**
- * @brief
- *
  *
  **************************************************************************************************/
-enum class BorderStyle : int
-{
-    SOLID,
-    DOTTED,
-    DASHED,
-};
-
-/***********************************************************************************************//**
- * @brief
- *
- *
- **************************************************************************************************/
-class GeometricShape : public Gtk::DrawingArea
+class NDADisc : public CXDisc
 {
 
 public:
 
-///@{ @name Object construction and destruction
-
     /*******************************************************************************************//**
      *
-     **********************************************************************************************/
-    GeometricShape(const cxutil::Color& p_fillColor       ,
-                   const cxutil::Color& p_backgroundColor ,
-                   const cxutil::Color& p_borderColor     ,
-                   bool p_hasBorder                       ,
-                   double p_borderThickness               ,
-                   BorderStyle p_borderStyle
-                   );
-
-    /*******************************************************************************************//**
      *
      **********************************************************************************************/
-    virtual ~GeometricShape();
-
-///@}
-
-
-protected:
-
-///@{ @name Visual representation
-
-    /*******************************************************************************************//**
-     *
-     **********************************************************************************************/
-    virtual void draw(const Cairo::RefPtr<Cairo::Context>& p_context) = 0;
+    NDADisc();
 
 
     /*******************************************************************************************//**
      *
+     *
      **********************************************************************************************/
-    bool on_draw(const Cairo::RefPtr<Cairo::Context>& p_context) override final;
+    NDADisc(const cxbase::Disc& p_backEndDisc);
 
 
-///@}
+    /*******************************************************************************************//**
+     *
+     *
+     **********************************************************************************************/
+    virtual ~NDADisc();
 
 
-///@{ @name Data members
+    /*******************************************************************************************//**
+     *
+     *
+     **********************************************************************************************/
+    virtual void hide() override;
 
-    // Body:
-    cxutil::Color m_fillColor;              ///<
 
-    // Background:
-    cxutil::Color m_backgroundColor;        ///<
+    /*******************************************************************************************//**
+     *
+     *
+     **********************************************************************************************/
+    void update(const cxbase::Disc& p_newBackEndDisc);
 
-    // Border:
-    cxutil::Color m_borderColor;            ///<
-    bool          m_hasBorder;              ///<
-    double        m_borderThinkness;        ///<
-    BorderStyle   m_borderStyle;            ///<
 
-///@}
+private:
 
+    cxbase::Disc m_backEndDisc;   ///<
 };
 
-} // namespace cxgui
+} // namespace cx
 
-#endif // IGEOMETRICSHAPE_H_312A51F3_19BC_48E4_BA7E_5DD0F0908D27
+#endif // NDADISC_H_CB0208FC_FE9C_44BC_87CC_389C335CE6B7
