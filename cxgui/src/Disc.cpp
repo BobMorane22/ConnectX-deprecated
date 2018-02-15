@@ -60,51 +60,16 @@ cxgui::Disc::Disc(const cxutil::Color& p_fillColor,
 cxgui::Disc::~Disc() = default;
 
 
-void cxgui::Disc::draw(const Cairo::RefPtr<Cairo::Context>& p_context)
+void cxgui::Disc::drawBorder(const Cairo::RefPtr<Cairo::Context>& p_context)
 {
-    // Get space allocated by parent widget to the Disc:
     const Gtk::Allocation allocation{get_allocation()};
 
     const int width{allocation.get_width()};
     const int height{allocation.get_height()};
     const int smallestDimension{std::min(width, height)};
 
-    // Get allocated space center position coordinates:
     const int xCenter{width / 2};
     const int yCenter{height / 2};
-
-    // Get every color's individual components:
-    double bgRed, bgGreen, bgBlue, bgAlpha;
-    cxutil::normalize(m_backgroundColor, bgRed, bgGreen, bgBlue, bgAlpha);
-
-    double fillRed, fillGreen, fillBlue, fillAlpha;
-    cxutil::normalize(m_fillColor, fillRed, fillGreen, fillBlue, fillAlpha);
-
-    // If a border is required, change the border thickness according to
-    // parent dimensions to allow smooth resizing of the border as the
-    // parent is resized:
-    if(m_hasBorder)
-    {
-        p_context->set_line_width(smallestDimension * m_borderThinkness);
-    }
-
-    // Define and draw the background:
-    p_context->save();
-
-    p_context->set_source_rgba(bgRed, bgGreen, bgBlue, bgAlpha);
-
-    p_context->move_to(0, 0);
-    p_context->line_to(width, 0);
-    p_context->line_to(width, height);
-    p_context->line_to(0, height);
-    p_context->line_to(0, 0);
-
-    p_context->fill();
-
-    p_context->restore();
-
-    // Define and draw the disc:
-    p_context->save();
 
     p_context->arc(xCenter,
                    yCenter,
@@ -112,7 +77,6 @@ void cxgui::Disc::draw(const Cairo::RefPtr<Cairo::Context>& p_context)
                    0.0,
                    2.0 * M_PI);
 
-    // If a border is required, it needs to be drawn. It is drawn here:
     if(m_hasBorder)
     {
         double bdrRed, bdrGreen, bdrBlue, bdrAlpha;
@@ -150,13 +114,12 @@ void cxgui::Disc::draw(const Cairo::RefPtr<Cairo::Context>& p_context)
                 CX_ASSERT_MSG(false, "Unsupported border style.");
         }
 
-        // Draw the line:
         p_context->stroke_preserve();
     }
+}
 
-    // We fill the disc here:
-    p_context->set_source_rgba(fillRed, fillGreen, fillBlue, fillAlpha);
-    p_context->fill_preserve();
 
-    p_context->restore();
+void cxgui::Disc::checkInvariant() const
+{
+
 }

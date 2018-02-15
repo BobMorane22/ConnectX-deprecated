@@ -30,17 +30,9 @@ LIBS_INCLUDE = -L$(LIBS_OUT)
 INCLUDES     = -I$(SRC_ROOT)
 VPATH        = src
 
-SRCS     = CXDisc.cpp    \
-           GameBoard.cpp \
-           GBDisc.cpp    \
-           main.cpp      \
-           NDADisc.cpp
+SRCS     = main.cpp
 
-OBJS     = $(OBJ_DIR)/CXDisc.o    \
-           $(OBJ_DIR)/GameBoard.o \
-           $(OBJ_DIR)/GBDisc.o    \
-           $(OBJ_DIR)/main.o      \
-           $(OBJ_DIR)/NDADisc.o
+OBJS     = $(OBJ_DIR)/main.o
 
 LIBS = -lcxbase \
        -lcxutil \

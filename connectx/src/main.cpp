@@ -32,17 +32,17 @@
 #include <gtkmm/main.h>
 #include <gtkmm/window.h>
 
-#include "../include/GameBoard.h"
+#include <cxgui/include/Disc.h>
 
+#include "../include/GameBoard.h"
 
 int main(int argc, char* argv[])
 {
     Gtk::Main app(argc, argv);
 
     Gtk::Window w;
-    cx::GameBoard gb;
-
-    w.add(gb);
+    cxgui::Disc disc;
+    w.add(disc);
     w.show_all();
 
     Gtk::Main::run(w);
