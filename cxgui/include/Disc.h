@@ -38,8 +38,11 @@ namespace cxgui
 {
 
 /***********************************************************************************************//**
- * @brief
+ * @brief Customizable disc shapes that can be drawn to the screen.
  *
+ * A disc is a geometric shape which is defined by a circular border.
+ *
+ * @see GeometricShape
  *
  **************************************************************************************************/
 class Disc : public GeometricShape
@@ -48,6 +51,17 @@ class Disc : public GeometricShape
 public:
 
     /*******************************************************************************************//**
+     * @brief Constructor with parameters.
+     *
+     * Construct a cxgui::Disc object. By default, a black disc with a blue background is
+     * constructed.
+     *
+     * @param[in] p_fillColor        The fill color.
+     * @param[in] p_backgroundColor  The background color.
+     * @param[in] p_borderColor      The border color (show if the border is visible).
+     * @param[in] p_hasBorder        Visible state of the border.
+     * @param[in] p_borderThickness  Thickness of the border.
+     * @param[in] p_borderStyle      The border line style.
      *
      **********************************************************************************************/
     Disc(const cxutil::Color& p_fillColor       = cxutil::Color::black(),
@@ -60,6 +74,7 @@ public:
 
 
     /*******************************************************************************************//**
+     * @brief Default destructor.
      *
      **********************************************************************************************/
     virtual ~Disc();
@@ -68,15 +83,19 @@ public:
 private:
 
     /*******************************************************************************************//**
+     * @brief Draws the circular border for the Disc.
+     *
+     * @param[in] p_context The Cairo::Context passed from the drawing handler.
      *
      **********************************************************************************************/
     virtual void drawBorder(const Cairo::RefPtr<Cairo::Context>& p_context) override;
 
 
     /*******************************************************************************************//**
+     * @brief Checks class invariants.
      *
      **********************************************************************************************/
-    void checkInvariant() const override;
+    virtual void checkInvariant() const override;
 
 };
 

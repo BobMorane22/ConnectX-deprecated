@@ -34,9 +34,9 @@ SRCS     = main.cpp
 
 OBJS     = $(OBJ_DIR)/main.o
 
-LIBS = -lcxbase \
-       -lcxutil \
-       -lcxgui
+LIBS = -lcxgui  \
+       -lcxbase \
+       -lcxutil
 
 # Build output:
 

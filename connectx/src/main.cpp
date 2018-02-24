@@ -41,7 +41,12 @@ int main(int argc, char* argv[])
     Gtk::Main app(argc, argv);
 
     Gtk::Window w;
-    cxgui::Disc disc;
+
+    const cxutil::Color fill{125, 0, 0, 255};
+    const cxutil::Color background{0, 125, 0, 255};
+    const cxutil::Color border{0, 0, 125, 255};
+    cxgui::Disc disc{fill, background, border};
+
     w.add(disc);
     w.show_all();
 

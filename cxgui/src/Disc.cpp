@@ -29,14 +29,10 @@
  *
  **************************************************************************************************/
 
-#include <algorithm>
 #include <cmath>
-#include <vector>
 
 #include <cairomm/context.h>
 #include <gtkmm/drawingarea.h>
-
-#include <cxutil/include/Assertion.h>
 
 #include "../include/Disc.h"
 
@@ -77,49 +73,23 @@ void cxgui::Disc::drawBorder(const Cairo::RefPtr<Cairo::Context>& p_context)
                    0.0,
                    2.0 * M_PI);
 
-    if(m_hasBorder)
-    {
-        double bdrRed, bdrGreen, bdrBlue, bdrAlpha;
-        cxutil::normalize(m_borderColor, bdrRed, bdrGreen, bdrBlue, bdrAlpha);
+    // Not simple:
+    /*p_context->move_to(xCenter - width / 4, yCenter - height / 4);
+    p_context->line_to(xCenter + width / 4, yCenter + height / 4);
+    p_context->line_to(xCenter + width / 4, yCenter - height / 4);
+    p_context->line_to(xCenter - width / 4, yCenter + height / 4);
+    p_context->close_path();*/
 
-        p_context->set_source_rgba(bdrRed, bdrGreen, bdrBlue, bdrAlpha);
+    // Simple:
+    /*p_context->move_to(xCenter - width / 4, yCenter - height / 4);
+    p_context->line_to(xCenter + width / 4, yCenter - height / 4);
+    p_context->line_to(xCenter + width / 4, yCenter + height / 4);
+    p_context->line_to(xCenter - width / 4, yCenter + height / 4);
 
-        switch(m_borderStyle)
-        {
-            case BorderStyle::SOLID:
-            {
-                break;
-            }
-            case BorderStyle::DOTTED:
-            {
-                double nbPointsOn{5.0};
-                double nbPointsOff{nbPointsOn};
-
-                const std::vector<double> pattern {nbPointsOn, nbPointsOff};
-                p_context->set_dash(pattern, 0.0);
-
-                break;
-            }
-            case BorderStyle::DASHED:
-            {
-                double nbPointsOn{10.0};
-                double nbPointsOff{nbPointsOn};
-
-                const std::vector<double> pattern {nbPointsOn, nbPointsOff};
-                p_context->set_dash(pattern, 0.0);
-
-                break;
-            }
-            default:
-                CX_ASSERT_MSG(false, "Unsupported border style.");
-        }
-
-        p_context->stroke_preserve();
-    }
+    p_context->close_path();*/
 }
 
 
 void cxgui::Disc::checkInvariant() const
 {
-
 }
