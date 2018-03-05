@@ -20,86 +20,95 @@
  **************************************************************************************************/
 
 /***********************************************************************************************//**
- * @file    Disc.h
+ * @file    RAIICairoPath.h
  * @author  Eric Poirier
- * @date    February 2018
+ * @date    March 2018
  * @version 1.0
  *
- * Interface for a disc widget utility.
+ * Interface for an RAII handler of cairo paths.
  *
  **************************************************************************************************/
 
-#ifndef DISC_H_533131F6_7FFA_4A0F_B794_8536167052AC
-#define DISC_H_533131F6_7FFA_4A0F_B794_8536167052AC
+#ifndef RAIICAIROPATH_H_C422C72E_5D58_446F_ABE5_FF730DC2E5A6
+#define RAIICAIROPATH_H_C422C72E_5D58_446F_ABE5_FF730DC2E5A6
 
-#include "GeometricShape.h"
+#include <cairomm/path.h>
 
 namespace cxgui
 {
 
 /***********************************************************************************************//**
- * @brief Customizable disc shapes that can be drawn to the screen.
+ * @brief RAII handler class for cairo paths.
  *
- * A disc is a geometric shape which is defined by a circular border.
- *
- * @see GeometricShape
+ * The official cairomm documentation (see cairomm/path.h) says that: " The application is
+ * responsible for freeing the Path object when it is no longer needed. ". This RAII handler
+ * makes sure that happens.
  *
  **************************************************************************************************/
-class Disc : public GeometricShape
+class RAIICairoPath
 {
 
 public:
 
-    /*******************************************************************************************//**
-     * @brief Constructor with parameters.
-     *
-     * Construct a cxgui::Disc object. By default, a black disc with a blue background is
-     * constructed.
-     *
-     * @param[in] p_fillColor        The fill color.
-     * @param[in] p_backgroundColor  The background color.
-     * @param[in] p_borderColor      The border color (show if the border is visible).
-     * @param[in] p_hasBorder        Visible state of the border.
-     * @param[in] p_borderThickness  Thickness of the border.
-     * @param[in] p_borderStyle      The border line style.
-     *
-     **********************************************************************************************/
-    Disc(const cxutil::Color& p_fillColor       = cxutil::Color::black(),
-         const cxutil::Color& p_backgroundColor = cxutil::Color::blue() ,
-         const cxutil::Color& p_borderColor     = cxutil::Color::black(),
-         bool p_hasBorder                       = true                  ,
-         double p_borderThickness               = 0.02                  ,
-         BorderStyle p_borderStyle              = BorderStyle::SOLID
-         );
+    RAIICairoPath() = delete;
 
 
     /*******************************************************************************************//**
-     * @brief Default destructor.
+     * @brief C++-handle constructor (Cairomm).
+     *
+     * @param[in] p_pathHandle C++ Cairo path handle.
+     *
+     * @pre The handle is defined (i.e. not nullptr)
      *
      **********************************************************************************************/
-    virtual ~Disc();
+    RAIICairoPath(Cairo::Path* p_pathHandle);
+
+
+    /*******************************************************************************************//**
+     * @brief C-handle constructor (Cairo).
+     *
+     * @param[in] p_pathHandle C Cairo path handle.
+     *
+     * @pre The handle is defined (i.e. not NULL or nullptr)
+     *
+     **********************************************************************************************/
+    RAIICairoPath(cairo_path_t* p_pathHandle);
+
+
+    /*******************************************************************************************//**
+     * @brief Releases the handle.
+     *
+     * See https://www.cairographics.org/manual/cairo-Paths.html for more information.
+     *
+     **********************************************************************************************/
+    ~RAIICairoPath();
+
+
+    /*******************************************************************************************//**
+     * @brief Class member access operator.
+     *
+     * @return The path handle address.
+     *
+     **********************************************************************************************/
+    cairo_path_t* operator->();
+
+
+    /*******************************************************************************************//**
+     * @brief Boolean conversion operator
+     *
+     * @return @c true if the handle is valid, @c false otherwise.
+     *
+     **********************************************************************************************/
+    operator bool() const;
 
 
 private:
 
-    /*******************************************************************************************//**
-     * @brief Draws the circular border for the Disc.
-     *
-     * @param[in] p_context The Cairo::Context passed from the drawing handler.
-     *
-     **********************************************************************************************/
-    void drawCircleBorder(const Cairo::RefPtr<Cairo::Context>& p_context);
-
-
-    /*******************************************************************************************//**
-     * @brief Checks class invariants.
-     *
-     **********************************************************************************************/
-    //virtual void checkInvariant() const override;
+    cairo_path_t* m_pathHandle; ///< The cairo path handle.
 
 };
 
 } // namespace cxgui
 
+#endif // RAIICAIROPATH_H_C422C72E_5D58_446F_ABE5_FF730DC2E5A6
 
-#endif // DISC_H_533131F6_7FFA_4A0F_B794_8536167052AC

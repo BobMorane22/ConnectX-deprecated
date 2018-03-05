@@ -25,7 +25,7 @@
  * @date    February 2018
  * @version 1.0
  *
- * Interface for a geometric shape widget utility.
+ * Interface for a simple and closed geometric shape widget utility.
  *
  **************************************************************************************************/
 
@@ -39,10 +39,50 @@
 namespace cxgui
 {
 
+/*******************************************************************************************//**
+ * @brief Defines the shape's border.
+ *
+ * This functor needs to be defined by any child class to define how the border, for the
+ * particular geometric shape represented by that child class, will be drawn. This method
+ * is automatically called by @c draw(). Here is an example to get a centered circle
+ * shape:
+ *
+ *   @code
+ *
+ *       // Get information abount the containing widget:
+ *       const Gtk::Allocation allocation{get_allocation()};
+ *
+ *       // Calculate needed dimensions:
+ *       const int width{allocation.get_width()};
+ *       const int height{allocation.get_height()};
+ *       const int smallestDimension{std::min(width, height)};
+ *
+ *       const int xCenter{width / 2};
+ *       const int yCenter{height / 2};
+ *
+ *       // Setup the shape:
+ *       p_context->arc(xCenter,
+ *                      yCenter,
+ *                      smallestDimension / 2.5,
+ *                      0.0,
+ *                      2.0 * M_PI);
+ *
+ *       p_context->close_path();
+ *
+ *   @endcode
+ *
+ * @param[in] p_context The Cairo::Context passed from the drawing handler.
+ *
+ * @see draw
+ *
+ **********************************************************************************************/
+using BorderDrawer = std::function<void(const Cairo::RefPtr<Cairo::Context>& p_context)>;
+
+
 /***********************************************************************************************//**
  * @brief Border styles for shapes.
  *
- * Available border line style used to draw a GeometricShape's border. Available styles are:
+ * Available border line styles used to draw a GeometricShape's border. Available styles are:
  *
  * @li @c SOLID  : ____________________
  * @li @c DOTTED : _ _ _ _ _ _ _ _ _ _
@@ -90,9 +130,10 @@ public:
      * @param[in] p_hasBorder        Visible state of the border.
      * @param[in] p_borderThickness  Thickness of the border.
      * @param[in] p_borderStyle      The border line style.
+     * @param[in] p_drawBorder       The border drawing functor.
      *
      * @pre The border thickness is a positive real number(verified when @c on_draw() is called).
-     * @pre p_borderThickness is a positive real number.
+     * @pre The border is a simple and closed curve.
      *
      * @see cx::BorderStyle
      *
@@ -102,23 +143,25 @@ public:
                    const cxutil::Color& p_borderColor     ,
                    bool p_hasBorder                       ,
                    double p_borderThickness               ,
-                   BorderStyle p_borderStyle
+                   BorderStyle p_borderStyle              ,
+                   BorderDrawer p_drawBorder
                    );
+
 
     /*******************************************************************************************//**
      * @brief Default destructor.
      *
-     * Destructs the geometric shape.
+     * Destructs the geometric shape. Note that the destructor is pure virtual.
      *
      **********************************************************************************************/
-    virtual ~GeometricShape();
+    virtual ~GeometricShape() = 0;
 
 ///@}
 
 
 protected:
 
-///@{ @name Shape Actions and properties.
+///@{ @name Shape Actions and Properties.
 
     /******************************************************************************************//**
      * @brief Redraw the geometric shape.
@@ -137,7 +180,7 @@ protected:
      * @param[in] p_newFillColor The new fill region Color.
      *
      *********************************************************************************************/
-    void changeFillColor(const cxutil::Color& p_newFillColor){ m_fillColor = p_newFillColor; };
+    void changeFillColor(const cxutil::Color& p_newFillColor);
 
 
     /******************************************************************************************//**
@@ -155,7 +198,7 @@ protected:
      * @param[in] p_newBackgroundColor The new background region Color.
      *
      *********************************************************************************************/
-    void changeBackgroundColor(const cxutil::Color& p_newBackgroundColor){ m_backgroundColor = p_newBackgroundColor; };
+    void changeBackgroundColor(const cxutil::Color& p_newBackgroundColor);
 
 
     /******************************************************************************************//**
@@ -164,7 +207,7 @@ protected:
      * @return The active background region Color.
      *
      *********************************************************************************************/
-    cxutil::Color backgroundColor() const {  return m_backgroundColor; };
+    cxutil::Color backgroundColor() const { return m_backgroundColor; };
 
 
     /******************************************************************************************//**
@@ -173,7 +216,7 @@ protected:
      * @param[in] p_newBorderColor The new border Color.
      *
      *********************************************************************************************/
-    void changeBorderColor(const cxutil::Color& p_newBorderColor){ m_backgroundColor = p_newBorderColor; };
+    void changeBorderColor(const cxutil::Color& p_newBorderColor);
 
 
     /******************************************************************************************//**
@@ -191,7 +234,7 @@ protected:
      * @param[in] p_newBorderStyle The new boarder style.
      *
      *********************************************************************************************/
-    void changeBorderStyle(BorderStyle p_newBorderStyle){ m_borderStyle = p_newBorderStyle; };
+    void changeBorderStyle(BorderStyle p_newBorderStyle);
 
 
     /******************************************************************************************//**
@@ -238,14 +281,14 @@ protected:
      * @brief Show the border.
      *
      *********************************************************************************************/
-    void showBorder(){ m_hasBorder = true; };
+    void showBorder();
 
 
     /******************************************************************************************//**
      * @brief Hides the border.
      *
      *********************************************************************************************/
-    void removeBorder(){ m_hasBorder = false; };
+    void removeBorder();
 
 ///@}
 
@@ -254,124 +297,16 @@ private:
 
 ///@{ @name Automatic Drawing Process
 
-    /*******************************************************************************************//**
-     * @brief Signal handler called when the widget is to be drawn to the screen.
-     *
-     * This signal handler is called after the widget has been realized and needs to be drawn
-     * to the screen. calling @c reDraw() will trigger this signal handler.
-     *
-     * @param[in] p_context The Cairo::Context passed from the drawing handler.
-     *
-     * @see reDraw
-     *
-     **********************************************************************************************/
-    bool on_draw(const Cairo::RefPtr<Cairo::Context>& p_context) override final;
-
-
-    /*******************************************************************************************//**
-     * @brief Draws the geometric shape.
-     *
-     * This is the actual method doing all the drawing. Its behavior is completely defined by the
-     * the three methods: @c drawBackgroundColor(), @c drawBorder() and @c drawFillColor()
-     * respectively.Overriding the @c drawBorder() method will completely define the shape.
-     *
-     * @param[in] p_context The Cairo::Context passed from the drawing handler.
-     *
-     * @see drawBackgroundColor
-     * @see drawBorder
-     * @see drawFillColor
-     *
-     **********************************************************************************************/
-    void draw(const Cairo::RefPtr<Cairo::Context>& p_context);
-
-
-    /*******************************************************************************************//**
-     * @brief Draws the initial background color for the geometric shape.
-     *
-     * This is called as a sub part of the @c draw() method.
-     *
-     * @param[in] p_context The Cairo::Context passed from the drawing handler.
-     *
-     * @see draw
-     *
-     **********************************************************************************************/
+    bool on_draw            (const Cairo::RefPtr<Cairo::Context>& p_context) override final;
+    void draw               (const Cairo::RefPtr<Cairo::Context>& p_context);
     void drawBackgroundColor(const Cairo::RefPtr<Cairo::Context>& p_context);
-
-
-    /*******************************************************************************************//**
-     * @brief Defines the shape's border.
-     *
-     * This method needs to be overridden by any child class to define how the border, for the
-     * particular geometric shape represented by that child class, will be drawn. This method
-     * is automatically called by @c draw(). Here is an example override to get a centered circle
-     * shape:
-     *
-     *   @code
-     *
-     *       // Get information abount the containing widget:
-     *       const Gtk::Allocation allocation{get_allocation()};
-     *
-     *       // Calculate needed dimensions:
-     *       const int width{allocation.get_width()};
-     *       const int height{allocation.get_height()};
-     *       const int smallestDimension{std::min(width, height)};
-     *
-     *       const int xCenter{width / 2};
-     *       const int yCenter{height / 2};
-     *
-     *       // Setup the shape:
-     *       p_context->arc(xCenter,
-     *                      yCenter,
-     *                      smallestDimension / 2.5,
-     *                      0.0,
-     *                      2.0 * M_PI);
-     *
-     *       p_context->close_path();
-     *
-     *   @endcode
-     *
-     * @param[in] p_context The Cairo::Context passed from the drawing handler.
-     *
-     * @see draw
-     *
-     **********************************************************************************************/
-    virtual void drawBorder(const Cairo::RefPtr<Cairo::Context>& p_context) = 0;
-
-
-    /*******************************************************************************************//**
-     * @brief Draws the initial background color for the geometric shape.
-     *
-     * This is called as a sub part of the @c draw() method.
-     *
-     * @param[in] p_context The Cairo::Context passed from the drawing handler.
-     *
-     * @see draw
-     *
-     **********************************************************************************************/
-    void drawFillColor(const Cairo::RefPtr<Cairo::Context>& p_context);
+    void drawFillColor      (const Cairo::RefPtr<Cairo::Context>& p_context);
 
 ///@}
 
 ///@{ @name Contract
 
-    /*******************************************************************************************//**
-     * @brief Checks if the border is a simple and closed path.
-     *
-     * @return @c true if the border defined in @c drawBorder() is a simple and closed curve,
-     *         @c false otherwise.
-     *
-     **********************************************************************************************/
-    bool isTheBorderASimpleAndClosedCurve();
-
-
-    /*******************************************************************************************//**
-     * @brief Checks the class invariants.
-     *
-     * Checks that:
-     *
-     *   @li The boarder thickness is a positive real number.
-     *
-     **********************************************************************************************/
+    bool isTheBorderASimpleAndClosedCurve() const;
     virtual void checkInvariant() const override;
 
 ///@}
@@ -387,8 +322,9 @@ private:
         // Border:
         cxutil::Color m_borderColor;            ///< The border color.
         bool          m_hasBorder;              ///< The border's visible state.
-        double        m_borderThinkness;        ///< The border thickness.
+        double        m_borderThickness;        ///< The border thickness.
         BorderStyle   m_borderStyle;            ///< The border line style (see BorderStyle).
+        BorderDrawer  m_drawBorder;             ///< The border drawing functor.
 
 ///@}
 
