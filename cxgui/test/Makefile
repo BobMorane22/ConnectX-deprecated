@@ -21,21 +21,29 @@ CPPFLAGS = $(OPT_FLAGS) $(DEBUG_FLAGS) $(STANDARD_FLAGS) \
            $(WARN_AS_ERRORS_FLAGS)
 
 # Source files, headers, etc.:
-OBJ_DIR      = $(BIN_ROOT)/tests/unit
-OUT_DIR      = $(BIN_ROOT)/tests/unit
-INCLUDES     = -I$(SRC_ROOT)/cxgui
-LIBINCLUDES  = -L$(BIN_ROOT)/connectx/libs
-VPATH        = unit
+OBJ_DIR       = $(BIN_ROOT)/tests/unit
+OUT_DIR       = $(BIN_ROOT)/tests/unit
+INCLUDES      = -I$(SRC_ROOT)
+LIBS_INCLUDE  = -L$(BIN_ROOT)/connectx/libs
+VPATH         = unit
 
-SRCS      = cxguiTest.cpp
+SRCS      = cxguiTest.cpp           \
+            test_Disc.cpp           \
+            test_GeometricShape.cpp \
+            test_RAIICairoPath.cpp
 
-OBJS      = cxguiTest.o
+OBJS      = cxguiTest.o           \
+            test_Disc.o           \
+            test_GeometricShape.o \
+            test_RAIICairoPath.o
 
 OBJS := $(addprefix $(OBJ_DIR)/,$(OBJS))
 
 LIBS      = -lgtest      \
             -lgtest_main \
             -lpthread    \
+            -lcxutil     \
+            -lcxbase     \
             -lcxgui
 
 # Product:
@@ -45,12 +53,12 @@ all: make_dir make_log $(MAIN)
 
 $(MAIN): $(OBJS)
 	@echo Invoquing GCC...
-	$(CPPC) $(LIBINCLUDES) -o $(OUT_DIR)/$(MAIN) $(OBJS) $(LIBS)
+	$(CPPC) $(LIBS_INCLUDE) -o $(OUT_DIR)/$(MAIN) $(OBJS) $(LIBS)
 	@echo $(MAIN) has been compiled and linked!
 
 $(OBJ_DIR)/%.o: %.cpp
 	@echo Invoquing GCC...
-	$(CPPC) $(CPPFLAGS) $(INCLUDES) -c $< -o $@
+	$(CPPC) $(CPPFLAGS) $(INCLUDES) `pkg-config gtkmm-3.0 --cflags` -c $< -o $@
 	@echo Object files created!
 
 make_dir:
