@@ -39,46 +39,6 @@
 namespace cxgui
 {
 
-/*******************************************************************************************//**
- * @brief Defines the shape's border.
- *
- * This functor needs to be defined by any child class to define how the border, for the
- * particular geometric shape represented by that child class, will be drawn. This method
- * is automatically called by @c draw(). Here is an example to get a centered circle
- * shape:
- *
- *   @code
- *
- *       // Get information abount the containing widget:
- *       const Gtk::Allocation allocation{get_allocation()};
- *
- *       // Calculate needed dimensions:
- *       const int width{allocation.get_width()};
- *       const int height{allocation.get_height()};
- *       const int smallestDimension{std::min(width, height)};
- *
- *       const int xCenter{width / 2};
- *       const int yCenter{height / 2};
- *
- *       // Setup the shape:
- *       p_context->arc(xCenter,
- *                      yCenter,
- *                      smallestDimension / 2.5,
- *                      0.0,
- *                      2.0 * M_PI);
- *
- *       p_context->close_path();
- *
- *   @endcode
- *
- * @param[in] p_context The Cairo::Context passed from the drawing handler.
- *
- * @see draw
- *
- **********************************************************************************************/
-using BorderDrawer = std::function<void(const Cairo::RefPtr<Cairo::Context>& p_context)>;
-
-
 /***********************************************************************************************//**
  * @brief Border styles for shapes.
  *
@@ -102,17 +62,20 @@ enum class BorderStyle : int
  *
  * A geometric shape is an external boundary (a border) defining two regions: the internal and
  * external regions. These regions are referred to respectively as the fill and the background
- * regions. The border must be a simple and closed curve. The border, although it always exists,
- * might not be visible.
+ * regions. The border must be a simple and closed curve, otherwise drawing behavior is undefined.
+ * The border, although it always exists, might not be visible.
  *
  * Use this base abstract class to derive from if you need to create a geometric shape (square,
- * circle, triangle, etc) that can be drawn to the screen as an independent widget.
+ * circle, triangle, etc) that can be drawn to the screen as an independent widget. Override the
+ * @c drawBorder() method to define your own shape.
  *
  * @invariant The border thickness is a positive real number.
  * @invariant The border is a simple and closed curve.
  *
+ * @see drawBorder
+ *
  **************************************************************************************************/
-class GeometricShape : public Gtk::DrawingArea, public cxutil::IEnforceContract
+class GeometricShape : public Gtk::DrawingArea
 {
 
 public:
@@ -130,10 +93,8 @@ public:
      * @param[in] p_hasBorder        Visible state of the border.
      * @param[in] p_borderThickness  Thickness of the border.
      * @param[in] p_borderStyle      The border line style.
-     * @param[in] p_drawBorder       The border drawing functor.
      *
      * @pre The border thickness is a positive real number(verified when @c on_draw() is called).
-     * @pre The border is a simple and closed curve.
      *
      * @see cx::BorderStyle
      *
@@ -143,18 +104,17 @@ public:
                    const cxutil::Color& p_borderColor     ,
                    bool p_hasBorder                       ,
                    double p_borderThickness               ,
-                   BorderStyle p_borderStyle              ,
-                   BorderDrawer p_drawBorder
+                   BorderStyle p_borderStyle
                    );
 
 
     /*******************************************************************************************//**
      * @brief Default destructor.
      *
-     * Destructs the geometric shape. Note that the destructor is pure virtual.
+     * Destructs the geometric shape.
      *
      **********************************************************************************************/
-    virtual ~GeometricShape() = 0;
+    virtual ~GeometricShape();
 
 ///@}
 
@@ -297,17 +257,60 @@ private:
 
 ///@{ @name Automatic Drawing Process
 
-    bool on_draw            (const Cairo::RefPtr<Cairo::Context>& p_context) override final;
-    void draw               (const Cairo::RefPtr<Cairo::Context>& p_context);
-    void drawBackgroundColor(const Cairo::RefPtr<Cairo::Context>& p_context);
-    void drawFillColor      (const Cairo::RefPtr<Cairo::Context>& p_context);
+    virtual bool on_draw            (const Cairo::RefPtr<Cairo::Context>& p_context) override final;
+    void         draw               (const Cairo::RefPtr<Cairo::Context>& p_context) const;
+    void         drawBackgroundColor(const Cairo::RefPtr<Cairo::Context>& p_context) const;
+    void         drawFillColor      (const Cairo::RefPtr<Cairo::Context>& p_context) const;
+
+
+    /*******************************************************************************************//**
+     * @brief Defines the shape's border.
+     *
+     * This method needs to be overriden by any child class to define how the border, for the
+     * particular geometric shape represented by that child class, will be drawn. This method
+     * is automatically called by @c draw(). Here is an example to get a centered circle
+     * shape:
+     *
+     *   @code
+     *
+     *       // Get information about the containing widget:
+     *       const Gtk::Allocation allocation{get_allocation()};
+     *
+     *       // Calculate needed dimensions:
+     *       const int width{allocation.get_width()};
+     *       const int height{allocation.get_height()};
+     *       const int smallestDimension{std::min(width, height)};
+     *
+     *       const int xCenter{width / 2};
+     *       const int yCenter{height / 2};
+     *
+     *       // Setup the shape:
+     *       p_context->arc(xCenter,
+     *                      yCenter,
+     *                      smallestDimension / 2.5,
+     *                      0.0,
+     *                      2.0 * M_PI);
+     *
+     *       p_context->close_path();
+     *
+     *   @endcode
+     *
+     * @param[in] p_context The Cairo::Context passed from the drawing handler.
+     *
+     * @see draw
+     *
+     **********************************************************************************************/
+    virtual void drawBorder(const Cairo::RefPtr<Cairo::Context>& p_context) const = 0;
+
+
+    bool isTheBorderASimpleAndClosedCurve() const;
 
 ///@}
 
+
 ///@{ @name Contract
 
-    bool isTheBorderASimpleAndClosedCurve() const;
-    virtual void checkInvariant() const override;
+    void checkInvariant() const;
 
 ///@}
 
@@ -324,7 +327,6 @@ private:
         bool          m_hasBorder;              ///< The border's visible state.
         double        m_borderThickness;        ///< The border thickness.
         BorderStyle   m_borderStyle;            ///< The border line style (see BorderStyle).
-        BorderDrawer  m_drawBorder;             ///< The border drawing functor.
 
 ///@}
 

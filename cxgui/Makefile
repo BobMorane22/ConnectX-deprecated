@@ -31,10 +31,12 @@ INCLUDES     = -I$(SRC_ROOT)
 VPATH        = src
 
 SRCS     = Disc.cpp           \
-           GeometricShape.cpp
+           GeometricShape.cpp \
+           RAIICairoPath.cpp
 
 OBJS     = $(OBJ_DIR)/Disc.o           \
-           $(OBJ_DIR)/GeometricShape.o
+           $(OBJ_DIR)/GeometricShape.o \
+           $(OBJ_DIR)/RAIICairoPath.o
 
 LIBS = -lcxbase \
        -lcxutil \

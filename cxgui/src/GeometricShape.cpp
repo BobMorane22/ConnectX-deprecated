@@ -123,15 +123,13 @@ cxgui::GeometricShape::GeometricShape(const cxutil::Color& p_fillColor       ,
                                       const cxutil::Color& p_borderColor     ,
                                       bool p_hasBorder                       ,
                                       double p_borderThickness               ,
-                                      BorderStyle p_borderStyle              ,
-                                      BorderDrawer p_drawBorder
+                                      BorderStyle p_borderStyle
                                       ): m_fillColor{p_fillColor},
                                          m_backgroundColor{p_backgroundColor},
                                          m_borderColor{p_borderColor},
                                          m_hasBorder{p_hasBorder},
                                          m_borderThickness{p_borderThickness},
-                                         m_borderStyle{p_borderStyle},
-                                         m_drawBorder{p_drawBorder}
+                                         m_borderStyle{p_borderStyle}
 {
     PRECONDITION(p_borderThickness >= 0);
 }
@@ -209,6 +207,7 @@ bool cxgui::GeometricShape::on_draw(const Cairo::RefPtr<Cairo::Context>& p_conte
 {
     draw(p_context);
 
+    CX_ASSERT_MSG(isTheBorderASimpleAndClosedCurve(), "The geometric shape you are attempting to draw is either not closed or not simple.");
     INVARIANTS();
 
     return true;
@@ -228,7 +227,7 @@ bool cxgui::GeometricShape::on_draw(const Cairo::RefPtr<Cairo::Context>& p_conte
  * @see drawFillColor
  *
  **********************************************************************************************/
-void cxgui::GeometricShape::draw(const Cairo::RefPtr<Cairo::Context>& p_context)
+void cxgui::GeometricShape::draw(const Cairo::RefPtr<Cairo::Context>& p_context) const
 {
     const Gtk::Allocation allocation{get_allocation()};
 
@@ -249,7 +248,7 @@ void cxgui::GeometricShape::draw(const Cairo::RefPtr<Cairo::Context>& p_context)
     }
 
     p_context->save();
-    m_drawBorder(p_context);
+    drawBorder(p_context);
 
     if(m_hasBorder)
     {
@@ -302,7 +301,7 @@ void cxgui::GeometricShape::draw(const Cairo::RefPtr<Cairo::Context>& p_context)
  * @see draw
  *
  **********************************************************************************************/
-void cxgui::GeometricShape::drawBackgroundColor(const Cairo::RefPtr<Cairo::Context>& p_context)
+void cxgui::GeometricShape::drawBackgroundColor(const Cairo::RefPtr<Cairo::Context>& p_context) const
 {
     double bgRed, bgGreen, bgBlue, bgAlpha;
     cxutil::normalize(m_backgroundColor, bgRed, bgGreen, bgBlue, bgAlpha);
@@ -312,11 +311,11 @@ void cxgui::GeometricShape::drawBackgroundColor(const Cairo::RefPtr<Cairo::Conte
     const int width{allocation.get_width()};
     const int height{allocation.get_height()};
 
-    p_context->move_to(0, 0);
-    p_context->line_to(width, 0);
+    p_context->move_to(0    , 0     );
+    p_context->line_to(width, 0     );
     p_context->line_to(width, height);
-    p_context->line_to(0, height);
-    p_context->line_to(0, 0);
+    p_context->line_to(0    , height);
+    p_context->line_to(0    , 0     );
 
     p_context->fill();
 }
@@ -332,7 +331,7 @@ void cxgui::GeometricShape::drawBackgroundColor(const Cairo::RefPtr<Cairo::Conte
  * @see draw
  *
  **********************************************************************************************/
-void cxgui::GeometricShape::drawFillColor(const Cairo::RefPtr<Cairo::Context>& p_context)
+void cxgui::GeometricShape::drawFillColor(const Cairo::RefPtr<Cairo::Context>& p_context) const
 {
     double fillRed, fillGreen, fillBlue, fillAlpha;
     cxutil::normalize(m_fillColor, fillRed, fillGreen, fillBlue, fillAlpha);
@@ -363,6 +362,8 @@ bool cxgui::GeometricShape::isTheBorderASimpleAndClosedCurve() const
     CX_ASSERT(context);
 
     // Get the underlying path as a collection of straight lines:
+    drawBorder(context);
+
     cxgui::RAIICairoPath shapeFlatPath{context->copy_path_flat()};
     CX_ASSERT(shapeFlatPath);
 
@@ -511,14 +512,10 @@ bool cxgui::GeometricShape::isTheBorderASimpleAndClosedCurve() const
 /*******************************************************************************************//**
  * @brief Checks the class invariants.
  *
- * Checks that:
- *
- *   @li The boarder thickness is a positive real number.
- *   @li The border is a simple and closed curve.
+ * Checks that the border thickness is a positive real number.
  *
  **********************************************************************************************/
 void cxgui::GeometricShape::checkInvariant() const
 {
     INVARIANT(m_borderThickness >= 0);
-    INVARIANT(isTheBorderASimpleAndClosedCurve());
 }

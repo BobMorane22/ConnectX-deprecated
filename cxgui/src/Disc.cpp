@@ -48,11 +48,7 @@ cxgui::Disc::Disc(const cxutil::Color& p_fillColor,
                                             p_borderColor,
                                             p_hasBorder,
                                             p_borderThickness,
-                                            p_borderStyle,
-                                            [&](const Cairo::RefPtr<Cairo::Context>& p_context)
-                                               {
-                                                   this->drawCircleBorder(p_context);
-                                               })
+                                            p_borderStyle)
 {
 }
 
@@ -60,7 +56,7 @@ cxgui::Disc::Disc(const cxutil::Color& p_fillColor,
 cxgui::Disc::~Disc() = default;
 
 
-void cxgui::Disc::drawCircleBorder(const Cairo::RefPtr<Cairo::Context>& p_context)
+void cxgui::Disc::drawBorder(const Cairo::RefPtr<Cairo::Context>& p_context) const
 {
     const Gtk::Allocation allocation{get_allocation()};
 
@@ -76,19 +72,4 @@ void cxgui::Disc::drawCircleBorder(const Cairo::RefPtr<Cairo::Context>& p_contex
                    smallestDimension / 2.5,
                    0.0,
                    2.0 * M_PI);
-
-    // Not simple:
-    /*p_context->move_to(xCenter - width / 4, yCenter - height / 4);
-    p_context->line_to(xCenter + width / 4, yCenter + height / 4);
-    p_context->line_to(xCenter + width / 4, yCenter - height / 4);
-    p_context->line_to(xCenter - width / 4, yCenter + height / 4);
-    p_context->close_path();*/
-
-    // Simple:
-    /*p_context->move_to(xCenter - width / 4, yCenter - height / 4);
-    p_context->line_to(xCenter + width / 4, yCenter - height / 4);
-    p_context->line_to(xCenter + width / 4, yCenter + height / 4);
-    p_context->line_to(xCenter - width / 4, yCenter + height / 4);
-
-    p_context->close_path();*/
 }

@@ -88,14 +88,14 @@ private:
      * @param[in] p_context The Cairo::Context passed from the drawing handler.
      *
      **********************************************************************************************/
-    void drawCircleBorder(const Cairo::RefPtr<Cairo::Context>& p_context);
+    virtual void drawBorder(const Cairo::RefPtr<Cairo::Context>& p_context) const override;
 
 
     /*******************************************************************************************//**
      * @brief Checks class invariants.
      *
      **********************************************************************************************/
-    //virtual void checkInvariant() const override;
+    void checkInvariant() const;
 
 };
 
