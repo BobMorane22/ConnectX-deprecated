@@ -75,8 +75,8 @@ protected:
     ~UnCopyable() = default;
 
 private:
-    UnCopyable( const Uncopyable& p_object )            = delete;
-    UnCopyable& operator=( const Uncopyable& p_object ) = delete;
+    UnCopyable( const UnCopyable& p_object )            = delete;
+    UnCopyable& operator=( const UnCopyable& p_object ) = delete;
 };
 
 } // namespace cxutil

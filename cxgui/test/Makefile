@@ -39,12 +39,12 @@ OBJS      = cxguiTest.o           \
 
 OBJS := $(addprefix $(OBJ_DIR)/,$(OBJS))
 
-LIBS      = -lgtest      \
-            -lgtest_main \
-            -lpthread    \
-            -lcxutil     \
+LIBS      = -lcxutil     \
             -lcxbase     \
-            -lcxgui
+            -lcxgui      \
+            -lgtest      \
+            -lgtest_main \
+            -lpthread
 
 # Product:
 MAIN = cxguiTest.out
@@ -53,7 +53,7 @@ all: make_dir make_log $(MAIN)
 
 $(MAIN): $(OBJS)
 	@echo Invoquing GCC...
-	$(CPPC) $(LIBS_INCLUDE) -o $(OUT_DIR)/$(MAIN) $(OBJS) $(LIBS)
+	$(CPPC) $(LIBS_INCLUDE) $(INCLUDES) -o $(OUT_DIR)/$(MAIN) $(OBJS) $(LIBS) `pkg-config gtkmm-3.0 --libs`
 	@echo $(MAIN) has been compiled and linked!
 
 $(OBJ_DIR)/%.o: %.cpp

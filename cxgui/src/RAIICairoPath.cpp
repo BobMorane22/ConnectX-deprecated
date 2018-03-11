@@ -36,30 +36,33 @@
 
 cxgui::RAIICairoPath::RAIICairoPath(Cairo::Path* p_pathHandle)
 {
-    PRECONDITION(p_pathHandle->cobj() != nullptr);
-
-    m_pathHandle = p_pathHandle->cobj();
-}
-
-
-cxgui::RAIICairoPath::RAIICairoPath(cairo_path_t* p_pathHandle)
-{
     PRECONDITION(p_pathHandle != nullptr);
 
-    m_pathHandle = p_pathHandle;
+    if(p_pathHandle != nullptr)
+    {
+        m_pathHandle = p_pathHandle;
+    }
+    else
+    {
+        m_pathHandle = nullptr;
+    }
 }
 
 
 cxgui::RAIICairoPath::~RAIICairoPath()
 {
-    // Release handle accordingly:
-    cairo_path_destroy(m_pathHandle);
+    if(m_pathHandle != nullptr)
+    {
+        // Release handle accordingly:
+        delete(m_pathHandle);
+    }
 }
 
 
 cairo_path_t* cxgui::RAIICairoPath::operator->()
 {
-    return m_pathHandle;
+    // Gets the C handle:
+    return m_pathHandle->cobj();
 }
 
 

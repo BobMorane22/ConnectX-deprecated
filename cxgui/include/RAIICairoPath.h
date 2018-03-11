@@ -25,7 +25,7 @@
  * @date    March 2018
  * @version 1.0
  *
- * Interface for an RAII handler of cairo paths.
+ * Interface for an RAII handler of cairomm paths.
  *
  **************************************************************************************************/
 
@@ -34,18 +34,27 @@
 
 #include <cairomm/path.h>
 
+#include <cxutil/include/UnCopyable.h>
+
 namespace cxgui
 {
 
 /***********************************************************************************************//**
- * @brief RAII handler class for cairo paths.
+ * @brief RAII handler class for cairomm paths.
  *
- * The official cairomm documentation (see cairomm/path.h) says that: " The application is
- * responsible for freeing the Path object when it is no longer needed. ". This RAII handler
- * makes sure that happens.
+ * The official cairomm documentation (see cairomm/path.h) says that: "The application is
+ * responsible for freeing the Path object when it is no longer needed.". This RAII handler
+ * makes sure that happens. Note that by 'freeing', the documentation implies using @c delete
+ * and not the @c cairo_path_destroy C routine. This C routine is invoked in the Cairo:Path
+ * destructor, and we do not need to worry about it here.
+ *
+ * Why not use a smart pointer? Because the documentation also mentions that "there's currently no
+ * way to access the path data without reverting to he C object (see @c cobj())." This RAII
+ * gives access to the path data in a natural way, i.e. without explicitly reverting to the
+ * C object. See @ operator-> for more information.
  *
  **************************************************************************************************/
-class RAIICairoPath
+class RAIICairoPath : private cxutil::UnCopyable
 {
 
 public:
@@ -54,9 +63,9 @@ public:
 
 
     /*******************************************************************************************//**
-     * @brief C++-handle constructor (Cairomm).
+     * @brief Constructor.
      *
-     * @param[in] p_pathHandle C++ Cairo path handle.
+     * @param[in] p_pathHandle Cairomm path handle.
      *
      * @pre The handle is defined (i.e. not nullptr)
      *
@@ -65,20 +74,7 @@ public:
 
 
     /*******************************************************************************************//**
-     * @brief C-handle constructor (Cairo).
-     *
-     * @param[in] p_pathHandle C Cairo path handle.
-     *
-     * @pre The handle is defined (i.e. not NULL or nullptr)
-     *
-     **********************************************************************************************/
-    RAIICairoPath(cairo_path_t* p_pathHandle);
-
-
-    /*******************************************************************************************//**
      * @brief Releases the handle.
-     *
-     * See https://www.cairographics.org/manual/cairo-Paths.html for more information.
      *
      **********************************************************************************************/
     ~RAIICairoPath();
@@ -87,14 +83,39 @@ public:
     /*******************************************************************************************//**
      * @brief Class member access operator.
      *
-     * @return The path handle address.
+     * Use this operator to work on a RAIICairoPath object like you would on a @c cairo_path_t*
+     * pointer.For example:
+     *
+     * @code
+     *
+     *     RAIICairoPath pathRAII{context->copy_path()};
+     *     CX_ASSERT_MSG(pathRAII, "Invalid path address.");
+     *
+     *     std::cout << pathRAII->num_data << std::endl;
+     *
+     * @endcode
+     *
+     * is equivalent to:
+     *
+     * @code
+     *
+     *     Cairo::Path* path{context->copy_path()};
+     *     CX_ASSERT_MSG(path, "Invalid path address.");
+     *
+     *     std::cout << path->cobj()->num_data << std::endl; // cobj(): gets the C handle.
+     *
+     *     delete(path);
+     *
+     * @endcode
+     *
+     * @return The path C-handle address.
      *
      **********************************************************************************************/
     cairo_path_t* operator->();
 
 
     /*******************************************************************************************//**
-     * @brief Boolean conversion operator
+     * @brief Boolean conversion operator.
      *
      * @return @c true if the handle is valid, @c false otherwise.
      *
@@ -104,7 +125,7 @@ public:
 
 private:
 
-    cairo_path_t* m_pathHandle; ///< The cairo path handle.
+    Cairo::Path* m_pathHandle; ///< The cairo path handle.
 
 };
 

@@ -31,11 +31,69 @@
 
 #include<gtest/gtest.h>
 
+#include <cairomm/context.h>
+#include <cairomm/surface.h>
+
+#include <cxutil/include/ContractException.h>
+
 #include "../../include/RAIICairoPath.h"
 
 
-TEST(RAIICairoPath, NothingYet)
+TEST(RAIICairoPath, test1)
 {
+    Cairo::Path* t_invalidHandle{nullptr};
+
+    ASSERT_THROW(cxgui::RAIICairoPath t_RAII{t_invalidHandle}, PreconditionException);
+}
+
+
+TEST(RAIICairoPath, test2)
+{
+    Cairo::RefPtr<Cairo::Surface> mockSurface{Cairo::ImageSurface::create(Cairo::Format::FORMAT_A8, 200, 200)};
+    ASSERT_TRUE(mockSurface);
+
+    Cairo::RefPtr<Cairo::Context> context{Cairo::Context::create(mockSurface)};
+    ASSERT_TRUE(context);
+
+    // Add some data to the paths:
+    context->line_to(100, 100);
+    context->line_to(100, -100);
+
+    // Two exactly alike paths:
+    Cairo::Path* t_path1{context->copy_path()};
+    ASSERT_FALSE(t_path1 == nullptr);
+
+    Cairo::Path* t_path2{context->copy_path()};
+    ASSERT_FALSE(t_path2 == nullptr);
+
+    cxgui::RAIICairoPath t_RAIIPath2{t_path2};
+
+    // We check if reading works:
+    ASSERT_TRUE(t_path1->cobj()->status   == t_RAIIPath2->status);
+    ASSERT_TRUE(t_path1->cobj()->num_data == t_RAIIPath2->num_data);
+
+    delete(t_path1);
+}
+
+
+TEST(RAIICairoPath, test3)
+{
+    Cairo::RefPtr<Cairo::Surface> mockSurface{Cairo::ImageSurface::create(Cairo::Format::FORMAT_A8, 200, 200)};
+    ASSERT_TRUE(mockSurface);
+
+    Cairo::RefPtr<Cairo::Context> context{Cairo::Context::create(mockSurface)};
+    ASSERT_TRUE(context);
+
+    // Add some data to the path:
+    context->line_to(100, 100);
+    context->line_to(100, -100);
+
+    Cairo::Path* t_path{context->copy_path()};
+    ASSERT_FALSE(t_path == nullptr);
+
+    cxgui::RAIICairoPath t_RAIIPath{t_path};
+
+    ASSERT_TRUE(t_RAIIPath);
 }
 
 
