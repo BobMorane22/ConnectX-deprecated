@@ -31,10 +31,13 @@
 
 #include <gtkmm/main.h>
 #include <gtkmm/window.h>
+#include <gtkmm/box.h>
 
-#include <cxgui/include/Disc.h>
+#include <cxbase/include/Disc.h>
 
-#include "../include/GameBoard.h"
+#include "../include/GBDisc.h"
+#include "../include/NDADisc.h"
+
 
 int main(int argc, char* argv[])
 {
@@ -42,12 +45,24 @@ int main(int argc, char* argv[])
 
     Gtk::Window w;
 
-    const cxutil::Color fill{125, 0, 0, 255};
-    const cxutil::Color background{0, 125, 0, 255};
-    const cxutil::Color border{0, 0, 125, 255};
-    cxgui::Disc disc{fill, background, border};
+    const cxutil::Color fill{cxutil::RGBA{12, 175, 55, 255}};
 
-    w.add(disc);
+    const cxbase::Disc d1{fill};
+    const cxbase::Disc d2{fill};
+
+    cx::ui::GBDisc disc1{d1};
+    cx::ui::GBDisc disc2{d2};
+    disc2.highlight();
+    cx::ui::GBDisc disc3{d2};
+    disc3.highlight();
+    disc3.removeHighlighting();
+
+    Gtk::HBox b;
+    b.pack_start(disc1);
+    b.pack_start(disc2);
+    b.pack_start(disc3);
+
+    w.add(b);
     w.show_all();
 
     Gtk::Main::run(w);

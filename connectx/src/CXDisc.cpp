@@ -29,13 +29,14 @@
  *
  **************************************************************************************************/
 
+#include <cxutil/include/narrow_cast.h>
 
 #include "../include/CXDisc.h"
 
 
-cx::CXDisc::CXDisc(const cxutil::Color& p_fillColor,
-                   const cxutil::Color& p_backgroundColor,
-                   const cxutil::Color& p_borderColor) :
+cx::ui::CXDisc::CXDisc(const cxutil::Color& p_fillColor,
+                       const cxutil::Color& p_backgroundColor,
+                       const cxutil::Color& p_borderColor) :
                        cxgui::Disc(p_fillColor,
                                    p_backgroundColor,
                                    p_borderColor)
@@ -43,32 +44,44 @@ cx::CXDisc::CXDisc(const cxutil::Color& p_fillColor,
 }
 
 
-cx::CXDisc::~CXDisc() = default;
+cx::ui::CXDisc::~CXDisc() = default;
 
 
-void cx::CXDisc::updateFillColor(const cxutil::Color& p_newFillColor)
+void cx::ui::CXDisc::highlight()
 {
-    // If necessary, change the fill color:
-    if(m_fillColor != p_newFillColor)
-    {
-        m_fillColor = p_newFillColor;
-    }
+    const double darkerFill      {fillColor().lightness()};
+    const double darkerBackground{backgroundColor().lightness()};
+
+    const double highlightedFill      {darkerFill < 0.85 ? darkerFill + 0.15 : 1.00 };
+    const double highlightedBackground{darkerBackground < 0.85 ? darkerBackground + 0.15 : 1.00 };
+
+    changeFillColor(cxutil::Color{cxutil::HSLA{fillColor().hue(),
+                                               fillColor().saturation(),
+                                               highlightedFill,
+                                               fillColor().alpha()}});
+
+    changeBackgroundColor(cxutil::Color{cxutil::HSLA{backgroundColor().hue(),
+                                                     backgroundColor().saturation(),
+                                                     highlightedBackground,
+                                                     backgroundColor().alpha()}});
 }
 
 
-void cx::CXDisc::showBorder()
+void cx::ui::CXDisc::removeHighlighting()
 {
-    m_borderColor = cxutil::Color::black();
-}
+    const double highlightedFill      {fillColor().lightness()};
+    const double highlightedBackground{backgroundColor().lightness()};
 
+    const double darkerFill      {highlightedFill < 0.15 ? 1.00 : highlightedFill - 0.15 };
+    const double darkerBackground{highlightedBackground < 0.15 ? 1.00 : highlightedBackground - 0.15 };
 
-void cx::CXDisc::removeBorder()
-{
-    m_borderColor = cxutil::Color::transparent();
-}
+    changeFillColor(cxutil::Color{cxutil::HSLA{fillColor().hue(),
+                                               fillColor().saturation(),
+                                               darkerFill,
+                                               fillColor().alpha()}});
 
-
-void cx::CXDisc::reDraw()
-{
-    DrawingArea::queue_draw();
+    changeBackgroundColor(cxutil::Color{cxutil::HSLA{backgroundColor().hue(),
+                                                     backgroundColor().saturation(),
+                                                     darkerBackground,
+                                                     backgroundColor().alpha()}});
 }

@@ -39,7 +39,7 @@
 #include "../../include/RAIICairoPath.h"
 
 
-TEST(RAIICairoPath, test1)
+TEST(RAIICairoPath, Constructor_InvalidHandle_ExceptionThrown)
 {
     Cairo::Path* t_invalidHandle{nullptr};
 
@@ -47,7 +47,7 @@ TEST(RAIICairoPath, test1)
 }
 
 
-TEST(RAIICairoPath, test2)
+TEST(RAIICairoPath, Constructor_TwoPathsFromSameContext_EqualValuesFromHandleAndRAII)
 {
     Cairo::RefPtr<Cairo::Surface> mockSurface{Cairo::ImageSurface::create(Cairo::Format::FORMAT_A8, 200, 200)};
     ASSERT_TRUE(mockSurface);
@@ -76,7 +76,7 @@ TEST(RAIICairoPath, test2)
 }
 
 
-TEST(RAIICairoPath, test3)
+TEST(RAIICairoPath, BoolConversionOperator_ValidHandle_ReturnsTrue)
 {
     Cairo::RefPtr<Cairo::Surface> mockSurface{Cairo::ImageSurface::create(Cairo::Format::FORMAT_A8, 200, 200)};
     ASSERT_TRUE(mockSurface);
@@ -93,6 +93,7 @@ TEST(RAIICairoPath, test3)
 
     cxgui::RAIICairoPath t_RAIIPath{t_path};
 
+    // Convert to boolean:
     ASSERT_TRUE(t_RAIIPath);
 }
 

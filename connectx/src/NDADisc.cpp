@@ -32,35 +32,35 @@
 #include "../include/NDADisc.h"
 
 
-cx::NDADisc::NDADisc() : cx::CXDisc(cxutil::Color::transparent(),
+cx::ui::NDADisc::NDADisc() : cx::ui::CXDisc(cxutil::Color::transparent(),
                                     cxutil::Color::transparent(),
                                     cxutil::Color::transparent())
 {
 }
 
 
-cx::NDADisc::NDADisc(const cxbase::Disc& p_backEndDisc) : CXDisc(p_backEndDisc.color(),
+cx::ui::NDADisc::NDADisc(const cxbase::Disc& p_backEndDisc) : CXDisc(p_backEndDisc.color(),
                                                                  cxutil::Color::transparent(),
                                                                  cxutil::Color::black())
 {
 }
 
 
-cx::NDADisc::~NDADisc() = default;
+cx::ui::NDADisc::~NDADisc() = default;
 
 
-void cx::NDADisc::hide()
+void cx::ui::NDADisc::hide()
 {
-    updateFillColor(cxutil::Color::transparent());
+    changeFillColor(cxutil::Color::transparent());
     removeBorder();
 
     reDraw();
 }
 
 
-void cx::NDADisc::update(const cxbase::Disc& p_newBackEndDisc)
+void cx::ui::NDADisc::update(const cxbase::Disc& p_newBackEndDisc)
 {
-    updateFillColor(p_newBackEndDisc.color());
+    changeFillColor(p_newBackEndDisc.color());
     showBorder();
 
     reDraw();

@@ -25,38 +25,38 @@
  * @date    February 2018
  * @version 1.0
  *
- * Implementation for a Connect X GUI gameboard disc utility.
+ * Implementation for a Connect X GUI game board disc utility.
  *
  **************************************************************************************************/
 
 #include "../include/GBDisc.h"
 
 
-cx::GBDisc::GBDisc() : cx::CXDisc(cxutil::Color::black(), cxutil::Color::blue())
+cx::ui::GBDisc::GBDisc() : cx::ui::CXDisc(cxutil::Color::black(), cxutil::Color::blue())
 {
 }
 
 
-cx::GBDisc::GBDisc(const cxbase::Disc& p_backEndDisc) : CXDisc(p_backEndDisc.color(),
-                                                               cxutil::Color::blue())
+cx::ui::GBDisc::GBDisc(const cxbase::Disc& p_backEndDisc) : CXDisc(p_backEndDisc.color(),
+                                                                   cxutil::Color::blue())
 {
 }
 
 
-cx::GBDisc::~GBDisc() = default;
+cx::ui::GBDisc::~GBDisc() = default;
 
 
-void cx::GBDisc::hide()
+void cx::ui::GBDisc::hide()
 {
-    updateFillColor(cxutil::Color::black());
+    changeFillColor(cxutil::Color::black());
 
     reDraw();
 }
 
 
-void cx::GBDisc::update(const cxbase::Disc& p_newBackEndDisc)
+void cx::ui::GBDisc::update(const cxbase::Disc& p_newBackEndDisc)
 {
-    updateFillColor(p_newBackEndDisc.color());
+    changeFillColor(p_newBackEndDisc.color());
 
     reDraw();
 }

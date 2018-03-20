@@ -36,6 +36,7 @@
 #include <tuple>
 
 #include <cxutil/include/Assertion.h>
+#include <cxutil/include/ContractException.h>
 #include <cxutil/include/Coordinate.h>
 #include <cxutil/include/narrow_cast.h>
 
