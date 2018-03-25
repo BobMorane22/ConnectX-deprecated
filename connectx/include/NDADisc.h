@@ -43,6 +43,16 @@ namespace ui
 {
 
 /***********************************************************************************************//**
+ * @brief Connect X disc for the next disc area.
+ *
+ * This is a special variant of the Connect X disc specialized to behave according to the
+ * requirements of the next disc area. More specifically:
+ *
+ *     @li it has no background (i.e. transparent);
+ *     @li when hidden, the disc's fill area and border become transparent also.
+ *
+ * in other words, when such a disc is considered hidden, it becomes completely invisible to the
+ * user.
  *
  **************************************************************************************************/
 class NDADisc : public CXDisc
@@ -51,38 +61,56 @@ class NDADisc : public CXDisc
 public:
 
     /*******************************************************************************************//**
+     * @brief Default constructor.
      *
+     * Construct a disc for which the fill and background colors are transparent as well as the
+     * border color.
      *
      **********************************************************************************************/
     NDADisc();
 
 
     /*******************************************************************************************//**
+     * @brief Constructor with parameters.
      *
+     * Constructs a disc visually representing the backend disc passed as an argument. The
+     * background color for the disc is transparent.
+     *
+     * @param[in] p_backEndDisc A backend disc.
+     *
+     * @see cxbase::Disc
      *
      **********************************************************************************************/
     NDADisc(const cxbase::Disc& p_backEndDisc);
 
 
     /*******************************************************************************************//**
-     *
+     * @brief Destructor.
      *
      **********************************************************************************************/
-    virtual ~NDADisc();
+    virtual ~NDADisc() override;
 
 
     /*******************************************************************************************//**
+     * @brief Visually hides the disc.
      *
+     * Changes the disc current appearance to a transparent disc with a transparent background
+     * and a transparent border (i.e. invisible).
      *
      **********************************************************************************************/
     virtual void hide() override;
 
 
     /*******************************************************************************************//**
+     * @brief Updates the disc's visual representation.
      *
+     * Updates the disc's visual representation according to a backend disc object holding
+     * the disc's logic.
+     *
+     * @param[in] p_newBackEndDisc A backend disc.
      *
      **********************************************************************************************/
-    void update(const cxbase::Disc& p_newBackEndDisc);
+    void update(const cxbase::Disc& p_newBackEndDisc) override;
 
 
 private:

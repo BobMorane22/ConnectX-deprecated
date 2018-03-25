@@ -34,7 +34,7 @@
 #include "../include/GameBoard.h"
 
 
-cx::GameBoard::GameBoard()
+cx::ui::GameBoard::GameBoard()
 {
     set_orientation(Gtk::Orientation::ORIENTATION_VERTICAL);
 
@@ -72,4 +72,4 @@ cx::GameBoard::GameBoard()
 }
 
 
-cx::GameBoard::~GameBoard() = default;
+cx::ui::GameBoard::~GameBoard() = default;

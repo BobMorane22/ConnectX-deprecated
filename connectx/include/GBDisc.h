@@ -43,6 +43,13 @@ namespace ui
 {
 
 /***********************************************************************************************//**
+ * @brief Connect X disc for the game board area.
+ *
+ * This is a special variant of the a Connect X disc specialized to behave according to the
+ * requirements of the Connect X game board area. More specifically:
+ *
+ *     @li it has the classic Connect X blue background;
+ *     @li when hidden, the disc's fill area becomes black.
  *
  **************************************************************************************************/
 class GBDisc : public CXDisc
@@ -51,43 +58,62 @@ class GBDisc : public CXDisc
 public:
 
     /*******************************************************************************************//**
+     * @brief Default constructor.
      *
+     * Constructs a opaque black disc with the classic Connect X blue background.
      *
      **********************************************************************************************/
     GBDisc();
 
 
     /*******************************************************************************************//**
+     * @brief Constructor with parameters.
      *
+     * Constructs a disc visually representing the backend disc passed as an argument. The
+     * background color for the disc is the classic Connect X blue.
+     *
+     * @param[in] p_backEndDisc A backend disc.
+     *
+     * @see cxbase::Disc
      *
      **********************************************************************************************/
     GBDisc(const cxbase::Disc& p_backEndDisc);
 
 
     /*******************************************************************************************//**
-     *
-     *
-     **********************************************************************************************/
-    virtual ~GBDisc();
-
-
-    /*******************************************************************************************//**
-     *
+     * @brief Destructor.
      *
      **********************************************************************************************/
+    virtual ~GBDisc() override;
+
+
+    /******************************************************************************************//**
+     * @brief Visually hides the disc.
+     *
+     * Changes the disc current appearance to an opaque disc with the classic Connect X blue as
+     * background.
+     *
+     *********************************************************************************************/
     virtual void hide() override;
 
 
     /*******************************************************************************************//**
+     * @brief Updates the disc's visual representation.
      *
+     * Updates the disc's visual representation according to a backend disc object holding
+     * the disc's logic.
+     *
+     * @param[in] p_newBackEndDisc A backend disc.
      *
      **********************************************************************************************/
-    void update(const cxbase::Disc& p_newBackEndDisc);
+    virtual void update(const cxbase::Disc& p_newBackEndDisc) override;
 
 
 private:
 
-    cxbase::Disc m_backEndDisc;   ///<
+    cxbase::Disc m_backEndDisc;   ///< The backend (from @c cxbase ) disc visually represented.
+                                  ///< the current GUI disc.
+                                  ///<
 };
 
 } // namespace ui

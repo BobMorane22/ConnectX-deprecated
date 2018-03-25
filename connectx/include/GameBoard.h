@@ -42,8 +42,46 @@
 namespace cx
 {
 
+namespace ui
+{
+
 /**********************************************************************************************//**
+ * @brief A Connect X game board.
  *
+ * A Connect X game board emulates a standard Four-In-A-Row game board in a scalable way. It
+ * consists of two important and distinct areas: the game board area and the next disc area.
+ *
+ * The game board area is the area where the discs that have already been dropped by the
+ * different players lie. In a Four-In-A-Row game, it represents the vertical plastic rack where
+ * the discs are piled up vertically after each move.
+ *
+ * The next disc area is the area where the next disc that is about to be dropped in the game
+ * board area is displayed. In a Four-In-A-Row game, it represents the disc in the active
+ * player's hand, that is, the next disc to be dropped in the vertical plastic rack.
+ *
+ * Visually, the Connect X game board is displayed like this:
+ *
+ *   @verbatim
+ *
+ *     |--------------------------|
+ *     |                          |
+ *     |      Next disc area      |  <-- Next disc to be played is displayed here!
+ *     |                          |
+ *     |--------------------------|
+ *     |                          |
+ *     |                          |
+ *     |                          |
+ *     |     Game board area      | <-- All discs that have been played are piled up here.
+ *     |                          |
+ *     |                          |
+ *     |                          |
+ *     |                          |
+ *     |--------------------------|
+ *
+ *   @endverbatim
+ *
+ * The Connect X game board class also offers many services that allow to perform actions on
+ * sets of discs on the game board in a simplified way.
  *
  *************************************************************************************************/
 class GameBoard : public Gtk::Paned
@@ -52,14 +90,17 @@ class GameBoard : public Gtk::Paned
 public:
 
     /******************************************************************************************//**
+     * @brief Default constructor.
      *
+     * Constructs a GameBoard with hidden discs in the next disc area and empty (i.e. black)
+     * discs in the game board area. So in essence, it constructs an empty Connect X game board.
      *
      *********************************************************************************************/
     GameBoard();
 
 
     /******************************************************************************************//**
-     *
+     * @brief Destructor.
      *
      *********************************************************************************************/
     virtual ~GameBoard();
@@ -67,10 +108,12 @@ public:
 
 private:
 
-    Gtk::Grid m_nextDiscArea;    ///<
-    Gtk::Grid m_gameBoardGrid;   ///<
+    Gtk::Grid m_nextDiscArea;    ///< The next disc area layout.
+    Gtk::Grid m_gameBoardGrid;   ///< The game board layout.
 
 };
+
+} // namespace ui
 
 } // namespace cx
 
