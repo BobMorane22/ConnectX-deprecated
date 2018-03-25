@@ -316,17 +316,26 @@ private:
 
 ///@{ @name Data Members
 
-        // Body:
-        cxutil::Color m_fillColor;              ///< The fill color.
+    // Body:
+    cxutil::Color m_fillColor;                ///< The fill color.
 
-        // Background:
-        cxutil::Color m_backgroundColor;        ///< The background color.
+    // Background:
+    cxutil::Color m_backgroundColor;          ///< The background color.
 
-        // Border:
-        cxutil::Color m_borderColor;            ///< The border color.
-        bool          m_hasBorder;              ///< The border's visible state.
-        double        m_borderThickness;        ///< The border thickness.
-        BorderStyle   m_borderStyle;            ///< The border line style (see BorderStyle).
+    // Border:
+    cxutil::Color m_borderColor;              ///< The border color.
+    bool          m_hasBorder;                ///< The border's visible state.
+    double        m_borderThickness;          ///< The border thickness.
+    BorderStyle   m_borderStyle;              ///< The border line style (see BorderStyle).
+
+    mutable bool  m_simpleAndClosedCheckDone; // Flag that makes sure the method
+                                              // 'isTheBorderASimpleAndClosedCurve()'
+                                              // is called at least once. It is mutable
+                                              // because its value is modified at the
+                                              // end of that method, which is const. This
+                                              // check needs not be repeated because it
+                                              // is very expensive, and useless to perform
+                                              // more than once.
 
 ///@}
 

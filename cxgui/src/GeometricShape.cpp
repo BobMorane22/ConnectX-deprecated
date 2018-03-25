@@ -29,18 +29,10 @@
  *
  **************************************************************************************************/
 
-#include <algorithm>
-#include <fstream>
-#include <memory>
-#include <sstream>
-#include <tuple>
 
-#include <cxutil/include/Assertion.h>
 #include <cxutil/include/ContractException.h>
 #include <cxutil/include/Coordinate.h>
 #include <cxutil/include/narrow_cast.h>
-
-#include <cairomm/surface.h>
 
 #include "../include/GeometricShape.h"
 #include "../include/RAIICairoPath.h"
@@ -130,7 +122,8 @@ cxgui::GeometricShape::GeometricShape(const cxutil::Color& p_fillColor       ,
                                          m_borderColor{p_borderColor},
                                          m_hasBorder{p_hasBorder},
                                          m_borderThickness{p_borderThickness},
-                                         m_borderStyle{p_borderStyle}
+                                         m_borderStyle{p_borderStyle},
+                                         m_simpleAndClosedCheckDone{false}
 {
     PRECONDITION(p_borderThickness >= 0);
 }
@@ -208,7 +201,13 @@ bool cxgui::GeometricShape::on_draw(const Cairo::RefPtr<Cairo::Context>& p_conte
 {
     draw(p_context);
 
-    CX_ASSERT_MSG(isTheBorderASimpleAndClosedCurve(), "The geometric shape you are attempting to draw is either not closed or not simple.");
+    if(!m_simpleAndClosedCheckDone)
+    {
+        CX_ASSERT_MSG(isTheBorderASimpleAndClosedCurve(), "The geometric shape you are attempting "
+                                                          "to draw is either not closed or not "
+                                                          "simple.");
+    }
+
     INVARIANTS();
 
     return true;
@@ -417,11 +416,9 @@ bool cxgui::GeometricShape::isTheBorderASimpleAndClosedCurve() const
                shapeFlatPath->data[index].header.type == CAIRO_PATH_MOVE_TO)
             {
                 const cxutil::Coordinate<double> x{shapeFlatPath->data[index + 1].point.x};
-                std::cout << x.value() << "\t";
 
                 const cxutil::Coordinate<double> y{shapeFlatPath->data[index + 1].point.y};
                 dataPoints.push_back(std::make_tuple(x, y));
-                std::cout << y.value() << std::endl;
             }
         }
 
@@ -462,7 +459,6 @@ bool cxgui::GeometricShape::isTheBorderASimpleAndClosedCurve() const
 
                 if(crossProduct2D(r, s) == 0.0 && crossProduct2D(diff(q, p), r) == 0.0)
                 {
-                    std::cout << 1 << std::endl;
                     // The two lines are collinear. Are they also overlapping?
                     const double t0{dotProduct2D(diff(q, p), r) / dotProduct2D(r, r)};
                     const double t1{t0 + dotProduct2D(s, r) / dotProduct2D(r, r)};
@@ -473,12 +469,10 @@ bool cxgui::GeometricShape::isTheBorderASimpleAndClosedCurve() const
                 }
                 else if(crossProduct2D(r, s) == 0.0 && crossProduct2D(diff(q, p), r) != 0.0)
                 {
-                    std::cout << 2 << std::endl;
                     // The two lines segments are parallel and non-intersecting
                 }
                 else if(crossProduct2D(r, s) != 0.0)
                 {
-                    std::cout << 3 << std::endl;
                     const double t{crossProduct2D(diff(q, p), s) / crossProduct2D(r, s)};
                     const double u{crossProduct2D(diff(q, p), r) / crossProduct2D(r, s)};
                     const bool tIn0To1{t > 0.0 && t < 1.0};
@@ -486,11 +480,7 @@ bool cxgui::GeometricShape::isTheBorderASimpleAndClosedCurve() const
 
                     if(tIn0To1 && uIn0To1)
                     {
-                        std::cout << 4 << std::endl;
                         areSegmentsIntersecting = true;
-                        std::cout << "First segment:  " << "(" << p.x << ", " << p.y << ") and (" << r.x << ", " << r.y << ")" << std::endl;
-                        std::cout << "Second segment: " << "(" << q.x << ", " << q.y << ") and (" << s.x << ", " << s.y << ")" << std::endl;
-                        std::cout << "t = " << t << ", u = " << u << std::endl << std::endl;
                     }
                 }
                 else
@@ -503,8 +493,7 @@ bool cxgui::GeometricShape::isTheBorderASimpleAndClosedCurve() const
         }
     }
 
-    std::cout << "Closed: " << isBorderClosed << std::endl;
-    std::cout << "Simple: " << isPathSimple   << std::endl;
+    m_simpleAndClosedCheckDone = true;
 
     return isBorderClosed && isPathSimple;
 }
