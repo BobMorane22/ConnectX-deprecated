@@ -33,15 +33,15 @@
 
 
 cx::ui::NDADisc::NDADisc() : cx::ui::CXDisc(cxutil::Color::transparent(),
-                                    cxutil::Color::transparent(),
-                                    cxutil::Color::transparent())
+                                            cxutil::Color::transparent(),
+                                            cxutil::Color::transparent())
 {
 }
 
 
 cx::ui::NDADisc::NDADisc(const cxbase::Disc& p_backEndDisc) : CXDisc(p_backEndDisc.color(),
-                                                                 cxutil::Color::transparent(),
-                                                                 cxutil::Color::black())
+                                                                     cxutil::Color::transparent(),
+                                                                     cxutil::Color::black())
 {
 }
 

@@ -4,8 +4,9 @@
 #include <unistd.h>
 #include <linux/limits.h>
 
-#include "util.h"
-#include "Assertion.h"
+#include <cxutil/include/Assertion.h>
+
+#include "../include/util.h"
 
 // Temporary file for dev utilities. To be factored out when the GUI
 // code will be more mature...

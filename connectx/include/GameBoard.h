@@ -32,12 +32,16 @@
 #ifndef GAMEBOARD_H_243D9911_CDCC_4CD8_B2A5_14BE544ED80C
 #define GAMEBOARD_H_243D9911_CDCC_4CD8_B2A5_14BE544ED80C
 
+#include <memory>
+
 #include <gtkmm/grid.h>
 #include <gtkmm/hvbox.h>
 #include <gtkmm/paned.h>
 
 #include "../include/GBDisc.h"
 #include "../include/NDADisc.h"
+
+namespace cxbase{ class GameBoard; }
 
 namespace cx
 {
@@ -89,14 +93,18 @@ class GameBoard : public Gtk::Paned
 
 public:
 
+///@{ @name Object Construction and Destruction
+
+
     /******************************************************************************************//**
-     * @brief Default constructor.
+     * @brief Constructor with parameters.
      *
-     * Constructs a GameBoard with hidden discs in the next disc area and empty (i.e. black)
-     * discs in the game board area. So in essence, it constructs an empty Connect X game board.
+     * Constructs the GUI layer for the backend Connect X game board passed as an argument.
+     *
+     * @param p_gameBoard The backend Connect X game board's address.
      *
      *********************************************************************************************/
-    GameBoard();
+    GameBoard(const std::shared_ptr<cxbase::GameBoard>& p_gameBoard);
 
 
     /******************************************************************************************//**
@@ -105,11 +113,18 @@ public:
      *********************************************************************************************/
     virtual ~GameBoard();
 
+///@}
 
 private:
 
-    Gtk::Grid m_nextDiscArea;    ///< The next disc area layout.
-    Gtk::Grid m_gameBoardGrid;   ///< The game board layout.
+///@{ @name Data Members
+
+    Gtk::Grid m_nextDiscArea;                        ///< The next disc area layout.
+    Gtk::Grid m_gameBoardGrid;                       ///< The game board layout.
+
+    std::shared_ptr<cxbase::GameBoard> m_gameBoard;  ///< The related backend Connect X game board.
+
+///@}
 
 };
 

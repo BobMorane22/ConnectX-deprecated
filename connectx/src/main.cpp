@@ -32,21 +32,18 @@
 #include <gtkmm/main.h>
 #include <gtkmm/window.h>
 
-#include "../include/GameBoard.h"
+#include "../include/GameWindow.h"
 
 
 int main(int argc, char* argv[])
 {
     Gtk::Main app(argc, argv);
 
-    Gtk::Window w;
+    cx::ui::GameWindow gw;
 
-    cx::ui::GameBoard gb;
+    gw.show_all();
 
-    w.add(gb);
-    w.show_all();
-
-    Gtk::Main::run(w);
+    Gtk::Main::run(gw);
 
     return 0;
 }
