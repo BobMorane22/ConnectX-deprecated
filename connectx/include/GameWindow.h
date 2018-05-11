@@ -7,6 +7,7 @@
 #include <gtkmm/applicationwindow.h>
 
 #include <cxbase/include/Game.h>
+#include <cxgui/include/SectionTitle.h>
 
 #include "GameBoard.h"
 
@@ -46,7 +47,7 @@ private:
 ///@{ @name Data members:
 
     // Widget layouts:
-    Gtk::Grid       m_mainLayout;                 ///< Contains all window widgets.
+    Gtk::Grid       m_mainLayout;                 ///< Contains all window sub-layouts.
 
     Gtk::Grid       m_gameInfoLayout;             ///< Contains all widgets in
                                                   ///< the 'Game information' section.
@@ -56,22 +57,23 @@ private:
                                                   ///< 'Game board' section.
                                                   ///<
 
-    Gtk::HButtonBox m_reinitializeLayout;
+    Gtk::HButtonBox m_reinitializeLayout;         ///< Layout for the 'Reinitialize' button.
 
     // Visible widgets:
-    Gtk::Label      m_gameInfoSection            {"<b>Game information:</b>" };
-    Gtk::Label      m_activePlayer               {"Active player:"       };
-    Gtk::Label      m_activePlayerName           {"John Doe"             };
-    Gtk::Label      m_activePlayerColor          {"Orange"               };
-    Gtk::Label      m_nextPlayer                 {"Next player:"         };
-    Gtk::Label      m_nextPlayerName             {"Jane Hardy"           };
-    Gtk::Label      m_nextPlayerColor            {"Red"                  };
-    Gtk::Label      m_inARowValue                {"In-a-row value:"      };
-    Gtk::Label      m_inARowValueNumber          {"4"                    };
-    Gtk::Label      m_nbMovesLeft                {"Number of moves left:"};
-    Gtk::Label      m_nbMovesLeftNumber          {"21"                   };
+    cxgui::SectionTitle m_gameInfoSection            {"Game information:"    };
+    Gtk::Label          m_activePlayer               {"Active player:"       };
+    Gtk::Label          m_activePlayerName           {"John Doe"             };
+    cx::ui::NDADisc     m_activePlayerColor          {cxbase::Disc{cxutil::Color::red()}};
+    Gtk::Label          m_nextPlayer                 {"Next player:"         };
+    Gtk::Label          m_nextPlayerName             {"Jane Hardy"           };
+    cx::ui::NDADisc     m_nextPlayerColor            {cxbase::Disc{cxutil::Color::green()}};
+    Gtk::Label          m_inARowValue                {"In-a-row value:"      };
+    Gtk::Label          m_inARowValueNumber          {"4"                    };
+    Gtk::Label          m_nbMovesLeft                {"Number of moves left:"};
+    Gtk::Label          m_nbMovesLeftNumber          {"21"                   };
 
-    cx::ui::GameBoard m_gameBoard{std::make_shared<cxbase::GameBoard>()};
+    cxgui::SectionTitle m_gameBoardSection           {"Game board:"          };
+    cx::ui::GameBoard   m_gameBoard                  {std::make_shared<cxbase::GameBoard>()};
 
     Gtk::Button     m_reinitialize               {"Reinitialize"         };
 

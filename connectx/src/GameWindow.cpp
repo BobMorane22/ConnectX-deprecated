@@ -87,7 +87,7 @@ void cx::ui::GameWindow::registerLayouts()
     // Window main layout:
     add(m_mainLayout);
 
-    // Principal section layouts used in this window:
+    // Principal sub-layouts used in this window:
     m_mainLayout.attach(m_gameInfoLayout,     0, GAME_INFORMATION, GridWidth::ONE_COLUMN, GridHeight::ONE_ROW);
     m_mainLayout.attach(m_gameBoardLayout,    0, GAME_BOARD,       GridWidth::ONE_COLUMN, GridHeight::ONE_ROW);
     m_mainLayout.attach(m_reinitializeLayout, 0, REINITIALIZE,     GridWidth::ONE_COLUMN, GridHeight::ONE_ROW);
@@ -111,7 +111,8 @@ void cx::ui::GameWindow::registerWidgets()
     m_gameInfoLayout.attach(m_nbMovesLeftNumber, PRIMARY_INFO,   NB_MOVES_REMAINING, GridWidth::ONE_COLUMN, GridHeight::ONE_ROW);
 
     // Game board section:
-    m_gameBoardLayout.attach(m_gameBoard, 0, 0, GridWidth::ONE_COLUMN, GridHeight::ONE_ROW);
+    m_gameBoardLayout.attach(m_gameBoardSection, 0, 0, GridWidth::ONE_COLUMN, GridHeight::ONE_ROW);
+    m_gameBoardLayout.attach(m_gameBoard,        0, 1, GridWidth::ONE_COLUMN, GridHeight::ONE_ROW);
 
     // Reinitialize button section:
     m_reinitializeLayout.pack_start(m_reinitialize);
@@ -126,52 +127,23 @@ void cx::ui::GameWindow::configureLayoutsAndWidgets()
     m_mainLayout.set_vexpand();
     m_mainLayout.set_row_spacing(spacing);
 
-    // Game information section:
-
-    // Game information section title should be in bold, markup must be enabled:
-    m_gameInfoSection.set_use_markup(true);
 
     // Leave some space between the game information widgets:
     m_gameInfoLayout.set_column_spacing(spacing);
 
-    // Disable expansion:
-    m_gameInfoSection.set_hexpand(false);
-    m_gameInfoSection.set_vexpand(false);
+    // For every game information widget, remove vertical expansion.
+    for(Widget* widget : m_gameInfoLayout.get_children())
+    {
+        Gtk::Label* label{static_cast<Gtk::Label*>(widget)};
+        label->set_vexpand(false);
+    }
 
-    // Left-align all the game information widgets:
-    m_gameInfoSection  .set_alignment(Gtk::Align::ALIGN_START);
-    m_activePlayer     .set_alignment(Gtk::Align::ALIGN_START);
-    m_activePlayerName .set_alignment(Gtk::Align::ALIGN_START);
-    m_activePlayerColor.set_alignment(Gtk::Align::ALIGN_START);
-    m_nextPlayer       .set_alignment(Gtk::Align::ALIGN_START);
-    m_nextPlayerName   .set_alignment(Gtk::Align::ALIGN_START);
-    m_nextPlayerColor  .set_alignment(Gtk::Align::ALIGN_START);
-    m_inARowValue      .set_alignment(Gtk::Align::ALIGN_START);
-    m_inARowValueNumber.set_alignment(Gtk::Align::ALIGN_START);
-    m_nbMovesLeft      .set_alignment(Gtk::Align::ALIGN_START);
-    m_nbMovesLeftNumber.set_alignment(Gtk::Align::ALIGN_START);
+    m_gameBoard.set_hexpand(true);
+    m_gameBoard.set_vexpand(true);
 
-    m_gameInfoSection  .set_vexpand(false);
-    m_activePlayer     .set_vexpand(false);
-    m_activePlayerName .set_vexpand(false);
-    m_activePlayerColor.set_vexpand(false);
-    m_nextPlayer       .set_vexpand(false);
-    m_nextPlayerName   .set_vexpand(false);
-    m_nextPlayerColor  .set_vexpand(false);
-    m_inARowValue      .set_vexpand(false);
-    m_inARowValueNumber.set_vexpand(false);
-    m_nbMovesLeft      .set_vexpand(false);
-    m_nbMovesLeftNumber.set_vexpand(false);
+    m_gameBoardLayout.set_hexpand(true);
+    m_gameBoardLayout.set_vexpand(true);
 
-
-    // Game board section:
-    m_gameBoard.set_hexpand();
-    m_gameBoard.set_vexpand();
-
-    m_gameBoardLayout.set_hexpand();
-    m_gameBoardLayout.set_vexpand();
-
-    // Reinitialize button section:
 
     // Button to the left:
     m_reinitializeLayout.set_layout(Gtk::BUTTONBOX_END);
