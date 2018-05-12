@@ -29,22 +29,18 @@
  *
  **************************************************************************************************/
 
-#include <gtkmm/main.h>
-#include <gtkmm/window.h>
+#include <gtkmm/application.h>
 
 #include "../include/GameWindow.h"
 
 
-int main(int argc, char* argv[])
+int main(int argc, char** argv)
 {
-    Gtk::Main app(argc, argv);
+    Glib::RefPtr<Gtk::Application> app{Gtk::Application::create(argc, argv, "com.github.bobmorane22.connectx")};
 
-    cx::ui::GameWindow gw;
+   cx::ui::GameWindow gw;
+   gw.show_all();
 
-    gw.show_all();
-
-    Gtk::Main::run(gw);
-
-    return 0;
+   return app->run(gw);
 }
 

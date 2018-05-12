@@ -1,10 +1,15 @@
 #include <memory>
 
+#include <gtkmm/applicationwindow.h>
 #include <gtkmm/button.h>
 #include <gtkmm/buttonbox.h>
-#include <gtkmm/label.h>
 #include <gtkmm/grid.h>
-#include <gtkmm/applicationwindow.h>
+#include <gtkmm/imagemenuitem.h>
+#include <gtkmm/label.h>
+#include <gtkmm/menu.h>
+#include <gtkmm/menubar.h>
+#include <gtkmm/menuitem.h>
+#include <gtkmm/stock.h>
 
 #include <cxbase/include/Game.h>
 #include <cxgui/include/SectionTitle.h>
@@ -38,6 +43,7 @@ private:
 ///@{ @name Layout Configuration
 
     void registerLayouts();
+    void registerMenu();
     void registerWidgets();
     void configureLayoutsAndWidgets();
 
@@ -49,6 +55,7 @@ private:
     // Widget layouts:
     Gtk::Grid       m_mainLayout;                 ///< Contains all window sub-layouts.
 
+    Gtk::Grid       m_menuBarLayout;
     Gtk::Grid       m_gameInfoLayout;             ///< Contains all widgets in
                                                   ///< the 'Game information' section.
                                                   ///<
@@ -60,6 +67,18 @@ private:
     Gtk::HButtonBox m_reinitializeLayout;         ///< Layout for the 'Reinitialize' button.
 
     // Visible widgets:
+    Gtk::MenuBar        m_menuBar;
+    Gtk::Menu           m_gameMenu;
+    Gtk::MenuItem       m_gameMenuItem               {"_Game", true          };
+    Gtk::ImageMenuItem  m_newGameMenuItem            {Gtk::Stock::NEW        };
+    Gtk::MenuItem       m_reinitializeGameMenuItem   {"_Reinitialize Game", true};
+    Gtk::ImageMenuItem  m_quitMenuItem               {Gtk::Stock::QUIT       };
+
+    Gtk::Menu           m_helpMenu;
+    Gtk::MenuItem       m_helpMenuItem               {"_Help", true};
+    Gtk::ImageMenuItem  m_showHelpMenuItem           {Gtk::Stock::HELP       };
+    Gtk::ImageMenuItem  m_aboutMenuItem              {Gtk::Stock::ABOUT      };
+
     cxgui::SectionTitle m_gameInfoSection            {"Game information:"    };
     Gtk::Label          m_activePlayer               {"Active player:"       };
     Gtk::Label          m_activePlayerName           {"John Doe"             };
@@ -75,7 +94,7 @@ private:
     cxgui::SectionTitle m_gameBoardSection           {"Game board:"          };
     cx::ui::GameBoard   m_gameBoard                  {std::make_shared<cxbase::GameBoard>()};
 
-    Gtk::Button     m_reinitialize               {"Reinitialize"         };
+    Gtk::Button         m_reinitialize               {"Reinitialize"         };
 
 ///@}
 
