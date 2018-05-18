@@ -1,25 +1,12 @@
 #include <iostream>
 
+#include <cxgui/include/enums.h>
+
 #include "../include/GameWindow.h"
 #include "../include/util.h"
 
 namespace
 {
-
-enum GridWidth
-{
-    ONE_COLUMN = 1,
-    TWO_COLUMNS,
-    THREE_COLUMNS,
-
-};
-
-enum GridHeight
-{
-    ONE_ROW = 1,
-    TWO_ROWS,
-    THREE_ROWS,
-};
 
 enum WindowSection
 {
@@ -55,7 +42,6 @@ cx::ui::GameWindow::GameWindow()
 
     std::string iconPath{currentExecutablePath()};
     iconPath.append("/icons/cxicon16.png");
-    std::cout << iconPath << std::endl;
 
     set_icon_from_file(iconPath);
     set_position(Gtk::WIN_POS_CENTER);
@@ -77,25 +63,19 @@ cx::ui::GameWindow::GameWindow()
 }
 
 
-cx::ui::GameWindow::~GameWindow()
-{
-}
+cx::ui::GameWindow::~GameWindow() = default;
 
 
 void cx::ui::GameWindow::registerLayouts()
 {
-    // Sets padding around the window edges. This cases the contained widgets not to
-    // stick to the sides of the window, which is more elegant:
-    //set_border_width(15);
-
     // Window main layout:
     add(m_mainLayout);
 
     // Principal sub-layouts used in this window:
-    m_mainLayout.attach(m_menuBarLayout,      0, MENU_BAR,         GridWidth::ONE_COLUMN, GridHeight::ONE_ROW);
-    m_mainLayout.attach(m_gameInfoLayout,     0, GAME_INFORMATION, GridWidth::ONE_COLUMN, GridHeight::ONE_ROW);
-    m_mainLayout.attach(m_gameBoardLayout,    0, GAME_BOARD,       GridWidth::ONE_COLUMN, GridHeight::ONE_ROW);
-    m_mainLayout.attach(m_reinitializeLayout, 0, REINITIALIZE,     GridWidth::ONE_COLUMN, GridHeight::ONE_ROW);
+    m_mainLayout.attach(m_menuBarLayout,      0, MENU_BAR,         cxgui::GridWidth::ONE_COLUMN, cxgui::GridHeight::ONE_ROW);
+    m_mainLayout.attach(m_gameInfoLayout,     0, GAME_INFORMATION, cxgui::GridWidth::ONE_COLUMN, cxgui::GridHeight::ONE_ROW);
+    m_mainLayout.attach(m_gameBoardLayout,    0, GAME_BOARD,       cxgui::GridWidth::ONE_COLUMN, cxgui::GridHeight::ONE_ROW);
+    m_mainLayout.attach(m_reinitializeLayout, 0, REINITIALIZE,     cxgui::GridWidth::ONE_COLUMN, cxgui::GridHeight::ONE_ROW);
 }
 
 
@@ -117,25 +97,25 @@ void cx::ui::GameWindow::registerMenu()
 void cx::ui::GameWindow::registerWidgets()
 {
     //Menu bar:
-    m_menuBarLayout.attach(m_menuBar,            0,              0,                              GridWidth::ONE_COLUMN, GridHeight::ONE_ROW);
+    m_menuBarLayout.attach(m_menuBar,            0,              0,                              cxgui::GridWidth::ONE_COLUMN, cxgui::GridHeight::ONE_ROW);
 
     // Game information section:
-    m_gameInfoLayout.attach(m_gameInfoSection,   TITLE,          GAME_INFORMATION_SECTION_TITLE, GridWidth::THREE_COLUMNS, GridHeight::ONE_ROW);
+    m_gameInfoLayout.attach(m_gameInfoSection,   TITLE,          GAME_INFORMATION_SECTION_TITLE, cxgui::GridWidth::THREE_COLUMNS, cxgui::GridHeight::ONE_ROW);
 
-    m_gameInfoLayout.attach(m_activePlayer,      LABEL,          ACTIVE_PLAYER,                  GridWidth::ONE_COLUMN, GridHeight::ONE_ROW);
-    m_gameInfoLayout.attach(m_activePlayerName,  PRIMARY_INFO,   ACTIVE_PLAYER,                  GridWidth::ONE_COLUMN, GridHeight::ONE_ROW);
-    m_gameInfoLayout.attach(m_activePlayerColor, SECONDARY_INFO, ACTIVE_PLAYER,                  GridWidth::ONE_COLUMN, GridHeight::ONE_ROW);
-    m_gameInfoLayout.attach(m_nextPlayer,        LABEL,          NEXT_PLAYER,                    GridWidth::ONE_COLUMN, GridHeight::ONE_ROW);
-    m_gameInfoLayout.attach(m_nextPlayerName,    PRIMARY_INFO,   NEXT_PLAYER,                    GridWidth::ONE_COLUMN, GridHeight::ONE_ROW);
-    m_gameInfoLayout.attach(m_nextPlayerColor,   SECONDARY_INFO, NEXT_PLAYER,                    GridWidth::ONE_COLUMN, GridHeight::ONE_ROW);
-    m_gameInfoLayout.attach(m_inARowValue,       LABEL,          IN_A_ROW_VALUE,                 GridWidth::ONE_COLUMN, GridHeight::ONE_ROW);
-    m_gameInfoLayout.attach(m_inARowValueNumber, PRIMARY_INFO,   IN_A_ROW_VALUE,                 GridWidth::ONE_COLUMN, GridHeight::ONE_ROW);
-    m_gameInfoLayout.attach(m_nbMovesLeft,       LABEL,          NB_MOVES_REMAINING,             GridWidth::ONE_COLUMN, GridHeight::ONE_ROW);
-    m_gameInfoLayout.attach(m_nbMovesLeftNumber, PRIMARY_INFO,   NB_MOVES_REMAINING,             GridWidth::ONE_COLUMN, GridHeight::ONE_ROW);
+    m_gameInfoLayout.attach(m_activePlayer,      LABEL,          ACTIVE_PLAYER,                  cxgui::GridWidth::ONE_COLUMN, cxgui::GridHeight::ONE_ROW);
+    m_gameInfoLayout.attach(m_activePlayerName,  PRIMARY_INFO,   ACTIVE_PLAYER,                  cxgui::GridWidth::ONE_COLUMN, cxgui::GridHeight::ONE_ROW);
+    m_gameInfoLayout.attach(m_activePlayerColor, SECONDARY_INFO, ACTIVE_PLAYER,                  cxgui::GridWidth::ONE_COLUMN, cxgui::GridHeight::ONE_ROW);
+    m_gameInfoLayout.attach(m_nextPlayer,        LABEL,          NEXT_PLAYER,                    cxgui::GridWidth::ONE_COLUMN, cxgui::GridHeight::ONE_ROW);
+    m_gameInfoLayout.attach(m_nextPlayerName,    PRIMARY_INFO,   NEXT_PLAYER,                    cxgui::GridWidth::ONE_COLUMN, cxgui::GridHeight::ONE_ROW);
+    m_gameInfoLayout.attach(m_nextPlayerColor,   SECONDARY_INFO, NEXT_PLAYER,                    cxgui::GridWidth::ONE_COLUMN, cxgui::GridHeight::ONE_ROW);
+    m_gameInfoLayout.attach(m_inARowValue,       LABEL,          IN_A_ROW_VALUE,                 cxgui::GridWidth::ONE_COLUMN, cxgui::GridHeight::ONE_ROW);
+    m_gameInfoLayout.attach(m_inARowValueNumber, PRIMARY_INFO,   IN_A_ROW_VALUE,                 cxgui::GridWidth::ONE_COLUMN, cxgui::GridHeight::ONE_ROW);
+    m_gameInfoLayout.attach(m_nbMovesLeft,       LABEL,          NB_MOVES_REMAINING,             cxgui::GridWidth::ONE_COLUMN, cxgui::GridHeight::ONE_ROW);
+    m_gameInfoLayout.attach(m_nbMovesLeftNumber, PRIMARY_INFO,   NB_MOVES_REMAINING,             cxgui::GridWidth::ONE_COLUMN, cxgui::GridHeight::ONE_ROW);
 
     // Game board section:
-    m_gameBoardLayout.attach(m_gameBoardSection, 0,              0,                              GridWidth::ONE_COLUMN, GridHeight::ONE_ROW);
-    m_gameBoardLayout.attach(m_gameBoard,        0,              1,                              GridWidth::ONE_COLUMN, GridHeight::ONE_ROW);
+    m_gameBoardLayout.attach(m_gameBoardSection, 0,              0,                              cxgui::GridWidth::ONE_COLUMN, cxgui::GridHeight::ONE_ROW);
+    m_gameBoardLayout.attach(m_gameBoard,        0,              1,                              cxgui::GridWidth::ONE_COLUMN, cxgui::GridHeight::ONE_ROW);
 
     // Reinitialize button section:
     m_reinitializeLayout.pack_start(m_reinitialize);

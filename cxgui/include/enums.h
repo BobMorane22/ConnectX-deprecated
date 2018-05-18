@@ -20,31 +20,36 @@
  **************************************************************************************************/
 
 /***********************************************************************************************//**
- * @file    main.cpp
+ * @file    enums.h
  * @author  Eric Poirier
- * @date    February 2018
+ * @date    May 2018
  * @version 1.0
  *
- * Implementation for the Connect X main function.
+ * Useful enumerations for GUI developpement.
  *
  **************************************************************************************************/
 
-#include <gtkmm/application.h>
+#ifndef ENUMS_H_9E9CE149_978E_4586_A577_132DF8104FA4
+#define ENUMS_H_9E9CE149_978E_4586_A577_132DF8104FA4
 
-#include "../include/GameWindow.h"
-#include "../include/NewGame.h"
-
-
-int main(int argc, char** argv)
+namespace cxgui
 {
-    Glib::RefPtr<Gtk::Application> app{Gtk::Application::create(argc, argv, "com.github.bobmorane22.connectx")};
 
-   //cx::ui::GameWindow w;
-   //w.show_all();
+enum GridWidth
+{
+    ONE_COLUMN = 1,
+    TWO_COLUMNS,
+    THREE_COLUMNS,
 
-    cx::ui::NewGame w;
-    w.show_all();
+};
 
-   return app->run(w);
-}
+enum GridHeight
+{
+    ONE_ROW = 1,
+    TWO_ROWS,
+    THREE_ROWS,
+};
 
+} // namespace cxgui
+
+#endif // ENUMS_H_9E9CE149_978E_4586_A577_132DF8104FA4

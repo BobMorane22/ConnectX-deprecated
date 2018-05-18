@@ -36,6 +36,7 @@ SRCS     = CXDisc.cpp     \
            GBDisc.cpp     \
            main.cpp       \
            NDADisc.cpp    \
+           NewGame.cpp    \
            util.cpp
 
 OBJS     = $(OBJ_DIR)/CXDisc.o     \
@@ -44,6 +45,7 @@ OBJS     = $(OBJ_DIR)/CXDisc.o     \
            $(OBJ_DIR)/GBDisc.o     \
            $(OBJ_DIR)/main.o       \
            $(OBJ_DIR)/NDADisc.o    \
+           $(OBJ_DIR)/NewGame.o    \
            $(OBJ_DIR)/util.o
 
 LIBS = -lcxutil \
