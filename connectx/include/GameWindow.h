@@ -23,7 +23,7 @@ namespace cx
 namespace ui
 {
 
-class GameWindow : public Gtk::ApplicationWindow
+class GameWindow final : public Gtk::ApplicationWindow
 {
 
 public:
@@ -40,7 +40,7 @@ public:
 
 private:
 
-///@{ @name Layout Configuration
+///@{ @name Layout and widgets configuration
 
     void registerLayouts();
     void registerMenu();

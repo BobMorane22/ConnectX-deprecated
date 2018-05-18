@@ -116,14 +116,17 @@ cxgui::GeometricShape::GeometricShape(const cxutil::Color& p_fillColor       ,
                                       const cxutil::Color& p_borderColor     ,
                                       bool p_hasBorder                       ,
                                       double p_borderThickness               ,
-                                      BorderStyle p_borderStyle
-                                      ): m_fillColor{p_fillColor},
-                                         m_backgroundColor{p_backgroundColor},
-                                         m_borderColor{p_borderColor},
-                                         m_hasBorder{p_hasBorder},
-                                         m_borderThickness{p_borderThickness},
-                                         m_borderStyle{p_borderStyle},
-                                         m_simpleAndClosedCheckDone{false}
+                                      BorderStyle p_borderStyle              ,
+                                      bool p_fillOnlyVisibleBackground
+                                      )
+ : m_fillColor{p_fillColor}
+ , m_backgroundColor{p_backgroundColor}
+ , m_borderColor{p_borderColor}
+ , m_hasBorder{p_hasBorder}
+ , m_borderThickness{p_borderThickness}
+ , m_borderStyle{p_borderStyle}
+ , m_fillOnlyVisibleBackground{p_fillOnlyVisibleBackground}
+ , m_simpleAndClosedCheckDone{false}
 {
     PRECONDITION(p_borderThickness >= 0);
 }
@@ -235,16 +238,15 @@ void cxgui::GeometricShape::draw(const Cairo::RefPtr<Cairo::Context>& p_context)
     const int height{allocation.get_height()};
     const int smallestDimension{std::min(width, height)};
 
-    p_context->save();
     drawBackgroundColor(p_context);
-    p_context->restore();
+    drawFillColor(p_context);
 
     // If a border is required, change the border thickness according to
     // parent dimensions to allow smooth resizing of the border as the
     // parent is resized:
     if(m_hasBorder)
     {
-        p_context->set_line_width(smallestDimension * m_borderThickness);
+        p_context->set_line_width(smallestDimension * 2 * m_borderThickness);
     }
 
     p_context->save();
@@ -286,7 +288,6 @@ void cxgui::GeometricShape::draw(const Cairo::RefPtr<Cairo::Context>& p_context)
         p_context->stroke_preserve();
     }
 
-    drawFillColor(p_context);
     p_context->restore();
 }
 
@@ -303,6 +304,9 @@ void cxgui::GeometricShape::draw(const Cairo::RefPtr<Cairo::Context>& p_context)
  **********************************************************************************************/
 void cxgui::GeometricShape::drawBackgroundColor(const Cairo::RefPtr<Cairo::Context>& p_context) const
 {
+    p_context->save();
+    drawBorder(p_context);
+
     double bgRed, bgGreen, bgBlue, bgAlpha;
     cxutil::normalize(m_backgroundColor, bgRed, bgGreen, bgBlue, bgAlpha);
     p_context->set_source_rgba(bgRed, bgGreen, bgBlue, bgAlpha);
@@ -317,7 +321,13 @@ void cxgui::GeometricShape::drawBackgroundColor(const Cairo::RefPtr<Cairo::Conte
     p_context->line_to(0    , height);
     p_context->line_to(0    , 0     );
 
+    if(m_fillOnlyVisibleBackground)
+    {
+        p_context->set_fill_rule(Cairo::FILL_RULE_EVEN_ODD);
+    }
+
     p_context->fill();
+    p_context->restore();
 }
 
 
@@ -337,6 +347,8 @@ void cxgui::GeometricShape::drawFillColor(const Cairo::RefPtr<Cairo::Context>& p
     cxutil::normalize(m_fillColor, fillRed, fillGreen, fillBlue, fillAlpha);
 
     p_context->set_source_rgba(fillRed, fillGreen, fillBlue, fillAlpha);
+
+    drawBorder(p_context);
     p_context->fill();
 }
 

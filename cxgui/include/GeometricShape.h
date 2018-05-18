@@ -87,12 +87,14 @@ public:
      *
      * Constructs a geometric shape with a given border, fill and background color.
      *
-     * @param[in] p_fillColor        The fill color.
-     * @param[in] p_backgroundColor  The background color.
-     * @param[in] p_borderColor      The border color (show if the border is visible).
-     * @param[in] p_hasBorder        Visible state of the border.
-     * @param[in] p_borderThickness  Thickness of the border.
-     * @param[in] p_borderStyle      The border line style.
+     * @param[in] p_fillColor                  The fill color.
+     * @param[in] p_backgroundColor            The background color.
+     * @param[in] p_borderColor                The border color (show if the border is visible).
+     * @param[in] p_hasBorder                  Visible state of the border.
+     * @param[in] p_borderThickness            Thickness of the border.
+     * @param[in] p_borderStyle                The border line style.
+     * @param[in] p_fillOnlyVisibleBackground  Fill option: fill whole background, or only the
+     *                                         visible background (around the shape).
      *
      * @pre The border thickness is a positive real number(verified when @c on_draw() is called).
      *
@@ -104,7 +106,8 @@ public:
                    const cxutil::Color& p_borderColor     ,
                    bool p_hasBorder                       ,
                    double p_borderThickness               ,
-                   BorderStyle p_borderStyle
+                   BorderStyle p_borderStyle              ,
+                   bool p_fillOnlyVisibleBackground = false
                    );
 
 
@@ -317,25 +320,32 @@ private:
 ///@{ @name Data Members
 
     // Body:
-    cxutil::Color m_fillColor;                ///< The fill color.
+    cxutil::Color m_fillColor;                 ///< The fill color.
 
     // Background:
-    cxutil::Color m_backgroundColor;          ///< The background color.
+    cxutil::Color m_backgroundColor;           ///< The background color.
 
     // Border:
-    cxutil::Color m_borderColor;              ///< The border color.
-    bool          m_hasBorder;                ///< The border's visible state.
-    double        m_borderThickness;          ///< The border thickness.
-    BorderStyle   m_borderStyle;              ///< The border line style (see BorderStyle).
+    cxutil::Color m_borderColor;               ///< The border color.
+    bool          m_hasBorder;                 ///< The border's visible state.
+    double        m_borderThickness;           ///< The border thickness.
+    BorderStyle   m_borderStyle;               ///< The border line style (see BorderStyle).
 
-    mutable bool  m_simpleAndClosedCheckDone; // Flag that makes sure the method
-                                              // 'isTheBorderASimpleAndClosedCurve()'
-                                              // is called at least once. It is mutable
-                                              // because its value is modified at the
-                                              // end of that method, which is const. This
-                                              // check needs not be repeated because it
-                                              // is very expensive, and useless to perform
-                                              // more than once.
+    bool    m_fillOnlyVisibleBackground;       ///< Fills only the visible background. If set to
+                                               ///< @c true , the background area behind the
+                                               ///< geometric shape will be left untouched. If the
+                                               ///< fill color is set to transparent, no background color
+                                               ///< will be visible in the shape are.
+                                               ///<
+
+    mutable bool  m_simpleAndClosedCheckDone;  // Flag that makes sure the method
+                                               // 'isTheBorderASimpleAndClosedCurve()'
+                                               // is called at least once. It is mutable
+                                               // because its value is modified at the
+                                               // end of that method, which is const. This
+                                               // check needs not be repeated because it
+                                               // is very expensive, and useless to perform
+                                               // more than once.
 
 ///@}
 
