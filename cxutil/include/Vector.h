@@ -70,6 +70,6 @@ T dotProduct(const Vector<T, N>& p_v1, const Vector<T, N>& p_v2);
 
 }// namespace math
 
-#include "Vector.ipp"
-#include "Vector2D.ipp"
-#include "Vector3D.ipp"
+#include "../src/Vector.ipp"
+#include "../src/Vector2D.ipp"
+#include "../src/Vector3D.ipp"

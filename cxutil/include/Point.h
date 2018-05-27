@@ -46,4 +46,4 @@ using Point3D = Point<double, 3>;
 
 } // namespace math
 
-#include "Point.ipp"
+#include "../src/Point.ipp"
