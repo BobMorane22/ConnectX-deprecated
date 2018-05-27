@@ -128,17 +128,26 @@ void cx::ui::NewGame::configureLayoutsAndWidgets()
 
     m_mainLayout.set_border_width(spacing);
 
+    m_inARowValueLabel.set_halign(Gtk::Align::ALIGN_START);
+    m_nbRowsLabel.set_halign(Gtk::Align::ALIGN_START);
+    m_nbColumnsEntry.set_halign(Gtk::Align::ALIGN_START);
+
+    // Make sure that EditBoxes are not too wide, and do not expand horizontally:
     m_inARowValueEntry.set_max_width_chars(8);
     m_inARowValueEntry.set_width_chars(8);
+    m_inARowValueEntry.set_margin_left(4* spacing);
 
     m_nbRowsEntry.set_max_width_chars(8);
     m_nbRowsEntry.set_width_chars(8);
+    m_nbRowsEntry.set_margin_left(3* spacing);
 
     m_nbColumnsEntry.set_max_width_chars(8);
     m_nbColumnsEntry.set_width_chars(8);
+    m_nbColumnsEntry.set_margin_left(3* spacing);
 
     m_addPlayerButtonLayout.set_layout(Gtk::BUTTONBOX_END);
-    m_addPlayerButton.set_border_width(spacing);
+    m_addPlayerButtonLayout.set_hexpand(true); // Otherwise the main layout does not expand horizontally.
 
     m_startGameSectionLayout.set_layout(Gtk::BUTTONBOX_END);
+    m_startGameSectionLayout.set_margin_top(spacing);
 }
