@@ -89,27 +89,33 @@ void cx::ui::NewGame::registerLayouts()
     m_mainLayout.attach(m_gameBoardSectionLayout, 0, GAME_BOARD, cxgui::GridWidth::ONE_COLUMN, cxgui::GridHeight::ONE_ROW);
     m_mainLayout.attach(m_playersSectionLayout,   0, PLAYERS,    cxgui::GridWidth::ONE_COLUMN, cxgui::GridHeight::ONE_ROW);
     m_mainLayout.attach(m_startGameSectionLayout, 0, START_GAME, cxgui::GridWidth::ONE_COLUMN, cxgui::GridHeight::ONE_ROW);
+
+    // Special sub-layout for the "Add player..." button:
+    m_addPlayerButtonLayout.pack_start(m_addPlayerButton);
 }
 
 
 void cx::ui::NewGame::registerWidgets()
 {
     // Game section:
-    m_gameSectionLayout.attach(m_gameSectionTitle,           0, 0, cxgui::GridWidth::TWO_COLUMNS, cxgui::GridHeight::ONE_ROW);
-    m_gameSectionLayout.attach(m_inARowValueLabel,           0, 1, cxgui::GridWidth::ONE_COLUMN, cxgui::GridHeight::ONE_ROW);
-    m_gameSectionLayout.attach(m_inARowValueEntry,           1, 1, cxgui::GridWidth::ONE_COLUMN, cxgui::GridHeight::ONE_ROW);
+    m_mainLayout.insert_next_to(m_gameSectionLayout, Gtk::PositionType::POS_TOP);
+    m_mainLayout.attach_next_to(m_gameSectionTitle, m_gameSectionLayout, Gtk::PositionType::POS_TOP, cxgui::GridWidth::ONE_COLUMN, cxgui::GridHeight::ONE_ROW);
+    m_gameSectionLayout.attach(m_inARowValueLabel,           0, 0, cxgui::GridWidth::ONE_COLUMN, cxgui::GridHeight::ONE_ROW);
+    m_gameSectionLayout.attach(m_inARowValueEntry,           1, 0, cxgui::GridWidth::ONE_COLUMN, cxgui::GridHeight::ONE_ROW);
 
     // Game board section:
-    m_gameBoardSectionLayout.attach(m_gameBoardSectionTitle, 0, 0, cxgui::GridWidth::TWO_COLUMNS, cxgui::GridHeight::ONE_ROW);
-    m_gameBoardSectionLayout.attach(m_nbRowsLabel,           0, 1, cxgui::GridWidth::ONE_COLUMN,  cxgui::GridHeight::ONE_ROW);
-    m_gameBoardSectionLayout.attach(m_nbRowsEntry,           1, 1, cxgui::GridWidth::ONE_COLUMN,  cxgui::GridHeight::ONE_ROW);
-    m_gameBoardSectionLayout.attach(m_nbColumnsLabel,        0, 2, cxgui::GridWidth::ONE_COLUMN,  cxgui::GridHeight::ONE_ROW);
-    m_gameBoardSectionLayout.attach(m_nbColumnsEntry,        1, 2, cxgui::GridWidth::ONE_COLUMN,  cxgui::GridHeight::ONE_ROW);
+    m_mainLayout.insert_next_to(m_gameBoardSectionLayout, Gtk::PositionType::POS_TOP);
+    m_mainLayout.attach_next_to(m_gameBoardSectionTitle, m_gameBoardSectionLayout, Gtk::PositionType::POS_TOP, cxgui::GridWidth::ONE_COLUMN, cxgui::GridHeight::ONE_ROW);
+    m_gameBoardSectionLayout.attach(m_nbRowsLabel,           0, 0, cxgui::GridWidth::ONE_COLUMN,  cxgui::GridHeight::ONE_ROW);
+    m_gameBoardSectionLayout.attach(m_nbRowsEntry,           1, 0, cxgui::GridWidth::ONE_COLUMN,  cxgui::GridHeight::ONE_ROW);
+    m_gameBoardSectionLayout.attach(m_nbColumnsLabel,        0, 1, cxgui::GridWidth::ONE_COLUMN,  cxgui::GridHeight::ONE_ROW);
+    m_gameBoardSectionLayout.attach(m_nbColumnsEntry,        1, 1, cxgui::GridWidth::ONE_COLUMN,  cxgui::GridHeight::ONE_ROW);
 
     // Players section:
-    m_playersSectionLayout.attach(m_playersSectionTitle,     0, 0, cxgui::GridWidth::TWO_COLUMNS, cxgui::GridHeight::ONE_ROW);
-    m_playersSectionLayout.attach(m_playersTable,            0, 1, cxgui::GridWidth::ONE_COLUMN, cxgui::GridHeight::ONE_ROW);
-    m_playersSectionLayout.attach(m_addPlayerButton,         0, 2, cxgui::GridWidth::ONE_COLUMN, cxgui::GridHeight::ONE_ROW);
+    m_mainLayout.insert_next_to(m_playersSectionLayout, Gtk::PositionType::POS_TOP);
+    m_mainLayout.attach_next_to(m_playersSectionTitle, m_playersSectionLayout, Gtk::PositionType::POS_TOP, cxgui::GridWidth::ONE_COLUMN, cxgui::GridHeight::ONE_ROW);
+    m_playersSectionLayout.attach(m_playersTable,            0, 0, cxgui::GridWidth::ONE_COLUMN, cxgui::GridHeight::ONE_ROW);
+    m_playersSectionLayout.attach(m_addPlayerButtonLayout,   0, 1, cxgui::GridWidth::ONE_COLUMN, cxgui::GridHeight::ONE_ROW);
 
     // Start game:
     m_startGameSectionLayout.pack_start(m_startButton);
@@ -118,5 +124,21 @@ void cx::ui::NewGame::registerWidgets()
 
 void cx::ui::NewGame::configureLayoutsAndWidgets()
 {
-    //const int spacing{15};
+    const int spacing{15};
+
+    m_mainLayout.set_border_width(spacing);
+
+    m_inARowValueEntry.set_max_width_chars(8);
+    m_inARowValueEntry.set_width_chars(8);
+
+    m_nbRowsEntry.set_max_width_chars(8);
+    m_nbRowsEntry.set_width_chars(8);
+
+    m_nbColumnsEntry.set_max_width_chars(8);
+    m_nbColumnsEntry.set_width_chars(8);
+
+    m_addPlayerButtonLayout.set_layout(Gtk::BUTTONBOX_END);
+    m_addPlayerButton.set_border_width(spacing);
+
+    m_startGameSectionLayout.set_layout(Gtk::BUTTONBOX_END);
 }

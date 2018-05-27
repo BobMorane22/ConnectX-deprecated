@@ -75,6 +75,7 @@ private:
     Gtk::Grid            m_gameSectionLayout;
     Gtk::Grid            m_gameBoardSectionLayout;
     Gtk::Grid            m_playersSectionLayout;
+    Gtk::HButtonBox      m_addPlayerButtonLayout;
     Gtk::HButtonBox      m_startGameSectionLayout;
 
     // Visible widgets:

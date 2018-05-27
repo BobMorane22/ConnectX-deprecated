@@ -48,3 +48,26 @@ int main(int argc, char** argv)
    return app->run(w);
 }
 
+/*int main(int argc, char** argv)
+{
+    Glib::RefPtr<Gtk::Application> app{Gtk::Application::create(argc, argv, "com.github.bobmorane22.connectx")};
+
+    Gtk::Grid grid;
+    Gtk::Label label("My label:");
+    Gtk::Entry entry;
+
+    grid.attach(label, 0, 0, 1, 1);
+    grid.attach(entry, 1, 0, 1, 1);
+
+    entry.set_alignment(Gtk::Align::ALIGN_START); // Left align
+    entry.set_max_width_chars(4);
+    entry.set_hexpand_set(true);                  // Override with hexpand
+    entry.set_hexpand(false);                     // No horizontal expansion
+
+    Gtk::Window w;
+    w.add(grid);
+    w.show_all();
+
+   return app->run(w);
+}*/
+
