@@ -34,11 +34,13 @@ TESTS_RUNNER            = $(SRC_ROOT)/cxscripts/python/RunUnitTests.py
 
 CXUTIL_UNIT_TESTS_EXEC  = -t $(BIN_ROOT)/tests/unit/cxutilTest.out
 CXBASE_UNIT_TESTS_EXEC  = -t $(BIN_ROOT)/tests/unit/cxbaseTest.out
-CXGUI_UNIT_TESTS_EXEC  = -t $(BIN_ROOT)/tests/unit/cxguiTest.out
+CXGUI_UNIT_TESTS_EXEC   = -t $(BIN_ROOT)/tests/unit/cxguiTest.out
+CX_UNIT_TESTS_EXEC      = -t $(BIN_ROOT)/tests/unit/connectxTest.out
 
 CXUTIL_UNIT_TESTS_LOG   = -l $(BIN_ROOT)/tests/unit/log/cxutilUnitTests.log
 CXBASE_UNIT_TESTS_LOG   = -l $(BIN_ROOT)/tests/unit/log/cxbaseUnitTests.log
-CXGUI_UNIT_TESTS_LOG   = -l $(BIN_ROOT)/tests/unit/log/cxguiUnitTests.log
+CXGUI_UNIT_TESTS_LOG    = -l $(BIN_ROOT)/tests/unit/log/cxguiUnitTests.log
+CX_UNIT_TESTS_LOG       = -l $(BIN_ROOT)/tests/unit/log/connectxUnitTests.log
 
 
 MAIN     = connectx
@@ -99,7 +101,8 @@ cxexec:
 	$(MAKE) -C connectx
 
 cxexectest:
-	@echo Nothing available so far...
+	$(MAKE) -C connectx/test
+	python $(TESTS_RUNNER) $(CX_UNIT_TESTS_EXEC) $(CX_UNIT_TESTS_LOG)
 
 cxexecdoc:
 	@echo Nothing available so far...

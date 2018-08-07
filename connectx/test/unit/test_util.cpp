@@ -20,27 +20,51 @@
  **************************************************************************************************/
 
 /***********************************************************************************************//**
- * @file    main.cpp
+ * @file    test_util.cpp
  * @author  Eric Poirier
- * @date    February 2018
+ * @date    July 2018
  * @version 1.0
  *
- * Implementation for the Connect X main function.
+ * Unit tests for temporary utilities (to be refactored once the UI is more stable).
  *
  **************************************************************************************************/
 
-#include <gtkmm/application.h>
+#include <string>
 
-#include "../include/GameWindow.h"
-#include "../include/NewGame.h"
+#include <cxutil/include/Color.h>
 
+#include <gtest/gtest.h>
 
-int main(int argc, char** argv)
+#include "../../include/util.h"
+
+/*
+TEST(util, buildGdkColorString_ColorRed_ReturnsStringForRed)
 {
-    Glib::RefPtr<Gtk::Application> app{Gtk::Application::create(argc, argv, "com.github.bobmorane22.connectx")};
+    const std::string stringRed{"rgba(255, 0, 0, 255)"};
 
-    cx::ui::NewGame w;
-    w.show_all();
-
-   return app->run(w);
+    ASSERT_TRUE(stringRed == cx::ui::buildGdkColorString(cxutil::Color::red()));
 }
+
+
+TEST(util, buildGdkColorString_ColorGreen_ReturnsStringForGreen)
+{
+    const std::string stringGreen{"rgba(0, 255, 0, 255)"};
+
+    ASSERT_TRUE(stringGreen == cx::ui::buildGdkColorString(cxutil::Color::green()));
+}
+
+
+TEST(util, buildGdkColorString_ColorBlue_ReturnsStringForBlue)
+{
+    const std::string stringBlue{"rgba(0, 0, 255, 255)"};
+
+    ASSERT_TRUE(stringBlue == cx::ui::buildGdkColorString(cxutil::Color::blue()));
+}
+
+
+TEST(util, buildGdkColorString_ColorAlpha_ReturnsStringForAlpha)
+{
+    const std::string stringTransparent{"rgba(0, 0, 255, 255)"};
+
+    ASSERT_TRUE(stringTransparent == cx::ui::buildGdkColorString(cxutil::Color::transparent()));
+}*/

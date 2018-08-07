@@ -17,9 +17,9 @@
 * You should have received a copy of the GNU General Public License
 * along with Connect X.  If not, see <http://www.gnu.org/licenses./>.
 * 
-**************************************************************************************************
+**************************************************************************************************/
 
-/***********************************************************************************************//*
+/**********************************************************************************************//**
 * @file    connectxTest.cpp
 * @author  elliotchance
 * @date    September 2016
@@ -35,8 +35,6 @@ using namespace testing;
 
 
 class ConfigurableEventListener : public TestEventListener
-
-
 {
 
 protected:

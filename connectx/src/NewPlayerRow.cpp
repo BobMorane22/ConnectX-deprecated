@@ -20,27 +20,54 @@
  **************************************************************************************************/
 
 /***********************************************************************************************//**
- * @file    main.cpp
+ * @file    NewPlayerRow.cpp
  * @author  Eric Poirier
- * @date    February 2018
+ * @date    July 2018
  * @version 1.0
  *
- * Implementation for the Connect X main function.
+ * Implementation for the widget containing a new player's information.
  *
  **************************************************************************************************/
 
-#include <gtkmm/application.h>
+#include <sstream>
 
-#include "../include/GameWindow.h"
-#include "../include/NewGame.h"
+#include <cxutil/include/Assertion.h>
+#include <cxutil/include/narrow_cast.h>
+
+#include "../include/NewPlayerRow.h"
+#include "../include/util.h"
 
 
-int main(int argc, char** argv)
+cx::ui::NewPlayerRow::NewPlayerRow(const std::string& p_playerName, const cxutil::Color& p_playerDiscColor)
 {
-    Glib::RefPtr<Gtk::Application> app{Gtk::Application::create(argc, argv, "com.github.bobmorane22.connectx")};
+    m_playerName.set_text(p_playerName);
 
-    cx::ui::NewGame w;
-    w.show_all();
+    // Add color to the button:
+    Gdk::RGBA btnColor{cx::ui::convertToGdkRGBA(p_playerDiscColor)};
+    m_playerDiscColor.set_rgba(btnColor);
 
-   return app->run(w);
+    // Populate the row layout for the ListView:
+    m_gridLayout.add(m_playerName);
+    m_gridLayout.add(m_playerDiscColor);
+
+    add(m_gridLayout);
+}
+
+
+void cx::ui::NewPlayerRow::update(const std::string& p_playerNewName, const cxutil::Color& p_playerNewDiscColor)
+{
+    (void)p_playerNewName;
+    (void)p_playerNewDiscColor;
+}
+
+
+std::string cx::ui::NewPlayerRow::playerName() const
+{
+    return m_playerName.get_text();
+}
+
+
+cxutil::Color cx::ui::NewPlayerRow::playerDiscColor() const
+{
+    return cx::ui::deprecated::convertToLocalColor(m_playerDiscColor.get_color());
 }

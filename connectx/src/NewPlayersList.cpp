@@ -20,27 +20,30 @@
  **************************************************************************************************/
 
 /***********************************************************************************************//**
- * @file    main.cpp
+ * @file    NewPlayersList.cpp
  * @author  Eric Poirier
- * @date    February 2018
+ * @date    May 2018
  * @version 1.0
  *
- * Implementation for the Connect X main function.
+ * Implementation for the widget containing the list of players to add to a game.
  *
  **************************************************************************************************/
 
-#include <gtkmm/application.h>
 
-#include "../include/GameWindow.h"
-#include "../include/NewGame.h"
+#include "../include/NewPlayersList.h"
 
 
-int main(int argc, char** argv)
+cx::ui::NewPlayersList::NewPlayersList()
 {
-    Glib::RefPtr<Gtk::Application> app{Gtk::Application::create(argc, argv, "com.github.bobmorane22.connectx")};
+    // Two players are set up. More can manually be added by the users later, if needed:
+    m_newPlayersList.push_back(std::move(*Gtk::manage(new NewPlayerRow("-- Player 1 --", cxutil::Color::black()))));
+    m_newPlayersList.push_back(std::move(*Gtk::manage(new NewPlayerRow("-- Player 2 --", cxutil::Color::red()  ))));
 
-    cx::ui::NewGame w;
-    w.show_all();
-
-   return app->run(w);
+    for(auto& row : m_newPlayersList)
+    {
+        append(row);
+    }
 }
+
+
+cx::ui::NewPlayersList::~NewPlayersList() = default;

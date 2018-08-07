@@ -20,27 +20,48 @@
  **************************************************************************************************/
 
 /***********************************************************************************************//**
- * @file    main.cpp
+ * @file    NewPlayersList.h
  * @author  Eric Poirier
- * @date    February 2018
+ * @date    May 2018
  * @version 1.0
  *
- * Implementation for the Connect X main function.
+ * Interface for the widget containing the list of players to add to a game.
  *
  **************************************************************************************************/
 
-#include <gtkmm/application.h>
+#ifndef NEWPLAYERSLIST_H_A39DED7C_43CD_419E_A4AA_4E6A61C46E63
+#define NEWPLAYERSLIST_H_A39DED7C_43CD_419E_A4AA_4E6A61C46E63
 
-#include "../include/GameWindow.h"
-#include "../include/NewGame.h"
+#include <vector>
 
+#include <gtkmm/listbox.h>
+#include <gtkmm/treeview.h>
 
-int main(int argc, char** argv)
+#include "NewPlayerRow.h"
+
+namespace cx
 {
-    Glib::RefPtr<Gtk::Application> app{Gtk::Application::create(argc, argv, "com.github.bobmorane22.connectx")};
 
-    cx::ui::NewGame w;
-    w.show_all();
+namespace ui
+{
 
-   return app->run(w);
-}
+/***********************************************************************************************//**
+ *
+ **************************************************************************************************/
+class NewPlayersList : public Gtk::ListBox
+{
+
+public:
+    NewPlayersList();
+    ~NewPlayersList();
+
+private:
+    std::vector<NewPlayerRow> m_newPlayersList;
+
+};
+
+} // namespace ui
+
+} // namespace cx
+
+#endif // NEWPLAYERSLIST_H_A39DED7C_43CD_419E_A4AA_4E6A61C46E63

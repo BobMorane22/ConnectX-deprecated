@@ -40,7 +40,7 @@
 
 #include <cxgui/include/SectionTitle.h>
 
-//#include "../include/PlayersTable.h"
+#include "../include/NewPlayersList.h"
 
 namespace cx
 {
@@ -71,30 +71,29 @@ private:
 ///@}
 
     // Widget layouts:
-    Gtk::Grid            m_mainLayout;
-    Gtk::Grid            m_gameSectionLayout;
-    Gtk::Grid            m_gameBoardSectionLayout;
-    Gtk::Grid            m_playersSectionLayout;
-    Gtk::HButtonBox      m_addPlayerButtonLayout;
-    Gtk::HButtonBox      m_startGameSectionLayout;
+    Gtk::Grid              m_mainLayout;
+    Gtk::Grid              m_gameSectionLayout;
+    Gtk::Grid              m_gameBoardSectionLayout;
+    Gtk::Grid              m_playersSectionLayout;
+    Gtk::HButtonBox        m_addPlayerButtonLayout;
+    Gtk::HButtonBox        m_startGameSectionLayout;
 
     // Visible widgets:
-    cxgui::SectionTitle  m_gameSectionTitle        {"Game:"};
-    Gtk::Label           m_inARowValueLabel        {"In-a-row value:"};
-    Gtk::Entry           m_inARowValueEntry;
+    cxgui::SectionTitle    m_gameSectionTitle        {"Game:"};
+    Gtk::Label             m_inARowValueLabel        {"In-a-row value:"};
+    Gtk::Entry             m_inARowValueEntry;
 
-    cxgui::SectionTitle  m_gameBoardSectionTitle   {"Game board:"};
-    Gtk::Label           m_nbRowsLabel             {"Number of rows:"};
-    Gtk::Entry           m_nbRowsEntry;
-    Gtk::Label           m_nbColumnsLabel          {"Number of columns:"};
-    Gtk::Entry           m_nbColumnsEntry;
+    cxgui::SectionTitle    m_gameBoardSectionTitle   {"Game board:"};
+    Gtk::Label             m_nbRowsLabel             {"Number of rows:"};
+    Gtk::Entry             m_nbRowsEntry;
+    Gtk::Label             m_nbColumnsLabel          {"Number of columns:"};
+    Gtk::Entry             m_nbColumnsEntry;
 
-    cxgui::SectionTitle  m_playersSectionTitle     {"Players:"};
-    //cx::ui::PlayersTable m_playersTable;
-    Gtk::Button m_playersTable{"Players table!"};
-    Gtk::Button          m_addPlayerButton         {"Add player..."};
+    cxgui::SectionTitle    m_playersSectionTitle     {"Players:"};
+    cx::ui::NewPlayersList m_playersTable;
+    Gtk::Button            m_addPlayerButton         {"Add player..."};
 
-    Gtk::Button          m_startButton             {"Start"};
+    Gtk::Button            m_startButton             {"Start"};
 };
 
 } // namespace ui

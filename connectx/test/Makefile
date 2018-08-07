@@ -23,20 +23,24 @@ CPPFLAGS = $(OPT_FLAGS) $(DEBUG_FLAGS) $(STANDARD_FLAGS) \
 # Source files, headers, etc.:
 OBJ_DIR      = $(BIN_ROOT)/tests/unit
 OUT_DIR      = $(BIN_ROOT)/tests/unit
-INCLUDES     = -I$(SRC_ROOT)/connectx
+INCLUDES     = -I$(SRC_ROOT)
 LIBINCLUDES  = -L$(BIN_ROOT)/connectx/libs
 VPATH        = unit
 
 SRCS      = connectxTest.cpp\
+            test_util.cpp
 
-OBJS      =
+OBJS      = connectxTest.o\
+            test_util.o
 
 OBJS := $(addprefix $(OBJ_DIR)/,$(OBJS))
 
-LIBS      = -lgtest\
+LIBS      = -lcxutil    \
+            -lcxbase    \
+            -lcxgui     \
+            -lgtest     \
             -lgtest_main\
-            -lpthread\
-            -lconnectx
+            -lpthread
 
 # Product:
 MAIN = connectxTest.out
@@ -45,12 +49,12 @@ all: make_dir make_log $(MAIN)
 
 $(MAIN): $(OBJS)
 	@echo Invoquing GCC...
-	$(CPPC) $(LIBINCLUDES) -o $(OUT_DIR)/$(MAIN) $(OBJS) $(LIBS)
+	$(CPPC) $(LIBINCLUDES) -o $(OUT_DIR)/$(MAIN) $(OBJS) $(LIBS) `pkg-config gtkmm-3.0 --libs`
 	@echo $(MAIN) has been compiled and linked!
 
 $(OBJ_DIR)/%.o: %.cpp
 	@echo Invoquing GCC...
-	$(CPPC) $(CPPFLAGS) $(INCLUDES) -c $< -o $@
+	$(CPPC) $(CPPFLAGS) $(INCLUDES) `pkg-config gtkmm-3.0 --cflags` -c $< -o $@
 	@echo Object files created!
 
 make_dir:

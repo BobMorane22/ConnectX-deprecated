@@ -1,10 +1,46 @@
+/***************************************************************************************************
+ *
+ * Copyright (C) 2018 Connect X team
+ *
+ * This file is part of Connect X.
+ *
+ * Connect X is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Connect X is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Connect X.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ **************************************************************************************************/
+
+/***********************************************************************************************//**
+ * @file    util.cpp
+ * @author  Eric Poirier
+ * @date    July 2018
+ * @version 1.0
+ *
+ * Temporary utilities file (to be refactored once the UI is more stable).
+ *
+ **************************************************************************************************/
+
 #include <algorithm>
 #include <cstdio>
 
 #include <unistd.h>
 #include <linux/limits.h>
 
+#include <gdkmm/color.h>
+#include <gdkmm/rgba.h>
+
 #include <cxutil/include/Assertion.h>
+#include <cxutil/include/narrow_cast.h>
+#include <cxutil/include/Color.h>
 
 #include "../include/util.h"
 
@@ -52,4 +88,51 @@ std::string currentExecutablePath(const bool p_pathOnly)
     }
 
     return pathToCurrentExecutable;
+}
+
+
+cxutil::Color cx::ui::convertToLocalColor(const Gdk::RGBA& p_gdkColor)
+{
+    const uint8_t red   {cxutil::narrow_cast<uint8_t>(p_gdkColor.get_red_u()  )};
+    const uint8_t green {cxutil::narrow_cast<uint8_t>(p_gdkColor.get_green_u())};
+    const uint8_t blue  {cxutil::narrow_cast<uint8_t>(p_gdkColor.get_blue_u() )};
+    const uint8_t alpha {cxutil::narrow_cast<uint8_t>(p_gdkColor.get_alpha_u())};
+
+    return cxutil::Color{cxutil::RGBA{red, green, blue, alpha}};
+}
+
+
+cxutil::Color cx::ui::deprecated::convertToLocalColor(const Gdk::Color& p_gdkColor)
+{
+    const uint8_t red   {cxutil::narrow_cast<uint8_t>(p_gdkColor.get_red()  )};
+    const uint8_t green {cxutil::narrow_cast<uint8_t>(p_gdkColor.get_green())};
+    const uint8_t blue  {cxutil::narrow_cast<uint8_t>(p_gdkColor.get_blue() )};
+
+    return cxutil::Color{cxutil::RGBA{red, green, blue, 255}};
+}
+
+
+std::string cx::ui::buildGdkColorString(const cxutil::Color& p_localColor)
+{
+    std::ostringstream os;
+
+    os << "rgba(" << unsigned(p_localColor.r())
+       << ","     << unsigned(p_localColor.g())
+       << ","     << unsigned(p_localColor.b())
+       << ","     << unsigned(p_localColor.a())
+       << ")";
+
+    return os.str();
+}
+
+
+Gdk::RGBA cx::ui::convertToGdkRGBA(const cxutil::Color& p_localColor)
+{
+    return Gdk::RGBA{cx::ui::buildGdkColorString(p_localColor)};
+}
+
+
+Gdk::Color cx::ui::deprecated::convertToGdkColor(const cxutil::Color& p_localColor)
+{
+    return Gdk::Color{cx::ui::buildGdkColorString(p_localColor)};
 }
