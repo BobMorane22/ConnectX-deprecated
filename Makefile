@@ -35,15 +35,16 @@ TESTS_RUNNER            = $(SRC_ROOT)/cxscripts/python/RunUnitTests.py
 CXUTIL_UNIT_TESTS_EXEC  = -t $(BIN_ROOT)/tests/unit/cxutilTest.out
 CXBASE_UNIT_TESTS_EXEC  = -t $(BIN_ROOT)/tests/unit/cxbaseTest.out
 CXGUI_UNIT_TESTS_EXEC   = -t $(BIN_ROOT)/tests/unit/cxguiTest.out
-CX_UNIT_TESTS_EXEC      = -t $(BIN_ROOT)/tests/unit/connectxTest.out
+CXEXEC_UNIT_TESTS_EXEC      = -t $(BIN_ROOT)/tests/unit/cxexecTest.out
 
 CXUTIL_UNIT_TESTS_LOG   = -l $(BIN_ROOT)/tests/unit/log/cxutilUnitTests.log
 CXBASE_UNIT_TESTS_LOG   = -l $(BIN_ROOT)/tests/unit/log/cxbaseUnitTests.log
 CXGUI_UNIT_TESTS_LOG    = -l $(BIN_ROOT)/tests/unit/log/cxguiUnitTests.log
-CX_UNIT_TESTS_LOG       = -l $(BIN_ROOT)/tests/unit/log/connectxUnitTests.log
+CXEXEC_UNIT_TESTS_LOG       = -l $(BIN_ROOT)/tests/unit/log/cxexecUnitTests.log
 
 
 MAIN     = connectx
+
 TARGETS  += cxutil     \
             cxutiltest \
             cxutildoc  \
@@ -58,7 +59,8 @@ TARGETS  += cxutil     \
             cxexecdoc  \
             cxcppnorm
 
-.PHONY: cxutil cxbase cxgui
+
+.PHONY: cxutil cxbase cxgui cxexec cxmain
 
 all: $(MAIN)
 
@@ -94,30 +96,37 @@ cxguitest:
 cxguidoc:
 	$(MAKE) -C cxgui/doc
 
-cxdoc:
-	$(MAKE) -C cxgui/doc
-
 cxexec:
-	$(MAKE) -C connectx
+	$(MAKE) -C cxexec
 
 cxexectest:
-	$(MAKE) -C connectx/test
-	python $(TESTS_RUNNER) $(CX_UNIT_TESTS_EXEC) $(CX_UNIT_TESTS_LOG)
+	$(MAKE) -C cxexec/test
+	python $(TESTS_RUNNER) $(CXEXEC_UNIT_TESTS_EXEC) $(CXEXEC_UNIT_TESTS_LOG)
 
 cxexecdoc:
-	@echo Nothing available so far...
+	$(MAKE) -C cxexec/doc
+
+cxmain:
+	$(MAKE) -C cxmain
 
 cxcppnorm:
 	$(MAKE) -C cx_cpp_norme
 
 mrproper:
-	@echo Cleaning ConnectX...
+	@echo Cleaning Connect X...
 	$(MAKE) mrproper -C cxutil
 	$(MAKE) mrproper -C cxutil/test
 	$(MAKE) mrproper -C cxutil/doc
 	$(MAKE) mrproper -C cxbase
 	$(MAKE) mrproper -C cxbase/test
 	$(MAKE) mrproper -C cxbase/doc
+	$(MAKE) mrproper -C cxgui
+	$(MAKE) mrproper -C cxgui/test
+	$(MAKE) mrproper -C cxgui/doc
+	$(MAKE) mrproper -C cxexec
+	$(MAKE) mrproper -C cxexec/test
+	$(MAKE) mrproper -C cxexec/doc
+	$(MAKE) mrproper -C cxmain
 	$(MAKE) mrproper -C cx_cpp_norme
 	@echo ConnectX cleaned!
 
@@ -125,9 +134,15 @@ clean:
 	@echo Removing object files...
 	$(MAKE) clean -C cxutil
 	$(MAKE) clean -C cxutil/test
+	$(MAKE) clean -C cxutil/doc
 	$(MAKE) clean -C cxbase
 	$(MAKE) clean -C cxbase/test
-	$(MAKE) clean -C cxutil/doc
 	$(MAKE) clean -C cxbase/doc
+	$(MAKE) clean -C cxgui/test
+	$(MAKE) clean -C cxgui/doc
+	$(MAKE) clean -C cxexec
+	$(MAKE) clean -C cxexec/test
+	$(MAKE) clean -C cxexec/doc
+	$(MAKE) mrproper -C cxmain
 	$(MAKE) clean -C cx_cpp_norme
 	@echo Object files removed!

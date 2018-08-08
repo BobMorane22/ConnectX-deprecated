@@ -466,9 +466,13 @@ cx_cpp_norme/cx_cpp_norm.pdf
 cxgui/doc/doxygen/html/
 cxgui/doc/doxygen/latex/
 
-### connectx ###
-connectx/doc/specs/ui/connectXGuiSpec.pdf
-connectx/doc/specs/ui/auto/
-connectx/doc/specs/ui/files/auto/
+### cxexec ###
+cxexec/doc/doxygen/html/
+cxexec/doc/doxygen/latex/
+
+### cxmain ###
+cxmain/doc/specs/ui/connectXGuiSpec.pdf
+cxmain/doc/specs/ui/auto/
+cxmain/doc/specs/ui/files/auto/
 
 # End of https://www.gitignore.io/api/c++, python, eclipse, latex, emacs

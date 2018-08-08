@@ -43,7 +43,7 @@ OBJS     = $(OBJ_DIR)/Disc.o           \
            $(OBJ_DIR)/utils.o
 
 LIBS = -lcxbase \
-       -lcxutil \
+       -lcxutil
 
 # Build output:
 
