@@ -35,12 +35,12 @@ TESTS_RUNNER            = $(SRC_ROOT)/cxscripts/python/RunUnitTests.py
 CXUTIL_UNIT_TESTS_EXEC  = -t $(BIN_ROOT)/tests/unit/cxutilTest.out
 CXBASE_UNIT_TESTS_EXEC  = -t $(BIN_ROOT)/tests/unit/cxbaseTest.out
 CXGUI_UNIT_TESTS_EXEC   = -t $(BIN_ROOT)/tests/unit/cxguiTest.out
-CXEXEC_UNIT_TESTS_EXEC      = -t $(BIN_ROOT)/tests/unit/cxexecTest.out
+CXEXEC_UNIT_TESTS_EXEC  = -t $(BIN_ROOT)/tests/unit/cxexecTest.out
 
 CXUTIL_UNIT_TESTS_LOG   = -l $(BIN_ROOT)/tests/unit/log/cxutilUnitTests.log
 CXBASE_UNIT_TESTS_LOG   = -l $(BIN_ROOT)/tests/unit/log/cxbaseUnitTests.log
 CXGUI_UNIT_TESTS_LOG    = -l $(BIN_ROOT)/tests/unit/log/cxguiUnitTests.log
-CXEXEC_UNIT_TESTS_LOG       = -l $(BIN_ROOT)/tests/unit/log/cxexecUnitTests.log
+CXEXEC_UNIT_TESTS_LOG   = -l $(BIN_ROOT)/tests/unit/log/cxexecUnitTests.log
 
 
 MAIN     = connectx
