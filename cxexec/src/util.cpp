@@ -114,9 +114,9 @@ std::string cx::ui::buildGdkColorString(const cxutil::Color& p_localColor)
     std::ostringstream os;
 
     os << "rgba(" << unsigned(p_localColor.r())
-       << ","     << unsigned(p_localColor.g())
-       << ","     << unsigned(p_localColor.b())
-       << ","     << unsigned(p_localColor.a())
+       << ", "    << unsigned(p_localColor.g())
+       << ", "    << unsigned(p_localColor.b())
+       << ", "    << unsigned(p_localColor.a())
        << ")";
 
     return os.str();

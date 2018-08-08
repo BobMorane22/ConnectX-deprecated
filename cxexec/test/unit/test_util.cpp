@@ -38,7 +38,7 @@
 #include "../../include/util.h"
 
 
-TEST(util, buildGdkColorString_ColorRed_ReturnsStringForRed)
+TEST(colors, buildGdkColorString_ColorRed_ReturnsStringForRed)
 {
     const std::string stringRed{"rgba(255, 0, 0, 255)"};
 
@@ -46,7 +46,7 @@ TEST(util, buildGdkColorString_ColorRed_ReturnsStringForRed)
 }
 
 
-TEST(util, buildGdkColorString_ColorGreen_ReturnsStringForGreen)
+TEST(colors, buildGdkColorString_ColorGreen_ReturnsStringForGreen)
 {
     const std::string stringGreen{"rgba(0, 255, 0, 255)"};
 
@@ -54,7 +54,7 @@ TEST(util, buildGdkColorString_ColorGreen_ReturnsStringForGreen)
 }
 
 
-TEST(util, buildGdkColorString_ColorBlue_ReturnsStringForBlue)
+TEST(colors, buildGdkColorString_ColorBlue_ReturnsStringForBlue)
 {
     const std::string stringBlue{"rgba(0, 0, 255, 255)"};
 
@@ -62,9 +62,9 @@ TEST(util, buildGdkColorString_ColorBlue_ReturnsStringForBlue)
 }
 
 
-TEST(util, buildGdkColorString_ColorAlpha_ReturnsStringForAlpha)
+TEST(colors, buildGdkColorString_ColorAlpha_ReturnsStringForAlpha)
 {
-    const std::string stringTransparent{"rgba(0, 0, 255, 255)"};
+    const std::string stringTransparent{"rgba(255, 255, 255, 0)"};
 
     ASSERT_TRUE(stringTransparent == cx::ui::buildGdkColorString(cxutil::Color::transparent()));
 }
