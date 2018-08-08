@@ -225,10 +225,11 @@ def generateLibraryMakefile(p_path, p_libName, p_headerInfo):
 
     makefile.write("# Source files, headers, etc.:\n"                                                                        )
     makefile.write("MAKEFILE_LOC = $(SRC_ROOT)/" + p_libName + "\n"                                                          )
-    makefile.write("OBJ_DIR      = $(BIN_ROOT)/connectx\n"                                                                   )
+    makefile.write("OBJ_DIR      = $(BIN_ROOT)/connectx/objects/" + p_libName + "\n"                                         )
     makefile.write("OUT_DIR      = $(BIN_ROOT)/connectx\n"                                                                   )
     makefile.write("LIBS_OUT     = $(BIN_ROOT)/connectx/libs\n"                                                              )
-    makefile.write("INCLUDES     = -I$(MAKEFILE_LOC)/src -I$(MAKEFILE_LOC)/include\n"                                        )
+    makefile.write("LIBS_INCLUDE = -static -L$(LIBS_OUT)\n"                                                                  )
+    makefile.write("INCLUDES     = -I$(SRC_ROOT)\n"                                                                          )
     makefile.write("VPATH        = src\n\n"                                                                                  )
 
     makefile.write("SRCS     = \\\n"                                                                                         )
@@ -253,7 +254,7 @@ def generateLibraryMakefile(p_path, p_libName, p_headerInfo):
 
     makefile.write("$(OBJ_DIR)/%.o: %.cpp\n"                                                                                 )
     makefile.write("\t@echo Invoquing GCC...\n"                                                                              )
-    makefile.write("\t$(CPPC) $(CPPFLAGS) $(INCLUDES) -c $< -o $@\n"                                                         )
+    makefile.write("\t$(CPPC) $(CPPFLAGS) $(INCLUDES) -c $< -o $@ $(LIBS) $(LIBS_INCLUDE)\n"                                 )
     makefile.write("\t@echo Object files created!\n\n"                                                                       )
 
     makefile.write("make_dir:\n"                                                                                             )
@@ -318,25 +319,25 @@ def generateTestMakefile(p_path, p_libName, p_headerInfo):
     makefile.write("           $(WARN_AS_ERRORS_FLAGS)\n\n"                                                                  )
 
     makefile.write("# Source files, headers, etc.:\n"                                                                        )
-    makefile.write("OBJ_DIR      = $(BIN_ROOT)/tests/unit\n"                                                            )
-    makefile.write("OUT_DIR      = $(BIN_ROOT)/tests/unit\n"                                                            )
-    makefile.write("INCLUDES     = -I$(SRC_ROOT)/" + p_libName + "\n"                                                     )
-    makefile.write("LIBINCLUDES  = -L$(BIN_ROOT)/connectx/libs\n"                                                       )
-    makefile.write("VPATH        = unit\n\n"                                                                                )
+    makefile.write("OBJ_DIR      = $(BIN_ROOT)/tests/unit\n"                                                                 )
+    makefile.write("OUT_DIR      = $(BIN_ROOT)/tests/unit\n"                                                                 )
+    makefile.write("INCLUDES     = -I$(SRC_ROOT)/\n"                                                                         )
+    makefile.write("LIBINCLUDES  = -L$(BIN_ROOT)/connectx/libs\n"                                                            )
+    makefile.write("VPATH        = unit\n\n"                                                                                 )
 
-    makefile.write("SRCS      = " + p_libName + "Test.cpp\\\n\n"                                                            )
+    makefile.write("SRCS      = " + p_libName + "Test.cpp\\\n\n"                                                             )
 
     makefile.write("OBJS      =\n\n"                                                                                         )
 
     makefile.write("OBJS := $(addprefix $(OBJ_DIR)/,$(OBJS))\n"                                                              )
     makefile.write("\n"                                                                                                      )
-    makefile.write("LIBS      = -lgtest\\\n"                                                                                 )
-    makefile.write("            -lgtest_main\\\n"                                                                            )
-    makefile.write("            -lpthread\\\n"                                                                               )
     makefile.write("            -l" + p_libName + "\n\n"                                                                     )
+    makefile.write("LIBS      = -lgtest      \\\n"                                                                           )
+    makefile.write("            -lgtest_main \\\n"                                                                           )
+    makefile.write("            -lpthread    \\\n"                                                                           )
 
     makefile.write("# Product:\n"                                                                                            )
-    makefile.write("MAIN = " + p_libName + "Test.out\n\n"                                                                   )
+    makefile.write("MAIN = " + p_libName + "Test.out\n\n"                                                                    )
 
     makefile.write("all: make_dir make_log $(MAIN)\n\n"                                                                      )
 
@@ -356,7 +357,7 @@ def generateTestMakefile(p_path, p_libName, p_headerInfo):
 
     makefile.write("make_log:\n"                                                                                             )
     makefile.write("\tmkdir -p $(OUT_DIR)/log\n"                                                                             )
-    makefile.write("\ttouch $(OUT_DIR)/log/" + p_libName + "UnitTests.log\n\n"                                                 )
+    makefile.write("\ttouch $(OUT_DIR)/log/" + p_libName + "UnitTests.log\n\n"                                               )
 
     makefile.write("clean:\n"                                                                                                )
     makefile.write("\t@echo Removing object files...\n"                                                                      )
@@ -489,9 +490,9 @@ def generateUnitTestMain(p_path, p_libName):
     testFile.write("* You should have received a copy of the GNU General Public License\n"                                 )
     testFile.write("* along with Connect X.  If not, see <http://www.gnu.org/licenses./>.\n"                               )
     testFile.write("* \n"                                                                                                  )
-    testFile.write("**************************************************************************************************\n\n")
+    testFile.write("**************************************************************************************************/\n\n")
 
-    testFile.write("/***********************************************************************************************//*\n" )
+    testFile.write("/***********************************************************************************************//**\n" )
     testFile.write("* @file    " + p_libName + "Test.cpp\n"                                                                )
     testFile.write("* @author  elliotchance\n"                                                                             )
     testFile.write("* @date    September 2016\n"                                                                           )
@@ -500,14 +501,14 @@ def generateUnitTestMain(p_path, p_libName):
     testFile.write("* Unit tests main. All unit tests for the " + p_libName + "library run from here. All source code from this\n")
     testFile.write("* file comes from <a href=\"https://gist.github.com/ \"elliotchance/8215283\"> here </a>.\n"           )
     testFile.write("* \n"                                                                                                  )
-    testFile.write("**************************************************************************************************/\n" )
+    testFile.write("***************************************************************************************************/\n")
 
     testFile.write("#include \"gtest/gtest.h\"\n\n"                                                                        )
 
     testFile.write("using namespace testing;\n\n\n"                                                                        )
 
 
-    testFile.write("class ConfigurableEventListener : public TestEventListener\n\n\n"                                      )
+    testFile.write("class ConfigurableEventListener : public TestEventListener\n"                                          )
     testFile.write("{\n\n"                                                                                                 )
 
     testFile.write("protected:\n"                                                                                          )
