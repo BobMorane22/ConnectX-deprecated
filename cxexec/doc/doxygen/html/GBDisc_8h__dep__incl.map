@@ -1,7 +1,0 @@
-<map id="GBDisc.h" name="GBDisc.h">
-<area shape="rect" id="node2" href="$GameBoard_8h.html" title="GameBoard.h" alt="" coords="88,80,191,107"/>
-<area shape="rect" id="node6" href="$GBDisc_8cpp.html" title="GBDisc.cpp" alt="" coords="215,80,309,107"/>
-<area shape="rect" id="node3" href="$GameWindow_8h.html" title="GameWindow.h" alt="" coords="13,155,127,181"/>
-<area shape="rect" id="node5" href="$GameBoard_8cpp.html" title="GameBoard.cpp" alt="" coords="152,155,268,181"/>
-<area shape="rect" id="node4" href="$GameWindow_8cpp.html" title="GameWindow.cpp" alt="" coords="5,229,135,256"/>
-</map>

@@ -1,4 +1,0 @@
-<map id="cx::ui::CXDisc" name="cx::ui::CXDisc">
-<area shape="rect" id="node3" href="$classcx_1_1ui_1_1GBDisc.html" title="Connect X disc for the game board area. " alt="" coords="5,155,113,181"/>
-<area shape="rect" id="node4" href="$classcx_1_1ui_1_1NDADisc.html" title="Connect X disc for the next disc area. " alt="" coords="137,155,256,181"/>
-</map>
