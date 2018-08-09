@@ -35,13 +35,13 @@ OBJS      = cxexecTest.o \
 
 OBJS := $(addprefix $(OBJ_DIR)/,$(OBJS))
 
-LIBS      = -lcxutil     \
+LIBS      = -lgtest      \
+            -lgtest_main \
+            -lpthread    \
+            -lcxutil     \
             -lcxbase     \
             -lcxgui      \
-            -lcxexec     \
-            -lgtest      \
-            -lgtest_main \
-            -lpthread
+            -lcxexec
 
 # Product:
 MAIN = cxexecTest.out

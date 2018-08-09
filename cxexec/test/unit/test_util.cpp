@@ -32,6 +32,7 @@
 #include <string>
 
 #include <cxutil/include/Color.h>
+#include <cxutil/include/narrow_cast.h>
 
 #include <gtest/gtest.h>
 
@@ -40,25 +41,25 @@
 
 TEST(colors, buildGdkColorString_ColorRed_ReturnsStringForRed)
 {
-    const std::string stringRed{"rgba(255, 0, 0, 255)"};
+    const std::string stringRed{"rgba(255, 0, 0, 1)"};
 
-    ASSERT_TRUE(stringRed == cx::ui::buildGdkColorString(cxutil::Color::red()));
+    ASSERT_EQ(stringRed, cx::ui::buildGdkColorString(cxutil::Color::red()));
 }
 
 
 TEST(colors, buildGdkColorString_ColorGreen_ReturnsStringForGreen)
 {
-    const std::string stringGreen{"rgba(0, 255, 0, 255)"};
+    const std::string stringGreen{"rgba(0, 255, 0, 1)"};
 
-    ASSERT_TRUE(stringGreen == cx::ui::buildGdkColorString(cxutil::Color::green()));
+    ASSERT_EQ(stringGreen, cx::ui::buildGdkColorString(cxutil::Color::green()));
 }
 
 
 TEST(colors, buildGdkColorString_ColorBlue_ReturnsStringForBlue)
 {
-    const std::string stringBlue{"rgba(0, 0, 255, 255)"};
+    const std::string stringBlue{"rgba(0, 0, 255, 1)"};
 
-    ASSERT_TRUE(stringBlue == cx::ui::buildGdkColorString(cxutil::Color::blue()));
+    ASSERT_EQ(stringBlue, cx::ui::buildGdkColorString(cxutil::Color::blue()));
 }
 
 
@@ -66,5 +67,134 @@ TEST(colors, buildGdkColorString_ColorAlpha_ReturnsStringForAlpha)
 {
     const std::string stringTransparent{"rgba(255, 255, 255, 0)"};
 
-    ASSERT_TRUE(stringTransparent == cx::ui::buildGdkColorString(cxutil::Color::transparent()));
+    ASSERT_EQ(stringTransparent, cx::ui::buildGdkColorString(cxutil::Color::transparent()));
+}
+
+
+TEST(colors, buildGdkColorString_ColorAlpha_ReturnsStringForAlphaNotZero)
+{
+    const std::string stringTransparent{"rgba(255, 255, 255, 0.2)"};
+
+    ASSERT_EQ(stringTransparent, cx::ui::buildGdkColorString(cxutil::Color{cxutil::RGBA{255, 255, 255, 51}}));
+}
+
+
+TEST(colors, buildDeprecatedGdkColorString_ColorRed_ReturnsStringForRed)
+{
+    const std::string stringRed{"#FF0000"};
+
+    ASSERT_EQ(stringRed, cx::ui::deprecated::buildGdkColorString(cxutil::Color::red()));
+}
+
+
+TEST(colors, buildDeprecatedGdkColorString_ColorGreen_ReturnsStringForGreen)
+{
+    const std::string stringGreen{"#00FF00"};
+
+    ASSERT_EQ(stringGreen, cx::ui::deprecated::buildGdkColorString(cxutil::Color::green()));
+}
+
+
+TEST(colors, buildDeprecatedGdkColorString_ColorBlue_ReturnsStringForBlue)
+{
+    const std::string stringBlue{"#0000FF"};
+
+    ASSERT_EQ(stringBlue, cx::ui::deprecated::buildGdkColorString(cxutil::Color::blue()));
+}
+
+
+TEST(colors, ConvertToLocalColor_SomeGdkRGBA_ReturnsEquivalentLocalColor)
+{
+    const cxutil::Color t_localColor{cxutil::RGBA{50, 100, 150, 200}};
+    const Gdk::RGBA t_gdkColor{"rgba(50, 100, 150, 0.784313725)"};
+
+    // Conversion:
+    const cxutil::Color t_convertedColor{cx::ui::convertToLocalColor(t_gdkColor)};
+
+    ASSERT_EQ(t_localColor, t_convertedColor);
+}
+
+
+TEST(colors, ConvertToGdkRGBA_SomeLocalColor_ReturnsEquivalentGdkRGBA)
+{
+    const cxutil::Color t_localColor{cxutil::RGBA{50, 100, 150, 200}};
+
+    // Conversion:
+    const Gdk::RGBA t_convertedColor{cx::ui::convertToGdkRGBA(t_localColor)};
+
+    // Here there will be a small error when converting to Gdk::RGBA because it holds
+    // 16 bits values for its RGBA values, unlike cxutil::Colors which hold 8 bits values.
+    // Therefore, there is some lost during the conversion. See the conversion function
+    // documentation for more details.
+
+    // Absolute error ratio:
+    const double max8bits {0xFF};
+    const double max16bits{0xFFFF};
+
+    const double absoluteErrorRatio{max8bits / max16bits};
+
+    // Error ratios for the local color (on 8 bits):
+    const double localRedRatio  {cxutil::narrow_cast<double>(t_localColor.r()) / max8bits};
+    const double localGreenRatio{cxutil::narrow_cast<double>(t_localColor.g()) / max8bits};
+    const double localBlueRatio {cxutil::narrow_cast<double>(t_localColor.b()) / max8bits};
+    const double localAlphaRatio{cxutil::narrow_cast<double>(t_localColor.a()) / max8bits};
+
+    // Error ratios for the Gdk color (on 16 bits):
+    const double gdkConvertedRedRatio  {t_convertedColor.get_red()};
+    const double gdkConvertedGreenRatio{t_convertedColor.get_green()};
+    const double gdkConvertedBlueRatio {t_convertedColor.get_blue()};
+    const double gdkConvertedAlphaRatio{t_convertedColor.get_alpha()};
+
+    // Color components should, to a 8 bits factor, be within bounds:
+    ASSERT_NEAR(localRedRatio  , gdkConvertedRedRatio  , absoluteErrorRatio);
+    ASSERT_NEAR(localGreenRatio, gdkConvertedGreenRatio, absoluteErrorRatio);
+    ASSERT_NEAR(localBlueRatio , gdkConvertedBlueRatio , absoluteErrorRatio);
+    ASSERT_NEAR(localAlphaRatio, gdkConvertedAlphaRatio, absoluteErrorRatio);
+}
+
+
+TEST(colors, ConvertToLocalColor_SomeGdkDeprecatedColor_ReturnsEquivalentLocalColor)
+{
+    const cxutil::Color t_localColor{cxutil::RGBA{50, 100, 150, 255}};
+    const Gdk::Color t_gdkColor{"#326496"};
+
+    // Conversion:
+    const cxutil::Color t_convertedColor{cx::ui::deprecated::convertToLocalColor(t_gdkColor)};
+
+    ASSERT_EQ(t_localColor, t_convertedColor);
+}
+
+
+TEST(colors, ConvertToGdkColor_SomeLocalColor_ReturnsEquivalentGdkDeprecatedColor)
+{
+    const cxutil::Color t_localColor{cxutil::RGBA{50, 100, 150, 255}};
+
+    // Conversion:
+    const Gdk::Color t_convertedColor{cx::ui::deprecated::convertToGdkColor(t_localColor)};
+
+    // Here there will be a small error when converting to Gdk::Color because it holds
+    // 16 bits values for its RGB values, unlike cxutil::Colors which hold 8 bits values.
+    // Therefore, there is some lost during the conversion. See the conversion function
+    // documentation for more details.
+
+    // Absolute error ratio:
+    const double max8bits {0xFF};
+    const double max16bits{0xFFFF};
+
+    const double absoluteErrorRatio{max8bits / max16bits};
+
+    // Error ratios for the local color (on 8 bits):
+    const double localRedRatio  {cxutil::narrow_cast<double>(t_localColor.r()) / max8bits};
+    const double localGreenRatio{cxutil::narrow_cast<double>(t_localColor.g()) / max8bits};
+    const double localBlueRatio {cxutil::narrow_cast<double>(t_localColor.b()) / max8bits};
+
+    // Error ratios for the Gdk color (on 16 bits):
+    const double gdkConvertedRedRatio  {cxutil::narrow_cast<double>(t_convertedColor.get_red())  / max16bits};
+    const double gdkConvertedGreenRatio{cxutil::narrow_cast<double>(t_convertedColor.get_green())/ max16bits};
+    const double gdkConvertedBlueRatio {cxutil::narrow_cast<double>(t_convertedColor.get_blue()) / max16bits};
+
+    // Color components should, to a 8 bits factor, be within bounds:
+    ASSERT_NEAR(localRedRatio  , gdkConvertedRedRatio  , absoluteErrorRatio);
+    ASSERT_NEAR(localGreenRatio, gdkConvertedGreenRatio, absoluteErrorRatio);
+    ASSERT_NEAR(localBlueRatio , gdkConvertedBlueRatio , absoluteErrorRatio);
 }

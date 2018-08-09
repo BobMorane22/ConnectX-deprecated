@@ -59,14 +59,17 @@ namespace ui
 {
 
     /*******************************************************************************************//**
-     * Builds a string of the form <tt> rgba(r, g, b, a) </tt> where @c r , @c g @c b and @c a
-     * represent the four RGBA components for the color. This function is useful to build
-     * @c Gdk::RGBA or @c Gdk::Color (deprecated) objects from a @x cxutil::Color type, which
-     * does not deal with strings.
+     * Builds a string of the form <tt>rgba(r, g, b, a)</tt> where @c r , @c g @c b and @c a
+     * represent the four RGBA components for the color. @c r, @c g and @c b are integers from
+     * 0 to 255 and @c a is a ration from 0.0 (transparent) to 1.0 (opaque). This function is
+     * useful to build @c Gdk::RGBA objects from a @x cxutil::Color type, which does not deal with
+     * strings.
      *
-     * @param p_localColor The @c cxutil::Color to be converted to a Gdk compatible string.
+     * @param p_localColor The @c cxutil::Color to be converted to a @c Gdk::RGBA compatible string.
      *
      * @return The Gdk compatible string representing the color passed as an argument.
+     *
+     * @see cxutil::Color
      *
      **********************************************************************************************/
      std::string buildGdkColorString(const cxutil::Color& p_localColor);
@@ -79,6 +82,14 @@ namespace ui
      *
      * @return The @c cxutil::Color object represented the Gdk color passed as an argument.
      *
+     * @note @c Gdk::RGBA internally store its RGBA components as 16 bits values, unlike
+     *          @c cxutil::Color which store its equivalent data as 8 bits values. Therefore, it
+     *          is inevitable that there is some precision loss when converting from @c Gdk to
+     *          @c cxutil , since some colors exist only as Gdk colors. This function will convert
+     *          to a color that is at most 1/257 away, when normalized.
+     *
+     * @see cxutil::Color
+     *
      ***********************************************************************************************/
     cxutil::Color convertToLocalColor(const Gdk::RGBA& p_gdkColor);
 
@@ -90,12 +101,31 @@ namespace ui
      *
      * @return The @c Gdk::RGBA object represented the local color passed as an argument.
      *
+     * @see cxutil::Color
+     *
      **********************************************************************************************/
     Gdk::RGBA convertToGdkRGBA(const cxutil::Color& p_localColor);
 
 
 namespace deprecated
 {
+
+    /*******************************************************************************************//**
+     * Builds a string of the form <tt>#RRGGBB</tt> where @c RR , @c BB and @c BB represent the
+     * three RGB components for the color, as hexadecimal values. This function is useful to
+     * build @c Gdk::Color (deprecated) objects from a @c cxutil::Color type, which does not deal
+     * with strings.
+     *
+     * @param p_localColor The @c cxutil::Color to be converted to a @c Gdk::Color compatible string.
+     *
+     * @return The Gdk compatible string representing the color passed as an argument.
+     *
+     * @see cxutil::Color
+     *
+     **********************************************************************************************/
+    std::string buildGdkColorString(const cxutil::Color& p_localColor);
+
+
     /*******************************************************************************************//**
      * Converts a @c Gdk::Color object to a cxutil::Color object.
      *
@@ -103,12 +133,20 @@ namespace deprecated
      *
      * @return The @c cxutil::Color object represented the Gdk color passed as an argument.
      *
+     * @note @c Gdk::Color internally store its RGB components as 16 bits values, unlike
+     *          @c cxutil::Color which store its equivalent data as 8 bits values. Therefore, it
+     *          is inevitable that there is some precision loss when converting from @c Gdk to
+     *          @c cxutil , since some colors exist only as Gdk colors. This function will convert
+     *          to a color that is at most 1/257 away, when normalized.
+     *
      * @deprecated According to the Gdk reference for Color : "When working with cairo,
      *             it is often more convenient to use a @c GdkRGBA instead, and @c GdkColor has
      *             been deprecated in favor of @cGdkRGBA." This function has been added here
      *             because some of the Gtkmm3 functionalities have not yet been ported to
      *             @c Gdk::RGBA (such as the @cGtk::ColorButton for example) and still need
      *             support for @c Gdk::Color.
+     *
+     * @see cxutil::Color
      *
      ***********************************************************************************************/
     cxutil::Color convertToLocalColor(const Gdk::Color& p_gdkColor);
@@ -127,6 +165,8 @@ namespace deprecated
      *             because some of the Gtkmm3 functionalities have not yet been ported to
      *             @c Gdk::RGBA (such as the @cGtk::ColorButton for example) and still need
      *             support for @c Gdk::Color.
+     *
+     * @see cxutil::Color
      *
      **********************************************************************************************/
     Gdk::Color convertToGdkColor(const cxutil::Color& p_localColor);

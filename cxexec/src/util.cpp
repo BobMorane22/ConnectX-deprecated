@@ -31,6 +31,7 @@
 
 #include <algorithm>
 #include <cstdio>
+#include <iomanip>
 
 #include <unistd.h>
 #include <linux/limits.h>
@@ -88,27 +89,6 @@ std::string currentExecutablePath(const bool p_pathOnly)
 }
 
 
-cxutil::Color cx::ui::convertToLocalColor(const Gdk::RGBA& p_gdkColor)
-{
-    const uint8_t red   {cxutil::narrow_cast<uint8_t>(p_gdkColor.get_red_u()  )};
-    const uint8_t green {cxutil::narrow_cast<uint8_t>(p_gdkColor.get_green_u())};
-    const uint8_t blue  {cxutil::narrow_cast<uint8_t>(p_gdkColor.get_blue_u() )};
-    const uint8_t alpha {cxutil::narrow_cast<uint8_t>(p_gdkColor.get_alpha_u())};
-
-    return cxutil::Color{cxutil::RGBA{red, green, blue, alpha}};
-}
-
-
-cxutil::Color cx::ui::deprecated::convertToLocalColor(const Gdk::Color& p_gdkColor)
-{
-    const uint8_t red   {cxutil::narrow_cast<uint8_t>(p_gdkColor.get_red()  )};
-    const uint8_t green {cxutil::narrow_cast<uint8_t>(p_gdkColor.get_green())};
-    const uint8_t blue  {cxutil::narrow_cast<uint8_t>(p_gdkColor.get_blue() )};
-
-    return cxutil::Color{cxutil::RGBA{red, green, blue, 255}};
-}
-
-
 std::string cx::ui::buildGdkColorString(const cxutil::Color& p_localColor)
 {
     std::ostringstream os;
@@ -116,10 +96,46 @@ std::string cx::ui::buildGdkColorString(const cxutil::Color& p_localColor)
     os << "rgba(" << unsigned(p_localColor.r())
        << ", "    << unsigned(p_localColor.g())
        << ", "    << unsigned(p_localColor.b())
-       << ", "    << unsigned(p_localColor.a())
+       << ", "    << p_localColor.alpha()
        << ")";
 
     return os.str();
+}
+
+
+std::string cx::ui::deprecated::buildGdkColorString(const cxutil::Color& p_localColor)
+{
+    using namespace std;
+
+    ostringstream os;
+
+    os << "#"
+       << uppercase << setfill('0') << setw(2) << hex << unsigned(p_localColor.r())
+       << uppercase << setfill('0') << setw(2) << hex << unsigned(p_localColor.g())
+       << uppercase << setfill('0') << setw(2) << hex << unsigned(p_localColor.b());
+
+    return os.str();
+}
+
+
+cxutil::Color cx::ui::convertToLocalColor(const Gdk::RGBA& p_gdkColor)
+{
+    const uint8_t red   {cxutil::narrow_cast<uint8_t>((p_gdkColor.get_red_u()   >> 8) & 0xFF)};
+    const uint8_t green {cxutil::narrow_cast<uint8_t>((p_gdkColor.get_green_u() >> 8) & 0xFF)};
+    const uint8_t blue  {cxutil::narrow_cast<uint8_t>((p_gdkColor.get_blue_u()  >> 8) & 0xFF)};
+    const uint8_t alpha {cxutil::narrow_cast<uint8_t>((p_gdkColor.get_alpha_u() >> 8) & 0xFF)};
+
+    return cxutil::Color{cxutil::RGBA{red, green, blue, alpha}};
+}
+
+
+cxutil::Color cx::ui::deprecated::convertToLocalColor(const Gdk::Color& p_gdkColor)
+{
+    const uint8_t red   {cxutil::narrow_cast<uint8_t>((p_gdkColor.get_red()   >> 8) & 0xFF)};
+    const uint8_t green {cxutil::narrow_cast<uint8_t>((p_gdkColor.get_green() >> 8) & 0xFF)};
+    const uint8_t blue  {cxutil::narrow_cast<uint8_t>((p_gdkColor.get_blue()  >> 8) & 0xFF)};
+
+    return cxutil::Color{cxutil::RGBA{red, green, blue, 255}};
 }
 
 
@@ -131,5 +147,5 @@ Gdk::RGBA cx::ui::convertToGdkRGBA(const cxutil::Color& p_localColor)
 
 Gdk::Color cx::ui::deprecated::convertToGdkColor(const cxutil::Color& p_localColor)
 {
-    return Gdk::Color{cx::ui::buildGdkColorString(p_localColor)};
+    return Gdk::Color{cx::ui::deprecated::buildGdkColorString(p_localColor)};
 }
