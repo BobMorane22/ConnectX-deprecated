@@ -35,8 +35,6 @@ using namespace testing;
 
 
 class ConfigurableEventListener : public TestEventListener
-
-
 {
 
 protected:
