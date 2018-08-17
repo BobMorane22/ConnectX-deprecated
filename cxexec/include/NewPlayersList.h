@@ -46,17 +46,45 @@ namespace ui
 {
 
 /***********************************************************************************************//**
+ * Widget containing row of players to be registered for a Connect X game, as well as the color
+ * they have chosen for their discs. There can be a minimum of two players and a maximum of ten
+ * players listed in this widget.
+ *
+ * @see cx::ui::NewPlayerRow
  *
  **************************************************************************************************/
-class NewPlayersList : public Gtk::ListBox
+class NewPlayersList final : public Gtk::ListBox
 {
 
 public:
+
+    /*******************************************************************************************//**
+     * Default constructor.
+     *
+     * Construct a list of two players with different colors. This is the basic Connect X
+     * configuration, an is equivalent to the classic Connect 4 requirements.
+     *
+     **********************************************************************************************/
     NewPlayersList();
+
+
+    /*******************************************************************************************//**
+     * Default destructor.
+     *
+     **********************************************************************************************/
     ~NewPlayersList();
 
 private:
-    std::vector<NewPlayerRow> m_newPlayersList;
+
+    const static int MIN_NB_PLAYERS;            ///< Minimum number of players that can be registered
+                                                ///< in this widget.
+
+    const static int MAX_NB_PLAYERS;            ///< Maximum number of players that can be registered
+                                                ///< in this widget.
+
+    std::vector<NewPlayerRow> m_newPlayersList; ///< List of rows of players for a game. These rows
+                                                ///< are vertically concatenated to make the current
+                                                ///< widget.
 
 };
 
