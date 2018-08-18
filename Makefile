@@ -57,6 +57,7 @@ TARGETS  += cxutil     \
             cxexec     \
             cxexectest \
             cxexecdoc  \
+            cxmain     \
             cxcppnorm
 
 
