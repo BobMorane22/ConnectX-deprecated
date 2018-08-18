@@ -35,6 +35,7 @@ SRCS     = CXDisc.cpp         \
            GameBoard.cpp      \
            GameWindow.cpp     \
            GBDisc.cpp         \
+           Help.cpp           \
            NDADisc.cpp        \
            NewGame.cpp        \
            NewPlayerRow.cpp   \
@@ -45,6 +46,7 @@ OBJS     = $(OBJ_DIR)/CXDisc.o         \
            $(OBJ_DIR)/GameBoard.o      \
            $(OBJ_DIR)/GameWindow.o     \
            $(OBJ_DIR)/GBDisc.o         \
+           $(OBJ_DIR)/Help.o           \
            $(OBJ_DIR)/NDADisc.o        \
            $(OBJ_DIR)/NewGame.o        \
            $(OBJ_DIR)/NewPlayerRow.o   \

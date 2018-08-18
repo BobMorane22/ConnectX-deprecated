@@ -20,28 +20,45 @@
  **************************************************************************************************/
 
 /***********************************************************************************************//**
- * @file    main.cpp
+ * @file    Help.cpp
  * @author  Eric Poirier
- * @date    February 2018
+ * @date    August 2018
  * @version 1.0
  *
- * Implementation for the Connect X main function.
+ * Implementation for the Connect X help dialog.
  *
  **************************************************************************************************/
 
-#include <gtkmm/application.h>
+#include <sstream>
 
-#include <cxexec/include/GameWindow.h>
-#include <cxexec/include/NewGame.h>
-#include <cxexec/include/Help.h>
+#include <cxexec/include/util.h>
+#include <cxgui/include/utils.h>
 
+#include "../include/Help.h"
 
-int main(int argc, char** argv)
+namespace
 {
-    Glib::RefPtr<Gtk::Application> app{Gtk::Application::create(argc, argv, "com.github.bobmorane22.connectx")};
 
-    cx::ui::Help w;
-    w.show_all();
+std::string buildHelpMessage()
+{
+    std::ostringstream os;
 
-   return app->run(w);
+    os << cxgui::addBoldMarkupTags("Do you want to read the manual online?")
+       << std::endl
+       << std::endl
+       << "You will be redirected to the documentation web page where help pages are "
+       << "maintained for every release."
+       << std::endl;
+
+    return os.str();
 }
+
+} // unamed namespace
+
+
+cx::ui::Help::Help() : cxgui::dlg::Help(buildHelpMessage())
+{
+}
+
+
+cx::ui::Help::~Help() = default;

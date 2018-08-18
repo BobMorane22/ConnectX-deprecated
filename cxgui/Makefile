@@ -32,12 +32,14 @@ VPATH        = src
 
 SRCS     = Disc.cpp           \
            GeometricShape.cpp \
+           Help.cpp           \
            RAIICairoPath.cpp  \
            SectionTitle.cpp   \
            utils.cpp
 
 OBJS     = $(OBJ_DIR)/Disc.o           \
            $(OBJ_DIR)/GeometricShape.o \
+           $(OBJ_DIR)/Help.o           \
            $(OBJ_DIR)/RAIICairoPath.o  \
            $(OBJ_DIR)/SectionTitle.o   \
            $(OBJ_DIR)/utils.o

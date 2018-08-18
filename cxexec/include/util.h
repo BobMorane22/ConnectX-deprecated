@@ -37,6 +37,8 @@
 #include <gdkmm/color.h>
 #include <gdkmm/rgba.h>
 
+#include <cxutil/include/Color.h>
+
 
 /***********************************************************************************************//**
  * Produces a string containing the path for the current executable.
