@@ -20,29 +20,54 @@
  **************************************************************************************************/
 
 /***********************************************************************************************//**
- * @file    main.cpp
+ * @file    About.h
  * @author  Eric Poirier
- * @date    February 2018
+ * @date    August 2018
  * @version 1.0
  *
- * Implementation for the Connect X main function.
+ * Interface for the Connect X 'about' dialog.
  *
  **************************************************************************************************/
 
-#include <gtkmm/application.h>
+#ifndef ABOUT_H_6347564A_EF2C_4AA0_AB0B_8C3B9DD9F6F0
+#define ABOUT_H_6347564A_EF2C_4AA0_AB0B_8C3B9DD9F6F0
 
-#include <cxexec/include/GameWindow.h>
-#include <cxexec/include/NewGame.h>
-#include <cxexec/include/Help.h>
-#include <cxexec/include/About.h>
+#include <cxgui/include/About.h>
 
 
-int main(int argc, char** argv)
+namespace cx
 {
-    Glib::RefPtr<Gtk::Application> app{Gtk::Application::create(argc, argv, "com.github.bobmorane22.connectx")};
 
-    cx::ui::About w;
-    w.show_all();
+namespace ui
+{
 
-   return app->run(w);
-}
+/***********************************************************************************************//**
+ * @class About
+ *
+ *
+ *
+ **************************************************************************************************/
+class About final : public cxgui::dlg::About
+{
+
+public:
+
+    /*******************************************************************************************//**
+     * Default constructor.
+     *
+     **********************************************************************************************/
+    About();
+
+
+    /*******************************************************************************************//**
+     * Default destructor.
+     *
+     **********************************************************************************************/
+    ~About();
+};
+
+} // namespace ui
+
+} // namespace cx
+
+#endif // ABOUT_H_6347564A_EF2C_4AA0_AB0B_8C3B9DD9F6F0

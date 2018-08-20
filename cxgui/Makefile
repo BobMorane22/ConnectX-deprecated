@@ -30,14 +30,16 @@ LIBS_OUT     = $(BIN_ROOT)/connectx/libs
 INCLUDES     = -I$(SRC_ROOT)
 VPATH        = src
 
-SRCS     = Disc.cpp           \
+SRCS     = About.cpp          \
+           Disc.cpp           \
            GeometricShape.cpp \
            Help.cpp           \
            RAIICairoPath.cpp  \
            SectionTitle.cpp   \
            utils.cpp
 
-OBJS     = $(OBJ_DIR)/Disc.o           \
+OBJS     = $(OBJ_DIR)/About.o          \
+           $(OBJ_DIR)/Disc.o           \
            $(OBJ_DIR)/GeometricShape.o \
            $(OBJ_DIR)/Help.o           \
            $(OBJ_DIR)/RAIICairoPath.o  \

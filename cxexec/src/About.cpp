@@ -20,29 +20,45 @@
  **************************************************************************************************/
 
 /***********************************************************************************************//**
- * @file    main.cpp
+ * @file    About.cpp
  * @author  Eric Poirier
- * @date    February 2018
+ * @date    August 2018
  * @version 1.0
  *
- * Implementation for the Connect X main function.
+ * Implementation for the Connect X 'about' dialog.
  *
  **************************************************************************************************/
 
-#include <gtkmm/application.h>
+#include <cxutil/include/Date.h>
+#include <cxexec/include/util.h>
 
-#include <cxexec/include/GameWindow.h>
-#include <cxexec/include/NewGame.h>
-#include <cxexec/include/Help.h>
-#include <cxexec/include/About.h>
+#include "../include/About.h"
 
 
-int main(int argc, char** argv)
+namespace
 {
-    Glib::RefPtr<Gtk::Application> app{Gtk::Application::create(argc, argv, "com.github.bobmorane22.connectx")};
 
-    cx::ui::About w;
-    w.show_all();
+const cxgui::ApplicationInformation APPLICATION_INFORMATION
+{
+    currentExecutablePath() + "/icons/cxicon64.png",
+    "Connect X",
+    "1.0",
+    "A scalable connect 4 game."
+};
 
-   return app->run(w);
+const cxgui::CopyrightInformation COPYRIGHT_INFORMATION
+{
+    "Eric Poirier",
+    cxutil::Date{2016, 1, 1},
+    cxutil::Date()
+};
+
+} // unamed namespace
+
+
+cx::ui::About::About() : cxgui::dlg::About(APPLICATION_INFORMATION, COPYRIGHT_INFORMATION)
+{
 }
+
+
+cx::ui::About::~About() = default;

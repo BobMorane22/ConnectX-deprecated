@@ -31,7 +31,8 @@ LIBS_INCLUDE = -static -L$(LIBS_OUT)
 INCLUDES     = -I$(SRC_ROOT)
 VPATH        = src
 
-SRCS     = CXDisc.cpp         \
+SRCS     = About.cpp          \
+           CXDisc.cpp         \
            GameBoard.cpp      \
            GameWindow.cpp     \
            GBDisc.cpp         \
@@ -42,7 +43,8 @@ SRCS     = CXDisc.cpp         \
            NewPlayersList.cpp \
            util.cpp
 
-OBJS     = $(OBJ_DIR)/CXDisc.o         \
+OBJS     = $(OBJ_DIR)/About.o          \
+           $(OBJ_DIR)/CXDisc.o         \
            $(OBJ_DIR)/GameBoard.o      \
            $(OBJ_DIR)/GameWindow.o     \
            $(OBJ_DIR)/GBDisc.o         \
