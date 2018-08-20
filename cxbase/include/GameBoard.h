@@ -36,7 +36,7 @@
 #include <string>
 #include <vector>
 
-#include <cxutil/include/IEnforceContract.h>
+#include <cxutil/include/ContractException.h>
 
 #include "Disc.h"
 #include "Position.h"
@@ -68,7 +68,7 @@ namespace cxbase
  * @note 3D GameBoards are not supported.
  *
  **************************************************************************************************/
-class GameBoard : public cxutil::IEnforceContract
+class GameBoard
 {
 
 public:
@@ -276,7 +276,7 @@ public:
 
 protected:
 
-    virtual void checkInvariant() const override;
+    void checkInvariant() const;
 
 private:
 

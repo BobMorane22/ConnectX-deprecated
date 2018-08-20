@@ -34,7 +34,7 @@
 
 #include <string>
 
-#include <cxutil/include/IEnforceContract.h>
+#include <cxutil/include/ContractException.h>
 #include <cxutil/include/Name.h>
 
 #include "Disc.h"
@@ -58,7 +58,7 @@ namespace cxbase
  * @see Disc
  *
  **************************************************************************************************/
-class Player : public cxutil::IEnforceContract
+class Player
 {
 
 public:
@@ -139,7 +139,7 @@ public:
 
 protected:
 
-    void checkInvariant() const override;
+    void checkInvariant() const;
 
 private:
 

@@ -33,7 +33,6 @@
 #define POSITION_H_423583B9_6944_4DC7_BB34_56FC0A5DC45B
 
 #include <cxutil/include/Coordinate.h>
-#include <cxutil/include/IEnforceContract.h>
 
 
 namespace cxbase

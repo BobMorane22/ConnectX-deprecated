@@ -42,7 +42,6 @@
 
 // Interfaces:
 #include "ICliObject.h"
-#include "IEnforceContract.h"
 #include "IObserver.h"
 #include "ISubject.h"
 #include "UnCopyable.h"

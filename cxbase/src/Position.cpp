@@ -29,6 +29,8 @@
  *
  **************************************************************************************************/
 
+#include <cxutil/include/ContractException.h>
+
 #include "../include/Position.h"
 
 

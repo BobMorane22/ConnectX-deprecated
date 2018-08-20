@@ -34,7 +34,8 @@
 
 #include <string>
 
-#include "IEnforceContract.h"
+#include "ContractException.h"
+
 
 namespace cxutil
 {
@@ -105,7 +106,7 @@ namespace cxutil
  * @see Severity
  *
  **************************************************************************************************/
-class Logger final : public IEnforceContract
+class Logger final
 {
 public:
 

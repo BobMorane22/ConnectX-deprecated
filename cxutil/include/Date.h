@@ -33,8 +33,8 @@
 #define DATE_H_9A0E690A_9429_4913_BAA2_6E341347674F
 
 
+#include "ContractException.h"
 #include "ICliObject.h"
-#include "IEnforceContract.h"
 
 
 namespace cxutil
@@ -59,7 +59,7 @@ namespace cxutil
  * @invariant The Date object represents a date on the gregorian calendar.
  *
  **************************************************************************************************/
-class Date : public IEnforceContract, public ICliObject
+class Date : public ICliObject
 {
 public:
 
@@ -245,7 +245,7 @@ private:
 ///@}
 
 
-    virtual void checkInvariant() const override;
+    void checkInvariant() const;
 
     /*******************************************************************************************//**
      * @enum Months

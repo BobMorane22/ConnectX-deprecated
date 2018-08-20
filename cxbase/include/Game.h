@@ -32,6 +32,7 @@
 #ifndef GAME_H_2D56E7FC_5FA9_4841_B204_05ADCF2DCE07
 #define GAME_H_2D56E7FC_5FA9_4841_B204_05ADCF2DCE07
 
+#include <cxutil/include/ContractException.h>
 
 #include "GameBoard.h"
 #include "Player.h"
@@ -66,7 +67,7 @@ namespace cxbase
  *            during the Game.
  *
  **************************************************************************************************/
-class Game : public cxutil::IEnforceContract
+class Game
 {
 
 public:
@@ -254,7 +255,7 @@ public:
 
 protected:
 
-    virtual void checkInvariant() const override;
+    void checkInvariant() const;
 
 ///{ @name private data
 

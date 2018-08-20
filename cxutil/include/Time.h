@@ -32,8 +32,9 @@
 #ifndef TIME_H_D4106369_434F_4ED5_A13F_C1FCAD668090
 #define TIME_H_D4106369_434F_4ED5_A13F_C1FCAD668090
 
+#include "ContractException.h"
 #include "ICliObject.h"
-#include "IEnforceContract.h"
+
 
 namespace cxutil
 {
@@ -60,7 +61,7 @@ namespace cxutil
  * @invariant seconds are in the interval [0, 59].
  *
  **************************************************************************************************/
-class Time : public IEnforceContract, public ICliObject
+class Time : public ICliObject
 {
 public:
 
@@ -295,7 +296,7 @@ private:
 ///@}
 
 
-    virtual void checkInvariant() const override;
+    void checkInvariant() const;
 
     static const int SECONDS_MIN;          ///< The minimum number of seconds.
     static const int MINUTES_MIN;          ///< The minimum number of minutes.

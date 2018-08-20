@@ -32,9 +32,9 @@
 #ifndef NAME_H_2DA14333_B8DB_4500_93A3_12263270A65C
 #define NAME_H_2DA14333_B8DB_4500_93A3_12263270A65C
 
-#include "IEnforceContract.h"
-
 #include <string>
+
+#include "ContractException.h"
 
 
 namespace cxutil
@@ -52,7 +52,7 @@ namespace cxutil
  *            @c std::string and a @c Name object.
  *
  **************************************************************************************************/
-class Name : public IEnforceContract
+class Name
 {
 
 public:
@@ -111,7 +111,7 @@ public:
 
 protected:
 
-    virtual void checkInvariant() const override;
+    void checkInvariant() const;
 
 
 private:
