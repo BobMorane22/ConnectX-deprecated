@@ -34,9 +34,9 @@
 #include <cxutil/include/Assertion.h>
 #include <cxutil/include/narrow_cast.h>
 #include <cxutil/include/ContractException.h>
+#include <cxgui/include/util.h>
 
 #include "../include/NewPlayerRow.h"
-#include "../include/util.h"
 
 
 cx::ui::NewPlayerRow::NewPlayerRow(const std::string& p_playerName, const cxutil::Color& p_playerDiscColor)
@@ -46,7 +46,7 @@ cx::ui::NewPlayerRow::NewPlayerRow(const std::string& p_playerName, const cxutil
     m_playerName.set_text(p_playerName);
 
     // Add color to the button:
-    Gdk::RGBA btnColor{cx::ui::convertToGdkRGBA(p_playerDiscColor)};
+    Gdk::RGBA btnColor{cxgui::convertToGdkRGBA(p_playerDiscColor)};
     m_playerDiscColor.set_rgba(btnColor);
 
     // Populate the row layout for the ListView:
@@ -69,7 +69,7 @@ void cx::ui::NewPlayerRow::update(const std::string& p_playerNewName, const cxut
     // Then we update the player's color. Usually we could check if the color has changed
     // before updating but here, since two different color types are in play, this
     // operation would not be free, and so we go ahead and skip it:
-    m_playerDiscColor.set_color(cx::ui::deprecated::convertToGdkColor(p_playerNewDiscColor));
+    m_playerDiscColor.set_color(cxgui::deprecated::convertToGdkColor(p_playerNewDiscColor));
 
     INVARIANTS();
 }
@@ -83,7 +83,7 @@ std::string cx::ui::NewPlayerRow::playerName() const
 
 cxutil::Color cx::ui::NewPlayerRow::playerDiscColor() const
 {
-    return cx::ui::deprecated::convertToLocalColor(m_playerDiscColor.get_color());
+    return cxgui::deprecated::convertToLocalColor(m_playerDiscColor.get_color());
 }
 
 

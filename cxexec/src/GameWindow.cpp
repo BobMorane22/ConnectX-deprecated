@@ -1,9 +1,9 @@
 #include <iostream>
 
+#include <cxutil/include/util.h>
 #include <cxgui/include/enums.h>
 
 #include "../include/GameWindow.h"
-#include "../include/util.h"
 
 namespace
 {
@@ -40,7 +40,7 @@ cx::ui::GameWindow::GameWindow()
     // Window setup:
     set_title("Connect X");
 
-    std::string iconPath{currentExecutablePath()};
+    std::string iconPath{cxutil::path::currentExecutablePath()};
     iconPath.append("/icons/cxicon16.png");
 
     set_icon_from_file(iconPath);

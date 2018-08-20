@@ -37,7 +37,8 @@ SRCS     = Color.cpp             \
            Logger.cpp            \
            Name.cpp              \
            ReturnCode.cpp        \
-           Time.cpp
+           Time.cpp              \
+           util.cpp
 
 OBJS     = $(OBJ_DIR)/Color.o             \
            $(OBJ_DIR)/ContractException.o \
@@ -46,7 +47,8 @@ OBJS     = $(OBJ_DIR)/Color.o             \
            $(OBJ_DIR)/Logger.o            \
            $(OBJ_DIR)/Name.o              \
            $(OBJ_DIR)/ReturnCode.o        \
-           $(OBJ_DIR)/Time.o
+           $(OBJ_DIR)/Time.o              \
+           $(OBJ_DIR)/util.o
 
 LIBS=
 

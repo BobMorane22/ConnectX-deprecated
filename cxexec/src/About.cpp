@@ -30,7 +30,7 @@
  **************************************************************************************************/
 
 #include <cxutil/include/Date.h>
-#include <cxexec/include/util.h>
+#include <cxutil/include/util.h>
 
 #include "../include/About.h"
 
@@ -40,7 +40,7 @@ namespace
 
 const cxgui::ApplicationInformation APPLICATION_INFORMATION
 {
-    currentExecutablePath() + "/icons/cxicon64.png",
+    cxutil::path::currentExecutablePath() + "/icons/cxicon64.png",
     "Connect X",
     "1.0",
     "A scalable connect 4 game."

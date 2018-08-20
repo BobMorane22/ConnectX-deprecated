@@ -36,7 +36,7 @@ SRCS     = About.cpp          \
            Help.cpp           \
            RAIICairoPath.cpp  \
            SectionTitle.cpp   \
-           utils.cpp
+           util.cpp
 
 OBJS     = $(OBJ_DIR)/About.o          \
            $(OBJ_DIR)/Disc.o           \
@@ -44,7 +44,7 @@ OBJS     = $(OBJ_DIR)/About.o          \
            $(OBJ_DIR)/Help.o           \
            $(OBJ_DIR)/RAIICairoPath.o  \
            $(OBJ_DIR)/SectionTitle.o   \
-           $(OBJ_DIR)/utils.o
+           $(OBJ_DIR)/util.o
 
 LIBS = -lcxbase \
        -lcxutil

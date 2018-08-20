@@ -49,7 +49,7 @@ namespace cxgui
  * title is nothing more than a title, in bold, that sits on top of an horizontal line separator.
  *
  **************************************************************************************************/
-class SectionTitle : public Gtk::Grid
+class SectionTitle final : public Gtk::Grid
 {
 
 public:

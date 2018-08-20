@@ -29,8 +29,8 @@
  *
  **************************************************************************************************/
 
+#include "../include/util.h"
 #include "../include/SectionTitle.h"
-#include "../include/utils.h"
 
 cxgui::SectionTitle::SectionTitle(const std::string& p_title,
                                   const Gtk::Align p_alignement,

@@ -31,10 +31,10 @@
 
 #include <sstream>
 
-#include <cxexec/include/util.h>
-#include <cxgui/include/utils.h>
+#include <cxgui/include/util.h>
 
 #include "../include/Help.h"
+
 
 namespace
 {

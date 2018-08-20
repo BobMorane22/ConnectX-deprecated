@@ -29,10 +29,10 @@
  *
  **************************************************************************************************/
 
+#include <cxutil/include/util.h>
 #include <cxgui/include/enums.h>
 
 #include "../include/NewGame.h"
-#include "../include/util.h"
 
 namespace
 {
@@ -53,7 +53,7 @@ cx::ui::NewGame::NewGame()
     // Window setup:
     set_title("New game");
 
-    std::string iconPath{currentExecutablePath()};
+    std::string iconPath{cxutil::path::currentExecutablePath()};
     iconPath.append("/icons/cxicon16.png");
 
     set_icon_from_file(iconPath);

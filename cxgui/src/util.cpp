@@ -22,19 +22,14 @@
 /***********************************************************************************************//**
  * @file    util.cpp
  * @author  Eric Poirier
- * @date    July 2018
+ * @date    May 2018
  * @version 1.0
  *
- * Temporary utilities file (to be refactored once the UI is more stable).
+ * Implementation for some utility free functions.
  *
  **************************************************************************************************/
 
-#include <algorithm>
-#include <cstdio>
 #include <iomanip>
-
-#include <unistd.h>
-#include <linux/limits.h>
 
 #include <cxutil/include/Assertion.h>
 #include <cxutil/include/narrow_cast.h>
@@ -42,54 +37,14 @@
 
 #include "../include/util.h"
 
-// Temporary file for dev utilities. To be factored out when the GUI
-// code will be more mature...
 
-std::string currentExecutablePath(const bool p_pathOnly)
+std::string cxgui::addBoldMarkupTags(const std::string& p_textToMakeBold)
 {
-    // Get the symlink path to the current exexutable:
-    char symlinkToCurrentExec[32];
-    sprintf(symlinkToCurrentExec, "/proc/%d/exe", getpid());
-
-    // Read the symlink:
-    char readPath[PATH_MAX];
-
-    const ssize_t nbBytesRead{readlink(symlinkToCurrentExec,
-                                       readPath,
-                                       PATH_MAX)};
-
-    // Make sure there is no overflow in path length from readlink:
-    const ssize_t nbBytesInPath{std::min(nbBytesRead,
-                                static_cast<ssize_t>(PATH_MAX - 1))};
-
-    // If something has been read, the 'end of string' character must be added
-    // before the read path can be manipulated:
-    if(nbBytesInPath >= 0)
-    {
-        readPath[nbBytesInPath] = '\0';
-    }
-
-    // Make sure file exists:
-    CX_ASSERT_MSG(access(readPath, F_OK) != -1, "The executable path does not exist.")
-
-    std::string pathToCurrentExecutable(readPath);
-
-    if(p_pathOnly)
-    {
-        // Only the path to directory is wanted, so the executable name is
-        // removed from the path:
-        const size_t indexOfDirectoryDelim{pathToCurrentExecutable.find_last_of("/")};
-
-        CX_ASSERT_MSG(indexOfDirectoryDelim != std::string::npos, "Error while trying to get the directory containing the current running executable.");
-
-        pathToCurrentExecutable = pathToCurrentExecutable.substr(0, indexOfDirectoryDelim);
-    }
-
-    return pathToCurrentExecutable;
+    return "<b>" + p_textToMakeBold + "</b>";
 }
 
 
-std::string cx::ui::buildGdkColorString(const cxutil::Color& p_localColor)
+std::string cxgui::buildGdkColorString(const cxutil::Color& p_localColor)
 {
     std::ostringstream os;
 
@@ -103,7 +58,7 @@ std::string cx::ui::buildGdkColorString(const cxutil::Color& p_localColor)
 }
 
 
-std::string cx::ui::deprecated::buildGdkColorString(const cxutil::Color& p_localColor)
+std::string cxgui::deprecated::buildGdkColorString(const cxutil::Color& p_localColor)
 {
     using namespace std;
 
@@ -118,7 +73,7 @@ std::string cx::ui::deprecated::buildGdkColorString(const cxutil::Color& p_local
 }
 
 
-cxutil::Color cx::ui::convertToLocalColor(const Gdk::RGBA& p_gdkColor)
+cxutil::Color cxgui::convertToLocalColor(const Gdk::RGBA& p_gdkColor)
 {
     const uint8_t red   {cxutil::narrow_cast<uint8_t>((p_gdkColor.get_red_u()   >> 8) & 0xFF)};
     const uint8_t green {cxutil::narrow_cast<uint8_t>((p_gdkColor.get_green_u() >> 8) & 0xFF)};
@@ -129,7 +84,7 @@ cxutil::Color cx::ui::convertToLocalColor(const Gdk::RGBA& p_gdkColor)
 }
 
 
-cxutil::Color cx::ui::deprecated::convertToLocalColor(const Gdk::Color& p_gdkColor)
+cxutil::Color cxgui::deprecated::convertToLocalColor(const Gdk::Color& p_gdkColor)
 {
     const uint8_t red   {cxutil::narrow_cast<uint8_t>((p_gdkColor.get_red()   >> 8) & 0xFF)};
     const uint8_t green {cxutil::narrow_cast<uint8_t>((p_gdkColor.get_green() >> 8) & 0xFF)};
@@ -139,13 +94,13 @@ cxutil::Color cx::ui::deprecated::convertToLocalColor(const Gdk::Color& p_gdkCol
 }
 
 
-Gdk::RGBA cx::ui::convertToGdkRGBA(const cxutil::Color& p_localColor)
+Gdk::RGBA cxgui::convertToGdkRGBA(const cxutil::Color& p_localColor)
 {
-    return Gdk::RGBA{cx::ui::buildGdkColorString(p_localColor)};
+    return Gdk::RGBA{cxgui::buildGdkColorString(p_localColor)};
 }
 
 
-Gdk::Color cx::ui::deprecated::convertToGdkColor(const cxutil::Color& p_localColor)
+Gdk::Color cxgui::deprecated::convertToGdkColor(const cxutil::Color& p_localColor)
 {
-    return Gdk::Color{cx::ui::deprecated::buildGdkColorString(p_localColor)};
+    return Gdk::Color{cxgui::deprecated::buildGdkColorString(p_localColor)};
 }

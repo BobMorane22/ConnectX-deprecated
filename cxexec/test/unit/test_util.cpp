@@ -33,17 +33,16 @@
 
 #include <cxutil/include/Color.h>
 #include <cxutil/include/narrow_cast.h>
+#include <cxgui/include/util.h>
 
 #include <gtest/gtest.h>
-
-#include "../../include/util.h"
 
 
 TEST(colors, buildGdkColorString_ColorRed_ReturnsStringForRed)
 {
     const std::string stringRed{"rgba(255, 0, 0, 1)"};
 
-    ASSERT_EQ(stringRed, cx::ui::buildGdkColorString(cxutil::Color::red()));
+    ASSERT_EQ(stringRed, cxgui::buildGdkColorString(cxutil::Color::red()));
 }
 
 
@@ -51,7 +50,7 @@ TEST(colors, buildGdkColorString_ColorGreen_ReturnsStringForGreen)
 {
     const std::string stringGreen{"rgba(0, 255, 0, 1)"};
 
-    ASSERT_EQ(stringGreen, cx::ui::buildGdkColorString(cxutil::Color::green()));
+    ASSERT_EQ(stringGreen, cxgui::buildGdkColorString(cxutil::Color::green()));
 }
 
 
@@ -59,7 +58,7 @@ TEST(colors, buildGdkColorString_ColorBlue_ReturnsStringForBlue)
 {
     const std::string stringBlue{"rgba(0, 0, 255, 1)"};
 
-    ASSERT_EQ(stringBlue, cx::ui::buildGdkColorString(cxutil::Color::blue()));
+    ASSERT_EQ(stringBlue, cxgui::buildGdkColorString(cxutil::Color::blue()));
 }
 
 
@@ -67,7 +66,7 @@ TEST(colors, buildGdkColorString_ColorAlpha_ReturnsStringForAlpha)
 {
     const std::string stringTransparent{"rgba(255, 255, 255, 0)"};
 
-    ASSERT_EQ(stringTransparent, cx::ui::buildGdkColorString(cxutil::Color::transparent()));
+    ASSERT_EQ(stringTransparent, cxgui::buildGdkColorString(cxutil::Color::transparent()));
 }
 
 
@@ -75,7 +74,7 @@ TEST(colors, buildGdkColorString_ColorAlpha_ReturnsStringForAlphaNotZero)
 {
     const std::string stringTransparent{"rgba(255, 255, 255, 0.2)"};
 
-    ASSERT_EQ(stringTransparent, cx::ui::buildGdkColorString(cxutil::Color{cxutil::RGBA{255, 255, 255, 51}}));
+    ASSERT_EQ(stringTransparent, cxgui::buildGdkColorString(cxutil::Color{cxutil::RGBA{255, 255, 255, 51}}));
 }
 
 
@@ -83,7 +82,7 @@ TEST(colors, buildDeprecatedGdkColorString_ColorRed_ReturnsStringForRed)
 {
     const std::string stringRed{"#FF0000"};
 
-    ASSERT_EQ(stringRed, cx::ui::deprecated::buildGdkColorString(cxutil::Color::red()));
+    ASSERT_EQ(stringRed, cxgui::deprecated::buildGdkColorString(cxutil::Color::red()));
 }
 
 
@@ -91,7 +90,7 @@ TEST(colors, buildDeprecatedGdkColorString_ColorGreen_ReturnsStringForGreen)
 {
     const std::string stringGreen{"#00FF00"};
 
-    ASSERT_EQ(stringGreen, cx::ui::deprecated::buildGdkColorString(cxutil::Color::green()));
+    ASSERT_EQ(stringGreen, cxgui::deprecated::buildGdkColorString(cxutil::Color::green()));
 }
 
 
@@ -99,7 +98,7 @@ TEST(colors, buildDeprecatedGdkColorString_ColorBlue_ReturnsStringForBlue)
 {
     const std::string stringBlue{"#0000FF"};
 
-    ASSERT_EQ(stringBlue, cx::ui::deprecated::buildGdkColorString(cxutil::Color::blue()));
+    ASSERT_EQ(stringBlue, cxgui::deprecated::buildGdkColorString(cxutil::Color::blue()));
 }
 
 
@@ -109,7 +108,7 @@ TEST(colors, ConvertToLocalColor_SomeGdkRGBA_ReturnsEquivalentLocalColor)
     const Gdk::RGBA t_gdkColor{"rgba(50, 100, 150, 0.784313725)"};
 
     // Conversion:
-    const cxutil::Color t_convertedColor{cx::ui::convertToLocalColor(t_gdkColor)};
+    const cxutil::Color t_convertedColor{cxgui::convertToLocalColor(t_gdkColor)};
 
     ASSERT_EQ(t_localColor, t_convertedColor);
 }
@@ -120,7 +119,7 @@ TEST(colors, ConvertToGdkRGBA_SomeLocalColor_ReturnsEquivalentGdkRGBA)
     const cxutil::Color t_localColor{cxutil::RGBA{50, 100, 150, 200}};
 
     // Conversion:
-    const Gdk::RGBA t_convertedColor{cx::ui::convertToGdkRGBA(t_localColor)};
+    const Gdk::RGBA t_convertedColor{cxgui::convertToGdkRGBA(t_localColor)};
 
     // Here there will be a small error when converting to Gdk::RGBA because it holds
     // 16 bits values for its RGBA values, unlike cxutil::Colors which hold 8 bits values.
@@ -159,7 +158,7 @@ TEST(colors, ConvertToLocalColor_SomeGdkDeprecatedColor_ReturnsEquivalentLocalCo
     const Gdk::Color t_gdkColor{"#326496"};
 
     // Conversion:
-    const cxutil::Color t_convertedColor{cx::ui::deprecated::convertToLocalColor(t_gdkColor)};
+    const cxutil::Color t_convertedColor{cxgui::deprecated::convertToLocalColor(t_gdkColor)};
 
     ASSERT_EQ(t_localColor, t_convertedColor);
 }
@@ -170,7 +169,7 @@ TEST(colors, ConvertToGdkColor_SomeLocalColor_ReturnsEquivalentGdkDeprecatedColo
     const cxutil::Color t_localColor{cxutil::RGBA{50, 100, 150, 255}};
 
     // Conversion:
-    const Gdk::Color t_convertedColor{cx::ui::deprecated::convertToGdkColor(t_localColor)};
+    const Gdk::Color t_convertedColor{cxgui::deprecated::convertToGdkColor(t_localColor)};
 
     // Here there will be a small error when converting to Gdk::Color because it holds
     // 16 bits values for its RGB values, unlike cxutil::Colors which hold 8 bits values.
