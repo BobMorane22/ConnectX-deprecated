@@ -139,11 +139,12 @@ clean:
 	$(MAKE) clean -C cxbase
 	$(MAKE) clean -C cxbase/test
 	$(MAKE) clean -C cxbase/doc
+	$(MAKE) clean -C cxgui
 	$(MAKE) clean -C cxgui/test
 	$(MAKE) clean -C cxgui/doc
 	$(MAKE) clean -C cxexec
 	$(MAKE) clean -C cxexec/test
 	$(MAKE) clean -C cxexec/doc
-	$(MAKE) mrproper -C cxmain
+	$(MAKE) clean -C cxmain
 	$(MAKE) clean -C cx_cpp_norme
 	@echo Object files removed!

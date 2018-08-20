@@ -269,7 +269,7 @@ def generateLibraryMakefile(p_path, p_libName, p_headerInfo):
     makefile.write("mrproper:\n"                                                                                             )
     makefile.write("\t@echo Cleaning project...\n"                                                                           )
     makefile.write("\t$(RM) $(OBJ_DIR)/*.o\n"                                                                                )
-    makefile.write("\t$(RM) $(OUT_DIR)/$(MAIN)\n"                                                                            )
+    makefile.write("\t$(RM) $(LIBS_OUT)/$(MAIN)\n"                                                                            )
     makefile.write("\t@echo Project cleaned!\n\n"                                                                            )
 
     makefile.write("depend: $(SRCS)\n"                                                                                       )

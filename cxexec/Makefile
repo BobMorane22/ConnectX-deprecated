@@ -90,7 +90,7 @@ clean:
 mrproper:
 	@echo Cleaning project...
 	$(RM) $(OBJ_DIR)/*.o
-	$(RM) $(OUT_DIR)/$(MAIN)
+	$(RM) $(LIBS_OUT)/$(MAIN)
 	@echo Project cleaned!
 
 depend: $(SRCS)
