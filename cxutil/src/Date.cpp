@@ -51,8 +51,6 @@ cxutil::Date::Date()
     m_year  = timeInfo.tm_year + 1900;
     m_month = timeInfo.tm_mon + 1;
     m_day   = timeInfo.tm_mday;
-    
-    print(std::cout);
 
     INVARIANTS();
 }
