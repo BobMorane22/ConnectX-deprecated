@@ -29,18 +29,119 @@
  *
  **************************************************************************************************/
 
+#include <algorithm>
 #include <iomanip>
+#include <sstream>
 
 #include <cxutil/include/Assertion.h>
+#include <cxutil/include/ContractException.h>
 #include <cxutil/include/narrow_cast.h>
 #include <cxutil/include/Color.h>
 
 #include "../include/util.h"
 
 
+std::string cxgui::addMarkupTags(const std::string& p_text, const std::string& p_tag)
+{
+    PRECONDITION(!p_tag.empty());
+    PRECONDITION(std::all_of(p_tag.begin(), p_tag.end(),
+                 [](const char p_letter)
+                 {
+                     return bool(isalpha(p_letter));
+                 }));
+
+    // We build the opening in closing tag:
+    const std::string leftTag {"<"  + p_tag + ">" };
+    const std::string rightTag{"</" + p_tag + ">" };
+
+    const size_t lenLeft {leftTag.length()};
+    const size_t lenRight{lenLeft + 1     };
+    const size_t lenExpr {p_text.length() };
+
+    if(lenExpr < lenLeft)
+    {
+        return leftTag + p_text + rightTag;
+    }
+
+    if(lenExpr == lenLeft && p_text == rightTag)
+    {
+        return p_text + rightTag;
+    }
+
+    const bool leftTagIsPresent  {p_text.substr(0, lenLeft) == leftTag                  };
+    const bool rightTagIsPresent {p_text.substr(lenExpr - lenRight, lenExpr) == rightTag};
+    const bool bothTagsArePresent{leftTagIsPresent && rightTagIsPresent                 };
+
+    if(bothTagsArePresent)
+    {
+        return p_text;
+    }
+
+    if(leftTagIsPresent)
+    {
+        return p_text + rightTag;
+    }
+
+    if(rightTagIsPresent)
+    {
+        return leftTag + p_text;
+    }
+
+    return leftTag + p_text + rightTag;
+}
+
+
 std::string cxgui::addBoldMarkupTags(const std::string& p_textToMakeBold)
 {
-    return "<b>" + p_textToMakeBold + "</b>";
+    return cxgui::addMarkupTags(p_textToMakeBold, "b");
+}
+
+
+std::string cxgui::addBigMarkupTags(const std::string& p_textToMakeBig)
+{
+    return cxgui::addMarkupTags(p_textToMakeBig, "big");
+}
+
+
+std::string cxgui::addItalicMarkupTags(const std::string& p_textToMakeItalic)
+{
+    return cxgui::addMarkupTags(p_textToMakeItalic, "i");
+}
+
+
+std::string cxgui::addStrikethroughMarkupTags(const std::string& p_textToMakeStrikethrough)
+{
+    return cxgui::addMarkupTags(p_textToMakeStrikethrough, "s");
+}
+
+
+std::string cxgui::addSubscriptMarkupTags(const std::string& p_textToMakeSubscript)
+{
+    return cxgui::addMarkupTags(p_textToMakeSubscript, "sub");
+}
+
+
+std::string cxgui::addSuperscriptMarkupTags(const std::string& p_textToMakeSuperscript)
+{
+    return cxgui::addMarkupTags(p_textToMakeSuperscript, "sup");
+}
+
+
+std::string cxgui::addSmallMarkupTags(const std::string& p_textToMakeSmall)
+{
+    return cxgui::addMarkupTags(p_textToMakeSmall, "small");
+}
+
+
+std::string cxgui::addTrueTypeMarkupTags(const std::string& p_textToMakeTrueType)
+{
+    return cxgui::addMarkupTags(p_textToMakeTrueType, "tt");
+}
+
+
+std::string cxgui::addUnderlineMarkupTags(const std::string& p_textToMakeunderline)
+{
+    return cxgui::addMarkupTags(p_textToMakeunderline, "u");
 }
 
 

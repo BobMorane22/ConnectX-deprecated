@@ -43,22 +43,71 @@ namespace cxgui
 {
 
 /**********************************************************************************************//**
- * Add bold markup tags to a string. Note that it is not the responsability of this method to
+ * @brief Add tags (in to form of pango markup convenience tags) around a string.
+ *
+ * Wraps opening and closing tags around a string in to form of pango markup convenience tags.
+ * For example, if you want to make some text, let's say the string 'Some text', smaller then
+ * you can call this function in the following way:
+ *
+ *   @code
+ *     addMarkupTags("Some text", "small");
+ *   @endcode
+ *
+ * which will return the string
+ *
+ *   @verbatim
+ *     <small>Some text</small>
+ *   @endverbatim
+ *
+ * If the string already has tags around it (the same tag you are trying to add), no additional
+ * tags will be added and the string will be left untouched. If the string has only one tag (either
+ * the opening or the closing tag) only the missing tag will be added.
+ *
+ * @note it is not the responsibility of this function to apply the markup styling. It only
+ *       formats  a string it so that when markup is activated, the string has the needed tags to
+ *       appear as bold. See the pango markup documentation for more details.
+ *
+ * @param p_text The test to warp in between tags.
+ * @param p_tag  The pango markup convenience tag.
+ *
+ * @pre The tag is a non-empty string composed of alpha characters only.
+ *
+ * @return The string passed as an argument wrapped in tags.
+ *
+ * @see Documentation for <a href="https://developer.gnome.org/pango/stable/PangoMarkupFormat.html">pango markup</a>.
+ *
+ *************************************************************************************************/
+std::string addMarkupTags(const std::string& p_text, const std::string& p_tag);
+
+
+/**********************************************************************************************//**
+ * Add bold markup tags to a string. Note that it is not the responsibility of this method to
  * make the character string appear bold. It only formats it so that when markup is activated,
  * the string has the needed tags to appear as bold.
  *
  * @note For some string 'Some text...', the function will return the string '<b>Some text...</b>'.
  * @note If the string passed as an argument already has bold tags surrounding it, the function
- *       will not add extra tags and will simply return the original string.
+ *       will not add extra tags and will simply return the original string. If the string has one
+ *       of the left or right tag only, the missing tag will be added.
  *
- * @todo Implement second note and test!!
- *
- * @param p_textToMakeBold [in] The string of characters to add bold markup tags to.
+ * @param p_textToMakeBold The string of characters to add bold markup tags to.
  *
  * @return The string with the markup bold tags added to it.
  *
+ * @see addMarkupTags
+ *
  *************************************************************************************************/
 std::string addBoldMarkupTags(const std::string& p_textToMakeBold);
+
+
+std::string addBigMarkupTags(const std::string& p_textToMakeBig);
+std::string addItalicMarkupTags(const std::string& p_textToMakeItalic);
+std::string addStrikethroughMarkupTags(const std::string& p_textToMakeStrikethrough);
+std::string addSubscriptMarkupTags(const std::string& p_textToMakeSubscript);
+std::string addSuperscriptMarkupTags(const std::string& p_textToMakeSuperscript);
+std::string addSmallMarkupTags(const std::string& p_textToMakeSmall);
+std::string addTrueTypeMarkupTags(const std::string& p_textToMakeTrueType);
+std::string addUnderlineMarkupTags(const std::string& p_textToMakeunderline);
 
 
 /*******************************************************************************************//**
@@ -175,7 +224,6 @@ cxutil::Color convertToLocalColor(const Gdk::Color& p_gdkColor);
 Gdk::Color convertToGdkColor(const cxutil::Color& p_localColor);
 
 } // namespace deprecated
-
 
 } // namespace cxgui
 

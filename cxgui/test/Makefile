@@ -28,10 +28,12 @@ LIBS_INCLUDE  = -L$(BIN_ROOT)/connectx/libs
 VPATH         = unit
 
 SRCS      = cxguiTest.cpp           \
-            test_RAIICairoPath.cpp
+            test_RAIICairoPath.cpp  \
+            test_util.cpp
 
 OBJS      = cxguiTest.o           \
-            test_RAIICairoPath.o
+            test_RAIICairoPath.o  \
+            test_util.o
 
 OBJS := $(addprefix $(OBJ_DIR)/,$(OBJS))
 
