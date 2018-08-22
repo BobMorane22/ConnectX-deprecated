@@ -44,7 +44,7 @@ namespace ui
 /***********************************************************************************************//**
  * @class About
  *
- *
+ * This class represents the About dialog presented to the user for the Connect X application.
  *
  **************************************************************************************************/
 class About final : public cxgui::dlg::About

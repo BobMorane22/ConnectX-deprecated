@@ -33,6 +33,9 @@
 
 #include <gtkmm/stock.h>
 
+#include <cxgui/include/util.h>
+#include <cxutil/include/util.h>
+
 #include "../include/About.h"
 
 
@@ -129,8 +132,12 @@ cxgui::dlg::About::About(const ApplicationInformation& p_appInfo,
     PRECONDITION(!p_appInfo.m_version.empty());
 
     // Window setup:
-    set_title("Connect X");
+    set_title("About Connect X");
 
+    std::string iconPath{cxutil::path::currentExecutablePath()};
+    iconPath.append("/icons/cxicon16.png");
+
+    set_icon_from_file(iconPath);
     set_position(Gtk::WIN_POS_CENTER);
 
     // Layouts registration:
@@ -153,7 +160,11 @@ cxgui::dlg::About::About(const ApplicationInformation& p_appInfo,
     }
 
     // General information labels:
-    m_softwareName.set_label(buildVersionedApplicationName(p_appInfo));
+    const std::string applicationName{buildVersionedApplicationName(p_appInfo)};
+
+    m_softwareName.set_label(cxgui::addBoldMarkupTags(cxgui::addBigMarkupTags(applicationName)));
+    m_softwareName.set_use_markup(true);
+
     m_copyrightInformation.set_label(buildCopyrightNotice(p_cpInfo));
 
     // Here we show the widgets one by one, except for the artwork widget.

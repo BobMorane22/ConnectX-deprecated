@@ -32,9 +32,9 @@ SRCS     = main.cpp
 OBJS     = $(OBJ_DIR)/main.o
 
 LIBS = -lcxexec \
-       -lcxutil \
-       -lcxbase \
        -lcxgui  \
+       -lcxbase \
+       -lcxutil \
 
 
 # Build output:

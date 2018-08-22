@@ -30,6 +30,7 @@
  **************************************************************************************************/
 
 #include <cxutil/include/ContractException.h>
+#include <cxutil/include/util.h>
 
 #include "../include/Help.h"
 
@@ -41,9 +42,10 @@ cxgui::dlg::Help::Help(const std::string& p_visibleMsg)
     // Window setup:
     set_title("Help");
 
-    /** @todo needs icon! The function is in cxexec, which is too highlevel, so linking
-     *        is not working. Should be moved to cxkernel eventually */
+    std::string iconPath{cxutil::path::currentExecutablePath()};
+    iconPath.append("/icons/cxicon16.png");
 
+    set_icon_from_file(iconPath);
     set_position(Gtk::WIN_POS_CENTER);
 
     // Setup the help message:

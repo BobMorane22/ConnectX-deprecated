@@ -43,7 +43,7 @@ namespace ui
 /***********************************************************************************************//**
  * @class Help
  *
- * This class represents the Help dialog presented to the user for the Connext X application.
+ * This class represents the Help dialog presented to the user for the Connect X application.
  *
  **************************************************************************************************/
 class Help final : public cxgui::dlg::Help
