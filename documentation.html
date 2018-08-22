@@ -1,0 +1,107 @@
+ <!-------------------------------------------------------------------------
+ Copyright (C) 2018 Connect X team
+ 
+ This file is part of Connect X.
+ 
+ Connect X is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+ 
+ Connect X is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+ 
+ You should have received a copy of the GNU General Public License
+ along with Connect X.  If not, see <http://www.gnu.org/licenses/>.
+ -------------------------------------------------------------------------->
+ <!-------------------------------------------------------------------------
+ @file    documentation.html
+ @author  Eric Poirier
+ @date    August 2018
+ @version 1.0
+ 
+ This web page acts as a gateway to every piece of Connect X related
+ documentation.
+ 
+  -------------------------------------------------------------------------->
+
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8" />
+        <title>Connect X documentation center</title>
+        
+        <!-- CSS -->
+        <style>
+            html, body
+            {
+                width:  100%;
+                height: 100%;
+                
+                margin:  0;
+                padding: 0;
+            }
+
+            .parent {
+                display:        flex;
+                flex-direction: row;
+                width:          100%;
+                height:         100%;
+                align-items:    stretch;
+                align-content:  stretch;
+            }
+
+            .menu {
+               width:  12%;
+               border: 1px solid black;
+            }
+
+            .doc-pages {
+               width:  87%;
+               border: 1px solid black;
+            }
+        </style>
+
+        <!-- Javascript -->
+        <script language="javascript" type="text/javascript">
+
+            // ***************************************************************************
+            // Change the iframe target to the needed to the needed documentation.
+            //
+            // @param p_libDocIndexPath The path to the needed documentation.
+            //
+            // ***************************************************************************
+			function displayLibraryDoc(p_libDocIndexPath) {
+				var frame = document.getElementById('doc-frame').src = p_libDocIndexPath;
+			}
+		</script>
+        
+    </head>
+    
+    <!-- HTML -->
+    <body>
+        <header>
+            <h1>The <tt>Connect X</tt> documentation center</h1>
+        </header>
+
+        <div class="parent">
+            <nav class="menu">
+                <!-- Add documentation reference here... -->
+                <h2>Libraries</h2>
+                <ul>
+                    <li><a type="link" href="" onclick="displayLibraryDoc('./cxutil/doc/doxygen/html/index.html'); return false;"><tt>cxutil</tt></a></li>
+                    <li><a type="link" href="" onclick="displayLibraryDoc('./cxbase/doc/doxygen/html/index.html'); return false;"><tt>cxbase</tt></a></li>
+                    <li><a type="link" href="" onclick="displayLibraryDoc('./cxgui/doc/doxygen/html/index.html'); return false;" ><tt>cxgui </tt></a></li>
+                    <li><a type="link" href="" onclick="displayLibraryDoc('./cxexec/doc/doxygen/html/index.html'); return false;"><tt>cxexec</tt></a></li>
+                </ul>
+            </nav>
+        
+            <section class="doc-pages">
+                <iframe id="doc-frame" width=100% height=100% src="about:blank"></iframe>
+            </section>
+        </div>
+    </body>
+</html>
