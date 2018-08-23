@@ -1,5 +1,42 @@
+/***************************************************************************************************
+ *
+ * Copyright (C) 2018 Connect X team
+ *
+ * This file is part of Connect X.
+ *
+ * Connect X is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Connect X is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Connect X.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ **************************************************************************************************/
+
+/***********************************************************************************************//**
+ * @file    Point.ipp
+ * @author  Eric Poirier
+ * @date    April 2018
+ * @version 1.0
+ *
+ * Implementation for a Point template utility.
+ *
+ **************************************************************************************************/
+
+
+#include <algorithm>
+
+#include "../include/ContractException.h"
+
+
 template<typename T, std::size_t N>
-math::Point<T, N>::Point()
+cxutil::math::Point<T, N>::Point()
 {
     static_assert(N >= 1 && N < 4, "Invalid number of coordinates.");
 
@@ -8,7 +45,7 @@ math::Point<T, N>::Point()
 
 
 template<typename T, std::size_t N>
-math::Point<T, N>::Point(const T& p_x)
+cxutil::math::Point<T, N>::Point(const T& p_x)
 {
     static_assert(N == 1, "A one dimensional point must have exactly one coordinate.");
     
@@ -17,7 +54,7 @@ math::Point<T, N>::Point(const T& p_x)
 
 
 template<typename T, std::size_t N>
-math::Point<T, N>::Point(const T& p_x, const T& p_y)
+cxutil::math::Point<T, N>::Point(const T& p_x, const T& p_y)
 {
     static_assert(N == 2, "A two dimensional point must have exactly two coordinates.");
     
@@ -27,7 +64,7 @@ math::Point<T, N>::Point(const T& p_x, const T& p_y)
 
 
 template<typename T, std::size_t N>
-math::Point<T, N>::Point(const T& p_x, const T& p_y, const T& p_z)
+cxutil::math::Point<T, N>::Point(const T& p_x, const T& p_y, const T& p_z)
 {
     static_assert(N == 3, "A three dimensional point must have exactly three coordinates.");
     
@@ -38,11 +75,11 @@ math::Point<T, N>::Point(const T& p_x, const T& p_y, const T& p_z)
 
 
 template<typename T, std::size_t N>
-math::Point<T, N>::~Point() = default;
+cxutil::math::Point<T, N>::~Point() = default;
 
 
 template<typename T, std::size_t N>
-inline T math::Point<T, N>::x() const
+inline T cxutil::math::Point<T, N>::x() const
 {
     static_assert(N >= 1 && N < 4, "Invalid number of coordinates.");
 
@@ -51,7 +88,7 @@ inline T math::Point<T, N>::x() const
 
 
 template<typename T, std::size_t N>
-inline T math::Point<T, N>::y() const
+inline T cxutil::math::Point<T, N>::y() const
 {
     static_assert(N >= 2 && N < 4, "Invalid number of coordinates.");
 
@@ -60,7 +97,7 @@ inline T math::Point<T, N>::y() const
 
 
 template<typename T, std::size_t N>
-inline T math::Point<T, N>::z() const
+inline T cxutil::math::Point<T, N>::z() const
 {
     static_assert(N == 3, "Invalid number of coordinates.");
 
@@ -69,7 +106,7 @@ inline T math::Point<T, N>::z() const
 
 
 template<typename T, std::size_t N>
-inline T& math::Point<T, N>::x()
+inline T& cxutil::math::Point<T, N>::x()
 {
     static_assert(N >= 1 && N < 4, "Invalid number of coordinates.");
 
@@ -78,7 +115,7 @@ inline T& math::Point<T, N>::x()
 
 
 template<typename T, std::size_t N>
-inline T& math::Point<T, N>::y()
+inline T& cxutil::math::Point<T, N>::y()
 {
     static_assert(N >= 2 && N < 4, "Invalid number of coordinates.");
 
@@ -87,7 +124,7 @@ inline T& math::Point<T, N>::y()
 
 
 template<typename T, std::size_t N>
-inline T& math::Point<T, N>::z()
+inline T& cxutil::math::Point<T, N>::z()
 {
     static_assert(N == 3, "Invalid number of coordinates.");
 
@@ -96,14 +133,20 @@ inline T& math::Point<T, N>::z()
 
 
 template<typename T, std::size_t N>
-inline const T& math::Point<T, N>::operator[](int p_index) const
+inline const T& cxutil::math::Point<T, N>::operator[](int p_index) const
 {
+    PRECONDITION(p_index >= 0                              );
+    PRECONDITION(p_index <= cxutil::narrow_cast<int>(N - 1));
+
     return m_coordinates[p_index];
 }
 
 
 template<typename T, std::size_t N>
-inline T& math::Point<T, N>::operator[](int p_index)
+inline T& cxutil::math::Point<T, N>::operator[](int p_index)
 {
+    PRECONDITION(p_index >= 0                              );
+    PRECONDITION(p_index <= cxutil::narrow_cast<int>(N - 1));
+
     return const_cast<T&>(const_cast<const math::Point<T, N>&>(*this)[p_index]);
 }
