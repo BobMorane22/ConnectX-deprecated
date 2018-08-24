@@ -1,6 +1,6 @@
 /***************************************************************************************************
  *
- * Copyright (C) 2017 Connect X team
+ * Copyright (C) 2018 Connect X team
  *
  * This file is part of Connect X.
  *
@@ -427,4 +427,168 @@ TYPED_TEST(PointTest, SubscriptOperatorMutator_PointWithThreeCoordinates_Updates
     point[2] = narrow_cast<TypeParam>(10);
 
     ASSERT_EQ(point.z(), narrow_cast<TypeParam>(10));
+}
+
+
+TYPED_TEST(PointTest, EqualityOperator_TwoEqualPoints1D_ReturnsTrue)
+{
+    using namespace cxutil;
+
+    const math::Point<TypeParam, 1> left{narrow_cast<TypeParam>(1)};
+    const math::Point<TypeParam, 1> right{narrow_cast<TypeParam>(1)};
+
+    ASSERT_TRUE(left == right);
+}
+
+
+TYPED_TEST(PointTest, EqualityOperator_TwoEqualPoints2D_ReturnsTrue)
+{
+    using namespace cxutil;
+
+    const math::Point<TypeParam, 2> left{narrow_cast<TypeParam>(1),
+                                         narrow_cast<TypeParam>(2)};
+
+    const math::Point<TypeParam, 2> right{narrow_cast<TypeParam>(1),
+                                          narrow_cast<TypeParam>(2)};
+
+    ASSERT_TRUE(left == right);
+}
+
+
+TYPED_TEST(PointTest, EqualityOperator_TwoEqualPoints3D_ReturnsTrue)
+{
+    using namespace cxutil;
+
+    const math::Point<TypeParam, 3> left{narrow_cast<TypeParam>(1),
+                                         narrow_cast<TypeParam>(2),
+                                         narrow_cast<TypeParam>(3)};
+
+    const math::Point<TypeParam, 3> right{narrow_cast<TypeParam>(1),
+                                          narrow_cast<TypeParam>(2),
+                                          narrow_cast<TypeParam>(3)};
+
+    ASSERT_TRUE(left == right);
+}
+
+
+TYPED_TEST(PointTest, EqualityOperator_TwoDifferentPoints1D_ReturnsFalse)
+{
+    using namespace cxutil;
+
+    const math::Point<TypeParam, 1> left{narrow_cast<TypeParam>(1)};
+    const math::Point<TypeParam, 1> right{narrow_cast<TypeParam>(-1)};
+
+    ASSERT_FALSE(left == right);
+}
+
+
+TYPED_TEST(PointTest, EqualityOperator_TwoDifferentPoints2D_ReturnsFalse)
+{
+    using namespace cxutil;
+
+    const math::Point<TypeParam, 2> left{narrow_cast<TypeParam>(1),
+                                         narrow_cast<TypeParam>(-2)};
+
+    const math::Point<TypeParam, 2> right{narrow_cast<TypeParam>(1),
+                                          narrow_cast<TypeParam>(2)};
+
+    ASSERT_FALSE(left == right);
+}
+
+
+TYPED_TEST(PointTest, EqualityOperator_TwoDifferentPoints3D_ReturnsFalse)
+{
+    using namespace cxutil;
+
+    const math::Point<TypeParam, 3> left{narrow_cast<TypeParam>(1),
+                                         narrow_cast<TypeParam>(2),
+                                         narrow_cast<TypeParam>(3)};
+
+    const math::Point<TypeParam, 3> right{narrow_cast<TypeParam>(1),
+                                          narrow_cast<TypeParam>(2),
+                                          narrow_cast<TypeParam>(-3)};
+
+    ASSERT_FALSE(left == right);
+}
+
+
+TYPED_TEST(PointTest, NonEqualityOperator_TwoDifferentPoints1D_ReturnsTrue)
+{
+    using namespace cxutil;
+
+    const math::Point<TypeParam, 1> left{narrow_cast<TypeParam>(1)};
+    const math::Point<TypeParam, 1> right{narrow_cast<TypeParam>(-1)};
+
+    ASSERT_TRUE(left != right);
+}
+
+
+TYPED_TEST(PointTest, NonEqualityOperator_TwoDifferentPoints2D_ReturnsTrue)
+{
+    using namespace cxutil;
+
+    const math::Point<TypeParam, 2> left{narrow_cast<TypeParam>(1),
+                                         narrow_cast<TypeParam>(2)};
+
+    const math::Point<TypeParam, 2> right{narrow_cast<TypeParam>(-1),
+                                          narrow_cast<TypeParam>(2)};
+
+    ASSERT_TRUE(left != right);
+}
+
+
+TYPED_TEST(PointTest, NonEqualityOperator_TwoDifferentPoints3D_ReturnsTrue)
+{
+    using namespace cxutil;
+
+    const math::Point<TypeParam, 3> left{narrow_cast<TypeParam>(1),
+                                         narrow_cast<TypeParam>(-2),
+                                         narrow_cast<TypeParam>(3)};
+
+    const math::Point<TypeParam, 3> right{narrow_cast<TypeParam>(1),
+                                          narrow_cast<TypeParam>(2),
+                                          narrow_cast<TypeParam>(3)};
+
+    ASSERT_TRUE(left != right);
+}
+
+
+TYPED_TEST(PointTest, NonEqualityOperator_TwoEqualPoints1D_ReturnsFalse)
+{
+    using namespace cxutil;
+
+    const math::Point<TypeParam, 1> left{narrow_cast<TypeParam>(1)};
+    const math::Point<TypeParam, 1> right{narrow_cast<TypeParam>(1)};
+
+    ASSERT_FALSE(left != right);
+}
+
+
+TYPED_TEST(PointTest, NonEqualityOperator_TwoEqualPoints2D_ReturnsFalse)
+{
+    using namespace cxutil;
+
+    const math::Point<TypeParam, 2> left{narrow_cast<TypeParam>(1),
+                                         narrow_cast<TypeParam>(2)};
+
+    const math::Point<TypeParam, 2> right{narrow_cast<TypeParam>(1),
+                                          narrow_cast<TypeParam>(2)};
+
+    ASSERT_FALSE(left != right);
+}
+
+
+TYPED_TEST(PointTest, NonEqualityOperator_TwoEqualPoints3D_ReturnsFalse)
+{
+    using namespace cxutil;
+
+    const math::Point<TypeParam, 3> left{narrow_cast<TypeParam>(1),
+                                         narrow_cast<TypeParam>(2),
+                                         narrow_cast<TypeParam>(3)};
+
+    const math::Point<TypeParam, 3> right{narrow_cast<TypeParam>(1),
+                                          narrow_cast<TypeParam>(2),
+                                          narrow_cast<TypeParam>(3)};
+
+    ASSERT_FALSE(left != right);
 }

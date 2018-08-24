@@ -150,3 +150,31 @@ inline T& cxutil::math::Point<T, N>::operator[](int p_index)
 
     return const_cast<T&>(const_cast<const math::Point<T, N>&>(*this)[p_index]);
 }
+
+
+template<typename T>
+bool cxutil::math::operator==(const cxutil::math::Point<T, 1>& p_left, const cxutil::math::Point<T, 1> p_right)
+{
+    return p_left.x() == p_right.x();
+}
+
+
+template<typename T>
+bool cxutil::math::operator==(const cxutil::math::Point<T, 2>& p_left, const cxutil::math::Point<T, 2> p_right)
+{
+    return (p_left.x() == p_right.x()) && (p_left.y() == p_right.y());
+}
+
+
+template<typename T>
+bool cxutil::math::operator==(const cxutil::math::Point<T, 3>& p_left, const cxutil::math::Point<T, 3> p_right)
+{
+    return (p_left.x() == p_right.x()) && (p_left.y() == p_right.y()) && (p_left.z() == p_right.z());
+}
+
+
+template<typename T, typename std::size_t N>
+bool cxutil::math::operator!=(const cxutil::math::Point<T, N>& p_left, const cxutil::math::Point<T, N> p_right)
+{
+    return !(p_left == p_right);
+}

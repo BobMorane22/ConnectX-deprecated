@@ -262,6 +262,83 @@ using Point1D = Point<double, 1>; ///< Common case of a 1D point with @c double 
 using Point2D = Point<double, 2>; ///< Common case of a 2D point with @c double as the coordinate type
 using Point3D = Point<double, 3>; ///< Common case of a 3D point with @c double as the coordinate type
 
+
+///{ @name Comparison operators
+
+/***********************************************************************************************//**
+ * @brief Equality comparison operator for 1D points.
+ *
+ * @tparam T       The coordinate type.
+ * @param  p_left  The first point to compare.
+ * @param  p_right The second point to compare.
+ *
+ * @return @c true if all coordinates are respectively equal, @c false otherwise.
+ *
+ **************************************************************************************************/
+template<typename T>
+bool operator==(const Point<T, 1>& p_left, const Point<T, 1> p_right);
+
+
+/***********************************************************************************************//**
+ * @brief Equality comparison operator for 2D points.
+ *
+ * @tparam T       The coordinate type.
+ * @param  p_left  The first point to compare.
+ * @param  p_right The second point to compare.
+ *
+ * @return @c true if all coordinates are respectively equal, @c false otherwise.
+ *
+ **************************************************************************************************/
+template<typename T>
+bool operator==(const Point<T, 2>& p_left, const Point<T, 2> p_right);
+
+
+/***********************************************************************************************//**
+ * @brief Equality comparison operator for 3D points.
+ *
+ * @tparam T       The coordinate type.
+ * @param  p_left  The first point to compare.
+ * @param  p_right The second point to compare.
+ *
+ * @return @c true if all coordinates are respectively equal, @c false otherwise.
+ *
+ **************************************************************************************************/
+template<typename T>
+bool operator==(const Point<T, 3>& p_left, const Point<T, 3> p_right);
+
+
+/***********************************************************************************************//**
+ * @brief Non-equality comparison operator.
+ *
+ * @tparam T       The coordinate type.
+ * @param  N       The point dimension.
+ * @param  p_left  The first point to compare.
+ * @param  p_right The second point to compare.
+ *
+ * @return @c true if at least one coordinate is not respectively equal in both points, @c false
+ *         otherwise.
+ *
+ **************************************************************************************************/
+template<typename T, typename std::size_t N>
+bool operator!=(const Point<T, N>& p_left, const Point<T, N> p_right);
+
+
+// All other comparison operator have no natural meaning:
+template<typename T, typename std::size_t N>
+bool operator<(const Point<T, N>& p_left, const Point<T, N> p_right) = delete;
+
+template<typename T, typename std::size_t N>
+bool operator<=(const Point<T, N>& p_left, const Point<T, N> p_right) = delete;
+
+template<typename T, typename std::size_t N>
+bool operator>(const Point<T, N>& p_left, const Point<T, N> p_right) = delete;
+
+template<typename T, typename std::size_t N>
+bool operator>=(const Point<T, N>& p_left, const Point<T, N> p_right) = delete;
+
+
+///@}
+
 } // namespace math
 
 } // namespace cxutil
