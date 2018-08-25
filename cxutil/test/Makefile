@@ -36,7 +36,8 @@ SRCS      = cxutilTest.cpp       \
             test_narrow_cast.cpp \
             test_Point.cpp       \
             test_ReturnCode.cpp  \
-            test_Time.cpp
+            test_Time.cpp        \
+            test_Vector.cpp
 
 OBJS      = test_Date.o        \
             test_Color.o       \
@@ -46,7 +47,8 @@ OBJS      = test_Date.o        \
             test_Point.o       \
             test_narrow_cast.o \
             test_ReturnCode.o  \
-            test_Time.o
+            test_Time.o        \
+            test_Vector.o
 
 OBJS := $(addprefix $(OBJ_DIR)/,$(OBJS))
 
