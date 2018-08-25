@@ -195,10 +195,57 @@ public:
 
 ///{ @name Arithmetic operators
 
+    /*******************************************************************************************//**
+     * @brief Unary minus operator.
+     *
+     * Reverts the point of origin and the destination point of the vector. This means that for
+     * a vector @c v, @c -v is the vector of same magnitude going in the opposite direction of
+     * @c v from @c v 's destination point. Of course, this operation reverses the sign of
+     * all vector components.
+     *
+     * @return A vector with reverted point of origin and destination.
+     *
+     **********************************************************************************************/
     Vector<T, N> operator-() const;
 
+
+    /*******************************************************************************************//**
+     * @brief Addition assignment operator.
+     *
+     * Performs vector addition on the current (calling) vector.
+     *
+     * @param p_vector The vector to add to the current vector.
+     *
+     * @return The sum vector.
+     *
+     ***********************************************************************************************/
     Vector<T, N>& operator+=(const Vector<T, N>& p_vector);
+
+
+    /*******************************************************************************************//**
+     * @brief Subtraction assignment operator.
+     *
+     * Performs vector subtraction on the current (calling) vector.
+     *
+     * @param p_vector The vector to subtract to the current vector.
+     *
+     * @return The difference vector.
+     *
+     ***********************************************************************************************/
     Vector<T, N>& operator-=(const Vector<T, N>& p_vector);
+
+
+    /*******************************************************************************************//**
+     * @brief Multiplication assignment operator (scalar).
+     *
+     * Performs <em>scalar</em> multiplication on the current (calling) vector.
+     *
+     * @tparam T       The coordinate type.
+     * @param p_scalar The scalar by which to multiply the current vector.
+     *
+     * @return The product vector.
+     *
+     **********************************************************************************************/
     Vector<T, N>& operator*=(const T& p_scalar);
 
 ///@}

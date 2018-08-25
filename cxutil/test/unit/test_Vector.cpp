@@ -56,6 +56,63 @@ typedef ::testing::Types<char, short, int, double, long long, long double> Vecto
 TYPED_TEST_CASE(VectorTest, VectorRelatedTypes);
 
 
+/***************************************************************************************************
+ * @brief Generates a 1D point.
+ *
+ * @tparam T   The coordinate type.
+ * @param  p_x The x coordinate.
+ *
+ * @return The 1D corresponding point.
+ *
+ **************************************************************************************************/
+template <typename T>
+cxutil::math::Point<T, 1> make1DTestPoint(const T& p_x)
+{
+    using namespace cxutil;
+
+    return math::Point<T, 1>{narrow_cast<T>(p_x)};
+}
+
+
+/***************************************************************************************************
+ * @brief Generates a 2D point.
+ *
+ * @tparam T   The coordinate type.
+ * @param  p_x The x coordinate.
+ * @param  p_y The y coordinate.
+ *
+ * @return The 1D corresponding point.
+ *
+ **************************************************************************************************/
+template <typename T>
+cxutil::math::Point<T, 2> make2DTestPoint(const T& p_x, const T& p_y)
+{
+    using namespace cxutil;
+
+    return math::Point<T, 2>{narrow_cast<T>(p_x), narrow_cast<T>(p_y)};
+}
+
+
+/***************************************************************************************************
+ * @brief Generates a 3D point.
+ *
+ * @tparam T   The coordinate type.
+ * @param  p_x The x coordinate.
+ * @param  p_y The y coordinate.
+ * @param  p_z The z coordinate.
+ *
+ * @return The 3D corresponding point.
+ *
+ **************************************************************************************************/
+template <typename T>
+cxutil::math::Point<T, 3> make3DTestPoint(const T& p_x, const T& p_y, const T& p_z)
+{
+    using namespace cxutil;
+
+    return math::Point<T, 3>{narrow_cast<T>(p_x), narrow_cast<T>(p_y), narrow_cast<T>(p_z)};
+}
+
+
 TYPED_TEST(VectorTest, DefaultConstructor_1D_FromOriginLengthIs0)
 {
     ASSERT_EQ(this->m_vector1D.x(), cxutil::narrow_cast<TypeParam>(0));
@@ -81,8 +138,8 @@ TYPED_TEST(VectorTest, ConstructorWithParameters_1D_VectorWellDefined)
 {
     using namespace cxutil::math;
 
-    const Point<TypeParam, 1> origin     {cxutil::narrow_cast<TypeParam>(1)};
-    const Point<TypeParam, 1> destination{cxutil::narrow_cast<TypeParam>(3)};
+    const Point<TypeParam, 1> origin     {make1DTestPoint<TypeParam>(1)};
+    const Point<TypeParam, 1> destination{make1DTestPoint<TypeParam>(3)};
 
     const Vector<TypeParam, 1> vector{origin, destination};
 
@@ -97,11 +154,8 @@ TYPED_TEST(VectorTest, ConstructorWithParameters_2D_VectorWellDefined)
 {
     using namespace cxutil::math;
 
-    const Point<TypeParam, 2> origin{cxutil::narrow_cast<TypeParam>(1),
-                                     cxutil::narrow_cast<TypeParam>(2)};
-
-    const Point<TypeParam, 2> destination{cxutil::narrow_cast<TypeParam>(3),
-                                          cxutil::narrow_cast<TypeParam>(4)};
+    const Point<TypeParam, 2> origin     {make2DTestPoint<TypeParam>(1, 2)};
+    const Point<TypeParam, 2> destination{make2DTestPoint<TypeParam>(3, 4)};
 
     const Vector<TypeParam, 2> vector{origin, destination};
 
@@ -117,13 +171,8 @@ TYPED_TEST(VectorTest, ConstructorWithParameters_3D_VectorWellDefined)
 {
     using namespace cxutil::math;
 
-    const Point<TypeParam, 3> origin{cxutil::narrow_cast<TypeParam>(1),
-                                     cxutil::narrow_cast<TypeParam>(2),
-                                     cxutil::narrow_cast<TypeParam>(3)};
-
-    const Point<TypeParam, 3> destination{cxutil::narrow_cast<TypeParam>(3),
-                                          cxutil::narrow_cast<TypeParam>(4),
-                                          cxutil::narrow_cast<TypeParam>(5)};
+    const Point<TypeParam, 3> origin     {make3DTestPoint<TypeParam>(1, 2, 3)};
+    const Point<TypeParam, 3> destination{make3DTestPoint<TypeParam>(3, 4, 5)};
 
     const Vector<TypeParam, 3> vector{origin, destination};
 
@@ -162,10 +211,9 @@ TYPED_TEST(VectorTest, Origin_ZeroVector3D_ReturnsOrigin)
 
 TYPED_TEST(VectorTest, Origin_SomeVector1D_ReturnsOrigin)
 {
-    using namespace cxutil;
     using namespace cxutil::math;
 
-    const Point<TypeParam, 1> origin{narrow_cast<TypeParam>(1)};
+    const Point<TypeParam, 1> origin{make1DTestPoint<TypeParam>(1)};
     const Vector<TypeParam, 1> vector{origin, Point<TypeParam, 1>()};
 
     ASSERT_EQ(vector.origin(), origin);
@@ -174,11 +222,9 @@ TYPED_TEST(VectorTest, Origin_SomeVector1D_ReturnsOrigin)
 
 TYPED_TEST(VectorTest, Origin_SomeVector2D_ReturnsOrigin)
 {
-    using namespace cxutil;
     using namespace cxutil::math;
 
-    const Point<TypeParam, 2> origin{narrow_cast<TypeParam>(1),
-                                     narrow_cast<TypeParam>(2)};
+    const Point<TypeParam, 2> origin{make2DTestPoint<TypeParam>(1, 2)};
 
     const Vector<TypeParam, 2> vector{origin, Point<TypeParam, 2>()};
 
@@ -188,12 +234,9 @@ TYPED_TEST(VectorTest, Origin_SomeVector2D_ReturnsOrigin)
 
 TYPED_TEST(VectorTest, Origin_SomeVector3D_ReturnsOrigin)
 {
-    using namespace cxutil;
     using namespace cxutil::math;
 
-    const Point<TypeParam, 3> origin{narrow_cast<TypeParam>(1),
-                                     narrow_cast<TypeParam>(2),
-                                     narrow_cast<TypeParam>(3)};
+    const Point<TypeParam, 3> origin{make3DTestPoint<TypeParam>(1, 2, 3)};
 
     const Vector<TypeParam, 3> vector{origin, Point<TypeParam, 3>()};
 
@@ -203,18 +246,17 @@ TYPED_TEST(VectorTest, Origin_SomeVector3D_ReturnsOrigin)
 
 TYPED_TEST(VectorTest, Origin_Two1DVectorsAdded_OriginOfTheFirstIsUnchanged)
 {
-    using namespace cxutil;
     using namespace cxutil::math;
 
     // First vector:
-    const Point<TypeParam, 1> origin1{narrow_cast<TypeParam>(1)};
-    const Point<TypeParam, 1> destination1{narrow_cast<TypeParam>(2)};
+    const Point<TypeParam, 1> origin1     {make1DTestPoint<TypeParam>(1)};
+    const Point<TypeParam, 1> destination1{make1DTestPoint<TypeParam>(2)};
 
     const Vector<TypeParam, 1> vector1{origin1, destination1};
 
     // Second vector:
-    const Point<TypeParam, 1> origin2{narrow_cast<TypeParam>(-1)};
-    const Point<TypeParam, 1> destination2{narrow_cast<TypeParam>(2)};
+    const Point<TypeParam, 1> origin2     {make1DTestPoint<TypeParam>(-1)};
+    const Point<TypeParam, 1> destination2{make1DTestPoint<TypeParam>(2)};
 
     const Vector<TypeParam, 1> vector2{origin2, destination2};
 
@@ -227,18 +269,17 @@ TYPED_TEST(VectorTest, Origin_Two1DVectorsAdded_OriginOfTheFirstIsUnchanged)
 
 TYPED_TEST(VectorTest, Origin_Two1DVectorsSubstracted_OriginOfTheFirstIsUnchanged)
 {
-    using namespace cxutil;
     using namespace cxutil::math;
 
     // First vector:
-    const Point<TypeParam, 1> origin1{narrow_cast<TypeParam>(1)};
-    const Point<TypeParam, 1> destination1{narrow_cast<TypeParam>(2)};
+    const Point<TypeParam, 1> origin1     {make1DTestPoint<TypeParam>(1)};
+    const Point<TypeParam, 1> destination1{make1DTestPoint<TypeParam>(2)};
 
     const Vector<TypeParam, 1> vector1{origin1, destination1};
 
     // Second vector:
-    const Point<TypeParam, 1> origin2{narrow_cast<TypeParam>(-1)};
-    const Point<TypeParam, 1> destination2{narrow_cast<TypeParam>(2)};
+    const Point<TypeParam, 1> origin2     {make1DTestPoint<TypeParam>(-1)};
+    const Point<TypeParam, 1> destination2{make1DTestPoint<TypeParam>(2)};
 
     const Vector<TypeParam, 1> vector2{origin2, destination2};
 
@@ -251,17 +292,16 @@ TYPED_TEST(VectorTest, Origin_Two1DVectorsSubstracted_OriginOfTheFirstIsUnchange
 
 TYPED_TEST(VectorTest, Origin_ScalarTimesA1DVector_OriginIsUnchanged)
 {
-    using namespace cxutil;
     using namespace cxutil::math;
 
     // First vector:
-    const Point<TypeParam, 1> origin{narrow_cast<TypeParam>(1)};
-    const Point<TypeParam, 1> destination{narrow_cast<TypeParam>(2)};
+    const Point<TypeParam, 1> origin     {make1DTestPoint<TypeParam>(1)};
+    const Point<TypeParam, 1> destination{make1DTestPoint<TypeParam>(2)};
 
     const Vector<TypeParam, 1> vector{origin, destination};
 
     // Scalar:
-    const TypeParam k{narrow_cast<TypeParam>(5)};
+    const TypeParam k{cxutil::narrow_cast<TypeParam>(5)};
 
     // Operation:
     const Vector<TypeParam, 1> prod = k*vector;
@@ -272,17 +312,16 @@ TYPED_TEST(VectorTest, Origin_ScalarTimesA1DVector_OriginIsUnchanged)
 
 TYPED_TEST(VectorTest, Origin_1DVectorTimesAScalar_OriginIsUnchanged)
 {
-    using namespace cxutil;
     using namespace cxutil::math;
 
     // First vector:
-    const Point<TypeParam, 1> origin{narrow_cast<TypeParam>(1)};
-    const Point<TypeParam, 1> destination{narrow_cast<TypeParam>(2)};
+    const Point<TypeParam, 1> origin     {make1DTestPoint<TypeParam>(1)};
+    const Point<TypeParam, 1> destination{make1DTestPoint<TypeParam>(2)};
 
     const Vector<TypeParam, 1> vector{origin, destination};
 
     // Scalar:
-    const TypeParam k{narrow_cast<TypeParam>(5)};
+    const TypeParam k{cxutil::narrow_cast<TypeParam>(5)};
 
     // Operation:
     const Vector<TypeParam, 1> prod = vector*k;
@@ -293,24 +332,17 @@ TYPED_TEST(VectorTest, Origin_1DVectorTimesAScalar_OriginIsUnchanged)
 
 TYPED_TEST(VectorTest, Origin_Two2DVectorsAdded_OriginOfTheFirstIsUnchanged)
 {
-    using namespace cxutil;
     using namespace cxutil::math;
 
     // First vector:
-    const Point<TypeParam, 2> origin1{narrow_cast<TypeParam>(1),
-                                      narrow_cast<TypeParam>(2)};
-
-    const Point<TypeParam, 2> destination1{narrow_cast<TypeParam>(2),
-                                           narrow_cast<TypeParam>(4)};
+    const Point<TypeParam, 2> origin1     {make2DTestPoint<TypeParam>(1, 2)};
+    const Point<TypeParam, 2> destination1{make2DTestPoint<TypeParam>(2, 4)};
 
     const Vector<TypeParam, 2> vector1{origin1, destination1};
 
     // Second vector:
-    const Point<TypeParam, 2> origin2{narrow_cast<TypeParam>(-1),
-                                      narrow_cast<TypeParam>(-2)};
-
-    const Point<TypeParam, 2> destination2{narrow_cast<TypeParam>(2),
-                                           narrow_cast<TypeParam>(3)};
+    const Point<TypeParam, 2> origin2     {make2DTestPoint<TypeParam>(-1, -2)};
+    const Point<TypeParam, 2> destination2{make2DTestPoint<TypeParam>(2, 3)};
 
     const Vector<TypeParam, 2> vector2{origin2, destination2};
 
@@ -323,24 +355,17 @@ TYPED_TEST(VectorTest, Origin_Two2DVectorsAdded_OriginOfTheFirstIsUnchanged)
 
 TYPED_TEST(VectorTest, Origin_Two2DVectorsSubstracted_OriginOfTheFirstIsUnchanged)
 {
-    using namespace cxutil;
     using namespace cxutil::math;
 
     // First vector:
-    const Point<TypeParam, 2> origin1{narrow_cast<TypeParam>(1),
-                                      narrow_cast<TypeParam>(2)};
-
-    const Point<TypeParam, 2> destination1{narrow_cast<TypeParam>(2),
-                                           narrow_cast<TypeParam>(4)};
+    const Point<TypeParam, 2> origin1     {make2DTestPoint<TypeParam>(1, 2)};
+    const Point<TypeParam, 2> destination1{make2DTestPoint<TypeParam>(2, 4)};
 
     const Vector<TypeParam, 2> vector1{origin1, destination1};
 
     // Second vector:
-    const Point<TypeParam, 2> origin2{narrow_cast<TypeParam>(-1),
-                                      narrow_cast<TypeParam>(-2)};
-
-    const Point<TypeParam, 2> destination2{narrow_cast<TypeParam>(2),
-                                           narrow_cast<TypeParam>(3)};
+    const Point<TypeParam, 2> origin2     {make2DTestPoint<TypeParam>(-1, -2)};
+    const Point<TypeParam, 2> destination2{make2DTestPoint<TypeParam>(2, 3)};
 
     const Vector<TypeParam, 2> vector2{origin2, destination2};
 
@@ -353,20 +378,16 @@ TYPED_TEST(VectorTest, Origin_Two2DVectorsSubstracted_OriginOfTheFirstIsUnchange
 
 TYPED_TEST(VectorTest, Origin_ScalarTimesA2DVector_OriginIsUnchanged)
 {
-    using namespace cxutil;
     using namespace cxutil::math;
 
     // First vector:
-    const Point<TypeParam, 2> origin{narrow_cast<TypeParam>(1),
-                                     narrow_cast<TypeParam>(2)};
-
-    const Point<TypeParam, 2> destination{narrow_cast<TypeParam>(2),
-                                          narrow_cast<TypeParam>(4)};
+    const Point<TypeParam, 2> origin     {make2DTestPoint<TypeParam>(1, 2)};
+    const Point<TypeParam, 2> destination{make2DTestPoint<TypeParam>(2, 4)};
 
     const Vector<TypeParam, 2> vector{origin, destination};
 
     // Scalar:
-    const TypeParam k{narrow_cast<TypeParam>(5)};
+    const TypeParam k{cxutil::narrow_cast<TypeParam>(5)};
 
     // Operation:
     const Vector<TypeParam, 2> prod = k*vector;
@@ -377,20 +398,16 @@ TYPED_TEST(VectorTest, Origin_ScalarTimesA2DVector_OriginIsUnchanged)
 
 TYPED_TEST(VectorTest, Origin_2DVectorTimesAScalar_OriginIsUnchanged)
 {
-    using namespace cxutil;
     using namespace cxutil::math;
 
     // First vector:
-    const Point<TypeParam, 2> origin{narrow_cast<TypeParam>(1),
-                                     narrow_cast<TypeParam>(2)};
-
-    const Point<TypeParam, 2> destination{narrow_cast<TypeParam>(2),
-                                          narrow_cast<TypeParam>(4)};
+    const Point<TypeParam, 2> origin     {make2DTestPoint<TypeParam>(1, 2)};
+    const Point<TypeParam, 2> destination{make2DTestPoint<TypeParam>(2, 4)};
 
     const Vector<TypeParam, 2> vector{origin, destination};
 
     // Scalar:
-    const TypeParam k{narrow_cast<TypeParam>(5)};
+    const TypeParam k{cxutil::narrow_cast<TypeParam>(5)};
 
     // Operation:
     const Vector<TypeParam, 2> prod = vector*k;
@@ -401,28 +418,17 @@ TYPED_TEST(VectorTest, Origin_2DVectorTimesAScalar_OriginIsUnchanged)
 
 TYPED_TEST(VectorTest, Origin_Two3DVectorsAdded_OriginOfTheFirstIsUnchanged)
 {
-    using namespace cxutil;
     using namespace cxutil::math;
 
     // First vector:
-    const Point<TypeParam, 3> origin1{narrow_cast<TypeParam>(1),
-                                      narrow_cast<TypeParam>(2),
-                                      narrow_cast<TypeParam>(3)};
-
-    const Point<TypeParam, 3> destination1{narrow_cast<TypeParam>(2),
-                                           narrow_cast<TypeParam>(4),
-                                           narrow_cast<TypeParam>(6)};
+    const Point<TypeParam, 3> origin1     {make3DTestPoint<TypeParam>(1, 2, 3)};
+    const Point<TypeParam, 3> destination1{make3DTestPoint<TypeParam>(2, 4, 6)};
 
     const Vector<TypeParam, 3> vector1{origin1, destination1};
 
     // Second vector:
-    const Point<TypeParam, 3> origin2{narrow_cast<TypeParam>(-1),
-                                      narrow_cast<TypeParam>(-2),
-                                      narrow_cast<TypeParam>(3)};
-
-    const Point<TypeParam, 3> destination2{narrow_cast<TypeParam>(2),
-                                           narrow_cast<TypeParam>(3),
-                                           narrow_cast<TypeParam>(4)};
+    const Point<TypeParam, 3> origin2     {make3DTestPoint<TypeParam>(-1, -2, 3)};
+    const Point<TypeParam, 3> destination2{make3DTestPoint<TypeParam>(2, 3, 4)};
 
     const Vector<TypeParam, 3> vector2{origin2, destination2};
 
@@ -435,28 +441,17 @@ TYPED_TEST(VectorTest, Origin_Two3DVectorsAdded_OriginOfTheFirstIsUnchanged)
 
 TYPED_TEST(VectorTest, Origin_Two3DVectorsSubstracted_OriginOfTheFirstIsUnchanged)
 {
-    using namespace cxutil;
     using namespace cxutil::math;
 
     // First vector:
-    const Point<TypeParam, 3> origin1{narrow_cast<TypeParam>(1),
-                                      narrow_cast<TypeParam>(2),
-                                      narrow_cast<TypeParam>(3)};
-
-    const Point<TypeParam, 3> destination1{narrow_cast<TypeParam>(2),
-                                           narrow_cast<TypeParam>(4),
-                                           narrow_cast<TypeParam>(6)};
+    const Point<TypeParam, 3> origin1     {make3DTestPoint<TypeParam>(1, 2, 3)};
+    const Point<TypeParam, 3> destination1{make3DTestPoint<TypeParam>(2, 4, 6)};
 
     const Vector<TypeParam, 3> vector1{origin1, destination1};
 
     // Second vector:
-    const Point<TypeParam, 3> origin2{narrow_cast<TypeParam>(-1),
-                                      narrow_cast<TypeParam>(-2),
-                                      narrow_cast<TypeParam>(3)};
-
-    const Point<TypeParam, 3> destination2{narrow_cast<TypeParam>(2),
-                                           narrow_cast<TypeParam>(3),
-                                           narrow_cast<TypeParam>(4)};
+    const Point<TypeParam, 3> origin2     {make3DTestPoint<TypeParam>(-1, -2, 3)};
+    const Point<TypeParam, 3> destination2{make3DTestPoint<TypeParam>(2, 3, 4)};
 
     const Vector<TypeParam, 3> vector2{origin2, destination2};
 
@@ -469,22 +464,16 @@ TYPED_TEST(VectorTest, Origin_Two3DVectorsSubstracted_OriginOfTheFirstIsUnchange
 
 TYPED_TEST(VectorTest, Origin_ScalarTimesA3DVector_OriginIsUnchanged)
 {
-    using namespace cxutil;
     using namespace cxutil::math;
 
     // First vector:
-    const Point<TypeParam, 3> origin{narrow_cast<TypeParam>(1),
-                                     narrow_cast<TypeParam>(2),
-                                     narrow_cast<TypeParam>(3)};
-
-    const Point<TypeParam, 3> destination{narrow_cast<TypeParam>(2),
-                                          narrow_cast<TypeParam>(4),
-                                          narrow_cast<TypeParam>(6)};
+    const Point<TypeParam, 3> origin     {make3DTestPoint<TypeParam>(1, 2, 3)};
+    const Point<TypeParam, 3> destination{make3DTestPoint<TypeParam>(2, 4, 6)};
 
     const Vector<TypeParam, 3> vector{origin, destination};
 
     // Scalar:
-    const TypeParam k{narrow_cast<TypeParam>(5)};
+    const TypeParam k{cxutil::narrow_cast<TypeParam>(5)};
 
     // Operation:
     const Vector<TypeParam, 3> prod = k*vector;
@@ -495,22 +484,16 @@ TYPED_TEST(VectorTest, Origin_ScalarTimesA3DVector_OriginIsUnchanged)
 
 TYPED_TEST(VectorTest, Origin_3DVectorTimesAScalar_OriginIsUnchanged)
 {
-    using namespace cxutil;
     using namespace cxutil::math;
 
     // First vector:
-    const Point<TypeParam, 3> origin{narrow_cast<TypeParam>(1),
-                                     narrow_cast<TypeParam>(2),
-                                     narrow_cast<TypeParam>(3)};
-
-    const Point<TypeParam, 3> destination{narrow_cast<TypeParam>(2),
-                                          narrow_cast<TypeParam>(4),
-                                          narrow_cast<TypeParam>(6)};
+    const Point<TypeParam, 3> origin     {make3DTestPoint<TypeParam>(1, 2, 3)};
+    const Point<TypeParam, 3> destination{make3DTestPoint<TypeParam>(2, 4, 6)};
 
     const Vector<TypeParam, 3> vector{origin, destination};
 
     // Scalar:
-    const TypeParam k{narrow_cast<TypeParam>(5)};
+    const TypeParam k{cxutil::narrow_cast<TypeParam>(5)};
 
     // Operation:
     const Vector<TypeParam, 3> prod = vector*k;
@@ -546,11 +529,10 @@ TYPED_TEST(VectorTest, Destination_ZeroVector3D_ReturnsOrigin)
 
 TYPED_TEST(VectorTest, Destination_SomeVector1D_ReturnsDestination)
 {
-    using namespace cxutil;
     using namespace cxutil::math;
 
     const Point<TypeParam, 1> origin;
-    const Point<TypeParam, 1> destination{narrow_cast<TypeParam>(1)};
+    const Point<TypeParam, 1> destination{make1DTestPoint<TypeParam>(1)};
 
     const Vector<TypeParam, 1> vector{origin, destination};
 
@@ -560,12 +542,10 @@ TYPED_TEST(VectorTest, Destination_SomeVector1D_ReturnsDestination)
 
 TYPED_TEST(VectorTest, Destination_SomeVector2D_ReturnsDestination)
 {
-    using namespace cxutil;
     using namespace cxutil::math;
 
     const Point<TypeParam, 2> origin;
-    const Point<TypeParam, 2> destination{narrow_cast<TypeParam>(1),
-                                          narrow_cast<TypeParam>(2)};
+    const Point<TypeParam, 2> destination{make2DTestPoint<TypeParam>(1, 2)};
 
     const Vector<TypeParam, 2> vector{origin, destination};
 
@@ -575,13 +555,10 @@ TYPED_TEST(VectorTest, Destination_SomeVector2D_ReturnsDestination)
 
 TYPED_TEST(VectorTest, Destination_SomeVector3D_ReturnsDestination)
 {
-    using namespace cxutil;
     using namespace cxutil::math;
 
     const Point<TypeParam, 3> origin;
-    const Point<TypeParam, 3> destination{narrow_cast<TypeParam>(1),
-                                          narrow_cast<TypeParam>(2),
-                                          narrow_cast<TypeParam>(3)};
+    const Point<TypeParam, 3> destination{make3DTestPoint<TypeParam>(1, 2, 3)};
 
     const Vector<TypeParam, 3> vector{origin, destination};
 
@@ -591,18 +568,17 @@ TYPED_TEST(VectorTest, Destination_SomeVector3D_ReturnsDestination)
 
 TYPED_TEST(VectorTest, Destination_Two1DVectorsAdded_ReturnsUpdatedDestination)
 {
-    using namespace cxutil;
     using namespace cxutil::math;
 
     // First vector:
-    const Point<TypeParam, 1> origin1{narrow_cast<TypeParam>(1)};
-    const Point<TypeParam, 1> destination1{narrow_cast<TypeParam>(2)};
+    const Point<TypeParam, 1> origin1     {make1DTestPoint<TypeParam>(1)};
+    const Point<TypeParam, 1> destination1{make1DTestPoint<TypeParam>(2)};
 
     const Vector<TypeParam, 1> vector1{origin1, destination1};
 
     // Second vector:
-    const Point<TypeParam, 1> origin2{narrow_cast<TypeParam>(-1)};
-    const Point<TypeParam, 1> destination2{narrow_cast<TypeParam>(2)};
+    const Point<TypeParam, 1> origin2     {make1DTestPoint<TypeParam>(-1)};
+    const Point<TypeParam, 1> destination2{make1DTestPoint<TypeParam>(2)};
 
     const Vector<TypeParam, 1> vector2{origin2, destination2};
 
@@ -610,7 +586,7 @@ TYPED_TEST(VectorTest, Destination_Two1DVectorsAdded_ReturnsUpdatedDestination)
     const Vector<TypeParam, 1> sum = vector1 + vector2;
 
     // Expected result:
-    const Point<TypeParam, 1> expectedResult{narrow_cast<TypeParam>(5)};
+    const Point<TypeParam, 1> expectedResult{make1DTestPoint<TypeParam>(5)};
 
     ASSERT_EQ(sum.destination(), expectedResult);
 }
@@ -618,18 +594,17 @@ TYPED_TEST(VectorTest, Destination_Two1DVectorsAdded_ReturnsUpdatedDestination)
 
 TYPED_TEST(VectorTest, Destination_Two1DVectorsSubstracted_ReturnsUpdatedDestination)
 {
-    using namespace cxutil;
     using namespace cxutil::math;
 
     // First vector:
-    const Point<TypeParam, 1> origin1{narrow_cast<TypeParam>(1)};
-    const Point<TypeParam, 1> destination1{narrow_cast<TypeParam>(2)};
+    const Point<TypeParam, 1> origin1     {make1DTestPoint<TypeParam>(1)};
+    const Point<TypeParam, 1> destination1{make1DTestPoint<TypeParam>(2)};
 
     const Vector<TypeParam, 1> vector1{origin1, destination1};
 
     // Second vector:
-    const Point<TypeParam, 1> origin2{narrow_cast<TypeParam>(-1)};
-    const Point<TypeParam, 1> destination2{narrow_cast<TypeParam>(2)};
+    const Point<TypeParam, 1> origin2     {make1DTestPoint<TypeParam>(-1)};
+    const Point<TypeParam, 1> destination2{make1DTestPoint<TypeParam>(2)};
 
     const Vector<TypeParam, 1> vector2{origin2, destination2};
 
@@ -637,7 +612,7 @@ TYPED_TEST(VectorTest, Destination_Two1DVectorsSubstracted_ReturnsUpdatedDestina
     const Vector<TypeParam, 1> diff = vector1 - vector2;
 
     // Expected result:
-    const Point<TypeParam, 1> expectedResult{narrow_cast<TypeParam>(-1)};
+    const Point<TypeParam, 1> expectedResult{make1DTestPoint<TypeParam>(-1)};
 
     ASSERT_EQ(diff.destination(), expectedResult);
 }
@@ -645,20 +620,18 @@ TYPED_TEST(VectorTest, Destination_Two1DVectorsSubstracted_ReturnsUpdatedDestina
 
 TYPED_TEST(VectorTest, Destination_ScalarTimesA1DVector_ReturnsUpdatedDestination)
 {
-    using namespace cxutil;
     using namespace cxutil::math;
 
-    const Point<TypeParam, 1> origin{narrow_cast<TypeParam>(1)};
-
-    const Point<TypeParam, 1> destination{narrow_cast<TypeParam>(2)};
+    const Point<TypeParam, 1> origin     {make1DTestPoint<TypeParam>(1)};
+    const Point<TypeParam, 1> destination{make1DTestPoint<TypeParam>(2)};
 
     const Vector<TypeParam, 1> vector{origin, destination};
 
-    const TypeParam k{narrow_cast<TypeParam>(5)};
+    const TypeParam k{cxutil::narrow_cast<TypeParam>(5)};
 
     const Vector<TypeParam, 1> prod = k*vector;
 
-    const Point<TypeParam, 1> expectedResult{narrow_cast<TypeParam>(6)};
+    const Point<TypeParam, 1> expectedResult{make1DTestPoint<TypeParam>(6)};
 
     ASSERT_EQ(prod.destination(), expectedResult);
 }
@@ -666,20 +639,18 @@ TYPED_TEST(VectorTest, Destination_ScalarTimesA1DVector_ReturnsUpdatedDestinatio
 
 TYPED_TEST(VectorTest, Destination_1DVectorTimesAScalar_ReturnsUpdatedDestination)
 {
-    using namespace cxutil;
     using namespace cxutil::math;
 
-    const Point<TypeParam, 1> origin{narrow_cast<TypeParam>(1)};
-
-    const Point<TypeParam, 1> destination{narrow_cast<TypeParam>(2)};
+    const Point<TypeParam, 1> origin     {make1DTestPoint<TypeParam>(1)};
+    const Point<TypeParam, 1> destination{make1DTestPoint<TypeParam>(2)};
 
     const Vector<TypeParam, 1> vector{origin, destination};
 
-    const TypeParam k{narrow_cast<TypeParam>(5)};
+    const TypeParam k{cxutil::narrow_cast<TypeParam>(5)};
 
     const Vector<TypeParam, 1> prod = vector*k;
 
-    const Point<TypeParam, 1> expectedResult{narrow_cast<TypeParam>(6)};
+    const Point<TypeParam, 1> expectedResult{make1DTestPoint<TypeParam>(6)};
 
     ASSERT_EQ(prod.destination(), expectedResult);
 }
@@ -687,24 +658,17 @@ TYPED_TEST(VectorTest, Destination_1DVectorTimesAScalar_ReturnsUpdatedDestinatio
 
 TYPED_TEST(VectorTest, Destination_Two2DVectorsAdded_ReturnsUpdatedDestination)
 {
-    using namespace cxutil;
     using namespace cxutil::math;
 
     // First vector:
-    const Point<TypeParam, 2> origin1{narrow_cast<TypeParam>(1),
-                                      narrow_cast<TypeParam>(2)};
-
-    const Point<TypeParam, 2> destination1{narrow_cast<TypeParam>(2),
-                                           narrow_cast<TypeParam>(4)};
+    const Point<TypeParam, 2> origin1     {make2DTestPoint<TypeParam>(1, 2)};
+    const Point<TypeParam, 2> destination1{make2DTestPoint<TypeParam>(2, 4)};
 
     const Vector<TypeParam, 2> vector1{origin1, destination1};
 
     // Second vector:
-    const Point<TypeParam, 2> origin2{narrow_cast<TypeParam>(-1),
-                                      narrow_cast<TypeParam>(-2)};
-
-    const Point<TypeParam, 2> destination2{narrow_cast<TypeParam>(2),
-                                           narrow_cast<TypeParam>(3)};
+    const Point<TypeParam, 2> origin2     {make2DTestPoint<TypeParam>(-1, -2)};
+    const Point<TypeParam, 2> destination2{make2DTestPoint<TypeParam>(2, 3)};
 
     const Vector<TypeParam, 2> vector2{origin2, destination2};
 
@@ -712,8 +676,7 @@ TYPED_TEST(VectorTest, Destination_Two2DVectorsAdded_ReturnsUpdatedDestination)
     const Vector<TypeParam, 2> sum = vector1 + vector2;
 
     // Expected result:
-    const Point<TypeParam, 2> expectedResult{narrow_cast<TypeParam>(5),
-                                             narrow_cast<TypeParam>(9)};
+    const Point<TypeParam, 2> expectedResult{make2DTestPoint<TypeParam>(5, 9)};
 
     ASSERT_EQ(sum.destination(), expectedResult);
 }
@@ -721,24 +684,17 @@ TYPED_TEST(VectorTest, Destination_Two2DVectorsAdded_ReturnsUpdatedDestination)
 
 TYPED_TEST(VectorTest, Destination_Two2DVectorsSubstracted_ReturnsUpdatedDestination)
 {
-    using namespace cxutil;
     using namespace cxutil::math;
 
     // First vector:
-    const Point<TypeParam, 2> origin1{narrow_cast<TypeParam>(1),
-                                      narrow_cast<TypeParam>(2)};
-
-    const Point<TypeParam, 2> destination1{narrow_cast<TypeParam>(2),
-                                           narrow_cast<TypeParam>(4)};
+    const Point<TypeParam, 2> origin1     {make2DTestPoint<TypeParam>(1, 2)};
+    const Point<TypeParam, 2> destination1{make2DTestPoint<TypeParam>(2, 4)};
 
     const Vector<TypeParam, 2> vector1{origin1, destination1};
 
     // Second vector:
-    const Point<TypeParam, 2> origin2{narrow_cast<TypeParam>(-1),
-                                      narrow_cast<TypeParam>(-2)};
-
-    const Point<TypeParam, 2> destination2{narrow_cast<TypeParam>(2),
-                                           narrow_cast<TypeParam>(3)};
+    const Point<TypeParam, 2> origin2     {make2DTestPoint<TypeParam>(-1, -2)};
+    const Point<TypeParam, 2> destination2{make2DTestPoint<TypeParam>(2, 3)};
 
     const Vector<TypeParam, 2> vector2{origin2, destination2};
 
@@ -746,8 +702,7 @@ TYPED_TEST(VectorTest, Destination_Two2DVectorsSubstracted_ReturnsUpdatedDestina
     const Vector<TypeParam, 2> diff = vector1 - vector2;
 
     // Expected result:
-    const Point<TypeParam, 2> expectedResult{narrow_cast<TypeParam>(-1),
-                                             narrow_cast<TypeParam>(-1)};
+    const Point<TypeParam, 2> expectedResult{make2DTestPoint<TypeParam>(-1, -1)};
 
     ASSERT_EQ(diff.destination(), expectedResult);
 }
@@ -755,23 +710,18 @@ TYPED_TEST(VectorTest, Destination_Two2DVectorsSubstracted_ReturnsUpdatedDestina
 
 TYPED_TEST(VectorTest, Destination_ScalarTimesA2DVector_ReturnsUpdatedDestination)
 {
-    using namespace cxutil;
     using namespace cxutil::math;
 
-    const Point<TypeParam, 2> origin{narrow_cast<TypeParam>(1),
-                                     narrow_cast<TypeParam>(2)};
-
-    const Point<TypeParam, 2> destination{narrow_cast<TypeParam>(2),
-                                          narrow_cast<TypeParam>(4)};
+    const Point<TypeParam, 2> origin     {make2DTestPoint<TypeParam>(1, 2)};
+    const Point<TypeParam, 2> destination{make2DTestPoint<TypeParam>(2, 4)};
 
     const Vector<TypeParam, 2> vector{origin, destination};
 
-    const TypeParam k{narrow_cast<TypeParam>(5)};
+    const TypeParam k{cxutil::narrow_cast<TypeParam>(5)};
 
     const Vector<TypeParam, 2> prod = k*vector;
 
-    const Point<TypeParam, 2> expectedResult{narrow_cast<TypeParam>(6),
-                                             narrow_cast<TypeParam>(12)};
+    const Point<TypeParam, 2> expectedResult{make2DTestPoint<TypeParam>(6, 12)};
 
     ASSERT_EQ(prod.destination(), expectedResult);
 }
@@ -779,23 +729,18 @@ TYPED_TEST(VectorTest, Destination_ScalarTimesA2DVector_ReturnsUpdatedDestinatio
 
 TYPED_TEST(VectorTest, Destination_2DVectorTimesAScalar_ReturnsUpdatedDestination)
 {
-    using namespace cxutil;
     using namespace cxutil::math;
 
-    const Point<TypeParam, 2> origin{narrow_cast<TypeParam>(1),
-                                     narrow_cast<TypeParam>(2)};
-
-    const Point<TypeParam, 2> destination{narrow_cast<TypeParam>(2),
-                                          narrow_cast<TypeParam>(4)};
+    const Point<TypeParam, 2> origin     {make2DTestPoint<TypeParam>(1, 2)};
+    const Point<TypeParam, 2> destination{make2DTestPoint<TypeParam>(2, 4)};
 
     const Vector<TypeParam, 2> vector{origin, destination};
 
-    const TypeParam k{narrow_cast<TypeParam>(5)};
+    const TypeParam k{cxutil::narrow_cast<TypeParam>(5)};
 
     const Vector<TypeParam, 2> prod = vector*k;
 
-    const Point<TypeParam, 2> expectedResult{narrow_cast<TypeParam>(6),
-                                             narrow_cast<TypeParam>(12)};
+    const Point<TypeParam, 2> expectedResult{make2DTestPoint<TypeParam>(6, 12)};
 
     ASSERT_EQ(prod.destination(), expectedResult);
 }
@@ -803,28 +748,17 @@ TYPED_TEST(VectorTest, Destination_2DVectorTimesAScalar_ReturnsUpdatedDestinatio
 
 TYPED_TEST(VectorTest, Destination_Two3DVectorsAdded_ReturnsUpdatedDestination)
 {
-    using namespace cxutil;
     using namespace cxutil::math;
 
     // First vector:
-    const Point<TypeParam, 3> origin1{narrow_cast<TypeParam>(1),
-                                      narrow_cast<TypeParam>(2),
-                                      narrow_cast<TypeParam>(3)};
-
-    const Point<TypeParam, 3> destination1{narrow_cast<TypeParam>(2),
-                                           narrow_cast<TypeParam>(4),
-                                           narrow_cast<TypeParam>(6)};
+    const Point<TypeParam, 3> origin1     {make3DTestPoint<TypeParam>(1, 2, 3)};
+    const Point<TypeParam, 3> destination1{make3DTestPoint<TypeParam>(2, 4, 6)};
 
     const Vector<TypeParam, 3> vector1{origin1, destination1};
 
     // Second vector:
-    const Point<TypeParam, 3> origin2{narrow_cast<TypeParam>(-1),
-                                      narrow_cast<TypeParam>(-2),
-                                      narrow_cast<TypeParam>(3)};
-
-    const Point<TypeParam, 3> destination2{narrow_cast<TypeParam>(2),
-                                           narrow_cast<TypeParam>(3),
-                                           narrow_cast<TypeParam>(4)};
+    const Point<TypeParam, 3> origin2     {make3DTestPoint<TypeParam>(-1, -2, 3)};
+    const Point<TypeParam, 3> destination2{make3DTestPoint<TypeParam>(2, 3, 4)};
 
     const Vector<TypeParam, 3> vector2{origin2, destination2};
 
@@ -832,9 +766,7 @@ TYPED_TEST(VectorTest, Destination_Two3DVectorsAdded_ReturnsUpdatedDestination)
     const Vector<TypeParam, 3> sum = vector1 + vector2;
 
     // Expected result:
-    const Point<TypeParam, 3> expectedResult{narrow_cast<TypeParam>(5),
-                                             narrow_cast<TypeParam>(9),
-                                             narrow_cast<TypeParam>(7)};
+    const Point<TypeParam, 3> expectedResult{make3DTestPoint<TypeParam>(5, 9, 7)};
 
     ASSERT_EQ(sum.destination(), expectedResult);
 }
@@ -842,28 +774,17 @@ TYPED_TEST(VectorTest, Destination_Two3DVectorsAdded_ReturnsUpdatedDestination)
 
 TYPED_TEST(VectorTest, Destination_Two3DVectorsSubstracted_ReturnsUpdatedDestination)
 {
-    using namespace cxutil;
     using namespace cxutil::math;
 
     // First vector:
-    const Point<TypeParam, 3> origin1{narrow_cast<TypeParam>(1),
-                                      narrow_cast<TypeParam>(2),
-                                      narrow_cast<TypeParam>(3)};
-
-    const Point<TypeParam, 3> destination1{narrow_cast<TypeParam>(2),
-                                           narrow_cast<TypeParam>(4),
-                                           narrow_cast<TypeParam>(6)};
+    const Point<TypeParam, 3> origin1     {make3DTestPoint<TypeParam>(1, 2, 3)};
+    const Point<TypeParam, 3> destination1{make3DTestPoint<TypeParam>(2, 4, 6)};
 
     const Vector<TypeParam, 3> vector1{origin1, destination1};
 
     // Second vector:
-    const Point<TypeParam, 3> origin2{narrow_cast<TypeParam>(-1),
-                                      narrow_cast<TypeParam>(-2),
-                                      narrow_cast<TypeParam>(3)};
-
-    const Point<TypeParam, 3> destination2{narrow_cast<TypeParam>(2),
-                                           narrow_cast<TypeParam>(3),
-                                           narrow_cast<TypeParam>(4)};
+    const Point<TypeParam, 3> origin2     {make3DTestPoint<TypeParam>(-1, -2, 3)};
+    const Point<TypeParam, 3> destination2{make3DTestPoint<TypeParam>(2, 3, 4)};
 
     const Vector<TypeParam, 3> vector2{origin2, destination2};
 
@@ -871,9 +792,7 @@ TYPED_TEST(VectorTest, Destination_Two3DVectorsSubstracted_ReturnsUpdatedDestina
     const Vector<TypeParam, 3> diff = vector1 - vector2;
 
     // Expected result:
-    const Point<TypeParam, 3> expectedResult{narrow_cast<TypeParam>(-1),
-                                             narrow_cast<TypeParam>(-1),
-                                             narrow_cast<TypeParam>(5)};
+    const Point<TypeParam, 3> expectedResult{make3DTestPoint<TypeParam>(-1, -1, 5)};
 
     ASSERT_EQ(diff.destination(), expectedResult);
 }
@@ -881,26 +800,18 @@ TYPED_TEST(VectorTest, Destination_Two3DVectorsSubstracted_ReturnsUpdatedDestina
 
 TYPED_TEST(VectorTest, Destination_ScalarTimesA3DVector_ReturnsUpdatedDestination)
 {
-    using namespace cxutil;
     using namespace cxutil::math;
 
-    const Point<TypeParam, 3> origin{narrow_cast<TypeParam>(1),
-                                     narrow_cast<TypeParam>(2),
-                                     narrow_cast<TypeParam>(3)};
-
-    const Point<TypeParam, 3> destination{narrow_cast<TypeParam>(2),
-                                          narrow_cast<TypeParam>(4),
-                                          narrow_cast<TypeParam>(6)};
+    const Point<TypeParam, 3> origin     {make3DTestPoint<TypeParam>(1, 2, 3)};
+    const Point<TypeParam, 3> destination{make3DTestPoint<TypeParam>(2, 4, 6)};
 
     const Vector<TypeParam, 3> vector{origin, destination};
 
-    const TypeParam k{narrow_cast<TypeParam>(5)};
+    const TypeParam k{cxutil::narrow_cast<TypeParam>(5)};
 
     const Vector<TypeParam, 3> prod = k*vector;
 
-    const Point<TypeParam, 3> expectedResult{narrow_cast<TypeParam>(6),
-                                             narrow_cast<TypeParam>(12),
-                                             narrow_cast<TypeParam>(18)};
+    const Point<TypeParam, 3> expectedResult{make3DTestPoint<TypeParam>(6, 12, 18)};
 
     ASSERT_EQ(prod.destination(), expectedResult);
 }
@@ -908,26 +819,18 @@ TYPED_TEST(VectorTest, Destination_ScalarTimesA3DVector_ReturnsUpdatedDestinatio
 
 TYPED_TEST(VectorTest, Destination_3DVectorTimesAScalar_ReturnsUpdatedDestination)
 {
-    using namespace cxutil;
     using namespace cxutil::math;
 
-    const Point<TypeParam, 3> origin{narrow_cast<TypeParam>(1),
-                                     narrow_cast<TypeParam>(2),
-                                     narrow_cast<TypeParam>(3)};
-
-    const Point<TypeParam, 3> destination{narrow_cast<TypeParam>(2),
-                                          narrow_cast<TypeParam>(4),
-                                          narrow_cast<TypeParam>(6)};
+    const Point<TypeParam, 3> origin     {make3DTestPoint<TypeParam>(1, 2, 3)};
+    const Point<TypeParam, 3> destination{make3DTestPoint<TypeParam>(2, 4, 6)};
 
     const Vector<TypeParam, 3> vector{origin, destination};
 
-    const TypeParam k{narrow_cast<TypeParam>(5)};
+    const TypeParam k{cxutil::narrow_cast<TypeParam>(5)};
 
     const Vector<TypeParam, 3> prod = vector*k;
 
-    const Point<TypeParam, 3> expectedResult{narrow_cast<TypeParam>(6),
-                                             narrow_cast<TypeParam>(12),
-                                             narrow_cast<TypeParam>(18)};
+    const Point<TypeParam, 3> expectedResult{make3DTestPoint<TypeParam>(6, 12, 18)};
 
     ASSERT_EQ(prod.destination(), expectedResult);
 }
@@ -971,134 +874,112 @@ TYPED_TEST(VectorTest, Z_Origin3DVector_Returns0)
 
 TYPED_TEST(VectorTest, X_Some1DVector_ReturnsXComponent)
 {
-    using namespace cxutil;
     using namespace cxutil::math;
 
-    const Point<TypeParam, 1> origin{narrow_cast<TypeParam>(1)};
-    const Point<TypeParam, 1> destination{narrow_cast<TypeParam>(2)};
+    const Point<TypeParam, 1> origin     {make1DTestPoint<TypeParam>(1)};
+    const Point<TypeParam, 1> destination{make1DTestPoint<TypeParam>(2)};
 
     const Vector<TypeParam, 1> vector{origin, destination};
 
-    ASSERT_EQ(vector.x(), narrow_cast<TypeParam>(1));
+    ASSERT_EQ(vector.x(), cxutil::narrow_cast<TypeParam>(1));
 }
 
 
 TYPED_TEST(VectorTest, X_Some2DVector_ReturnsXComponent)
 {
-    using namespace cxutil;
     using namespace cxutil::math;
 
-    const Point<TypeParam, 2> origin{narrow_cast<TypeParam>(1),
-                                     narrow_cast<TypeParam>(2)};
-
-    const Point<TypeParam, 2> destination{narrow_cast<TypeParam>(2),
-                                          narrow_cast<TypeParam>(4)};
+    const Point<TypeParam, 2> origin     {make2DTestPoint<TypeParam>(1, 2)};
+    const Point<TypeParam, 2> destination{make2DTestPoint<TypeParam>(2, 4)};
 
     const Vector<TypeParam, 2> vector{origin, destination};
 
-    ASSERT_EQ(vector.x(), narrow_cast<TypeParam>(1));
+    ASSERT_EQ(vector.x(), cxutil::narrow_cast<TypeParam>(1));
 }
 
 
 TYPED_TEST(VectorTest, X_Some3DVector_ReturnsXComponent)
 {
-    using namespace cxutil;
     using namespace cxutil::math;
 
-    const Point<TypeParam, 3> origin{narrow_cast<TypeParam>(1),
-                                     narrow_cast<TypeParam>(2),
-                                     narrow_cast<TypeParam>(3)};
-
-    const Point<TypeParam, 3> destination{narrow_cast<TypeParam>(2),
-                                          narrow_cast<TypeParam>(4),
-                                          narrow_cast<TypeParam>(6)};
+    const Point<TypeParam, 3> origin     {make3DTestPoint<TypeParam>(1, 2, 3)};
+    const Point<TypeParam, 3> destination{make3DTestPoint<TypeParam>(2, 4, 6)};
 
     const Vector<TypeParam, 3> vector{origin, destination};
 
-    ASSERT_EQ(vector.x(), narrow_cast<TypeParam>(1));
+    ASSERT_EQ(vector.x(), cxutil::narrow_cast<TypeParam>(1));
 }
 
 
 TYPED_TEST(VectorTest, Y_Some2DVector_ReturnsYComponent)
 {
-    using namespace cxutil;
     using namespace cxutil::math;
 
-    const Point<TypeParam, 2> origin{narrow_cast<TypeParam>(1),
-                                     narrow_cast<TypeParam>(2)};
-
-    const Point<TypeParam, 2> destination{narrow_cast<TypeParam>(2),
-                                          narrow_cast<TypeParam>(4)};
+    const Point<TypeParam, 2> origin     {make2DTestPoint<TypeParam>(1, 2)};
+    const Point<TypeParam, 2> destination{make2DTestPoint<TypeParam>(2, 4)};
 
     const Vector<TypeParam, 2> vector{origin, destination};
 
-    ASSERT_EQ(vector.y(), narrow_cast<TypeParam>(2));
+    ASSERT_EQ(vector.y(), cxutil::narrow_cast<TypeParam>(2));
 }
 
 
 TYPED_TEST(VectorTest, Y_Some3DVector_ReturnsYComponent)
 {
-    using namespace cxutil;
     using namespace cxutil::math;
 
-    const Point<TypeParam, 3> origin{narrow_cast<TypeParam>(1),
-                                     narrow_cast<TypeParam>(2),
-                                     narrow_cast<TypeParam>(3)};
-
-    const Point<TypeParam, 3> destination{narrow_cast<TypeParam>(2),
-                                          narrow_cast<TypeParam>(4),
-                                          narrow_cast<TypeParam>(6)};
+    const Point<TypeParam, 3> origin     {make3DTestPoint<TypeParam>(1, 2, 3)};
+    const Point<TypeParam, 3> destination{make3DTestPoint<TypeParam>(2, 4, 6)};
 
     const Vector<TypeParam, 3> vector{origin, destination};
 
-    ASSERT_EQ(vector.y(), narrow_cast<TypeParam>(2));
+    ASSERT_EQ(vector.y(), cxutil::narrow_cast<TypeParam>(2));
 }
 
 
 TYPED_TEST(VectorTest, Z_Some3DVector_ReturnsZComponent)
 {
-    using namespace cxutil;
     using namespace cxutil::math;
 
-    const Point<TypeParam, 3> origin{narrow_cast<TypeParam>(1),
-                                     narrow_cast<TypeParam>(2),
-                                     narrow_cast<TypeParam>(3)};
-
-    const Point<TypeParam, 3> destination{narrow_cast<TypeParam>(2),
-                                          narrow_cast<TypeParam>(4),
-                                          narrow_cast<TypeParam>(6)};
+    const Point<TypeParam, 3> origin     {make3DTestPoint<TypeParam>(1, 2, 3)};
+    const Point<TypeParam, 3> destination{make3DTestPoint<TypeParam>(2, 4, 6)};
 
     const Vector<TypeParam, 3> vector{origin, destination};
 
-    ASSERT_EQ(vector.z(), narrow_cast<TypeParam>(3));
+    ASSERT_EQ(vector.z(), cxutil::narrow_cast<TypeParam>(3));
 }
 
 
 TYPED_TEST(VectorTest, SubscriptOperator_Some1DVectorSusbriptN_ExceptionThrown)
 {
-    ASSERT_THROW(this->m_vector1D[1], PreconditionException);
+    using namespace cxutil::math;
+
+    ASSERT_THROW(this->m_vector1D[(Vector<TypeParam, 1>::X_COMPONENT + 1)], PreconditionException);
 }
 
 
 TYPED_TEST(VectorTest, SubscriptOperator_Some2DVectorSusbriptN_ExceptionThrown)
 {
-    ASSERT_THROW(this->m_vector2D[2], PreconditionException);
+    using namespace cxutil::math;
+
+    ASSERT_THROW(this->m_vector2D[(Vector<TypeParam, 2>::Y_COMPONENT + 1)], PreconditionException);
 }
 
 
 TYPED_TEST(VectorTest, SubscriptOperator_Some3DVectorSusbriptN_ExceptionThrown)
 {
-    ASSERT_THROW(this->m_vector3D[3], PreconditionException);
+    using namespace cxutil::math;
+
+    ASSERT_THROW(this->m_vector3D[(Vector<TypeParam, 3>::Z_COMPONENT + 1)], PreconditionException);
 }
 
 
 TYPED_TEST(VectorTest, SubscriptOperator_Some1DVector_ReturnsComponent)
 {
-    using namespace cxutil;
     using namespace cxutil::math;
 
-    const Point<TypeParam, 1> origin{narrow_cast<TypeParam>(1)};
-    const Point<TypeParam, 1> destination{narrow_cast<TypeParam>(2)};
+    const Point<TypeParam, 1> origin     {make1DTestPoint<TypeParam>(1)};
+    const Point<TypeParam, 1> destination{make1DTestPoint<TypeParam>(2)};
 
     const Vector<TypeParam, 1> vector{origin, destination};
 
@@ -1109,14 +990,10 @@ TYPED_TEST(VectorTest, SubscriptOperator_Some1DVector_ReturnsComponent)
 
 TYPED_TEST(VectorTest, SubscriptOperator_Some2DVector_ReturnsComponent)
 {
-    using namespace cxutil;
     using namespace cxutil::math;
 
-    const Point<TypeParam, 2> origin{narrow_cast<TypeParam>(1),
-                                     narrow_cast<TypeParam>(2)};
-
-    const Point<TypeParam, 2> destination{narrow_cast<TypeParam>(2),
-                                          narrow_cast<TypeParam>(4)};
+    const Point<TypeParam, 2> origin     {make2DTestPoint<TypeParam>(1, 2)};
+    const Point<TypeParam, 2> destination{make2DTestPoint<TypeParam>(2, 4)};
 
     const Vector<TypeParam, 2> vector{origin, destination};
 
@@ -1128,16 +1005,10 @@ TYPED_TEST(VectorTest, SubscriptOperator_Some2DVector_ReturnsComponent)
 
 TYPED_TEST(VectorTest, SubscriptOperator_Some3DVector_ReturnsComponent)
 {
-    using namespace cxutil;
     using namespace cxutil::math;
 
-    const Point<TypeParam, 3> origin{narrow_cast<TypeParam>(1),
-                                     narrow_cast<TypeParam>(2),
-                                     narrow_cast<TypeParam>(3)};
-
-    const Point<TypeParam, 3> destination{narrow_cast<TypeParam>(2),
-                                          narrow_cast<TypeParam>(4),
-                                          narrow_cast<TypeParam>(6)};
+    const Point<TypeParam, 3> origin     {make3DTestPoint<TypeParam>(1, 2, 3)};
+    const Point<TypeParam, 3> destination{make3DTestPoint<TypeParam>(2, 4, 6)};
 
     const Vector<TypeParam, 3> vector{origin, destination};
 
@@ -1148,8 +1019,249 @@ TYPED_TEST(VectorTest, SubscriptOperator_Some3DVector_ReturnsComponent)
 }
 
 
+TYPED_TEST(VectorTest, UnaryMinus_ZeroVector1D_ReturnsZeroVector)
+{
+    ASSERT_EQ(-(this->m_vector1D), this->m_vector1D);
+}
+
+
+TYPED_TEST(VectorTest, UnaryMinus_ZeroVector2D_ReturnsZeroVector)
+{
+    ASSERT_EQ(-(this->m_vector2D), this->m_vector2D);
+}
+
+
+TYPED_TEST(VectorTest, UnaryMinus_ZeroVector3D_ReturnsZeroVector)
+{
+    ASSERT_EQ(-(this->m_vector3D), this->m_vector3D);
+}
+
+
+TYPED_TEST(VectorTest, UnaryMinus_SomeVector1D_ReturnsOppositeVector)
+{
+    using namespace cxutil::math;
+
+    Point<TypeParam, 1> origin     {make1DTestPoint<TypeParam>(1)};
+    Point<TypeParam, 1> destination{make1DTestPoint<TypeParam>(2)};
+
+    Vector<TypeParam, 1> vector        {origin, destination};
+    Vector<TypeParam, 1> expectedResult{destination, origin};
+
+    ASSERT_EQ(-vector, expectedResult);
+}
+
+
+TYPED_TEST(VectorTest, UnaryMinus_SomeVector2D_ReturnsOppositeVector)
+{
+    using namespace cxutil::math;
+
+    Point<TypeParam, 2> origin     {make2DTestPoint<TypeParam>(1, 2)};
+    Point<TypeParam, 2> destination{make2DTestPoint<TypeParam>(2, 4)};
+
+    Vector<TypeParam, 2> vector        {origin, destination};
+    Vector<TypeParam, 2> expectedResult{destination, origin};
+
+    ASSERT_EQ(-vector, expectedResult);
+}
+
+
+TYPED_TEST(VectorTest, UnaryMinus_SomeVector3D_ReturnsOppositeVector)
+{
+    using namespace cxutil::math;
+
+    Point<TypeParam, 3> origin     {make3DTestPoint<TypeParam>(1, 2, 3)};
+    Point<TypeParam, 3> destination{make3DTestPoint<TypeParam>(2, 4, 6)};
+
+    Vector<TypeParam, 3> vector        {origin, destination};
+    Vector<TypeParam, 3> expectedResult{destination, origin};
+
+    ASSERT_EQ(-vector, expectedResult);
+}
+
+
+TYPED_TEST(VectorTest, AdditionAssignement_SomeVector1D_ReturnsSum)
+{
+    using namespace cxutil::math;
+
+    // First vector:
+    Point<TypeParam, 1> origin1     {make1DTestPoint<TypeParam>(1)};
+    Point<TypeParam, 1> destination1{make1DTestPoint<TypeParam>(2)};
+
+    Vector<TypeParam, 1> vector1{origin1, destination1};
+
+    // Second vector:
+    Point<TypeParam, 1> origin2     {make1DTestPoint<TypeParam>(2)};
+    Point<TypeParam, 1> destination2{make1DTestPoint<TypeParam>(1)};
+
+    Vector<TypeParam, 1> vector2{origin2, destination2};
+
+    ASSERT_EQ(vector1 += vector2, this->m_vector1D);
+}
+
+
+TYPED_TEST(VectorTest, AdditionAssignement_SomeVector2D_ReturnsSum)
+{
+    using namespace cxutil::math;
+
+    // First vector:
+    Point<TypeParam, 2> origin1     {make2DTestPoint<TypeParam>(1, 2)};
+    Point<TypeParam, 2> destination1{make2DTestPoint<TypeParam>(2, 4)};
+
+    Vector<TypeParam, 2> vector1{origin1, destination1};
+
+    // Second vector:
+    Point<TypeParam, 2> origin2     {make2DTestPoint<TypeParam>(2, 4)};
+    Point<TypeParam, 2> destination2{make2DTestPoint<TypeParam>(1, 2)};
+
+    Vector<TypeParam, 2> vector2{origin2, destination2};
+
+    ASSERT_EQ(vector1 += vector2, this->m_vector2D);
+}
+
+
+TYPED_TEST(VectorTest, AdditionAssignement_SomeVector3D_ReturnsSum)
+{
+    using namespace cxutil::math;
+
+    // First vector:
+    Point<TypeParam, 3> origin1     {make3DTestPoint<TypeParam>(1, 2, 3)};
+    Point<TypeParam, 3> destination1{make3DTestPoint<TypeParam>(2, 4, 6)};
+
+    Vector<TypeParam, 3> vector1{origin1, destination1};
+
+    // Second vector:
+    Point<TypeParam, 3> origin2     {make3DTestPoint<TypeParam>(2, 4, 6)};
+    Point<TypeParam, 3> destination2{make3DTestPoint<TypeParam>(1, 2, 3)};
+
+    Vector<TypeParam, 3> vector2{origin2, destination2};
+
+    ASSERT_EQ(vector1 += vector2, this->m_vector3D);
+}
+
+
+TYPED_TEST(VectorTest, SubtractionAssignement_SomeVector1D_ReturnsDifference)
+{
+    using namespace cxutil::math;
+
+    // First vector:
+    Point<TypeParam, 1> origin     {make1DTestPoint<TypeParam>(1)};
+    Point<TypeParam, 1> destination{make1DTestPoint<TypeParam>(2)};
+
+    Vector<TypeParam, 1> vector1{origin, destination};
+
+    // Second vector:
+    Vector<TypeParam, 1> vector2{origin, destination};
+
+    ASSERT_EQ(vector1 -= vector2, this->m_vector1D);
+}
+
+
+TYPED_TEST(VectorTest, SubtractionAssignement_SomeVector2D_ReturnsDifference)
+{
+    using namespace cxutil::math;
+
+    // First vector:
+    Point<TypeParam, 2> origin     {make2DTestPoint<TypeParam>(1, 2)};
+    Point<TypeParam, 2> destination{make2DTestPoint<TypeParam>(2, 4)};
+
+    Vector<TypeParam, 2> vector1{origin, destination};
+
+    // Second vector:
+    Vector<TypeParam, 2> vector2{origin, destination};
+
+    ASSERT_EQ(vector1 -= vector2, this->m_vector2D);
+}
+
+
+TYPED_TEST(VectorTest, SubtractionAssignement_SomeVector3D_ReturnsDifference)
+{
+    using namespace cxutil::math;
+
+    // First vector:
+    Point<TypeParam, 3> origin     {make3DTestPoint<TypeParam>(1, 2, 3)};
+    Point<TypeParam, 3> destination{make3DTestPoint<TypeParam>(2, 4, 6)};
+
+    Vector<TypeParam, 3> vector1{origin, destination};
+
+    // Second vector:
+    Vector<TypeParam, 3> vector2{origin, destination};
+
+    ASSERT_EQ(vector1 -= vector2, this->m_vector3D);
+}
+
+
+TYPED_TEST(VectorTest, ProductAssignement_SomeVector1D_ReturnsProduct)
+{
+    using namespace cxutil::math;
+
+    // First vector:
+    Point<TypeParam, 1> origin1     {make1DTestPoint<TypeParam>(1)};
+    Point<TypeParam, 1> destination1{make1DTestPoint<TypeParam>(2)};
+
+    Vector<TypeParam, 1> vector{origin1, destination1};
+
+    // Second vector:
+    Point<TypeParam, 1> origin2     {make1DTestPoint<TypeParam>(1)};
+    Point<TypeParam, 1> destination2{make1DTestPoint<TypeParam>(3)};
+
+    Vector<TypeParam, 1> expectedResult{origin2, destination2};
+
+    // Scalar:
+    const TypeParam k{cxutil::narrow_cast<TypeParam>(2)};
+
+    ASSERT_EQ(vector *= k, expectedResult);
+}
+
+
+TYPED_TEST(VectorTest, ProductAssignement_SomeVector2D_ReturnsProduct)
+{
+    using namespace cxutil::math;
+
+    // First vector:
+    Point<TypeParam, 2> origin1     {make2DTestPoint<TypeParam>(1, 2)};
+    Point<TypeParam, 2> destination1{make2DTestPoint<TypeParam>(2, 4)};
+
+    Vector<TypeParam, 2> vector{origin1, destination1};
+
+    // Second vector:
+    Point<TypeParam, 2> origin2     {make2DTestPoint<TypeParam>(1, 2)};
+    Point<TypeParam, 2> destination2{make2DTestPoint<TypeParam>(3, 6)};
+
+    Vector<TypeParam, 2> expectedResult{origin2, destination2};
+
+    // Scalar:
+    const TypeParam k{cxutil::narrow_cast<TypeParam>(2)};
+
+    ASSERT_EQ(vector *= k, expectedResult);
+}
+
+
+TYPED_TEST(VectorTest, ProductAssignement_SomeVector3D_ReturnsProduct)
+{
+    using namespace cxutil::math;
+
+    // First vector:
+    Point<TypeParam, 3> origin1     {make3DTestPoint<TypeParam>(1, 2, 3)};
+    Point<TypeParam, 3> destination1{make3DTestPoint<TypeParam>(2, 4, 6)};
+
+    Vector<TypeParam, 3> vector{origin1, destination1};
+
+    // Second vector:
+    Point<TypeParam, 3> origin2     {make3DTestPoint<TypeParam>(1, 2, 3)};
+    Point<TypeParam, 3> destination2{make3DTestPoint<TypeParam>(3, 6, 9)};
+
+    Vector<TypeParam, 3> expectedResult{origin2, destination2};
+
+    // Scalar:
+    const TypeParam k{cxutil::narrow_cast<TypeParam>(2)};
+
+    ASSERT_EQ(vector *= k, expectedResult);
+}
+
+
+
 /***************************************************************************************************
- * A note to the developpers...
+ * A note to the developers...
  *
  * The following tests verify that the cxutil::math::Vector class satisfies the  8 conditions of a
  * vector space over T. Let u, v and w be arbritary cxutil::math::Vector objects and a and b
