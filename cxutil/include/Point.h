@@ -59,6 +59,15 @@ class Point final
 
 public:
 
+///{ @name Convenience values
+
+    static const std::size_t X_COORDINATE{0};  ///< Access the @c x coordinate.
+    static const std::size_t Y_COORDINATE{1};  ///< Access the @c y coordinate.
+    static const std::size_t Z_COORDINATE{2};  ///< Access the @c z coordinate.
+
+///@}
+
+
 ///@{ @name Object construction and destruction
 
     /*******************************************************************************************//**
@@ -217,7 +226,7 @@ public:
      * @pre @c p_index is at most the point dimension @c N .
      *
      **********************************************************************************************/
-    const T& operator[](int p_index) const;
+    const T& operator[](std::size_t p_index) const;
 
 ///@}
 
@@ -242,7 +251,7 @@ public:
      * @pre @c p_index is at most the point dimension @c N .
      *
      **********************************************************************************************/
-    T& operator[](int p_index);
+    T& operator[](std::size_t p_index);
 
 ///@}
 

@@ -83,7 +83,7 @@ inline T cxutil::math::Point<T, N>::x() const
 {
     static_assert(N >= 1 && N < 4, "Invalid number of coordinates.");
 
-    return m_coordinates[0];
+    return m_coordinates[X_COORDINATE];
 }
 
 
@@ -92,7 +92,7 @@ inline T cxutil::math::Point<T, N>::y() const
 {
     static_assert(N >= 2 && N < 4, "Invalid number of coordinates.");
 
-    return m_coordinates[1];
+    return m_coordinates[Y_COORDINATE];
 }
 
 
@@ -101,7 +101,7 @@ inline T cxutil::math::Point<T, N>::z() const
 {
     static_assert(N == 3, "Invalid number of coordinates.");
 
-    return m_coordinates[2];
+    return m_coordinates[Z_COORDINATE];
 }
 
 
@@ -110,7 +110,7 @@ inline T& cxutil::math::Point<T, N>::x()
 {
     static_assert(N >= 1 && N < 4, "Invalid number of coordinates.");
 
-    return m_coordinates[0];
+    return m_coordinates[X_COORDINATE];
 }
 
 
@@ -119,7 +119,7 @@ inline T& cxutil::math::Point<T, N>::y()
 {
     static_assert(N >= 2 && N < 4, "Invalid number of coordinates.");
 
-    return m_coordinates[1];
+    return m_coordinates[Y_COORDINATE];
 }
 
 
@@ -128,25 +128,23 @@ inline T& cxutil::math::Point<T, N>::z()
 {
     static_assert(N == 3, "Invalid number of coordinates.");
 
-    return m_coordinates[2];
+    return m_coordinates[Z_COORDINATE];
 }
 
 
 template<typename T, std::size_t N>
-inline const T& cxutil::math::Point<T, N>::operator[](int p_index) const
+inline const T& cxutil::math::Point<T, N>::operator[](std::size_t p_index) const
 {
-    PRECONDITION(p_index >= 0                              );
-    PRECONDITION(p_index <= cxutil::narrow_cast<int>(N - 1));
+    PRECONDITION(p_index <= N - 1);
 
     return m_coordinates[p_index];
 }
 
 
 template<typename T, std::size_t N>
-inline T& cxutil::math::Point<T, N>::operator[](int p_index)
+inline T& cxutil::math::Point<T, N>::operator[](std::size_t p_index)
 {
-    PRECONDITION(p_index >= 0                              );
-    PRECONDITION(p_index <= cxutil::narrow_cast<int>(N - 1));
+    PRECONDITION(p_index <= N - 1);
 
     return const_cast<T&>(const_cast<const math::Point<T, N>&>(*this)[p_index]);
 }
