@@ -29,6 +29,10 @@
  *
  **************************************************************************************************/
 
+#include <iostream>
+#include <random>
+#include <type_traits>
+
 #include <gtest/gtest.h>
 
 #include <cxutil/include/narrow_cast.h>
@@ -55,6 +59,9 @@ public:
 typedef ::testing::Types<char, short, int, double, long long, long double> VectorRelatedTypes;
 TYPED_TEST_CASE(VectorTest, VectorRelatedTypes);
 
+
+namespace
+{
 
 /***************************************************************************************************
  * @brief Generates a 1D point.
@@ -111,6 +118,8 @@ cxutil::math::Point<T, 3> make3DTestPoint(const T& p_x, const T& p_y, const T& p
 
     return math::Point<T, 3>{narrow_cast<T>(p_x), narrow_cast<T>(p_y), narrow_cast<T>(p_z)};
 }
+
+} // unamed namespace
 
 
 TYPED_TEST(VectorTest, DefaultConstructor_1D_FromOriginLengthIs0)
@@ -1291,3 +1300,359 @@ TYPED_TEST(VectorTest, ProductAssignement_SomeVector3D_ReturnsProduct)
  *
  **************************************************************************************************/
 
+namespace
+{
+
+/***************************************************************************************************
+ *
+ * @param p_min
+ * @param p_max
+ *
+ * @return
+ *
+ **************************************************************************************************/
+template <typename T,
+          typename Distribution = typename std::conditional<
+              std::is_integral<T>::value,
+              std::uniform_int_distribution<T>,
+              std::uniform_real_distribution<T>>::type>
+Distribution getValidUniformDistribution(const T p_min, const T p_max)
+{
+    return Distribution(p_min, p_max);
+}
+
+
+/***************************************************************************************************
+ *
+ * @return
+ *
+ **************************************************************************************************/
+template<typename T, std::size_t N>
+cxutil::math::Vector<T, N> makeRandomTestVector()
+{
+    using namespace cxutil::math;
+
+    // Limits
+    const T min{cxutil::narrow_cast<T>(-5)};
+    const T max{cxutil::narrow_cast<T>(5)};
+
+    // Get the right distribution, depending on type:
+    static std::default_random_engine generator;
+    auto distribution{getValidUniformDistribution<T>(min, max)};
+
+    // Generate a random origin point:
+    Point<T, N> origin;
+
+    for(std::size_t i = 0; i < N; ++i)
+    {
+        origin[i] = distribution(generator);
+    }
+
+    // Generate a random destination point:
+    Point<T, N> destination;
+
+    for(std::size_t i = 0; i < N; ++i)
+    {
+        destination[i] = distribution(generator);
+    }
+
+    // Making the random vector:
+    return Vector<T, N>{origin, destination};
+}
+
+} // unamed namespace
+
+
+TYPED_TEST(VectorTest, Vector1DAdditionAssociativity)
+{
+    using namespace cxutil::math;
+
+    const Vector<TypeParam, 1> u{makeRandomTestVector<TypeParam, 1>()};
+    const Vector<TypeParam, 1> v{makeRandomTestVector<TypeParam, 1>()};
+    const Vector<TypeParam, 1> w{makeRandomTestVector<TypeParam, 1>()};
+
+    ASSERT_TRUE(u + (v + w) == (u + v) + w);
+}
+
+
+TYPED_TEST(VectorTest, Vector2DAdditionAssociativity)
+{
+    using namespace cxutil::math;
+
+    const Vector<TypeParam, 2> u{makeRandomTestVector<TypeParam, 2>()};
+    const Vector<TypeParam, 2> v{makeRandomTestVector<TypeParam, 2>()};
+    const Vector<TypeParam, 2> w{makeRandomTestVector<TypeParam, 2>()};
+
+    ASSERT_TRUE(u + (v + w) == (u + v) + w);
+}
+
+
+TYPED_TEST(VectorTest, Vector3DAdditionAssociativity)
+{
+    using namespace cxutil::math;
+
+    const Vector<TypeParam, 3> u{makeRandomTestVector<TypeParam, 3>()};
+    const Vector<TypeParam, 3> v{makeRandomTestVector<TypeParam, 3>()};
+    const Vector<TypeParam, 3> w{makeRandomTestVector<TypeParam, 3>()};
+
+    ASSERT_TRUE(u + (v + w) == (u + v) + w);
+}
+
+
+TYPED_TEST(VectorTest, Vector1DAdditionCommutativity)
+{
+    using namespace cxutil::math;
+
+    const Vector<TypeParam, 1> u{makeRandomTestVector<TypeParam, 1>()};
+    const Vector<TypeParam, 1> v{makeRandomTestVector<TypeParam, 1>()};
+
+    ASSERT_TRUE(u + v == v + u);
+}
+
+
+TYPED_TEST(VectorTest, Vector2DAdditionCommutativity)
+{
+    using namespace cxutil::math;
+
+    const Vector<TypeParam, 2> u{makeRandomTestVector<TypeParam, 2>()};
+    const Vector<TypeParam, 2> v{makeRandomTestVector<TypeParam, 2>()};
+
+    ASSERT_TRUE(u + v == v + u);
+}
+
+
+TYPED_TEST(VectorTest, Vector3DAdditionCommutativity)
+{
+    using namespace cxutil::math;
+
+    const Vector<TypeParam, 3> u{makeRandomTestVector<TypeParam, 3>()};
+    const Vector<TypeParam, 3> v{makeRandomTestVector<TypeParam, 3>()};
+
+    ASSERT_TRUE(u + v == v + u);
+}
+
+
+TYPED_TEST(VectorTest, Vector1DAdditionIdentityElement)
+{
+    using namespace cxutil::math;
+
+    const Vector<TypeParam, 1> u{makeRandomTestVector<TypeParam, 1>()};
+
+    ASSERT_TRUE((u + additionIdentity<TypeParam, 1>()) == u);
+}
+
+
+TYPED_TEST(VectorTest, Vector2DAdditionIdentityElement)
+{
+    using namespace cxutil::math;
+
+    const Vector<TypeParam, 2> u{makeRandomTestVector<TypeParam, 2>()};
+
+    ASSERT_TRUE((u + additionIdentity<TypeParam, 2>()) == u);
+}
+
+
+TYPED_TEST(VectorTest, Vector3DAdditionIdentityElement)
+{
+    using namespace cxutil::math;
+
+    const Vector<TypeParam, 3> u{makeRandomTestVector<TypeParam, 3>()};
+
+    ASSERT_TRUE((u + additionIdentity<TypeParam, 3>()) == u);
+}
+
+
+TYPED_TEST(VectorTest, Vector1DAdditionInverseElement)
+{
+    using namespace cxutil::math;
+
+    const Vector<TypeParam, 1> u{makeRandomTestVector<TypeParam, 1>()};
+
+    ASSERT_TRUE((u + (-u) == additionIdentity<TypeParam, 1>()));
+}
+
+
+TYPED_TEST(VectorTest, Vector2DAdditionInverseElement)
+{
+    using namespace cxutil::math;
+
+    const Vector<TypeParam, 2> u{makeRandomTestVector<TypeParam, 2>()};
+
+    ASSERT_TRUE((u + (-u) == additionIdentity<TypeParam, 2>()));
+}
+
+
+TYPED_TEST(VectorTest, Vector3DAdditionInverseElement)
+{
+    using namespace cxutil::math;
+
+    const Vector<TypeParam, 3> u{makeRandomTestVector<TypeParam, 3>()};
+
+    ASSERT_TRUE((u + (-u) == additionIdentity<TypeParam, 3>()));
+}
+
+
+TYPED_TEST(VectorTest, Vector1DScalarAndFieldMultiplicationsCompatibility)
+{
+    using namespace cxutil::math;
+
+    const TypeParam a{cxutil::narrow_cast<TypeParam>(3)};
+    const TypeParam b{cxutil::narrow_cast<TypeParam>(-4)};
+
+    const Vector<TypeParam, 1> u{makeRandomTestVector<TypeParam, 1>()};
+
+    ASSERT_TRUE(a * (b * u) == cxutil::narrow_cast<TypeParam>(a * b) * u);
+
+    // Note: In this last line, narrow_cast needs to be used because for smaller
+    // types, like char and short, the operator is not defined (the smallest type
+    // it accepts is int) and hence they get automatically -- and implicitely --
+    // promoted. THe cast is to avoid warnings afterwards, when the vector u is
+    // applied, because (again for smaller types) is nothing is done, a type
+    // mismatch will occur.
+    //
+    // Similar ugly tricks had to be performed in the implementation of Vector,
+    // see Vector.ipp for more examples...
+}
+
+
+TYPED_TEST(VectorTest, Vector2DScalarAndFieldMultiplicationsCompatibility)
+{
+    using namespace cxutil::math;
+
+    const TypeParam a{cxutil::narrow_cast<TypeParam>(3)};
+    const TypeParam b{cxutil::narrow_cast<TypeParam>(-4)};
+
+    const Vector<TypeParam, 2> u{makeRandomTestVector<TypeParam, 2>()};
+
+    ASSERT_TRUE(a * (b * u) == cxutil::narrow_cast<TypeParam>(a * b) * u);
+}
+
+
+TYPED_TEST(VectorTest, Vector3DScalarAndFieldMultiplicationsCompatibility)
+{
+    using namespace cxutil::math;
+
+    const TypeParam a{cxutil::narrow_cast<TypeParam>(3)};
+    const TypeParam b{cxutil::narrow_cast<TypeParam>(-4)};
+
+    const Vector<TypeParam, 3> u{makeRandomTestVector<TypeParam, 3>()};
+
+    ASSERT_TRUE(a * (b * u) == cxutil::narrow_cast<TypeParam>(a * b) * u);
+}
+
+
+TYPED_TEST(VectorTest, Vector1DScalarMultiplicationIdentityElement)
+{
+    using namespace cxutil::math;
+
+    const TypeParam multIdentity{cxutil::narrow_cast<TypeParam>(1)};
+
+    const Vector<TypeParam, 1> u{makeRandomTestVector<TypeParam, 1>()};
+
+    ASSERT_TRUE(multIdentity * u == u);
+}
+
+
+TYPED_TEST(VectorTest, Vector2DScalarMultiplicationIdentityElement)
+{
+    using namespace cxutil::math;
+
+    const TypeParam multIdentity{cxutil::narrow_cast<TypeParam>(1)};
+
+    const Vector<TypeParam, 2> u{makeRandomTestVector<TypeParam, 2>()};
+
+    ASSERT_TRUE(multIdentity * u == u);
+}
+
+
+TYPED_TEST(VectorTest, Vector3DScalarMultiplicationIdentityElement)
+{
+    using namespace cxutil::math;
+
+    const TypeParam multIdentity{cxutil::narrow_cast<TypeParam>(1)};
+
+    const Vector<TypeParam, 3> u{makeRandomTestVector<TypeParam, 3>()};
+
+    ASSERT_TRUE(multIdentity * u == u);
+}
+
+
+TYPED_TEST(VectorTest, Vector1DScalarMultiplicationDistributivityWithRespectToVectorAddition)
+{
+    using namespace cxutil::math;
+
+    const TypeParam a{cxutil::narrow_cast<TypeParam>(2)};
+
+    const Vector<TypeParam, 1> u{makeRandomTestVector<TypeParam, 1>()};
+    const Vector<TypeParam, 1> v{makeRandomTestVector<TypeParam, 1>()};
+
+    ASSERT_TRUE(a * (u + v) == a * v + a * u);
+}
+
+
+TYPED_TEST(VectorTest, Vector2DScalarMultiplicationDistributivityWithRespectToVectorAddition)
+{
+    using namespace cxutil::math;
+
+    const TypeParam a{cxutil::narrow_cast<TypeParam>(2)};
+
+    const Vector<TypeParam, 2> u{makeRandomTestVector<TypeParam, 2>()};
+    const Vector<TypeParam, 2> v{makeRandomTestVector<TypeParam, 2>()};
+
+    ASSERT_TRUE(a * (u + v) == a * v + a * u);
+}
+
+
+TYPED_TEST(VectorTest, Vector3DScalarMultiplicationDistributivityWithRespectToVectorAddition)
+{
+    using namespace cxutil::math;
+
+    const TypeParam a{cxutil::narrow_cast<TypeParam>(2)};
+
+    const Vector<TypeParam, 3> u{makeRandomTestVector<TypeParam, 3>()};
+    const Vector<TypeParam, 3> v{makeRandomTestVector<TypeParam, 3>()};
+
+    ASSERT_TRUE(a * (u + v) == a * v + a * u);
+}
+
+
+TYPED_TEST(VectorTest, Vector1DScalarMultiplicationDistributivityWithRespectToFieldAddition)
+{
+    using namespace cxutil::math;
+
+    const TypeParam a{cxutil::narrow_cast<TypeParam>(-1)};
+    const TypeParam b{cxutil::narrow_cast<TypeParam>(2)};
+
+    const Vector<TypeParam, 1> u{makeRandomTestVector<TypeParam, 1>()};
+    const Vector<TypeParam, 1> v{makeRandomTestVector<TypeParam, 1>()};
+
+    ASSERT_TRUE(cxutil::narrow_cast<TypeParam>(a + b) * u == a * u + b * u);
+}
+
+
+TYPED_TEST(VectorTest, Vector2DScalarMultiplicationDistributivityWithRespectToFieldAddition)
+{
+    using namespace cxutil::math;
+
+    const TypeParam a{cxutil::narrow_cast<TypeParam>(-1)};
+    const TypeParam b{cxutil::narrow_cast<TypeParam>(2)};
+
+    const Vector<TypeParam, 2> u{makeRandomTestVector<TypeParam, 2>()};
+    const Vector<TypeParam, 2> v{makeRandomTestVector<TypeParam, 2>()};
+
+    ASSERT_TRUE(cxutil::narrow_cast<TypeParam>(a + b) * u == a * u + b * u);
+}
+
+
+TYPED_TEST(VectorTest, Vector3DScalarMultiplicationDistributivityWithRespectToFieldAddition)
+{
+    using namespace cxutil::math;
+
+    const TypeParam a{cxutil::narrow_cast<TypeParam>(-1)};
+    const TypeParam b{cxutil::narrow_cast<TypeParam>(2)};
+
+    const Vector<TypeParam, 3> u{makeRandomTestVector<TypeParam, 3>()};
+    const Vector<TypeParam, 3> v{makeRandomTestVector<TypeParam, 3>()};
+
+    ASSERT_TRUE(cxutil::narrow_cast<TypeParam>(a + b) * u == a * u + b * u);
+}
