@@ -1304,11 +1304,17 @@ namespace
 {
 
 /***************************************************************************************************
+ * @brief Chooses a distribution at compile time.
  *
- * @param p_min
- * @param p_max
+ * Chosses a uniform random number distrubytion at compile time and returns it.
  *
- * @return
+ * @tparam T            The number type to be generated.
+ * @tparam Distribution The uniform random number distribution.
+ *
+ * @param p_min The minimum value for number generation.
+ * @param p_max The maximum value for number generation.
+ *
+ * @return A distribution respecting @c T and operating over the needed range.
  *
  **************************************************************************************************/
 template <typename T,
@@ -1323,8 +1329,16 @@ Distribution getValidUniformDistribution(const T p_min, const T p_max)
 
 
 /***************************************************************************************************
+ * @brief Generates a random vector.
  *
- * @return
+ * A random vector, in this context, is a vector whose origin and destination point are
+ * composed of random coordinates. Note that these coordinates are between -5 and +5 to
+ * make sure smaller types are compatible.
+ *
+ * @tparam T The coordinate type.
+ * @tparam N The vector dimension.
+ *
+ * @return THe random vector.
  *
  **************************************************************************************************/
 template<typename T, std::size_t N>
@@ -1345,7 +1359,10 @@ cxutil::math::Vector<T, N> makeRandomTestVector()
 
     for(std::size_t i = 0; i < N; ++i)
     {
-        origin[i] = distribution(generator);
+        // This ugly line fixes the floating point rounding errors in the tests
+        // by rounding them to the nearest integer value. This is enough for this
+        // Vector class.
+        origin[i] = cxutil::narrow_cast<T>(std::round(distribution(generator)));
     }
 
     // Generate a random destination point:
@@ -1353,7 +1370,7 @@ cxutil::math::Vector<T, N> makeRandomTestVector()
 
     for(std::size_t i = 0; i < N; ++i)
     {
-        destination[i] = distribution(generator);
+        destination[i] = cxutil::narrow_cast<T>(std::round(distribution(generator)));
     }
 
     // Making the random vector:
