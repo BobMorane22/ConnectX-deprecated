@@ -59,7 +59,7 @@ class Point final
 
 public:
 
-///{ @name Convenience values
+///@{ @name Convenience values
 
     static const std::size_t X_COORDINATE{0};  ///< Access the @c x coordinate.
     static const std::size_t Y_COORDINATE{1};  ///< Access the @c y coordinate.
@@ -272,7 +272,7 @@ using Point2D = Point<double, 2>; ///< Common case of a 2D point with @c double 
 using Point3D = Point<double, 3>; ///< Common case of a 3D point with @c double as the coordinate type
 
 
-///{ @name Comparison operators
+///@{ @name Comparison operators
 
 /***********************************************************************************************//**
  * @brief Equality comparison operator for 1D points.

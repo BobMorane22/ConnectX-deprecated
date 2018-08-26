@@ -67,7 +67,7 @@ class Vector final
 
 public:
 
-///{ @name Convenience values
+///@{ @name Convenience values
 
     static const std::size_t X_COMPONENT{0}; ///< Access @c x component.
     static const std::size_t Y_COMPONENT{1}; ///< Access @c y component.
@@ -75,7 +75,7 @@ public:
 
 ///@}
 
-///{ @name Object construction and destruction
+///@{ @name Object construction and destruction
 
     /*******************************************************************************************//**
      * @brief Default constructor.
@@ -107,7 +107,7 @@ public:
 
 ///@}
 
-///{ @name Data access
+///@{ @name Data access
 
     /*******************************************************************************************//**
      * @brief Gets the point of origin of the vector.
@@ -193,7 +193,7 @@ public:
 
 ///@}
 
-///{ @name Arithmetic operators
+///@{ @name Arithmetic operators
 
     /*******************************************************************************************//**
      * @brief Unary minus operator.
@@ -262,39 +262,188 @@ using Vector2D = Vector<double, 2>; ///< Common case of a 2D vector with @c doub
 using Vector3D = Vector<double, 3>; ///< Common case of a 3D vector with @c double as the coordinate type.
 
 
-/*************************************** 2D-Specific Operations ***************************************/
-template<typename T>
-void crossProduct(const Vector<T, 2>& p_v1, const Vector<T, 2>& p_v2, T& p_result);
+///@{ @name Comparison operators
 
-/*************************************** 3D-Specific Operations ***************************************/
-template<typename T>
-void crossProduct(const Vector<T, 3>& p_v1, const Vector<T, 3>& p_v2, Vector<T, 3>& p_result);
-
-/*************************************** nD-Specific Operations ***************************************/
-
-template<typename T, std::size_t N>
-const Vector<T, N>& additionIdentity();
-
+/***********************************************************************************************//**
+ * @brief Equality comparison operator.
+ *
+ * Two vectors are considered equal <em>if and only if</em> all of their respective components
+ * are equal. Note that two equal vectors can have different origin and destination points but
+ * still be considered equal, because only magnitude and direction is considered. One of the
+ * drawback of this definition is that for floating point types, this operator might not work
+ * as expected because of rounding off errors.
+ *
+ * @tparam T   The components type.
+ * @tparam N   The vectors dimension.
+ *
+ * @param p_v1 The first vector to compare with.
+ * @param p_v2 The second vector to compare with.
+ *
+ * @return @c true if the two vectore are equal, @c false otherwise.
+ *
+ **************************************************************************************************/
 template<typename T, std::size_t N>
 bool operator==(const Vector<T, N>& p_v1, const Vector<T, N>& p_v2);
 
+
+/***********************************************************************************************//**
+ * @brief Non equality comparison operator.
+ *
+ * Two vectors are considered NOT equal <em>if and only if</em> at least one of their component
+ * is different. Note that two equal can have different origin and destination points but still be
+ * considered equal, because only magnitude and direction is considered. One of the drawback of
+ * this definition is that for floating point types, this operator might not work as expected
+ * because of rounding off errors.
+ *
+ * @tparam T    The components type.
+ * @tparam N    The vectors dimension.
+ *
+ * @param  p_v1 The first vector to compare with.
+ * @param  p_v2 The second vector to compare with.
+ *
+ * @return @c true if the two vectore are NOT equal, @c false otherwise.
+ *
+ **************************************************************************************************/
 template<typename T, std::size_t N>
 bool operator!=(const Vector<T, N>& p_v1, const Vector<T, N>& p_v2);
 
+///@}
+
+///@{ @name Arithmetic operators
+
+/***********************************************************************************************//**
+ * @brief Vector addition operator.
+ *
+ * Performs vector addition on two vectors.
+ *
+ * @tparam T    The components type.
+ * @tparam N    The vectors dimension.
+ *
+ * @param  p_v1 The first vector operand.
+ * @param  p_v2 The second vector operand.
+ *
+ * @return The sum vector.
+ *
+ **************************************************************************************************/
 template<typename T, std::size_t N>
 Vector<T, N> operator+(const Vector<T, N>& p_v1, const Vector<T, N>& p_v2);
 
+
+/***********************************************************************************************//**
+ * @brief Vector subtraction operator.
+ *
+ * Performs vector difference on two vectors.
+ *
+ * @tparam T    The components type.
+ * @tparam N    The vectors dimension.
+ *
+ * @param  p_v1 The first vector operand.
+ * @param  p_v2 The second vector operand.
+ *
+ * @return The difference vector.
+ *
+ **************************************************************************************************/
 template<typename T, std::size_t N>
 Vector<T, N> operator-(const Vector<T, N>& p_v1, const Vector<T, N>& p_v2);
 
+
+/***********************************************************************************************//**
+ * @brief Scalar multiplication operator.
+ *
+ * Scales a vector by a scalar value.
+ *
+ * @tparam T        The components type.
+ * @tparam N        The vectors dimension.
+ *
+ * @param  p_scalar The scalar by which to scale the vector.
+ * @param  p_vector The vector to scale.
+ *
+ * @return The scaled vector.
+ *
+ **************************************************************************************************/
 template<typename T, std::size_t N>
 Vector<T, N> operator*(const T& p_scalar, const Vector<T, N>& p_vector);
 
+
+/***********************************************************************************************//**
+ *
+ * @copydoc cxutil::math::operator*(T, cxutil::math::Vector<T, N>)
+ *
+ **************************************************************************************************/
 template<typename T, std::size_t N>
 Vector<T, N> operator*(const Vector<T, N>& p_vector, const T& p_scalar);
 
+///@}
+
+///@{ @name Two dimensional operations
+
+/***********************************************************************************************//**
+ * @brief Classic 2D cross product.
+ *
+ * @tparam     T        The components type.
+ *
+ * @param[in]  p_v1     The first vector.
+ * @param[in]  p_v2     The second vector.
+ * @param[out] p_result The result of the 2D cross product of @c p_v1 and @c p_v2 .
+ *
+ * @note This operation is only available (under this form) in two dimensions.
+ *
+ **************************************************************************************************/
+template<typename T>
+void crossProduct(const Vector<T, 2>& p_v1, const Vector<T, 2>& p_v2, T& p_result);
+
+///@}
+
+///@{ @name Three dimensional operations
+
+/***********************************************************************************************//**
+ * @brief Classic 3D cross product.
+ *
+ * @tparam     T        The components type.
+ *
+ * @param[in]  p_v1     The first vector.
+ * @param[in]  p_v2     The second vector.
+ * @param[out] p_result The result of the 3D cross product of @c p_v1 and @c p_v2 .
+ *
+ * @note This operation is only available (under this form) in three dimensions.
+ *
+ **************************************************************************************************/
+template<typename T>
+void crossProduct(const Vector<T, 3>& p_v1, const Vector<T, 3>& p_v2, Vector<T, 3>& p_result);
+
+///@}
+
+///@{ @name N dimensional operations
+
+/***********************************************************************************************//**
+ * @brief Gets the addition identity vector for specific types and dimensions.
+ *
+ * @tparam T  The components type.
+ * @tparam N  The vectors dimension.
+ *
+ * @return The addition identity vector.
+ *
+ **************************************************************************************************/
+template<typename T, std::size_t N>
+const Vector<T, N>& additionIdentity();
+
+
+/***********************************************************************************************//**
+ * @brief Classic dot product.
+ *
+ * @tparam T    The components type.
+ * @tparam N    The vectors dimension.
+ *
+ * @param  p_v1 The first vector.
+ * @param  p_v2 The second vector.
+ *
+ * @return The result of the dot product of @c p_v1 with @c p_v2 .
+ *
+ **************************************************************************************************/
 template<typename T, std::size_t N>
 T dotProduct(const Vector<T, N>& p_v1, const Vector<T, N>& p_v2);
+
+///@}
 
 }// namespace math
 

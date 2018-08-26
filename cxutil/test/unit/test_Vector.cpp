@@ -1268,6 +1268,50 @@ TYPED_TEST(VectorTest, ProductAssignement_SomeVector3D_ReturnsProduct)
 }
 
 
+/*TYPED_TEST(VectorTest, EqualityOperator_TwoEqual1DVectors_ReturnsTrue)
+TYPED_TEST(VectorTest, EqualityOperator_TwoEqual2DVectors_ReturnsTrue)
+TYPED_TEST(VectorTest, EqualityOperator_TwoEqual3DVectors_ReturnsTrue)
+
+TYPED_TEST(VectorTest, EqualityOperator_TwoDifferent1DVectors_ReturnsFalse)
+TYPED_TEST(VectorTest, EqualityOperator_TwoDifferent2DVectors_ReturnsFalse)
+TYPED_TEST(VectorTest, EqualityOperator_TwoDifferent3DVectors_ReturnsFalse)
+
+TYPED_TEST(VectorTest, NonEqualityOperator_TwoDifferent1DVectors_ReturnsTrue)
+TYPED_TEST(VectorTest, NonEqualityOperator_TwoDifferent2DVectors_ReturnsTrue)
+TYPED_TEST(VectorTest, NonEqualityOperator_TwoDifferent3DVectors_ReturnsTrue)
+
+TYPED_TEST(VectorTest, NonEqualityOperator_TwoEqual1DVectors_ReturnsFalse)
+TYPED_TEST(VectorTest, NonEqualityOperator_TwoEqual2DVectors_ReturnsFalse)
+TYPED_TEST(VectorTest, NonEqualityOperator_TwoEqual3DVectors_ReturnsFalse)
+
+TYPED_TEST(VectorTest, VectorAddition_Two1DVectorsAdded_ReturnsSumVector)
+TYPED_TEST(VectorTest, VectorAddition_Two2DVectorsAdded_ReturnsSumVector)
+TYPED_TEST(VectorTest, VectorAddition_Two3DVectorsAdded_ReturnsSumVector)
+
+TYPED_TEST(VectorTest, VectorSubtraction_Two1DVectorsSubtracted_ReturnsDifferenceVector)
+TYPED_TEST(VectorTest, VectorSubtraction_Two2DVectorsSubtracted_ReturnsDifferenceVector)
+TYPED_TEST(VectorTest, VectorSubtraction_Two3DVectorsSubtracted_ReturnsDifferenceVector)
+
+TYPED_TEST(VectorTest, LeftScalarMultiplication_ScalarTimes1DVector_ReturnsScaledVector)
+TYPED_TEST(VectorTest, LeftScalarMultiplication_ScalarTimes2DVector_ReturnsScaledVector)
+TYPED_TEST(VectorTest, LeftScalarMultiplication_ScalarTimes3DVector_ReturnsScaledVector)
+
+TYPED_TEST(VectorTest, RightScalarMultiplication_ScalarTimes1DVector_ReturnsScaledVector)
+TYPED_TEST(VectorTest, RightScalarMultiplication_ScalarTimes2DVector_ReturnsScaledVector)
+TYPED_TEST(VectorTest, RightScalarMultiplication_ScalarTimes3DVector_ReturnsScaledVector)
+
+TYPED_TEST(VectorTest, CrossProduct2D_Two2DVectors_ReturnsCrossProductValue)
+
+TYPED_TEST(VectorTest, CrossProduct2D_Two3DVectors_ReturnsCrossProduct3DVector)
+
+TYPED_TEST(VectorTest, AdditionIdentity_InstantiateNew1DVector_VectorIsAdditionIdentity)
+TYPED_TEST(VectorTest, AdditionIdentity_InstantiateNew2DVector_VectorIsAdditionIdentity)
+TYPED_TEST(VectorTest, AdditionIdentity_InstantiateNew3DVector_VectorIsAdditionIdentity)
+
+TYPED_TEST(VectorTest, DotProduct_Two1DVectors_ReturnsDotProductValue)
+TYPED_TEST(VectorTest, DotProduct_Two2DVectors_ReturnsDotProductValue)
+TYPED_TEST(VectorTest, DotProduct_Two3DVectors_ReturnsDotProductValue)*/
+
 
 /***************************************************************************************************
  * A note to the developers...
@@ -1338,7 +1382,7 @@ Distribution getValidUniformDistribution(const T p_min, const T p_max)
  * @tparam T The coordinate type.
  * @tparam N The vector dimension.
  *
- * @return THe random vector.
+ * @return Th(e random vector.
  *
  **************************************************************************************************/
 template<typename T, std::size_t N>
