@@ -141,7 +141,7 @@ T cxutil::math::dotProduct(const cxutil::math::Vector<T, N>& p_v1, const cxutil:
 
     for(std::size_t i{0}; i < N; ++i)
     {
-        product += (p_v1[i] * p_v2[i]);
+        product = cxutil::narrow_cast<T>(product + cxutil::narrow_cast<T>(p_v1[i] * p_v2[i]));
     }
 
     return product;

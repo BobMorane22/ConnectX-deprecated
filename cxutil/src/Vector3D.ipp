@@ -35,11 +35,13 @@ void cxutil::math::crossProduct(const math::Vector<T, 3>& p_v1,
                                 const math::Vector<T, 3>& p_v2,
                                 math::Vector<T, 3>& p_result)
 {
+    using namespace cxutil;
     using namespace cxutil::math;
 
     p_result = Vector<T, 3>{Point<T, 3>{},
-                            Point<T, 3> { p_v1.y() * p_v2.z() - p_v1.z() * p_v2.y(),
-                                          p_v1.z() * p_v2.x() - p_v1.x() * p_v2.z(),
-                                          p_v1.x() * p_v2.y() - p_v1.y() * p_v2.x() }
+                            Point<T, 3> {
+                                          narrow_cast<T>(narrow_cast<T>(p_v1.y() * p_v2.z()) - narrow_cast<T>(p_v1.z() * p_v2.y())),
+                                          narrow_cast<T>(narrow_cast<T>(p_v1.z() * p_v2.x()) - narrow_cast<T>(p_v1.x() * p_v2.z())),
+                                          narrow_cast<T>(narrow_cast<T>(p_v1.x() * p_v2.y()) - narrow_cast<T>(p_v1.y() * p_v2.x())) }
     };
 }

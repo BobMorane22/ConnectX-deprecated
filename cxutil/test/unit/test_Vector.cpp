@@ -47,10 +47,6 @@ public:
     VectorTest() = default;
     virtual ~VectorTest() = default;
 
-    const cxutil::math::Vector<T, 1> addIden1D{cxutil::math::additionIdentity<T, 1>()};
-    const cxutil::math::Vector<T, 2> addIden2D{cxutil::math::additionIdentity<T, 2>()};
-    const cxutil::math::Vector<T, 3> addIden3D{cxutil::math::additionIdentity<T, 3>()};
-
     cxutil::math::Vector<T, 1> m_vector1D;
     cxutil::math::Vector<T, 2> m_vector2D;
     cxutil::math::Vector<T, 3> m_vector3D;
@@ -1268,49 +1264,635 @@ TYPED_TEST(VectorTest, ProductAssignement_SomeVector3D_ReturnsProduct)
 }
 
 
-/*TYPED_TEST(VectorTest, EqualityOperator_TwoEqual1DVectors_ReturnsTrue)
+TYPED_TEST(VectorTest, EqualityOperator_TwoEqual1DVectors_ReturnsTrue)
+{
+    using namespace cxutil::math;
+
+    const Point<TypeParam, 1> origin1     {make1DTestPoint<TypeParam>(1)};
+    const Point<TypeParam, 1> destination1{make1DTestPoint<TypeParam>(2)};
+
+    const Vector<TypeParam, 1> left{origin1, destination1};
+
+    const Point<TypeParam, 1> origin2     {make1DTestPoint<TypeParam>(2)};
+    const Point<TypeParam, 1> destination2{make1DTestPoint<TypeParam>(3)};
+
+    const Vector<TypeParam, 1> right{origin2, destination2};
+
+    ASSERT_TRUE(left == right);
+}
+
+
 TYPED_TEST(VectorTest, EqualityOperator_TwoEqual2DVectors_ReturnsTrue)
+{
+    using namespace cxutil::math;
+
+    const Point<TypeParam, 2> origin1     {make2DTestPoint<TypeParam>(1, 2)};
+    const Point<TypeParam, 2> destination1{make2DTestPoint<TypeParam>(2, 3)};
+
+    const Vector<TypeParam, 2> left{origin1, destination1};
+
+    const Point<TypeParam, 2> origin2     {make2DTestPoint<TypeParam>(2, 3)};
+    const Point<TypeParam, 2> destination2{make2DTestPoint<TypeParam>(3, 4)};
+
+    const Vector<TypeParam, 2> right{origin2, destination2};
+
+    ASSERT_TRUE(left == right);
+}
+
+
 TYPED_TEST(VectorTest, EqualityOperator_TwoEqual3DVectors_ReturnsTrue)
+{
+    using namespace cxutil::math;
+
+    const Point<TypeParam, 3> origin1     {make3DTestPoint<TypeParam>(1, 2, 3)};
+    const Point<TypeParam, 3> destination1{make3DTestPoint<TypeParam>(2, 3, 4)};
+
+    const Vector<TypeParam, 3> left{origin1, destination1};
+
+    const Point<TypeParam, 3> origin2     {make3DTestPoint<TypeParam>(2, 3, 4)};
+    const Point<TypeParam, 3> destination2{make3DTestPoint<TypeParam>(3, 4, 5)};
+
+    const Vector<TypeParam, 3> right{origin2, destination2};
+
+    ASSERT_TRUE(left == right);
+}
+
 
 TYPED_TEST(VectorTest, EqualityOperator_TwoDifferent1DVectors_ReturnsFalse)
+{
+    using namespace cxutil::math;
+
+    const Point<TypeParam, 1> origin1     {make1DTestPoint<TypeParam>(1)};
+    const Point<TypeParam, 1> destination1{make1DTestPoint<TypeParam>(2)};
+
+    const Vector<TypeParam, 1> left{origin1, destination1};
+
+    const Point<TypeParam, 1> origin2     {make1DTestPoint<TypeParam>(-2)};
+    const Point<TypeParam, 1> destination2{make1DTestPoint<TypeParam>(3)};
+
+    const Vector<TypeParam, 1> right{origin2, destination2};
+
+    ASSERT_FALSE(left == right);
+}
+
+
 TYPED_TEST(VectorTest, EqualityOperator_TwoDifferent2DVectors_ReturnsFalse)
+{
+    using namespace cxutil::math;
+
+    const Point<TypeParam, 2> origin1     {make2DTestPoint<TypeParam>(1, 2)};
+    const Point<TypeParam, 2> destination1{make2DTestPoint<TypeParam>(2, 3)};
+
+    const Vector<TypeParam, 2> left{origin1, destination1};
+
+    const Point<TypeParam, 2> origin2     {make2DTestPoint<TypeParam>(-2, -3)};
+    const Point<TypeParam, 2> destination2{make2DTestPoint<TypeParam>(3, 4)};
+
+    const Vector<TypeParam, 2> right{origin2, destination2};
+
+    ASSERT_FALSE(left == right);
+}
+
+
 TYPED_TEST(VectorTest, EqualityOperator_TwoDifferent3DVectors_ReturnsFalse)
+{
+    using namespace cxutil::math;
+
+    const Point<TypeParam, 3> origin1     {make3DTestPoint<TypeParam>(1, 2, 3)};
+    const Point<TypeParam, 3> destination1{make3DTestPoint<TypeParam>(2, 3, 4)};
+
+    const Vector<TypeParam, 3> left{origin1, destination1};
+
+    const Point<TypeParam, 3> origin2     {make3DTestPoint<TypeParam>(-2, -3, -4)};
+    const Point<TypeParam, 3> destination2{make3DTestPoint<TypeParam>(3, 4, 5)};
+
+    const Vector<TypeParam, 3> right{origin2, destination2};
+
+    ASSERT_FALSE(left == right);
+}
+
 
 TYPED_TEST(VectorTest, NonEqualityOperator_TwoDifferent1DVectors_ReturnsTrue)
+{
+    using namespace cxutil::math;
+
+    const Point<TypeParam, 1> origin1     {make1DTestPoint<TypeParam>(1)};
+    const Point<TypeParam, 1> destination1{make1DTestPoint<TypeParam>(2)};
+
+    const Vector<TypeParam, 1> left{origin1, destination1};
+
+    const Point<TypeParam, 1> origin2     {make1DTestPoint<TypeParam>(-2)};
+    const Point<TypeParam, 1> destination2{make1DTestPoint<TypeParam>(3)};
+
+    const Vector<TypeParam, 1> right{origin2, destination2};
+
+    ASSERT_TRUE(left != right);
+}
+
+
 TYPED_TEST(VectorTest, NonEqualityOperator_TwoDifferent2DVectors_ReturnsTrue)
+{
+    using namespace cxutil::math;
+
+    const Point<TypeParam, 2> origin1     {make2DTestPoint<TypeParam>(1, 2)};
+    const Point<TypeParam, 2> destination1{make2DTestPoint<TypeParam>(2, 3)};
+
+    const Vector<TypeParam, 2> left{origin1, destination1};
+
+    const Point<TypeParam, 2> origin2     {make2DTestPoint<TypeParam>(-2, -3)};
+    const Point<TypeParam, 2> destination2{make2DTestPoint<TypeParam>(3, 4)};
+
+    const Vector<TypeParam, 2> right{origin2, destination2};
+
+    ASSERT_TRUE(left != right);
+}
+
+
 TYPED_TEST(VectorTest, NonEqualityOperator_TwoDifferent3DVectors_ReturnsTrue)
+{
+    using namespace cxutil::math;
+
+    const Point<TypeParam, 3> origin1     {make3DTestPoint<TypeParam>(1, 2, 3)};
+    const Point<TypeParam, 3> destination1{make3DTestPoint<TypeParam>(2, 3, 4)};
+
+    const Vector<TypeParam, 3> left{origin1, destination1};
+
+    const Point<TypeParam, 3> origin2     {make3DTestPoint<TypeParam>(-2, -3, -4)};
+    const Point<TypeParam, 3> destination2{make3DTestPoint<TypeParam>(3, 4, 5)};
+
+    const Vector<TypeParam, 3> right{origin2, destination2};
+
+    ASSERT_TRUE(left != right);
+}
+
 
 TYPED_TEST(VectorTest, NonEqualityOperator_TwoEqual1DVectors_ReturnsFalse)
+{
+    using namespace cxutil::math;
+
+    const Point<TypeParam, 1> origin1     {make1DTestPoint<TypeParam>(1)};
+    const Point<TypeParam, 1> destination1{make1DTestPoint<TypeParam>(2)};
+
+    const Vector<TypeParam, 1> left{origin1, destination1};
+
+    const Point<TypeParam, 1> origin2     {make1DTestPoint<TypeParam>(2)};
+    const Point<TypeParam, 1> destination2{make1DTestPoint<TypeParam>(3)};
+
+    const Vector<TypeParam, 1> right{origin2, destination2};
+
+    ASSERT_FALSE(left != right);
+}
+
+
 TYPED_TEST(VectorTest, NonEqualityOperator_TwoEqual2DVectors_ReturnsFalse)
+{
+    using namespace cxutil::math;
+
+    const Point<TypeParam, 2> origin1     {make2DTestPoint<TypeParam>(1, 2)};
+    const Point<TypeParam, 2> destination1{make2DTestPoint<TypeParam>(2, 3)};
+
+    const Vector<TypeParam, 2> left{origin1, destination1};
+
+    const Point<TypeParam, 2> origin2     {make2DTestPoint<TypeParam>(2, 3)};
+    const Point<TypeParam, 2> destination2{make2DTestPoint<TypeParam>(3, 4)};
+
+    const Vector<TypeParam, 2> right{origin2, destination2};
+
+    ASSERT_FALSE(left != right);
+}
+
+
 TYPED_TEST(VectorTest, NonEqualityOperator_TwoEqual3DVectors_ReturnsFalse)
+{
+    using namespace cxutil::math;
+
+    const Point<TypeParam, 3> origin1     {make3DTestPoint<TypeParam>(1, 2, 3)};
+    const Point<TypeParam, 3> destination1{make3DTestPoint<TypeParam>(2, 3, 4)};
+
+    const Vector<TypeParam, 3> left{origin1, destination1};
+
+    const Point<TypeParam, 3> origin2     {make3DTestPoint<TypeParam>(2, 3, 4)};
+    const Point<TypeParam, 3> destination2{make3DTestPoint<TypeParam>(3, 4, 5)};
+
+    const Vector<TypeParam, 3> right{origin2, destination2};
+
+    ASSERT_FALSE(left != right);
+}
 
 TYPED_TEST(VectorTest, VectorAddition_Two1DVectorsAdded_ReturnsSumVector)
+{
+    using namespace cxutil::math;
+
+    const Point<TypeParam, 1> origin1     {make1DTestPoint<TypeParam>(1)};
+    const Point<TypeParam, 1> destination1{make1DTestPoint<TypeParam>(2)};
+
+    const Vector<TypeParam, 1> vect1{origin1, destination1};
+
+    const Point<TypeParam, 1> origin2     {make1DTestPoint<TypeParam>(2)};
+    const Point<TypeParam, 1> destination2{make1DTestPoint<TypeParam>(3)};
+
+    const Vector<TypeParam, 1> vect2{origin2, destination2};
+
+    const Point<TypeParam, 1> origin3     {make1DTestPoint<TypeParam>(2)};
+    const Point<TypeParam, 1> destination3{make1DTestPoint<TypeParam>(4)};
+
+    const Vector<TypeParam, 1> sum{origin3, destination3};
+
+    ASSERT_EQ(vect1 + vect2, sum);
+}
+
+
 TYPED_TEST(VectorTest, VectorAddition_Two2DVectorsAdded_ReturnsSumVector)
+{
+    using namespace cxutil::math;
+
+    const Point<TypeParam, 2> origin1     {make2DTestPoint<TypeParam>(1, 2)};
+    const Point<TypeParam, 2> destination1{make2DTestPoint<TypeParam>(2, 3)};
+
+    const Vector<TypeParam, 2> vect1{origin1, destination1};
+
+    const Point<TypeParam, 2> origin2     {make2DTestPoint<TypeParam>(2, 3)};
+    const Point<TypeParam, 2> destination2{make2DTestPoint<TypeParam>(3, 4)};
+
+    const Vector<TypeParam, 2> vect2{origin2, destination2};
+
+    const Point<TypeParam, 2> origin3     {make2DTestPoint<TypeParam>(2, 3)};
+    const Point<TypeParam, 2> destination3{make2DTestPoint<TypeParam>(4, 5)};
+
+    const Vector<TypeParam, 2> sum{origin3, destination3};
+
+    ASSERT_EQ(vect1 + vect2, sum);
+}
+
+
 TYPED_TEST(VectorTest, VectorAddition_Two3DVectorsAdded_ReturnsSumVector)
+{
+    using namespace cxutil::math;
+
+    const Point<TypeParam, 3> origin1     {make3DTestPoint<TypeParam>(1, 2, 3)};
+    const Point<TypeParam, 3> destination1{make3DTestPoint<TypeParam>(2, 3, 4)};
+
+    const Vector<TypeParam, 3> vect1{origin1, destination1};
+
+    const Point<TypeParam, 3> origin2     {make3DTestPoint<TypeParam>(2, 3, 4)};
+    const Point<TypeParam, 3> destination2{make3DTestPoint<TypeParam>(3, 4, 5)};
+
+    const Vector<TypeParam, 3> vect2{origin2, destination2};
+
+    const Point<TypeParam, 3> origin3     {make3DTestPoint<TypeParam>(2, 3, 4)};
+    const Point<TypeParam, 3> destination3{make3DTestPoint<TypeParam>(4, 5, 6)};
+
+    const Vector<TypeParam, 3> sum{origin3, destination3};
+
+    ASSERT_EQ(vect1 + vect2, sum);
+}
+
 
 TYPED_TEST(VectorTest, VectorSubtraction_Two1DVectorsSubtracted_ReturnsDifferenceVector)
+{
+    using namespace cxutil::math;
+
+    const Point<TypeParam, 1> origin1     {make1DTestPoint<TypeParam>(1)};
+    const Point<TypeParam, 1> destination1{make1DTestPoint<TypeParam>(2)};
+
+    const Vector<TypeParam, 1> vect1{origin1, destination1};
+
+    const Point<TypeParam, 1> origin2     {make1DTestPoint<TypeParam>(2)};
+    const Point<TypeParam, 1> destination2{make1DTestPoint<TypeParam>(3)};
+
+    const Vector<TypeParam, 1> vect2{origin2, destination2};
+
+    ASSERT_EQ(vect1 - vect2, this->m_vector1D);
+}
+
+
 TYPED_TEST(VectorTest, VectorSubtraction_Two2DVectorsSubtracted_ReturnsDifferenceVector)
+{
+    using namespace cxutil::math;
+
+    const Point<TypeParam, 2> origin1     {make2DTestPoint<TypeParam>(1, 2)};
+    const Point<TypeParam, 2> destination1{make2DTestPoint<TypeParam>(2, 3)};
+
+    const Vector<TypeParam, 2> vect1{origin1, destination1};
+
+    const Point<TypeParam, 2> origin2     {make2DTestPoint<TypeParam>(2, 3)};
+    const Point<TypeParam, 2> destination2{make2DTestPoint<TypeParam>(3, 4)};
+
+    const Vector<TypeParam, 2> vect2{origin2, destination2};
+
+    ASSERT_EQ(vect1 - vect2, this->m_vector2D);
+}
+
+
 TYPED_TEST(VectorTest, VectorSubtraction_Two3DVectorsSubtracted_ReturnsDifferenceVector)
+{
+    using namespace cxutil::math;
+
+    const Point<TypeParam, 3> origin1     {make3DTestPoint<TypeParam>(1, 2, 3)};
+    const Point<TypeParam, 3> destination1{make3DTestPoint<TypeParam>(2, 3, 4)};
+
+    const Vector<TypeParam, 3> vect1{origin1, destination1};
+
+    const Point<TypeParam, 3> origin2     {make3DTestPoint<TypeParam>(2, 3, 4)};
+    const Point<TypeParam, 3> destination2{make3DTestPoint<TypeParam>(3, 4, 5)};
+
+    const Vector<TypeParam, 3> vect2{origin2, destination2};
+
+    ASSERT_EQ(vect1 - vect2, this->m_vector3D);
+}
+
 
 TYPED_TEST(VectorTest, LeftScalarMultiplication_ScalarTimes1DVector_ReturnsScaledVector)
+{
+    using namespace cxutil::math;
+
+    const TypeParam k{cxutil::narrow_cast<TypeParam>(2)};
+
+    const Point<TypeParam, 1> origin1     {make1DTestPoint<TypeParam>(1)};
+    const Point<TypeParam, 1> destination1{make1DTestPoint<TypeParam>(2)};
+
+    const Vector<TypeParam, 1> vect{origin1, destination1};
+
+    const Point<TypeParam, 1> origin2     {make1DTestPoint<TypeParam>(1)};
+    const Point<TypeParam, 1> destination2{make1DTestPoint<TypeParam>(3)};
+
+    const Vector<TypeParam, 1> prod{origin2, destination2};
+
+    ASSERT_EQ(k*vect, prod);
+}
+
+
 TYPED_TEST(VectorTest, LeftScalarMultiplication_ScalarTimes2DVector_ReturnsScaledVector)
+{
+    using namespace cxutil::math;
+
+    const TypeParam k{cxutil::narrow_cast<TypeParam>(2)};
+
+    const Point<TypeParam, 2> origin1     {make2DTestPoint<TypeParam>(1, 2)};
+    const Point<TypeParam, 2> destination1{make2DTestPoint<TypeParam>(2, 3)};
+
+    const Vector<TypeParam, 2> vect{origin1, destination1};
+
+    const Point<TypeParam, 2> origin2     {make2DTestPoint<TypeParam>(1, 2)};
+    const Point<TypeParam, 2> destination2{make2DTestPoint<TypeParam>(3, 4)};
+
+    const Vector<TypeParam, 2> prod{origin2, destination2};
+
+    ASSERT_EQ(k*vect, prod);
+}
+
+
 TYPED_TEST(VectorTest, LeftScalarMultiplication_ScalarTimes3DVector_ReturnsScaledVector)
+{
+    using namespace cxutil::math;
+
+    const TypeParam k{cxutil::narrow_cast<TypeParam>(2)};
+
+    const Point<TypeParam, 3> origin1     {make3DTestPoint<TypeParam>(1, 2, 3)};
+    const Point<TypeParam, 3> destination1{make3DTestPoint<TypeParam>(2, 3, 4)};
+
+    const Vector<TypeParam, 3> vect{origin1, destination1};
+
+    const Point<TypeParam, 3> origin2     {make3DTestPoint<TypeParam>(1, 2, 3)};
+    const Point<TypeParam, 3> destination2{make3DTestPoint<TypeParam>(3, 4, 5)};
+
+    const Vector<TypeParam, 3> prod{origin2, destination2};
+
+    ASSERT_EQ(k*vect, prod);
+}
+
 
 TYPED_TEST(VectorTest, RightScalarMultiplication_ScalarTimes1DVector_ReturnsScaledVector)
+{
+    using namespace cxutil::math;
+
+    const TypeParam k{cxutil::narrow_cast<TypeParam>(2)};
+
+    const Point<TypeParam, 1> origin1     {make1DTestPoint<TypeParam>(1)};
+    const Point<TypeParam, 1> destination1{make1DTestPoint<TypeParam>(2)};
+
+    const Vector<TypeParam, 1> vect{origin1, destination1};
+
+    const Point<TypeParam, 1> origin2     {make1DTestPoint<TypeParam>(1)};
+    const Point<TypeParam, 1> destination2{make1DTestPoint<TypeParam>(3)};
+
+    const Vector<TypeParam, 1> prod{origin2, destination2};
+
+    ASSERT_EQ(vect*k, prod);
+}
+
+
 TYPED_TEST(VectorTest, RightScalarMultiplication_ScalarTimes2DVector_ReturnsScaledVector)
+{
+    using namespace cxutil::math;
+
+    const TypeParam k{cxutil::narrow_cast<TypeParam>(2)};
+
+    const Point<TypeParam, 2> origin1     {make2DTestPoint<TypeParam>(1, 2)};
+    const Point<TypeParam, 2> destination1{make2DTestPoint<TypeParam>(2, 3)};
+
+    const Vector<TypeParam, 2> vect{origin1, destination1};
+
+    const Point<TypeParam, 2> origin2     {make2DTestPoint<TypeParam>(1, 2)};
+    const Point<TypeParam, 2> destination2{make2DTestPoint<TypeParam>(3, 4)};
+
+    const Vector<TypeParam, 2> prod{origin2, destination2};
+
+    ASSERT_EQ(vect*k, prod);
+}
+
+
 TYPED_TEST(VectorTest, RightScalarMultiplication_ScalarTimes3DVector_ReturnsScaledVector)
+{
+    using namespace cxutil::math;
 
-TYPED_TEST(VectorTest, CrossProduct2D_Two2DVectors_ReturnsCrossProductValue)
+    const TypeParam k{cxutil::narrow_cast<TypeParam>(2)};
 
-TYPED_TEST(VectorTest, CrossProduct2D_Two3DVectors_ReturnsCrossProduct3DVector)
+    const Point<TypeParam, 3> origin1     {make3DTestPoint<TypeParam>(1, 2, 3)};
+    const Point<TypeParam, 3> destination1{make3DTestPoint<TypeParam>(2, 3, 4)};
+
+    const Vector<TypeParam, 3> vect{origin1, destination1};
+
+    const Point<TypeParam, 3> origin2     {make3DTestPoint<TypeParam>(1, 2, 3)};
+    const Point<TypeParam, 3> destination2{make3DTestPoint<TypeParam>(3, 4, 5)};
+
+    const Vector<TypeParam, 3> prod{origin2, destination2};
+
+    ASSERT_EQ(vect*k, prod);
+}
+
+
+TYPED_TEST(VectorTest, CrossProduct2D_Two2DVectorsA_ReturnsCrossProductValue)
+{
+    using namespace cxutil::math;
+
+    const Point<TypeParam, 2> origin;
+    const Point<TypeParam, 2> destination1{make2DTestPoint<TypeParam>(1, 2)};
+    const Point<TypeParam, 2> destination2{make2DTestPoint<TypeParam>(3, 4)};
+
+
+    const Vector<TypeParam, 2> u{origin, destination1};
+    const Vector<TypeParam, 2> v{origin, destination2};
+
+    const TypeParam expectedResult{cxutil::narrow_cast<TypeParam>(-2)};
+
+    TypeParam result;
+
+    crossProduct(u, v, result);
+
+    ASSERT_EQ(result, expectedResult);
+}
+
+
+TYPED_TEST(VectorTest, CrossProduct2D_Two2DVectorsB_ReturnsCrossProductValue)
+{
+    using namespace cxutil::math;
+
+    const Point<TypeParam, 2> origin;
+    const Point<TypeParam, 2> destination1{make2DTestPoint<TypeParam>(1, 2)};
+    const Point<TypeParam, 2> destination2{make2DTestPoint<TypeParam>(-7, 16)};
+
+
+    const Vector<TypeParam, 2> u{origin, destination1};
+    const Vector<TypeParam, 2> v{origin, destination2};
+
+    const TypeParam expectedResult{cxutil::narrow_cast<TypeParam>(30)};
+
+    TypeParam result;
+
+    crossProduct(u, v, result);
+
+    ASSERT_EQ(result, expectedResult);
+}
+
+
+TYPED_TEST(VectorTest, CrossProduct3D_Two2DIdenticalVectors_Returns0)
+{
+    using namespace cxutil::math;
+
+    const Point<TypeParam, 2> origin;
+    const Point<TypeParam, 2> destination1{make2DTestPoint<TypeParam>(1, 2)};
+
+    const Vector<TypeParam, 2> u{origin, destination1};
+
+    const TypeParam expectedResult{cxutil::narrow_cast<TypeParam>(0)};
+
+    TypeParam result;
+
+    crossProduct(u, u, result);
+
+    ASSERT_EQ(result, expectedResult);
+}
+
+
+TYPED_TEST(VectorTest, CrossProduct3D_Two3DVectorsA_ReturnsCrossProduct3DVector)
+{
+    using namespace cxutil::math;
+
+    const Point<TypeParam, 3> origin;
+    const Point<TypeParam, 3> destination1{make3DTestPoint<TypeParam>(1, 2, 3)};
+    const Point<TypeParam, 3> destination2{make3DTestPoint<TypeParam>(4, 5, 6)};
+
+    const Vector<TypeParam, 3> u{origin, destination1};
+    const Vector<TypeParam, 3> v{origin, destination2};
+
+    const Point<TypeParam, 3> destination3{make3DTestPoint<TypeParam>(-3, 6, -3)};
+    const Vector<TypeParam, 3> expectedResult{origin, destination3};
+
+    Vector<TypeParam, 3> result;
+
+    crossProduct(u, v, result);
+
+    ASSERT_EQ(result, expectedResult);
+}
+
+
+TYPED_TEST(VectorTest, CrossProduct3D_Two3DVectorsB_ReturnsCrossProduct3DVector)
+{
+    using namespace cxutil::math;
+
+    const Point<TypeParam, 3> origin;
+    const Point<TypeParam, 3> destination1{make3DTestPoint<TypeParam>(1, 2, 3)};
+    const Point<TypeParam, 3> destination2{make3DTestPoint<TypeParam>(-6, 3, 15)};
+
+    const Vector<TypeParam, 3> u{origin, destination1};
+    const Vector<TypeParam, 3> v{origin, destination2};
+
+    const Point<TypeParam, 3> destination3{make3DTestPoint<TypeParam>(21, -33, 15)};
+    const Vector<TypeParam, 3> expectedResult{origin, destination3};
+
+    Vector<TypeParam, 3> result;
+
+    crossProduct(u, v, result);
+
+    ASSERT_EQ(result, expectedResult);
+}
+
 
 TYPED_TEST(VectorTest, AdditionIdentity_InstantiateNew1DVector_VectorIsAdditionIdentity)
+{
+    ASSERT_EQ((cxutil::math::additionIdentity<TypeParam, 1>()), this->m_vector1D);
+}
+
+
 TYPED_TEST(VectorTest, AdditionIdentity_InstantiateNew2DVector_VectorIsAdditionIdentity)
+{
+    ASSERT_EQ((cxutil::math::additionIdentity<TypeParam, 2>()), this->m_vector2D);
+}
+
+
 TYPED_TEST(VectorTest, AdditionIdentity_InstantiateNew3DVector_VectorIsAdditionIdentity)
+{
+    ASSERT_EQ((cxutil::math::additionIdentity<TypeParam, 3>()), this->m_vector3D);
+}
+
 
 TYPED_TEST(VectorTest, DotProduct_Two1DVectors_ReturnsDotProductValue)
+{
+    using namespace cxutil::math;
+
+    const Point<TypeParam, 1> origin;
+    const Vector<TypeParam, 1> u{origin, make1DTestPoint<TypeParam>(1)};
+    const Vector<TypeParam, 1> v{origin, make1DTestPoint<TypeParam>(-1)};
+
+    const TypeParam expectedResult{cxutil::narrow_cast<TypeParam>(-1)};
+
+    const TypeParam result{dotProduct(u, v)};
+
+    ASSERT_EQ(result, expectedResult);
+}
+
+
 TYPED_TEST(VectorTest, DotProduct_Two2DVectors_ReturnsDotProductValue)
-TYPED_TEST(VectorTest, DotProduct_Two3DVectors_ReturnsDotProductValue)*/
+{
+    using namespace cxutil::math;
+
+    const Point<TypeParam, 2> origin;
+    const Vector<TypeParam, 2> u{origin, make2DTestPoint<TypeParam>(1, 2)};
+    const Vector<TypeParam, 2> v{origin, make2DTestPoint<TypeParam>(-1, -2)};
+
+    const TypeParam expectedResult{cxutil::narrow_cast<TypeParam>(-5)};
+
+    const TypeParam result{dotProduct(u, v)};
+
+    ASSERT_EQ(result, expectedResult);
+}
+
+
+TYPED_TEST(VectorTest, DotProduct_Two3DVectors_ReturnsDotProductValue)
+{
+    using namespace cxutil::math;
+
+    const Point<TypeParam, 3> origin;
+    const Vector<TypeParam, 3> u{origin, make3DTestPoint<TypeParam>(1, 2, 3)};
+    const Vector<TypeParam, 3> v{origin, make3DTestPoint<TypeParam>(-1, -2, -3)};
+
+    const TypeParam expectedResult{cxutil::narrow_cast<TypeParam>(-14)};
+
+    const TypeParam result{dotProduct(u, v)};
+
+    ASSERT_EQ(result, expectedResult);
+}
 
 
 /***************************************************************************************************
