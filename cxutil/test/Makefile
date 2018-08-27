@@ -31,6 +31,7 @@ SRCS      = cxutilTest.cpp       \
             test_Color.cpp       \
             test_Date.cpp        \
             test_ISubject.cpp    \
+            test_LineSegment.cpp \
             test_Logger.cpp      \
             test_Name.cpp        \
             test_narrow_cast.cpp \
@@ -42,6 +43,7 @@ SRCS      = cxutilTest.cpp       \
 OBJS      = test_Date.o        \
             test_Color.o       \
             test_ISubject.o    \
+            test_LineSegment.o \
             test_Logger.o      \
             test_Name.o        \
             test_Point.o       \
