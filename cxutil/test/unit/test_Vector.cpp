@@ -52,7 +52,8 @@ public:
     cxutil::math::Vector<T, 3> m_vector3D;
 };
 
-typedef ::testing::Types<char, short, int, double, long long, long double> VectorRelatedTypes;
+
+typedef ::testing::Types<int, double, long long, long double> VectorRelatedTypes;
 TYPED_TEST_CASE(VectorTest, VectorRelatedTypes);
 
 
@@ -2144,17 +2145,7 @@ TYPED_TEST(VectorTest, Vector1DScalarAndFieldMultiplicationsCompatibility)
 
     const Vector<TypeParam, 1> u{makeRandomTestVector<TypeParam, 1>()};
 
-    ASSERT_TRUE(a * (b * u) == cxutil::narrow_cast<TypeParam>(a * b) * u);
-
-    // Note: In this last line, narrow_cast needs to be used because for smaller
-    // types, like char and short, the operator is not defined (the smallest type
-    // it accepts is int) and hence they get automatically -- and implicitely --
-    // promoted. THe cast is to avoid warnings afterwards, when the vector u is
-    // applied, because (again for smaller types) is nothing is done, a type
-    // mismatch will occur.
-    //
-    // Similar ugly tricks had to be performed in the implementation of Vector,
-    // see Vector.ipp for more examples...
+    ASSERT_TRUE(a * (b * u) == (a * b) * u);
 }
 
 
@@ -2167,7 +2158,7 @@ TYPED_TEST(VectorTest, Vector2DScalarAndFieldMultiplicationsCompatibility)
 
     const Vector<TypeParam, 2> u{makeRandomTestVector<TypeParam, 2>()};
 
-    ASSERT_TRUE(a * (b * u) == cxutil::narrow_cast<TypeParam>(a * b) * u);
+    ASSERT_TRUE(a * (b * u) == (a * b) * u);
 }
 
 
@@ -2180,7 +2171,7 @@ TYPED_TEST(VectorTest, Vector3DScalarAndFieldMultiplicationsCompatibility)
 
     const Vector<TypeParam, 3> u{makeRandomTestVector<TypeParam, 3>()};
 
-    ASSERT_TRUE(a * (b * u) == cxutil::narrow_cast<TypeParam>(a * b) * u);
+    ASSERT_TRUE(a * (b * u) == (a * b) * u);
 }
 
 
@@ -2269,7 +2260,7 @@ TYPED_TEST(VectorTest, Vector1DScalarMultiplicationDistributivityWithRespectToFi
     const Vector<TypeParam, 1> u{makeRandomTestVector<TypeParam, 1>()};
     const Vector<TypeParam, 1> v{makeRandomTestVector<TypeParam, 1>()};
 
-    ASSERT_TRUE(cxutil::narrow_cast<TypeParam>(a + b) * u == a * u + b * u);
+    ASSERT_TRUE((a + b) * u == a * u + b * u);
 }
 
 
@@ -2283,7 +2274,7 @@ TYPED_TEST(VectorTest, Vector2DScalarMultiplicationDistributivityWithRespectToFi
     const Vector<TypeParam, 2> u{makeRandomTestVector<TypeParam, 2>()};
     const Vector<TypeParam, 2> v{makeRandomTestVector<TypeParam, 2>()};
 
-    ASSERT_TRUE(cxutil::narrow_cast<TypeParam>(a + b) * u == a * u + b * u);
+    ASSERT_TRUE((a + b) * u == a * u + b * u);
 }
 
 
@@ -2297,5 +2288,5 @@ TYPED_TEST(VectorTest, Vector3DScalarMultiplicationDistributivityWithRespectToFi
     const Vector<TypeParam, 3> u{makeRandomTestVector<TypeParam, 3>()};
     const Vector<TypeParam, 3> v{makeRandomTestVector<TypeParam, 3>()};
 
-    ASSERT_TRUE(cxutil::narrow_cast<TypeParam>(a + b) * u == a * u + b * u);
+    ASSERT_TRUE((a + b) * u == a * u + b * u);
 }

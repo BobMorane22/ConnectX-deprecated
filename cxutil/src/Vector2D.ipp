@@ -37,5 +37,5 @@ void cxutil::math::crossProduct(const cxutil::math::Vector<T, 2>& p_v1,
 {
     using namespace cxutil;
 
-    p_result = narrow_cast<T>(narrow_cast<T>(p_v1.x() * p_v2.y()) - narrow_cast<T>(p_v1.y() * p_v2.x()));
+    p_result = p_v1.x() * p_v2.y() - p_v1.y() * p_v2.x();
 }

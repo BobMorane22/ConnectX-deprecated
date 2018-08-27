@@ -57,10 +57,7 @@ inline T cxutil::math::Vector<T, N>::x() const
 {
     static_assert(N >= 1 && N < 4, "Invalid dimension.");
 
-    // See The C++ Programming Language 4th Edition by B. Stroustroup
-    // section 10.5.3 to see why this narrowing cast is necessary. This
-    // goes for other similar methods/functions in this file.
-    return cxutil::narrow_cast<T>(m_destination.x() - m_origin.x());
+    return m_destination.x() - m_origin.x();
 }
 
 
@@ -69,7 +66,7 @@ inline T cxutil::math::Vector<T, N>::y() const
 {
     static_assert(N >= 2 && N < 4, "Invalid dimension.");
 
-    return cxutil::narrow_cast<T>(m_destination.y() - m_origin.y());
+    return m_destination.y() - m_origin.y();
 }
 
 
@@ -78,7 +75,7 @@ inline T cxutil::math::Vector<T, N>::z() const
 {
     static_assert(N == 3, "Invalid dimension.");
 
-    return cxutil::narrow_cast<T>(m_destination.z() - m_origin.z());
+    return m_destination.z() - m_origin.z();
 }
 
 
@@ -87,7 +84,7 @@ inline const T cxutil::math::Vector<T, N>::operator[](std::size_t p_index) const
 {
     PRECONDITION(p_index < N);
 
-    return cxutil::narrow_cast<T>(m_destination[p_index] - m_origin[p_index]);
+    return m_destination[p_index] - m_origin[p_index];
 }
 
 
@@ -103,7 +100,7 @@ cxutil::math::Vector<T, N>& cxutil::math::Vector<T, N>::operator+=(const cxutil:
 {
     for(std::size_t i{0}; i < N; ++i)
     {
-        m_destination[i] = cxutil::narrow_cast<T>(m_destination[i] + p_vector[i]);
+        m_destination[i] = m_destination[i] + p_vector[i];
     }
 
     return *this;
@@ -115,7 +112,7 @@ cxutil::math::Vector<T, N>& cxutil::math::Vector<T, N>::operator-=(const Vector<
 {
     for(std::size_t i{0}; i < N; ++i)
     {
-        m_destination[i] = cxutil::narrow_cast<T>(m_destination[i] - p_vector[i]);
+        m_destination[i] = m_destination[i] - p_vector[i];
     }
 
     return *this;
@@ -127,7 +124,7 @@ cxutil::math::Vector<T, N>& cxutil::math::Vector<T, N>::operator*=(const T& p_sc
 {
     for(std::size_t i{0}; i < N; ++i)
     {
-        m_destination[i] = cxutil::narrow_cast<T>(m_origin[i] + p_scalar * (*this)[i]);
+        m_destination[i] = m_origin[i] + p_scalar * (*this)[i];
     }
 
     return *this;
@@ -141,7 +138,7 @@ T cxutil::math::dotProduct(const cxutil::math::Vector<T, N>& p_v1, const cxutil:
 
     for(std::size_t i{0}; i < N; ++i)
     {
-        product = cxutil::narrow_cast<T>(product + cxutil::narrow_cast<T>(p_v1[i] * p_v2[i]));
+        product += p_v1[i] * p_v2[i];
     }
 
     return product;
