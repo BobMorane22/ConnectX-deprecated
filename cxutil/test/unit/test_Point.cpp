@@ -49,7 +49,7 @@ public:
     cxutil::math::Point<T, 3> m_point3D;
 };
 
-typedef ::testing::Types<char, short, int, double, long long, long double> PointRelatedTypes;
+typedef ::testing::Types<float, double, long double> PointRelatedTypes;
 TYPED_TEST_CASE(PointTest, PointRelatedTypes);
 
 

@@ -17,9 +17,9 @@
 * You should have received a copy of the GNU General Public License
 * along with Connect X.  If not, see <http://www.gnu.org/licenses./>.
 *
-**************************************************************************************************
+**************************************************************************************************/
 
-/***********************************************************************************************//*
+/**********************************************************************************************//**
 * @file    cxutilTest.cpp
 * @author  elliotchance
 * @date    September 2016
@@ -170,7 +170,6 @@ int main(int argc, char **argv)
     ::testing::InitGoogleTest(&argc, argv);
 
     // remove the default listener
-
     testing::TestEventListeners& listeners = testing::UnitTest::GetInstance()->listeners();
     auto default_printer = listeners.Release(listeners.default_result_printer());
 

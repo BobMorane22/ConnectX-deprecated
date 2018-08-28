@@ -29,6 +29,7 @@
  *
  **************************************************************************************************/
 
+#include <chrono>
 #include <iostream>
 #include <random>
 #include <type_traits>
@@ -53,7 +54,7 @@ public:
 };
 
 
-typedef ::testing::Types<int, double, long long, long double> VectorRelatedTypes;
+typedef ::testing::Types<float, double, long double> VectorRelatedTypes;
 TYPED_TEST_CASE(VectorTest, VectorRelatedTypes);
 
 
@@ -1897,8 +1898,6 @@ TYPED_TEST(VectorTest, DotProduct_Two3DVectors_ReturnsDotProductValue)
 
 
 /***************************************************************************************************
- * A note to the developers...
- *
  * The following tests verify that the cxutil::math::Vector class satisfies the  8 conditions of a
  * vector space over T. Let u, v and w be arbritary cxutil::math::Vector objects and a and b
  * scalars in T. We want to verify (only through unit testing, not formally) that:
@@ -1973,12 +1972,19 @@ cxutil::math::Vector<T, N> makeRandomTestVector()
 {
     using namespace cxutil::math;
 
+    // We obtain a seed from the timer:
+    typedef std::chrono::high_resolution_clock myclock;
+    myclock::time_point beginning{myclock::now()};
+
+    myclock::duration interval{myclock::now() - beginning};
+    static const long int seed{interval.count()};
+
     // Limits
     const T min{cxutil::narrow_cast<T>(-5)};
     const T max{cxutil::narrow_cast<T>(5)};
 
     // Get the right distribution, depending on type:
-    static std::default_random_engine generator;
+    static std::default_random_engine generator(seed);
     auto distribution{getValidUniformDistribution<T>(min, max)};
 
     // Generate a random origin point:

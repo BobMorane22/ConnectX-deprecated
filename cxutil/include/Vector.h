@@ -255,6 +255,8 @@ private:
     Point<T, N> m_origin;      ///< Vector point of origin.
     Point<T, N> m_destination; ///< Vector destination.
 
+    static_assert(std::is_floating_point<T>(), "Floating point types only are accepted.");
+
 };
 
 using Vector1D = Vector<double, 1>; ///< Common case of a 1D vector with @c double as the coordinate type.

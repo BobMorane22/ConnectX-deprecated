@@ -31,6 +31,7 @@
  **************************************************************************************************/
 
 #include "../include/narrow_cast.h"
+#include "../include/util.h"
 
 template<typename T, std::size_t N>
 cxutil::math::Vector<T, N>::Vector()
@@ -161,7 +162,7 @@ bool cxutil::math::operator==(const cxutil::math::Vector<T, N>& p_v1, const cxut
 
     for(std::size_t i{0}; i < N; ++i)
     {
-        areEqual &= (p_v1[i] == p_v2[i]);
+        areEqual &= (cxutil::math::areLogicallyEqual<T>(p_v1[i], p_v2[i]));
     }
 
     return areEqual;

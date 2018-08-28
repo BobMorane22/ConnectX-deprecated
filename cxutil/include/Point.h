@@ -265,6 +265,8 @@ private:
 
     std::array<T, N> m_coordinates; ///< The different coordinates.
 
+    static_assert(std::is_floating_point<T>(), "Floating point types only are accepted.");
+
 };
 
 using Point1D = Point<double, 1>; ///< Common case of a 1D point with @c double as the coordinate type
