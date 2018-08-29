@@ -295,31 +295,363 @@ TYPED_TEST(LineSegmentTest, GetEndpoint_Two3DEndpoints_EndpointsAreDifferent)
 }
 
 
-/*TYPED_TEST(LineSegmentTest, AreParallel_TwoColinear1DLineSegments_ReturnsTrue)
+
 TYPED_TEST(LineSegmentTest, AreParallel_TwoColinear2DLineSegments_ReturnsTrue)
-TYPED_TEST(LineSegmentTest, AreParallel_TwoColinear3DLineSegments_ReturnsTrue)
-TYPED_TEST(LineSegmentTest, AreParallel_TwoParallel1DLineSegments_ReturnsTrue)
+{
+    using namespace cxutil::math;
+
+    const Point<TypeParam, 2> endPtA1;
+    const Point<TypeParam, 2> endPtA2{make2DTestPoint<TypeParam>(1, 1)};
+
+    LineSegment<TypeParam, 2> lineSegmentA{endPtA1, endPtA2};
+
+    const Point<TypeParam, 2> endPtB1{make2DTestPoint<TypeParam>(2, 2)};
+    const Point<TypeParam, 2> endPtB2{make2DTestPoint<TypeParam>(3, 3)};
+
+    LineSegment<TypeParam, 2> lineSegmentB{endPtB1, endPtB2};
+
+    ASSERT_TRUE((areParallel<TypeParam>(lineSegmentA, lineSegmentB)));
+}
+
+
 TYPED_TEST(LineSegmentTest, AreParallel_TwoParallel2DLineSegments_ReturnsTrue)
-TYPED_TEST(LineSegmentTest, AreParallel_TwoParallel3DLineSegments_ReturnsTrue)
+{
+    using namespace cxutil::math;
+
+    const Point<TypeParam, 2> endPtA1;
+    const Point<TypeParam, 2> endPtA2{make2DTestPoint<TypeParam>(1, 1)};
+
+    LineSegment<TypeParam, 2> lineSegmentA{endPtA1, endPtA2};
+
+    const Point<TypeParam, 2> endPtB1{make2DTestPoint<TypeParam>(1, 0)};
+    const Point<TypeParam, 2> endPtB2{make2DTestPoint<TypeParam>(2, 1)};
+
+    LineSegment<TypeParam, 2> lineSegmentB{endPtB1, endPtB2};
+
+    ASSERT_TRUE((areParallel<TypeParam>(lineSegmentA, lineSegmentB)));
+}
+
+
 TYPED_TEST(LineSegmentTest, AreParallel_TwoNonParallel2DLineSegments_ReturnsFalse)
-TYPED_TEST(LineSegmentTest, AreParallel_TwoNonParallel3DLineSegments_ReturnsFalse)
+{
+    using namespace cxutil::math;
+
+    const Point<TypeParam, 2> endPtA1;
+    const Point<TypeParam, 2> endPtA2{make2DTestPoint<TypeParam>(1, 1)};
+
+    LineSegment<TypeParam, 2> lineSegmentA{endPtA1, endPtA2};
+
+    const Point<TypeParam, 2> endPtB1{make2DTestPoint<TypeParam>(3, 0)};
+    const Point<TypeParam, 2> endPtB2{make2DTestPoint<TypeParam>(2, 1)};
+
+    LineSegment<TypeParam, 2> lineSegmentB{endPtB1, endPtB2};
+
+    ASSERT_FALSE((areParallel<TypeParam>(lineSegmentA, lineSegmentB)));
+}
+
 
 TYPED_TEST(LineSegmentTest, AreOrthogonal_TwoOrthogonal2DLineSegments_ReturnsTrue)
-TYPED_TEST(LineSegmentTest, AreOrthogonal_TwoOrthogonal3DLineSegments_ReturnsTrue)
-TYPED_TEST(LineSegmentTest, AreOrthogonal_TwoNonOrthogonal1DLineSegments_ReturnsTrue)
-TYPED_TEST(LineSegmentTest, AreOrthogonal_TwoNonOrthogonal2DLineSegments_ReturnsTrue)
-TYPED_TEST(LineSegmentTest, AreOrthogonal_TwoNonOrthogonal3DLineSegments_ReturnsTrue)
+{
+    using namespace cxutil::math;
 
-TYPED_TEST(LineSegmentTest, AreColinear_TwoColinear1DLineSegments_ReturnsTrue)
+    const Point<TypeParam, 2> endPtA1;
+    const Point<TypeParam, 2> endPtA2{make2DTestPoint<TypeParam>(1, 1)};
+
+    LineSegment<TypeParam, 2> lineSegmentA{endPtA1, endPtA2};
+
+    const Point<TypeParam, 2> endPtB1{make2DTestPoint<TypeParam>(3, 0)};
+    const Point<TypeParam, 2> endPtB2{make2DTestPoint<TypeParam>(2, 1)};
+
+    LineSegment<TypeParam, 2> lineSegmentB{endPtB1, endPtB2};
+
+    ASSERT_TRUE((areOrthogonal<TypeParam>(lineSegmentA, lineSegmentB)));
+}
+
+
+TYPED_TEST(LineSegmentTest, AreOrthogonal_TwoNonOrthogonal2DLineSegments_ReturnsFalse)
+{
+    using namespace cxutil::math;
+
+    const Point<TypeParam, 2> endPtA1;
+    const Point<TypeParam, 2> endPtA2{make2DTestPoint<TypeParam>(1, 1)};
+
+    LineSegment<TypeParam, 2> lineSegmentA{endPtA1, endPtA2};
+
+    const Point<TypeParam, 2> endPtB1{make2DTestPoint<TypeParam>(1, 0)};
+    const Point<TypeParam, 2> endPtB2{make2DTestPoint<TypeParam>(3, 1)};
+
+    LineSegment<TypeParam, 2> lineSegmentB{endPtB1, endPtB2};
+
+    ASSERT_FALSE((areOrthogonal<TypeParam>(lineSegmentA, lineSegmentB)));
+}
+
+
 TYPED_TEST(LineSegmentTest, AreColinear_TwoColinear2DLineSegments_ReturnsTrue)
-TYPED_TEST(LineSegmentTest, AreColinear_TwoColinear3DLineSegments_ReturnsTrue)
-TYPED_TEST(LineSegmentTest, AreColinear_TwoNonColinear2DLineSegments_ReturnsFalse)
-TYPED_TEST(LineSegmentTest, AreColinear_TwoNonColinear3DLineSegments_ReturnsFalse)
-TYPED_TEST(LineSegmentTest, AreColinear_TwoParallelDisjoint1DLineSegments_ReturnsFalse)
-TYPED_TEST(LineSegmentTest, AreColinear_TwoParallelDisjoint2DLineSegments_ReturnsFalse)
-TYPED_TEST(LineSegmentTest, AreColinear_TwoParallelDisjoint3DLineSegments_ReturnsFalse)
+{
+    using namespace cxutil::math;
 
-TYPED_TEST(LineSegmentTest, Intersect_TwoClearlyIntersectingLineSegments_ReturnsTrue)
-TYPED_TEST(LineSegmentTest, Intersect_TwoClearlyNonIntersectingLineSegments_ReturnsFalse)
+    const Point<TypeParam, 2> endPtA1;
+    const Point<TypeParam, 2> endPtA2{make2DTestPoint<TypeParam>(1, 1)};
+
+    LineSegment<TypeParam, 2> lineSegmentA{endPtA1, endPtA2};
+
+    const Point<TypeParam, 2> endPtB1{make2DTestPoint<TypeParam>(2, 2)};
+    const Point<TypeParam, 2> endPtB2{make2DTestPoint<TypeParam>(3, 3)};
+
+    LineSegment<TypeParam, 2> lineSegmentB{endPtB1, endPtB2};
+
+    ASSERT_TRUE((areColinear<TypeParam>(lineSegmentA, lineSegmentB)));
+}
+
+
+TYPED_TEST(LineSegmentTest, AreColinear_TwoNonColinear2DLineSegments_ReturnsFalse)
+{
+    using namespace cxutil::math;
+
+    const Point<TypeParam, 2> endPtA1;
+    const Point<TypeParam, 2> endPtA2{make2DTestPoint<TypeParam>(1, 1)};
+
+    LineSegment<TypeParam, 2> lineSegmentA{endPtA1, endPtA2};
+
+    const Point<TypeParam, 2> endPtB1{make2DTestPoint<TypeParam>(3, 0)};
+    const Point<TypeParam, 2> endPtB2{make2DTestPoint<TypeParam>(2, 1)};
+
+    LineSegment<TypeParam, 2> lineSegmentB{endPtB1, endPtB2};
+
+    ASSERT_FALSE((areColinear<TypeParam>(lineSegmentA, lineSegmentB)));
+}
+
+
+TYPED_TEST(LineSegmentTest, AreColinear_TwoParallelDisjoint2DLineSegments_ReturnsFalse)
+{
+    using namespace cxutil::math;
+
+    const Point<TypeParam, 2> endPtA1;
+    const Point<TypeParam, 2> endPtA2{make2DTestPoint<TypeParam>(1, 1)};
+
+    LineSegment<TypeParam, 2> lineSegmentA{endPtA1, endPtA2};
+
+    const Point<TypeParam, 2> endPtB1{make2DTestPoint<TypeParam>(1, 0)};
+    const Point<TypeParam, 2> endPtB2{make2DTestPoint<TypeParam>(2, 1)};
+
+    LineSegment<TypeParam, 2> lineSegmentB{endPtB1, endPtB2};
+
+    ASSERT_FALSE((areColinear<TypeParam>(lineSegmentA, lineSegmentB)));
+}
+
+
+TYPED_TEST(LineSegmentTest, Intersect_TwoClearlyIntersectingLineSegmentsConsiderEndpoints_ReturnsTrue)
+{
+    using namespace cxutil::math;
+
+    const Point<TypeParam, 2> endPtA1;
+    const Point<TypeParam, 2> endPtA2{make2DTestPoint<TypeParam>(2, 2)};
+
+    LineSegment<TypeParam, 2> lineSegmentA{endPtA1, endPtA2};
+
+    const Point<TypeParam, 2> endPtB1{make2DTestPoint<TypeParam>(0, 2)};
+    const Point<TypeParam, 2> endPtB2{make2DTestPoint<TypeParam>(2, 0)};
+
+    LineSegment<TypeParam, 2> lineSegmentB{endPtB1, endPtB2};
+
+    ASSERT_TRUE((intersect<TypeParam>(lineSegmentA, lineSegmentB, true)));
+}
+
+
+TYPED_TEST(LineSegmentTest, Intersect_TwoClearlyIntersectingLineSegmentsEndpointsNotConsidered_ReturnsTrue)
+{
+    using namespace cxutil::math;
+
+    const Point<TypeParam, 2> endPtA1;
+    const Point<TypeParam, 2> endPtA2{make2DTestPoint<TypeParam>(2, 2)};
+
+    LineSegment<TypeParam, 2> lineSegmentA{endPtA1, endPtA2};
+
+    const Point<TypeParam, 2> endPtB1{make2DTestPoint<TypeParam>(0, 2)};
+    const Point<TypeParam, 2> endPtB2{make2DTestPoint<TypeParam>(2, 0)};
+
+    LineSegment<TypeParam, 2> lineSegmentB{endPtB1, endPtB2};
+
+    ASSERT_TRUE((intersect<TypeParam>(lineSegmentA, lineSegmentB, false)));
+}
+
+
+TYPED_TEST(LineSegmentTest, Intersect_TwoClearlyNonIntersectingLineSegmentsEndpointsConsidered_ReturnsFalse)
+{
+    using namespace cxutil::math;
+
+    const Point<TypeParam, 2> endPtA1;
+    const Point<TypeParam, 2> endPtA2{make2DTestPoint<TypeParam>(2, 2)};
+
+    LineSegment<TypeParam, 2> lineSegmentA{endPtA1, endPtA2};
+
+    const Point<TypeParam, 2> endPtB1{make2DTestPoint<TypeParam>(0, 4)};
+    const Point<TypeParam, 2> endPtB2{make2DTestPoint<TypeParam>(2, 4)};
+
+    LineSegment<TypeParam, 2> lineSegmentB{endPtB1, endPtB2};
+
+    ASSERT_FALSE((intersect<TypeParam>(lineSegmentA, lineSegmentB, true)));
+}
+
+
+TYPED_TEST(LineSegmentTest, Intersect_TwoClearlyNonIntersectingLineSegmentsEndpointsNotConsidered_ReturnsFalse)
+{
+    using namespace cxutil::math;
+
+    const Point<TypeParam, 2> endPtA1;
+    const Point<TypeParam, 2> endPtA2{make2DTestPoint<TypeParam>(2, 2)};
+
+    LineSegment<TypeParam, 2> lineSegmentA{endPtA1, endPtA2};
+
+    const Point<TypeParam, 2> endPtB1{make2DTestPoint<TypeParam>(0, 4)};
+    const Point<TypeParam, 2> endPtB2{make2DTestPoint<TypeParam>(2, 4)};
+
+    LineSegment<TypeParam, 2> lineSegmentB{endPtB1, endPtB2};
+
+    ASSERT_FALSE((intersect<TypeParam>(lineSegmentA, lineSegmentB, false)));
+}
+
+
 TYPED_TEST(LineSegmentTest, Intersect_TwoIntersectingLineSegmentsOnEndpointEndpointsConsidered_ReturnsTrue)
-TYPED_TEST(LineSegmentTest, Intersect_TwoIntersectingLineSegmentsOnEndpointEndpointsNotConsidered_ReturnsFalse)*/
+{
+    using namespace cxutil::math;
+
+    const Point<TypeParam, 2> endPtA1;
+    const Point<TypeParam, 2> endPtA2{make2DTestPoint<TypeParam>(2, 2)};
+
+    LineSegment<TypeParam, 2> lineSegmentA{endPtA1, endPtA2};
+
+    const Point<TypeParam, 2> endPtB1{make2DTestPoint<TypeParam>(2, 2)};
+    const Point<TypeParam, 2> endPtB2{make2DTestPoint<TypeParam>(4, 2)};
+
+    LineSegment<TypeParam, 2> lineSegmentB{endPtB1, endPtB2};
+
+    ASSERT_TRUE((intersect<TypeParam>(lineSegmentA, lineSegmentB, true)));
+}
+
+
+TYPED_TEST(LineSegmentTest, Intersect_TwoIntersectingLineSegmentsOnEndpointEndpointsNotConsidered_ReturnsFalse)
+{
+    using namespace cxutil::math;
+
+    const Point<TypeParam, 2> endPtA1;
+    const Point<TypeParam, 2> endPtA2{make2DTestPoint<TypeParam>(2, 2)};
+
+    LineSegment<TypeParam, 2> lineSegmentA{endPtA1, endPtA2};
+
+    const Point<TypeParam, 2> endPtB1{make2DTestPoint<TypeParam>(2, 2)};
+    const Point<TypeParam, 2> endPtB2{make2DTestPoint<TypeParam>(4, 2)};
+
+    LineSegment<TypeParam, 2> lineSegmentB{endPtB1, endPtB2};
+
+    ASSERT_FALSE((intersect<TypeParam>(lineSegmentA, lineSegmentB, false)));
+}
+
+
+TYPED_TEST(LineSegmentTest, Intersect_TwoOverlappingLineSegmentsEndpointsConsidered_ReturnsTrue)
+{
+    using namespace cxutil::math;
+
+    const Point<TypeParam, 2> endPtA1;
+    const Point<TypeParam, 2> endPtA2{make2DTestPoint<TypeParam>(2, 2)};
+
+    LineSegment<TypeParam, 2> lineSegmentA{endPtA1, endPtA2};
+
+    const Point<TypeParam, 2> endPtB1{make2DTestPoint<TypeParam>(1, 1)};
+    const Point<TypeParam, 2> endPtB2{make2DTestPoint<TypeParam>(3, 3)};
+
+    LineSegment<TypeParam, 2> lineSegmentB{endPtB1, endPtB2};
+
+    ASSERT_TRUE((intersect<TypeParam>(lineSegmentA, lineSegmentB, true)));
+}
+
+
+TYPED_TEST(LineSegmentTest, Intersect_TwoOverlappingLineSegmentsEndpointsNotConsidered_ReturnsTrue)
+{
+    using namespace cxutil::math;
+
+    const Point<TypeParam, 2> endPtA1;
+    const Point<TypeParam, 2> endPtA2{make2DTestPoint<TypeParam>(2, 2)};
+
+    LineSegment<TypeParam, 2> lineSegmentA{endPtA1, endPtA2};
+
+    const Point<TypeParam, 2> endPtB1{make2DTestPoint<TypeParam>(1, 1)};
+    const Point<TypeParam, 2> endPtB2{make2DTestPoint<TypeParam>(3, 3)};
+
+    LineSegment<TypeParam, 2> lineSegmentB{endPtB1, endPtB2};
+
+    ASSERT_TRUE((intersect<TypeParam>(lineSegmentA, lineSegmentB, false)));
+}
+
+
+TYPED_TEST(LineSegmentTest, Intersect_TwoNonOverlappingLineSegmentsEndpointsConsidered_ReturnsFalse)
+{
+    using namespace cxutil::math;
+
+    const Point<TypeParam, 2> endPtA1;
+    const Point<TypeParam, 2> endPtA2{make2DTestPoint<TypeParam>(2, 2)};
+
+    LineSegment<TypeParam, 2> lineSegmentA{endPtA1, endPtA2};
+
+    const Point<TypeParam, 2> endPtB1{make2DTestPoint<TypeParam>(3, 3)};
+    const Point<TypeParam, 2> endPtB2{make2DTestPoint<TypeParam>(5, 5)};
+
+    LineSegment<TypeParam, 2> lineSegmentB{endPtB1, endPtB2};
+
+    ASSERT_FALSE((intersect<TypeParam>(lineSegmentA, lineSegmentB, true)));
+}
+
+
+TYPED_TEST(LineSegmentTest, Intersect_TwoNonOverlappingLineSegmentsEndpointsNotConsidered_ReturnsFalse)
+{
+    using namespace cxutil::math;
+
+    const Point<TypeParam, 2> endPtA1;
+    const Point<TypeParam, 2> endPtA2{make2DTestPoint<TypeParam>(2, 2)};
+
+    LineSegment<TypeParam, 2> lineSegmentA{endPtA1, endPtA2};
+
+    const Point<TypeParam, 2> endPtB1{make2DTestPoint<TypeParam>(3, 3)};
+    const Point<TypeParam, 2> endPtB2{make2DTestPoint<TypeParam>(5, 5)};
+
+    LineSegment<TypeParam, 2> lineSegmentB{endPtB1, endPtB2};
+
+    ASSERT_FALSE((intersect<TypeParam>(lineSegmentA, lineSegmentB, true)));
+}
+
+
+TYPED_TEST(LineSegmentTest, Intersect_TwoParallelLineSegmentsEndpointsConsidered_ReturnsFalse)
+{
+    using namespace cxutil::math;
+
+    const Point<TypeParam, 2> endPtA1;
+    const Point<TypeParam, 2> endPtA2{make2DTestPoint<TypeParam>(2, 2)};
+
+    LineSegment<TypeParam, 2> lineSegmentA{endPtA1, endPtA2};
+
+    const Point<TypeParam, 2> endPtB1{make2DTestPoint<TypeParam>(1, 0)};
+    const Point<TypeParam, 2> endPtB2{make2DTestPoint<TypeParam>(3, 2)};
+
+    LineSegment<TypeParam, 2> lineSegmentB{endPtB1, endPtB2};
+
+    ASSERT_FALSE((intersect<TypeParam>(lineSegmentA, lineSegmentB, true)));
+}
+
+
+TYPED_TEST(LineSegmentTest, Intersect_TwoParallelLineSegmentsEndpointsNotConsidered_ReturnsFalse)
+{
+    using namespace cxutil::math;
+
+    const Point<TypeParam, 2> endPtA1;
+    const Point<TypeParam, 2> endPtA2{make2DTestPoint<TypeParam>(2, 2)};
+
+    LineSegment<TypeParam, 2> lineSegmentA{endPtA1, endPtA2};
+
+    const Point<TypeParam, 2> endPtB1{make2DTestPoint<TypeParam>(1, 0)};
+    const Point<TypeParam, 2> endPtB2{make2DTestPoint<TypeParam>(3, 2)};
+
+    LineSegment<TypeParam, 2> lineSegmentB{endPtB1, endPtB2};
+
+    ASSERT_FALSE((intersect<TypeParam>(lineSegmentA, lineSegmentB, false)));
+}
+

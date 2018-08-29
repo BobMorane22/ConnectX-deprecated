@@ -31,6 +31,7 @@
 
 #include "../include/Assertion.h"
 #include "../include/Vector.h"
+#include "../include/util.h"
 
 
 template <typename T, std::size_t N>
@@ -56,85 +57,85 @@ void cxutil::math::LineSegment<T, N>::checkInvariant() const
 }
 
 
-template <typename T, std::size_t N>
-bool areParallel(const cxutil::math::LineSegment<T, N>& p_first,
-                 const cxutil::math::LineSegment<T, N>& p_second)
+template <typename T>
+bool cxutil::math::areParallel(const cxutil::math::LineSegment<T, 2>& p_first,
+                               const cxutil::math::LineSegment<T, 2>& p_second)
 {
     using namespace cxutil::math;
 
-    if(N == 1)
-    {
-        return true;
-    }
+    const Vector<T, 2> v1{p_first.firstEndpoint(), p_first.secondEndpoint()};
+    const Vector<T, 2> v2{p_second.firstEndpoint(), p_second.secondEndpoint()};
 
-    const Vector<T, N> v1{p_first.firstEndpoint(), p_first.secondEndpoint()};
-    const Vector<T, N> v2{p_second.firstEndpoint(), p_second.secondEndpoint()};
+    T result;
+    crossProduct(v1, v2, result);
 
-    return crossProduct<T, N>(v1, v2) == Vector<T, N>();
+    return areLogicallyEqual<T>(result, 0.0);
 }
 
 
-template <typename T, std::size_t N>
-bool areOrthogonal(const cxutil::math::LineSegment<T, N>& p_first,
-                   const cxutil::math::LineSegment<T, N>& p_second)
+template <typename T>
+bool cxutil::math::areOrthogonal(const cxutil::math::LineSegment<T, 2>& p_first,
+                                 const cxutil::math::LineSegment<T, 2>& p_second)
 {
     using namespace cxutil::math;
 
-    if(N == 1)
-    {
-        return false;
-    }
+    const Vector<T, 2> v1{p_first.firstEndpoint(), p_first.secondEndpoint()};
+    const Vector<T, 2> v2{p_second.firstEndpoint(), p_second.secondEndpoint()};
 
-    const Vector<T, N> v1{p_first.firstEndpoint(), p_first.secondEndpoint()};
-    const Vector<T, N> v2{p_second.firstEndpoint(), p_second.secondEndpoint()};
-
-    return dotProduct<T, N>(v1, v2) == 0.0;
+    return areLogicallyEqual<T>(dotProduct<T, 2>(v1, v2), 0.0);
 }
 
 
-template <typename T, std::size_t N>
-bool areColinear(const cxutil::math::LineSegment<T, N>& p_first,
-                 const cxutil::math::LineSegment<T, N>& p_second)
+template <typename T>
+bool cxutil::math::areColinear(const cxutil::math::LineSegment<T, 2>& p_first,
+                               const cxutil::math::LineSegment<T, 2>& p_second)
 {
     using namespace cxutil::math;
 
-    if(N == 1)
-    {
-        return true;
-    }
+    const Vector<T, 2> p{Point<T, 2>(), p_first.firstEndpoint()};
+    const Vector<T, 2> r{Point<T, 2>(), p_first.secondEndpoint()};
 
-    const Vector<T, N> p{Point<T, N>(), p_first.firstEndpoint()};
-    const Vector<T, N> r{Vector<T, N>{Point<T, N>(), p_first.secondEndpoint()} - p};
+    const Vector<T, 2> q{Point<T, 2>(), p_second.firstEndpoint()};
+    const Vector<T, 2> s{Point<T, 2>(), p_second.secondEndpoint()};
 
-    const Vector<T, N> q{Point<T, N>(), p_second.firstEndpoint()};
-    const Vector<T, N> s{Vector<T, N>{Point<T, N>(), p_second.secondEndpoint()} - q};
+    T crossProdRS;
+    T crossProdQPR;
 
-    return (crossProduct<T, N>(r, s) == 0.0) && (crossProduct<T, N>(q - p, r) == 0.0);
+    crossProduct(r, s, crossProdRS);
+    crossProduct(q - p, r, crossProdQPR);
+
+    return areLogicallyEqual<T>(crossProdRS, 0.0) && areLogicallyEqual<T>(crossProdQPR, 0.0);
 }
 
 
-template <typename T, std::size_t N>
-bool intersect(const cxutil::math::LineSegment<T, N>& p_first,
-               const cxutil::math::LineSegment<T, N>& p_second,
-               bool p_considerEndpoints = false)
+template <typename T>
+bool cxutil::math::intersect(const cxutil::math::LineSegment<T, 2>& p_first,
+                             const cxutil::math::LineSegment<T, 2>& p_second,
+                             bool p_considerEndpoints)
 {
-    static_assert(N == 2, "This functionality is only supported in two dimensions for now.");
-
     using namespace cxutil::math;
 
-    const Vector<T, N> p{Point<T, N>(), p_first.firstEndpoint()};
-    const Vector<T, N> r{Vector<T, N>{Point<T, N>(), p_first.secondEndpoint()} - p};
+    const Vector<T, 2> p{Point<T, 2>(), p_first.firstEndpoint()};
+    const Vector<T, 2> r{Point<T, 2>(), p_first.secondEndpoint()};
 
-    const Vector<T, N> q{Point<T, N>(), p_second.firstEndpoint()};
-    const Vector<T, N> s{Vector<T, N>{Point<T, N>(), p_second.secondEndpoint()} - q};
+    const Vector<T, 2> q{Point<T, 2>(), p_second.firstEndpoint()};
+    const Vector<T, 2> s{Point<T, 2>(), p_second.secondEndpoint()};
 
-    if(areColinear<T, N>(p_first, p_second))
+    T crossProdQPR;
+    T crossProdQPS;
+    T crossProdRS;
+
+    crossProduct(q - p, r, crossProdQPR);
+    crossProduct(q - p, s, crossProdQPS);
+    crossProduct(r, s,     crossProdRS);
+
+    if(areColinear<T>(p_first, p_second))
     {
         // The two lines are collinear. Are they also overlapping?
-        const T dotProdSR{dotProduct<T, N>(s, r)};
-        const T dotProdRR{dotProduct<T, N>(s, r)};
+        const T dotProdSR{dotProduct<T, 2>(s, r)};
+        const T dotProdRR{dotProduct<T, 2>(r, r)};
 
-        const T t0{r / dotProdRR};
+        const T t0{dotProduct<T, 2>(q - p, r) / dotProdRR};
         const T t1{t0 + dotProdSR / dotProdRR};
 
         const bool sAndRInSameDirection{dotProdSR > 0};
@@ -162,20 +163,24 @@ bool intersect(const cxutil::math::LineSegment<T, N>& p_first,
             return isLeftOverlap || isRightOverlap || isTotalOverlap;
         }
     }
-    else if(areParallel<T, N>(p_first, p_second) && crossProduct<T, N>(q - p, r) != 0.0)
+    else if(areParallel<T>(p_first, p_second) && !areLogicallyEqual<T>(crossProdQPR, 0.0))
     {
         return false;
     }
-    else if(crossProduct<T, N>(r, s) != 0.0)
+    else if(!areLogicallyEqual<T>(crossProdRS, 0.0))
     {
-        const T t{crossProduct<T, N>(q - p, s) / crossProduct<T, N>(r, s)};
-        const T u{crossProduct<T, N>(q - p, r) / crossProduct<T, N>(r, s)};
+        const T t{crossProdQPS / crossProdRS};
+        const T u{crossProdQPR / crossProdRS};
 
-        return p_considerEndpoints ? (t >= 0.0 && t <= 1.0) && (u >= 0.0 && u <= 1.0) :
-                                     (t > 0.0 && t < 1.0) && (u > 0.0 && u < 1.0);
+        if(p_considerEndpoints)
+        {
+            return (t >= 0.0 && t <= 1.0) && (u >= 0.0 && u <= 1.0);
+        }
+        else
+        {
+            return (t > 0.0 && t < 1.0) && (u > 0.0 && u < 1.0);
+        }
     }
-
-    CX_ASSERT_MSG(false, "All cases should have been covered.");
 
     return false;
 }

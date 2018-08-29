@@ -156,11 +156,13 @@ using LineSegment3D = LineSegment<double, 3>;  ///< Convenience typedefs for the
  * @param  p_first  The fisrt line segment.
  * @param  p_second the second line segment.
  *
+ * @note Supported only for N=2 now.
+ *
  * @return @c true if the line segments are parallel, @c false otherwise.
  *
  **************************************************************************************************/
-template <typename T, std::size_t N>
-bool areParallel(const LineSegment<T, N>& p_first, const LineSegment<T, N>& p_second);
+template <typename T>
+bool areParallel(const LineSegment<T, 2>& p_first, const LineSegment<T, 2>& p_second);
 
 
 /***********************************************************************************************//**
@@ -172,11 +174,13 @@ bool areParallel(const LineSegment<T, N>& p_first, const LineSegment<T, N>& p_se
  * @param  p_first  The fisrt line segment.
  * @param  p_second the second line segment.
  *
+ * @note Supported only for N=2 now.
+ *
  * @return @c true if the line segments are othogonal, @c false otherwise.
  *
  **************************************************************************************************/
-template <typename T, std::size_t N>
-bool areOrthogonal(const LineSegment<T, N>& p_first, const LineSegment<T, N>& p_second);
+template <typename T>
+bool areOrthogonal(const LineSegment<T, 2>& p_first, const LineSegment<T, 2>& p_second);
 
 
 /***********************************************************************************************//**
@@ -193,8 +197,8 @@ bool areOrthogonal(const LineSegment<T, N>& p_first, const LineSegment<T, N>& p_
  * @return @c true if the line segments are co-linear, @c false otherwise.
  *
  **************************************************************************************************/
-template <typename T, std::size_t N>
-bool areColinear(const LineSegment<T, N>& p_first, const LineSegment<T, N>& p_second);
+template <typename T>
+bool areColinear(const LineSegment<T, 2>& p_first, const LineSegment<T, 2>& p_second);
 
 
 /***********************************************************************************************//**
@@ -212,8 +216,8 @@ bool areColinear(const LineSegment<T, N>& p_first, const LineSegment<T, N>& p_se
  * @return @c true if the line segments are parallel, @c false otherwise.
  *
  **************************************************************************************************/
-template <typename T, std::size_t N>
-bool intersect(const LineSegment<T, N>& p_first, const LineSegment<T, N>& p_second, bool p_considerEndpoints = false);
+template <typename T>
+bool intersect(const LineSegment<T, 2>& p_first, const LineSegment<T, 2>& p_second, bool p_considerEndpoints = false);
 
 ///@}
 
