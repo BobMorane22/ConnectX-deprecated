@@ -116,10 +116,10 @@ bool cxutil::math::intersect(const cxutil::math::LineSegment<T, 2>& p_first,
     using namespace cxutil::math;
 
     const Vector<T, 2> p{Point<T, 2>(), p_first.firstEndpoint()};
-    const Vector<T, 2> r{Point<T, 2>(), p_first.secondEndpoint()};
+    const Vector<T, 2> r{Vector<T, 2>{Point<T, 2>(), p_first.secondEndpoint()} - p};
 
     const Vector<T, 2> q{Point<T, 2>(), p_second.firstEndpoint()};
-    const Vector<T, 2> s{Point<T, 2>(), p_second.secondEndpoint()};
+    const Vector<T, 2> s{Vector<T, 2>{Point<T, 2>(), p_second.secondEndpoint()} - q};
 
     T crossProdQPR;
     T crossProdQPS;
