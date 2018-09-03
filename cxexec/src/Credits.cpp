@@ -20,30 +20,22 @@
  **************************************************************************************************/
 
 /***********************************************************************************************//**
- * @file    main.cpp
+ * @file    Credits.h
  * @author  Eric Poirier
- * @date    February 2018
+ * @date    September 2018
  * @version 1.0
  *
- * Implementation for the Connect X main function.
+ * Interface for the Connect X 'credits' dialog.
  *
  **************************************************************************************************/
 
-#include <gtkmm/application.h>
-
-#include <cxexec/include/GameWindow.h>
-#include <cxexec/include/NewGame.h>
-#include <cxexec/include/Help.h>
-#include <cxexec/include/About.h>
-#include <cxexec/include/Credits.h>
+#include "../include/Credits.h"
 
 
-int main(int argc, char** argv)
+cx::ui::Credits::Credits() : cxgui::dlg::Credits()
 {
-    Glib::RefPtr<Gtk::Application> app{Gtk::Application::create(argc, argv, "com.github.bobmorane22.connectx")};
 
-    cx::ui::Credits w;
-    w.show_all();
-
-   return app->run(w);
 }
+
+
+cx::ui::Credits::~Credits() = default;

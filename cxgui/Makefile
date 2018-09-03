@@ -31,6 +31,7 @@ INCLUDES     = -I$(SRC_ROOT)
 VPATH        = src
 
 SRCS     = About.cpp          \
+           Credits.cpp        \
            Disc.cpp           \
            GeometricShape.cpp \
            Help.cpp           \
@@ -39,6 +40,7 @@ SRCS     = About.cpp          \
            util.cpp
 
 OBJS     = $(OBJ_DIR)/About.o          \
+		   $(OBJ_DIR)/Credits.o        \
            $(OBJ_DIR)/Disc.o           \
            $(OBJ_DIR)/GeometricShape.o \
            $(OBJ_DIR)/Help.o           \

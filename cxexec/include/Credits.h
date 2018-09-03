@@ -20,30 +20,41 @@
  **************************************************************************************************/
 
 /***********************************************************************************************//**
- * @file    main.cpp
+ * @file    Credits.h
  * @author  Eric Poirier
- * @date    February 2018
+ * @date    September 2018
  * @version 1.0
  *
- * Implementation for the Connect X main function.
+ * Interface for the Connect X 'credits' dialog.
  *
  **************************************************************************************************/
 
-#include <gtkmm/application.h>
+#ifndef CREDITS_H_79F6EAC0_0B34_4F83_A151_D3D5212E6E08
+#define CREDITS_H_79F6EAC0_0B34_4F83_A151_D3D5212E6E08
 
-#include <cxexec/include/GameWindow.h>
-#include <cxexec/include/NewGame.h>
-#include <cxexec/include/Help.h>
-#include <cxexec/include/About.h>
-#include <cxexec/include/Credits.h>
+#include <cxgui/include/Credits.h>
 
-
-int main(int argc, char** argv)
+namespace cx
 {
-    Glib::RefPtr<Gtk::Application> app{Gtk::Application::create(argc, argv, "com.github.bobmorane22.connectx")};
 
-    cx::ui::Credits w;
-    w.show_all();
+namespace ui
+{
 
-   return app->run(w);
-}
+class Credits final : public cxgui::dlg::Credits
+{
+
+public:
+
+    Credits();
+    ~Credits();
+
+private:
+
+
+};
+
+} // namespace ui
+
+} // namespace cx
+
+#endif // CREDITS_H_79F6EAC0_0B34_4F83_A151_D3D5212E6E08
