@@ -36,14 +36,78 @@
 #include <cxutil/include/Assertion.h>
 #include <cxutil/include/Color.h>
 #include <cxutil/include/ContractException.h>
+#include <cxutil/include/narrow_cast.h>
 #include <cxutil/include/util.h>
 #include <cxgui/include/util.h>
 
 #include "../include/Credits.h"
 
 
-cxgui::dlg::Credits::Credits() : m_credits{m_textArea.get_buffer()}
+cxgui::dlg::Credits::Credits(const std::map<CreditedTeam, ContributorList>& p_contributorLists)
+ : m_fromFile{false}
 {
+    PRECONDITION(!p_contributorLists.empty());
+    PRECONDITION(p_contributorLists.size() < cxutil::narrow_cast<unsigned int>(CreditedTeam::LAST) + 1);
+
+    // Lists setup:
+    for(const auto& list : p_contributorLists)
+    {
+        switch(list.first)
+        {
+            case CreditedTeam::DEVELOPPEMENT:
+            {
+                m_devList = list.second;
+
+                break;
+            }
+            case CreditedTeam::DOCUMENTATION:
+            {
+                m_docList = list.second;
+
+                break;
+            }
+            case CreditedTeam::ARTWORK:
+            {
+                m_artList = list.second;
+
+                break;
+            }
+            default:
+            {
+                CX_ASSERT_MSG(false, "Impossible, not a defined team.");
+                break;
+            }
+        }
+    }
+
+    // Window setup:
+    set_title("Credits");
+
+    std::string iconPath{cxutil::path::currentExecutablePath()};
+    iconPath.append("/icons/cxicon16.png");
+
+    set_icon_from_file(iconPath);
+    set_position(Gtk::WIN_POS_CENTER);
+
+    // Layouts registration:
+    registerLayouts();
+
+    // Widgets registration in layouts:
+    registerWidgets();
+
+    // Layout and Widgets look:
+    configureLayoutsAndWidgets();
+
+    // Display all widgets:
+    show_all();
+}
+
+cxgui::dlg::Credits::Credits(const std::string& p_creditsFilePath)
+ : m_creditsFilePath{p_creditsFilePath}
+ , m_fromFile{true}
+{
+    PRECONDITION(!p_creditsFilePath.empty());
+
     // Window setup:
     set_title("Credits");
 
@@ -70,41 +134,6 @@ cxgui::dlg::Credits::Credits() : m_credits{m_textArea.get_buffer()}
 cxgui::dlg::Credits::~Credits() = default;
 
 
-void cxgui::dlg::Credits::addCredit(const std::string& p_name,
-                                    const std::string& p_email,
-                                    CreditedTeam p_team)
-{
-    PRECONDITION(!p_name.empty());
-    PRECONDITION(!p_email.empty());
-    PRECONDITION(p_email.find('@') != std::string::npos);
-
-    switch (p_team)
-    {
-        case CreditedTeam::DEVELOPPEMENT:
-        {
-            m_devList.emplace(p_name, p_email);
-            break;
-        }
-        case CreditedTeam::DOCUMENTATION:
-        {
-            m_docList.emplace(p_name, p_email);
-            break;
-        }
-        case CreditedTeam::ARTWORK:
-        {
-            m_artList.emplace(p_name, p_email);
-            break;
-        }
-        default:
-        {
-            CX_ASSERT_MSG(false, "Impossible, not a defined team.");
-
-            break;
-        }
-    }
-}
-
-
 void cxgui::dlg::Credits::registerLayouts()
 {
     // Add the main layout to the window:
@@ -121,39 +150,50 @@ void cxgui::dlg::Credits::registerWidgets()
 
 void cxgui::dlg::Credits::configureLayoutsAndWidgets()
 {
-    // Populate the lists:
-    populateListFromFile("No file for now...", m_devList);
-    populateListFromFile("No file for now...", m_docList);
-    populateListFromFile("No file for now...", m_artList);
+    if(m_fromFile)
+    {
+        populateListFromFile();
+    }
 
     // Format the text area to display the credits:
     formatTextArea();
 
     // Link the credits text buffer to its respective text view:
     m_textArea.set_buffer(m_credits);
-}
 
-
-void cxgui::dlg::Credits::populateListFromFile(const std::string& p_filePath,
-                                               cxgui::dlg::Credits::ContributorList& p_list)
-{
-    PRECONDITION(!p_filePath.empty());
-
-    (void)p_filePath; // Needed to read data from a file!
-
-    p_list.emplace("Eric Poirier", "eric.poirier7@bobmorane.com");
-}
-
-
-void cxgui::dlg::Credits::formatTextArea()
-{
     // Expand to whole window:
     m_scrollArea.set_hexpand(true);
     m_scrollArea.set_vexpand(true);
 
     // Read only:
     m_textArea.set_editable(false);
+}
 
+
+/***************************************************************************************************
+ * @brief Reads the contributor file and populates the list with its information.
+ *
+ * This method has not yet been implemented. The file reader is not ready.
+ *
+ **************************************************************************************************/
+void cxgui::dlg::Credits::populateListFromFile()
+{
+    // File read not yet implemented...
+    m_devList.emplace("Eric Poirier", "eric.poirier7@dev.com");
+    m_docList.emplace("Eric Poirier", "eric.poirier7@doc.com");
+    m_artList.emplace("Eric Poirier", "eric.poirier7@art.com");
+}
+
+
+/***************************************************************************************************
+ * @brief Transfers the information of the lists to the text area and adds proper formating.
+ *
+ * Note: I think using the tag table, this could be done only once and reused everytime.
+   investigate this upon second pass...
+ *
+ **************************************************************************************************/
+void cxgui::dlg::Credits::formatTextArea()
+{
     // Generate adequate formatting tags:
     Glib::RefPtr<Gtk::TextBuffer::Tag> listTitleTag{Gtk::TextBuffer::Tag::create()};
     listTitleTag->property_weight() = Pango::Weight::WEIGHT_BOLD;

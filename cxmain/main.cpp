@@ -41,7 +41,6 @@
 int main(int argc, char** argv)
 {
     Glib::RefPtr<Gtk::Application> app{Gtk::Application::create(argc, argv, "com.github.bobmorane22.connectx")};
-
     cx::ui::Credits w;
     w.show_all();
 

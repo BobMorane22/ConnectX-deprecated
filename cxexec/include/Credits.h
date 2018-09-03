@@ -40,12 +40,31 @@ namespace cx
 namespace ui
 {
 
+/***********************************************************************************************//**
+ * @class Credits
+ *
+ * @brief Credits dialog for the Connect X project.
+ *
+ * This class is mainly a wrapper around the cxgui::dlg::Credits class. The only difference is
+ * that this class uses a fixed path to a file to generate the contributor lists.
+ *
+ **************************************************************************************************/
 class Credits final : public cxgui::dlg::Credits
 {
 
 public:
 
+    /*******************************************************************************************//**
+     * @brief Default constructor.
+     *
+     **********************************************************************************************/
     Credits();
+
+
+    /*******************************************************************************************//**
+     * @brief Default destructor.
+     *
+     ***********************************************************************************************/
     ~Credits();
 
 private:

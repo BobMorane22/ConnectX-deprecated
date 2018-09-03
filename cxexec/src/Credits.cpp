@@ -20,21 +20,21 @@
  **************************************************************************************************/
 
 /***********************************************************************************************//**
- * @file    Credits.h
+ * @file    Credits.cpp
  * @author  Eric Poirier
  * @date    September 2018
  * @version 1.0
  *
- * Interface for the Connect X 'credits' dialog.
+ * Implementation for the Connect X 'credits' dialog.
  *
  **************************************************************************************************/
 
 #include "../include/Credits.h"
 
 
-cx::ui::Credits::Credits() : cxgui::dlg::Credits()
+cx::ui::Credits::Credits() : cxgui::dlg::Credits("test")
 {
-
+    // Put real file once the reader is ready...
 }
 
 
