@@ -35,6 +35,7 @@ SRCS     = About.cpp          \
            Disc.cpp           \
            GeometricShape.cpp \
            Help.cpp           \
+           License.cpp        \
            RAIICairoPath.cpp  \
            SectionTitle.cpp   \
            util.cpp
@@ -44,6 +45,7 @@ OBJS     = $(OBJ_DIR)/About.o          \
            $(OBJ_DIR)/Disc.o           \
            $(OBJ_DIR)/GeometricShape.o \
            $(OBJ_DIR)/Help.o           \
+           $(OBJ_DIR)/License.o        \
            $(OBJ_DIR)/RAIICairoPath.o  \
            $(OBJ_DIR)/SectionTitle.o   \
            $(OBJ_DIR)/util.o

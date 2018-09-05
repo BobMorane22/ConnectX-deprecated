@@ -29,6 +29,8 @@
  *
  **************************************************************************************************/
 
+#include <cxutil/include/util.h>
+
 #include <gtkmm/application.h>
 
 #include <cxexec/include/GameWindow.h>
@@ -36,12 +38,13 @@
 #include <cxexec/include/Help.h>
 #include <cxexec/include/About.h>
 #include <cxexec/include/Credits.h>
+#include <cxgui/include/License.h>
 
 
 int main(int argc, char** argv)
 {
     Glib::RefPtr<Gtk::Application> app{Gtk::Application::create(argc, argv, "com.github.bobmorane22.connectx")};
-    cx::ui::Credits w;
+    cxgui::dlg::License w{cxutil::path::currentExecutablePath() + "/../../ConnectX/COPYING"};
     w.show_all();
 
    return app->run(w);
