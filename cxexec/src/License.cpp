@@ -20,32 +20,25 @@
  **************************************************************************************************/
 
 /***********************************************************************************************//**
- * @file    main.cpp
+ * @file    License.cpp
  * @author  Eric Poirier
- * @date    February 2018
+ * @date    September 2018
  * @version 1.0
  *
- * Implementation for the Connect X main function.
+ * Implementation for the Connect X 'license' dialog.
  *
  **************************************************************************************************/
 
 #include <cxutil/include/util.h>
 
-#include <gtkmm/application.h>
-
-#include <cxexec/include/GameWindow.h>
-#include <cxexec/include/NewGame.h>
-#include <cxexec/include/Help.h>
-#include <cxexec/include/About.h>
-#include <cxexec/include/Credits.h>
-#include <cxexec/include/License.h>
+#include "../include/License.h"
 
 
-int main(int argc, char** argv)
+cx::ui::License::License() : cxgui::dlg::License{cxutil::path::currentExecutablePath()
+                                                 + "/ressources/COPYING"}
 {
-    Glib::RefPtr<Gtk::Application> app{Gtk::Application::create(argc, argv, "com.github.bobmorane22.connectx")};
-    cx::ui::License w;
-    w.show_all();
-
-   return app->run(w);
+    // Nothing to do...
 }
+
+
+cx::ui::License::~License() = default;

@@ -58,12 +58,14 @@ $(OBJ_DIR)/%.o: %.cpp
 make_dir:
 	mkdir -p $(OBJ_DIR)
 	mkdir -p $(BIN_ROOT)/$(MAIN)/icons
+	mkdir -p $(BIN_ROOT)/$(MAIN)/ressources
 
 runtime_dependencies:
 	cp $(MAKEFILE_LOC)/img/icons/cxicon16.png $(BIN_ROOT)/$(MAIN)/icons
 	cp $(MAKEFILE_LOC)/img/icons/cxicon32.png $(BIN_ROOT)/$(MAIN)/icons
 	cp $(MAKEFILE_LOC)/img/icons/cxicon64.png $(BIN_ROOT)/$(MAIN)/icons
 	cp $(MAKEFILE_LOC)/img/icons/cxicon128.png $(BIN_ROOT)/$(MAIN)/icons
+	cp $(MAKEFILE_LOC)/../COPYING $(BIN_ROOT)/$(MAIN)/ressources
 
 clean:
 	@echo Removing object files...
