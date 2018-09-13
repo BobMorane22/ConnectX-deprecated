@@ -36,13 +36,11 @@
 #ifndef UTIL_H_E3BBA82A_4FD4_454C_9525_F45B6370A29D
 #define UTIL_H_E3BBA82A_4FD4_454C_9525_F45B6370A29D
 
-// path
-#include <string>
-
-// math
 #include <algorithm>
 #include <cmath>
 #include <limits>
+#include <string>
+#include <vector>
 
 
 namespace cxutil
@@ -142,6 +140,36 @@ bool areLogicallyEqual(const T& p_lhs,
 }
 
 } // namespace math
+
+
+namespace string
+{
+
+/***********************************************************************************************//**
+ * @brief Vectorizes a string into tokens according to a delimiter.
+ *
+ * Splits a string into a vector according to a specific token. After this action, each element
+ * of the returned vector contains the information between two delimiters. If the text to
+ * vectorize is empty, an empty @c std::vector is returned. If the text is not empty but the
+ * delimiter is nowhere to be found in it, a one element @c std::vector is returned, containing
+ * the whole text. Finally, set @c p_keepDelimiter to @c true if you want to keep the ending
+ * delimiter in each vector elements (except maybe the last, of course).
+ *
+ * @param p_text      The string to vectorize.
+ * @param p_delimiter The delimiter from which to vectorize.
+ * @param p_keepToken @c true if you want the end delimiter to be included in the vector elements
+ *                    (when applicable), @c false otherwise.
+ *
+ * @pre @c p_delimiter is not an empty string.
+ *
+ * @return A vector of strings corresponding to the text passed as an argument.
+ *
+ ***************************************************************************************************/
+std::vector<std::string> vectorize(const std::string& p_text,
+                                   const std::string& p_delimiter,
+                                   const bool p_keepDelimiter = false);
+
+} // namespace string
 
 } // namespace cxutil
 

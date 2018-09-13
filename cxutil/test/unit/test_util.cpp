@@ -32,6 +32,7 @@
 
 #include <gtest/gtest.h>
 
+#include <cxutil/include/ContractException.h>
 #include <cxutil/include/util.h>
 
 
@@ -66,4 +67,95 @@ TEST(MathTests, AreLogicallyEqual_TwoLogicallyEqualDoublesNear0_ReturnsTrue)
 
     ASSERT_FALSE(lhs - rhs == expectedResult);
     ASSERT_TRUE(cxutil::math::areLogicallyEqual<double>(lhs - rhs, expectedResult, 3.0));
+}
+
+
+TEST(StringTests, Vectorize_EmptyDelimiter_ThrowsException)
+{
+    const std::string text     {"Some text"};
+    const std::string delimiter{""         };
+
+    ASSERT_THROW(cxutil::string::vectorize(text, delimiter), PreconditionException);
+}
+
+
+TEST(StringTests, Vectorize_EmptyTextValidDelimiter_ReturnsEmptyVector)
+{
+    const std::string text     {""  };
+    const std::string delimiter{"\n"};
+
+    const std::vector<std::string> vectorized{cxutil::string::vectorize(text, delimiter)};
+
+    ASSERT_TRUE(vectorized.empty());
+}
+
+
+TEST(StringTests, Vectorize_ValidTextValidButDelimiterNotFound_ReturnsTextInVector)
+{
+    // Data:
+    const std::string text     {"Line1\n"
+                                "Line2"};
+    const std::string delimiter{"aa"};
+
+    // Expected result:
+    const std::vector<std::string> vectorized{"Line1\n"
+                                              "Line2"};
+
+    // Test:
+    ASSERT_EQ(vectorized, cxutil::string::vectorize(text, delimiter));
+}
+
+
+TEST(StringTests, Vectorize_TextWithTwoLinesValidAndKeptDelimiter_VectorHasTheTwoLines)
+{
+    // Data:
+    const std::string text1    {"Line1\n"
+                                "Line2"};
+    const std::string text2    {"Line1\n"
+                                "Line2\n"};
+    const std::string delimiter{"\n"};
+
+    // Expected result:
+    const std::vector<std::string> vectorized1{"Line1\n", "Line2"  };
+    const std::vector<std::string> vectorized2{"Line1\n", "Line2\n"};
+
+    // Test:
+    ASSERT_EQ(vectorized1, cxutil::string::vectorize(text1, delimiter, true));
+    ASSERT_EQ(vectorized2, cxutil::string::vectorize(text2, delimiter, true));
+}
+
+
+TEST(StringTests, Vectorize_TextWithTwoLinesValidAndNotKeptDelimiter_VectorHasTheTwoLines)
+{
+    // Data:
+    const std::string text1    {"Line1\n"
+                                "Line2"};
+    const std::string text2    {"Line1\n"
+                                "Line2\n"};
+    const std::string delimiter{"\n"};
+
+    // Expected result:
+    const std::vector<std::string> vectorized1{"Line1", "Line2"};
+    const std::vector<std::string> vectorized2{"Line1", "Line2"};
+
+    // Test:
+    ASSERT_EQ(vectorized1, cxutil::string::vectorize(text1, delimiter));
+    ASSERT_EQ(vectorized2, cxutil::string::vectorize(text2, delimiter));
+}
+
+
+TEST(StringTests, Vectorize_OneTextTwoValidNotKeptDelimiters_TwoRespectivelyMatchingVectors)
+{
+    // Data:
+    const std::string text1    {"Line1\n"
+                                "Line2"};
+    const std::string text2    {"Line1\n\r"
+                                "Line2"};
+
+    // Expected result:
+    const std::vector<std::string> vectorized{"Line1", "Line2"};
+
+    // Test:
+    ASSERT_EQ(vectorized, cxutil::string::vectorize(text1, "\n"  ));
+    ASSERT_EQ(vectorized, cxutil::string::vectorize(text2, "\n\r"));
 }

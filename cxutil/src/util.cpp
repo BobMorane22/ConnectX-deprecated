@@ -33,6 +33,7 @@
 #include <linux/limits.h>
 
 #include "../include/Assertion.h"
+#include "../include/ContractException.h"
 #include "../include/util.h"
 
 
@@ -77,4 +78,72 @@ std::string cxutil::path::currentExecutablePath(const bool p_pathOnly)
     }
 
     return pathToCurrentExecutable;
+}
+
+
+std::vector<std::string> cxutil::string::vectorize(const std::string& p_text,
+                                                   const std::string& p_delimiter,
+                                                   const bool p_keepDelimiter)
+{
+    PRECONDITION(!p_delimiter.empty());
+
+    std::vector<std::string> vectorized;
+    std::size_t start{0};
+    std::size_t end{p_text.find(p_delimiter)};
+
+    std::cout << start << " " << end << std::endl;
+
+    // If the text string is empty, return empty vector:
+    if(p_text.empty())
+    {
+        return vectorized;
+    }
+
+    // If the delimiter has not been found once, return whole text
+    // in the vector:
+    if(!p_text.empty() && end == std::string::npos)
+    {
+        vectorized.push_back(p_text);
+
+        return vectorized;
+    }
+
+    // Delimiter has been found at least once, so we proceed to vectorize the
+    // text according to it:
+    while(end != std::string::npos)
+    {
+        if(p_keepDelimiter)
+        {
+            const std::size_t length{(end + p_delimiter.size()) - start};
+            vectorized.push_back(p_text.substr(start, length));
+
+            start = end + p_delimiter.size();
+            end   = p_text.find(p_delimiter, end + p_delimiter.size());
+        }
+        else
+        {
+            const std::size_t length{end - start};
+            vectorized.push_back(p_text.substr(start, length));
+
+            start = end + p_delimiter.size();
+            end   = p_text.find(p_delimiter, end + p_delimiter.size());
+        }
+
+        std::cout << start << " " << end << std::endl;
+
+        if(end == std::string::npos)
+        {
+            // If it exists, we must not forget the remaining of the string. There
+            // might not be another delimiter, but some contents could still be
+            // left:
+            if(start < p_text.size())
+            {
+                vectorized.push_back(p_text.substr(start, p_text.size() - start));
+            }
+
+            break;
+        }
+    }
+
+    return vectorized;
 }
