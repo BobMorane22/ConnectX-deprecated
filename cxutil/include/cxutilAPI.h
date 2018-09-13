@@ -36,9 +36,13 @@
 #include "Color.h"
 #include "Coordinate.h"
 #include "Date.h"
+#include "LineSegment.h"
 #include "Logger.h"
 #include "Name.h"
+#include "Point.h"
 #include "ReturnCode.h"
+#include "Time.h"
+#include "Vector.h"
 
 // Interfaces:
 #include "ICliObject.h"
@@ -50,6 +54,7 @@
 #include "Assertion.h"
 #include "ContractException.h"
 #include "narrow_cast.h"
+#include "util.h"
 
 #endif // CXUTILAPI_H_FCFC9F42_868C_4859_A16C_11D2013A3788
 
