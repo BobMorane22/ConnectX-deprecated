@@ -107,8 +107,6 @@ void cxgui::dlg::License::configureLayoutsAndWidgets()
  **************************************************************************************************/
 void cxgui::dlg::License::populateLicenseFromFile()
 {
-    // Replace by RAII with every cases handled as soon as possible.
-
     // Create a Textbuffer with the TagTable:
     m_license = Gtk::TextBuffer::create();
     m_textArea.set_buffer(m_license);
