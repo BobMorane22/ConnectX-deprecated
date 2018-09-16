@@ -30,6 +30,8 @@
  **************************************************************************************************/
 
 #include <algorithm>
+#include <fstream>
+#include <regex>
 
 #include <pangomm/fontdescription.h>
 
@@ -54,7 +56,7 @@ cxgui::dlg::Credits::Credits(const std::map<CreditedTeam, ContributorList>& p_co
     {
         switch(list.first)
         {
-            case CreditedTeam::DEVELOPPEMENT:
+            case CreditedTeam::DEVELOPMENT:
             {
                 m_devList = list.second;
 
@@ -178,10 +180,97 @@ void cxgui::dlg::Credits::configureLayoutsAndWidgets()
  **************************************************************************************************/
 void cxgui::dlg::Credits::populateListFromFile()
 {
-    // File read not yet implemented...
-    m_devList.emplace("Eric Poirier", "eric.poirier7@dev.com");
-    m_docList.emplace("Eric Poirier", "eric.poirier7@doc.com");
-    m_artList.emplace("Eric Poirier", "eric.poirier7@art.com");
+    // Open file:
+    std::ifstream in{m_creditsFilePath, std::ifstream::in};
+    CX_ASSERT(in.is_open());
+
+    // Read all content into a string stream, which we will parse later. We
+    // do this because this file will always stay of reasonable size,
+    // so it does not cost too much, but saves a lot of work!
+    std::stringstream sstr;
+    sstr << in.rdbuf();
+
+    // We close the stream, the information is now in the string stream.
+    in.close();
+
+    const std::string fileContents{sstr.str()};
+
+    // The string should contain at least one entry:
+    CX_ASSERT(!fileContents.empty());
+
+    // We 'vectorize' the string, such that each vector element is
+    // a line from the file:
+    std::vector<std::string> fileContentsByLine{cxutil::string::vectorize(fileContents, "\n")};
+
+    // We remove: 1) blank lines;
+    //            2) comment lines (starting with '#'):
+    const std::regex blankLineRegex{"(\\s|\\t)*"};
+
+    const auto isNotNeeded{
+        [&blankLineRegex](const std::string p_line)
+        {
+            if(p_line.empty())
+            {
+                return true;
+            }
+            else if(p_line[0] == '#')
+            {
+                return true;
+            }
+            else if(std::regex_match(p_line, blankLineRegex))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    };
+
+    const auto endAllContributors = std::remove_if(fileContentsByLine.begin(),
+                                                   fileContentsByLine.end(),
+                                                   isNotNeeded);
+
+    fileContentsByLine.resize(std::distance(fileContentsByLine.begin(), endAllContributors));
+
+    // The vector should contain at least one entry, otherwise we had no contributors!
+    CX_ASSERT_MSG(!fileContents.empty(), "There is no contributor listed in the contributor "
+                                         "file. Please add some.");
+
+    // Finally we add all entries that are left into the right contributor
+    // list:
+    for(auto& line : fileContentsByLine)
+    {
+        std::vector<std::string> contributor{cxutil::string::vectorize(line, ", ")};
+        CX_ASSERT(contributor.size() == 3);
+
+        // For readability:
+        const std::string team {contributor[0]};
+        const std::string name {contributor[1]};
+        const std::string email{contributor[2]};
+
+        CX_ASSERT_MSG(email.find("@") != std::string::npos, "There is no '@' character in "
+                                                            "one of the email address in the "
+                                                            "contributor file.");
+
+        if(team == "DEVELOPMENT")
+        {
+            m_devList.emplace(name, email);
+        }
+        else if(team == "DOCUMENTATION")
+        {
+            m_docList.emplace(name, email);
+        }
+        else if(team == "ARTWORK")
+        {
+            m_artList.emplace(name, email);
+        }
+        else
+        {
+            CX_ASSERT_MSG(false, "There is a syntax error in the contributor file.");
+        }
+    }
 }
 
 
@@ -189,7 +278,7 @@ void cxgui::dlg::Credits::populateListFromFile()
  * @brief Transfers the information of the lists to the text area and adds proper formating.
  *
  * Note: I think using the tag table, this could be done only once and reused everytime.
-   investigate this upon second pass...
+ * investigate this upon second pass...
  *
  **************************************************************************************************/
 void cxgui::dlg::Credits::formatTextArea()
@@ -223,7 +312,7 @@ void cxgui::dlg::Credits::formatTextArea()
     auto iter{m_credits->get_iter_at_offset(0)};
 
     // Handle developpement list:
-    iter = m_credits->insert_with_tag(iter, "Developpement\n", listTitleTag);
+    iter = m_credits->insert_with_tag(iter, "Development\n", listTitleTag);
 
     for(const auto& developper : m_devList)
     {

@@ -29,12 +29,13 @@
  *
  **************************************************************************************************/
 
+#include <cxutil/include/util.h>
+
 #include "../include/Credits.h"
 
 
-cx::ui::Credits::Credits() : cxgui::dlg::Credits("test")
+cx::ui::Credits::Credits() : cxgui::dlg::Credits(cxutil::path::currentExecutablePath() + "/ressources/contributors")
 {
-    // Put real file once the reader is ready...
 }
 
 

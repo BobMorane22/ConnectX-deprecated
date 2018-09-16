@@ -55,13 +55,13 @@ namespace dlg
  * If a team is not in this enumeration, it cannot be displayed in the dialog.
  *
  **************************************************************************************************/
-enum class CreditedTeam : unsigned int
+enum class CreditedTeam
 {
-    DEVELOPPEMENT  = 1             ,  ///< Developpement team.
-    DOCUMENTATION                  ,  ///< Documentation team.
-    ARTWORK                        ,  ///< Artwork team.
-    FIRST          = DEVELOPPEMENT ,  ///< Value for first group in the enum.
-    LAST           = ARTWORK          ///< Value for last group in the enum.
+    DEVELOPMENT  = 1             ,  ///< Development team.
+    DOCUMENTATION                ,  ///< Documentation team.
+    ARTWORK                      ,  ///< Artwork team.
+    FIRST          = DEVELOPMENT ,  ///< Value for first group in the enum.
+    LAST           = ARTWORK        ///< Value for last group in the enum.
 };
 
 
@@ -89,13 +89,13 @@ enum class CreditedTeam : unsigned int
  *
  *   -# <tt>team</tt> is the credited team the contributor contributed to. Note that its
  *      spelling must match (even the case) the spellint in the CreditedTeam enum,
- *      otherwise parsing will fail. Options are: @c DEVELOPPEMENT, @c DOCUMENTATION and
+ *      otherwise parsing will fail. Options are: @c DEVELOPMENT, @c DOCUMENTATION and
  *      @c ARTWORK .
  *
  *   -# <tt>full name</tt> is the full name (first and last name, in that order).
  *
  *   -# <tt>email</tt> is the contributor's email address. Note that this address must contain
- *      the '@' character to be valid. It will appear as clickabel to the user who would like
+ *      the '@' character to be valid. It will appear as clickable to the user who would like
  *      to reach a contributor, so make sure it is correct.
  *
  * Note that only one such line should appear on the same line in the file, otherwise parsing
