@@ -39,12 +39,29 @@
 #include <cxexec/include/About.h>
 #include <cxexec/include/Credits.h>
 #include <cxexec/include/License.h>
+#include <cxgui/include/MessageBox.h>
 
 
 int main(int argc, char** argv)
 {
+    using namespace cxgui::dlg;
+
     Glib::RefPtr<Gtk::Application> app{Gtk::Application::create(argc, argv, "com.github.bobmorane22.connectx")};
-    cx::ui::Credits w;
+
+    // Parent window:
+    Gtk::Window parent;
+
+    // Message box:
+    /*cxgui::dlg::MessageBox w{parent,
+                             cxgui::dlg::MessageType::INFORMATION,
+                             6,
+                             cxutil::path::currentExecutablePath() + "/ressources/cxmessages",
+                             false};*/
+
+    cxgui::dlg::MessageBox w{parent,
+                             cxgui::dlg::MessageType::QUESTION,
+                             "Are you okay?"};
+
     w.show_all();
 
    return app->run(w);

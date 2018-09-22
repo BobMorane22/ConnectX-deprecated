@@ -1,0 +1,51 @@
+#**************************************************************************************************
+#
+# Copyright (C) 2018 Connect X team
+#
+# This file is part of Connect X.
+#
+# Connect X is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Connect X is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Connect X.  If not, see <http://www.gnu.org/licenses/>.
+#
+#*************************************************************************************************/
+
+#**********************************************************************************************//**
+# @file    cxmessages
+# @author  Eric Poirier
+# @date    September 2018
+# @version 1.0
+#
+# Standard Connect X messages.
+#
+#*************************************************************************************************/
+
+# Message tag       Message visibility     Message content
+#
+
+CX_MSG-1            PRIMARY                The game is a draw!
+CX_MSG-1            SECONDARY              Play again?
+
+CX_MSG-2            PRIMARY                The game is going to be a draw!
+CX_MSG-2            SECONDARY              Play again?
+
+CX_MSG-3            PRIMARY                Do you really want to reinitialize the game?
+CX_MSG-3            SECONDARY              This will cancel all your current moves.
+
+CX_MSG-4            PRIMARY                The game board dimensions do not agree with the in-a-row value you have chosen.
+CX_MSG-4            SECONDARY              Please enter new game board dimensions or a new in-a-row value.
+
+CX_MSG-5            PRIMARY                The game board dimensions you have chosen do not allow all players the same amount of moves.
+CX_MSG-5            SECONDARY              Please enter new values.
+
+CX_MSG-6            PRIMARY                You cannot unregister any more players.
+CX_MSG-6            SECONDARY              You need at least two players registered.
