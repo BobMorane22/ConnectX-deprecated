@@ -20,44 +20,28 @@
  **************************************************************************************************/
 
 /***********************************************************************************************//**
- * @file    main.cpp
+ * @file    MessageBox.cpp
  * @author  Eric Poirier
- * @date    February 2018
+ * @date    September 2018
  * @version 1.0
  *
- * Implementation for the Connect X main function.
+ * Implementation for a Connect X message box feeding from a message file.
  *
  **************************************************************************************************/
 
 #include <cxutil/include/util.h>
 
-#include <gtkmm/application.h>
-
-#include <cxexec/include/GameWindow.h>
-#include <cxexec/include/NewGame.h>
-#include <cxexec/include/Help.h>
-#include <cxexec/include/About.h>
-#include <cxexec/include/Credits.h>
-#include <cxexec/include/License.h>
-#include <cxexec/include/MessageBox.h>
+#include "../include/MessageBox.h"
 
 
-int main(int argc, char** argv)
+cx::ui::MessageBox::MessageBox(Gtk::Window&                   p_parent,
+                               const cxgui::dlg::MessageType  p_messageType,
+                               const int                      p_messageNumber,
+                               const bool                     p_makeModal)
+ : cxgui::dlg::MessageBox(p_parent,
+                          p_messageType,
+                          p_messageNumber,
+                          cxutil::path::currentExecutablePath() + "/ressources/cxmessages",
+                          p_makeModal)
 {
-    using namespace cxgui::dlg;
-
-    Glib::RefPtr<Gtk::Application> app{Gtk::Application::create(argc, argv, "com.github.bobmorane22.connectx")};
-
-    // Parent window:
-    Gtk::Window parent;
-
-    // Message box:
-    cx::ui::MessageBox w{parent,
-                         cxgui::dlg::MessageType::QUESTION,
-                         6,
-                         false};
-
-    w.show_all();
-
-    return app->run(w);
 }
