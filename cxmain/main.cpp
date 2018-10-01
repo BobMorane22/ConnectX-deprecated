@@ -29,11 +29,12 @@
  *
  **************************************************************************************************/
 
-#include <cxutil/include/util.h>
+#include <string>
 
 #include <gtkmm/application.h>
+#include <gtkmm/button.h>
 
-#include<gtkmm/button.h>
+#include <cxutil/include/util.h>
 
 #include <cxexec/include/GameWindow.h>
 #include <cxexec/include/NewGame.h>
@@ -56,6 +57,14 @@ public:
 private:
 
     Gtk::Button m_btn1;
+
+    virtual void setWindowIcon() override
+    {
+        std::string iconPath{cxutil::path::currentExecutablePath()};
+        iconPath.append("/icons/cxicon16.png");
+
+        set_icon_from_file(iconPath);
+    }
 
     virtual void registerLayouts() override
     {

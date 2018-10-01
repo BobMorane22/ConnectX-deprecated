@@ -55,6 +55,11 @@ namespace dlg
  *
  *   -# Define all the layouts and widgets you need.
  *
+ *   -# Override the @c setWindowIcon() method. In this method, you should specify a
+ *      path on the system where the icon file is located and load it up. Note that
+ *      the method does not ask for a path. You must have some kind of facility to
+ *      do so from inside the method.
+ *
  *   -# Override the @c registerLayouts() method. In this method, you should add all
  *      your layouts to the window main layout.
  *
@@ -96,6 +101,15 @@ protected:
 
 
 private:
+
+    /*******************************************************************************************//**
+     * @brief Sets an icon for the window.
+     *
+     * Override this method to specify a path for the window icon.
+     *
+     **********************************************************************************************/
+    virtual void setWindowIcon() = 0;
+
 
     /*******************************************************************************************//**
      * @brief Structures the layouts.
