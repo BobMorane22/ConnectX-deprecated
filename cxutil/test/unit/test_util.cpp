@@ -50,8 +50,6 @@ TEST(MathTests, AreLogicallyEqual_TwoLogicallyEqualDoubles_ReturnsTrue)
 
 TEST(MathTests, AreLogicallyEqual_TwoLogicallyEqualDoublesNear0_ReturnsTrue)
 {
-    std::cout << std::setprecision(40);
-
     const double expectedResult{0.0};
     double lhs{0.0};
 
@@ -61,9 +59,6 @@ TEST(MathTests, AreLogicallyEqual_TwoLogicallyEqualDoublesNear0_ReturnsTrue)
     }
 
     const double rhs{1.0};
-
-    std::cout << lhs-rhs << std::endl;
-    std::cout << std::numeric_limits<double>::epsilon() << std::endl;
 
     ASSERT_FALSE(lhs - rhs == expectedResult);
     ASSERT_TRUE(cxutil::math::areLogicallyEqual<double>(lhs - rhs, expectedResult, 3.0));
