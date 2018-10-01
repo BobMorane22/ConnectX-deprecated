@@ -39,7 +39,8 @@ SRCS     = About.cpp          \
            MessageBox.cpp     \
            RAIICairoPath.cpp  \
            SectionTitle.cpp   \
-           util.cpp
+           util.cpp           \
+           Window.cpp
 
 OBJS     = $(OBJ_DIR)/About.o          \
 		   $(OBJ_DIR)/Credits.o        \
@@ -50,7 +51,8 @@ OBJS     = $(OBJ_DIR)/About.o          \
            $(OBJ_DIR)/MessageBox.o     \
            $(OBJ_DIR)/RAIICairoPath.o  \
            $(OBJ_DIR)/SectionTitle.o   \
-           $(OBJ_DIR)/util.o
+           $(OBJ_DIR)/util.o           \
+           $(OBJ_DIR)/Window.o
 
 LIBS = -lcxbase \
        -lcxutil
