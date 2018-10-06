@@ -43,7 +43,8 @@ SRCS     = About.cpp          \
            NDADisc.cpp        \
            NewGame.cpp        \
            NewPlayerRow.cpp   \
-           NewPlayersList.cpp
+           NewPlayersList.cpp \
+           Window.cpp
 
 OBJS     = $(OBJ_DIR)/About.o          \
            $(OBJ_DIR)/Credits.o        \
@@ -57,7 +58,8 @@ OBJS     = $(OBJ_DIR)/About.o          \
            $(OBJ_DIR)/NDADisc.o        \
            $(OBJ_DIR)/NewGame.o        \
            $(OBJ_DIR)/NewPlayerRow.o   \
-           $(OBJ_DIR)/NewPlayersList.o
+           $(OBJ_DIR)/NewPlayersList.o \
+           $(OBJ_DIR)/Window.o
 
 LIBS = -lcxutil \
        -lcxbase \
