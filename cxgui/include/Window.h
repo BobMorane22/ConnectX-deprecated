@@ -49,7 +49,7 @@ namespace dlg
  * Derive from this class to make a window. It offers a variety of goodies, one being that
  * you can easily configure your window after it has been realized. This helps clean up the
  * construction/destruction process and enforces uniformity. If you decide to use this base
- * class, you will (minimaly) need to do the following:
+ * class, you will (minimally) need to do the following:
  *
  *   -# Inherit from it.
  *
@@ -135,7 +135,7 @@ private:
      * @brief Configure the layouts' attributes.
      *
      * Override this method to have control on layouts' attributes. If you need to set anything
-     * else than a 'Layout A contains layout B' dependance, this is where it happens.
+     * else than a 'Layout A contains layout B' dependence, this is where it happens.
      *
      **********************************************************************************************/
     virtual void configureLayouts() = 0;
@@ -145,7 +145,7 @@ private:
      * @brief Configure widgets' attributes.
      *
      * Override this method to have control on the widgets' attributes. If you need to set anything
-     * else than a 'Widget A belongs to layout B' dependance, this is where it happens.
+     * else than a 'Widget A belongs to layout B' dependence, this is where it happens.
      *
      **********************************************************************************************/
     virtual void configureWidgets() = 0;
