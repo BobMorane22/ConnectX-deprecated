@@ -56,6 +56,8 @@ class License final : public cxgui::dlg::License
 
 public:
 
+///@{ @name Object Construction and Destruction
+
     /*******************************************************************************************//**
      * @brief Default constructor.
      *
@@ -71,6 +73,19 @@ public:
      *
      **********************************************************************************************/
     ~License();
+
+///@}
+
+
+private:
+
+///@{ @name Window setup
+
+    virtual void setWindowIcon()    override;
+    virtual void registerLayouts()  override;
+    virtual void configureLayouts() override;
+
+///@}
 
 };
 

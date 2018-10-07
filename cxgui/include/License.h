@@ -37,6 +37,8 @@
 #include <gtkmm/scrolledwindow.h>
 #include <gtkmm/window.h>
 
+#include "../include/Window.h"
+
 
 namespace cxgui
 {
@@ -49,13 +51,13 @@ namespace dlg
  *
  * @brief A simple 'license' dialog.
  *
- * Shows a liscense in plain text format in a dialog. No text formatting is possible. The license
+ * Shows a license in plain text format in a dialog. No text formatting is possible. The license
  * text is read into the dialog from a file containing the license text at construction.
  *
  * @invariant The license file path is a valid file path on the system.
  *
  **************************************************************************************************/
-class License : public Gtk::Window
+class License : public cxgui::dlg::Window
 {
 
 public:
@@ -86,9 +88,16 @@ public:
 
 private:
 
-    void registerLayouts();
-    void registerWidgets();
-    void configureLayoutsAndWidgets();
+///@{ @name Window setup
+
+    virtual void setWindowIcon()    = 0;
+    virtual void configureWindow()  override;
+    virtual void registerLayouts()  = 0;
+    virtual void registerWidgets()  override;
+    virtual void configureLayouts() = 0;
+    virtual void configureWidgets() override;
+
+///@}
 
 ///@{ @name Text area generation
 
@@ -96,9 +105,10 @@ private:
 
 ///@}
 
+    void checkInvariant() const;
+
 ///@{ @name Data members
 
-    Gtk::Grid                     m_mainLayout;       ///< The dialog's main layout.
     Gtk::TextView                 m_textArea;         ///< The text area displaying the license.
     Gtk::ScrolledWindow           m_scrollArea;       ///< The scrolling area.
     Glib::RefPtr<Gtk::TextBuffer> m_license;          ///< The buffer containing the license text.

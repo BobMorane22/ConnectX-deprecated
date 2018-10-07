@@ -42,36 +42,28 @@ cxgui::dlg::License::License(const std::string& p_licenseFilePath)
  : m_licenseFilePath{p_licenseFilePath}
 {
     PRECONDITION(!p_licenseFilePath.empty());
-
-    // Window setup:
-        set_title("License");
-
-        std::string iconPath{cxutil::path::currentExecutablePath()};
-        iconPath.append("/icons/cxicon16.png");
-
-        set_icon_from_file(iconPath);
-        set_position(Gtk::WIN_POS_CENTER);
-
-        // Layouts registration:
-        registerLayouts();
-
-        // Widgets registration in layouts:
-        registerWidgets();
-
-        // Layout and Widgets look:
-        configureLayoutsAndWidgets();
-
-        // Display all widgets:
-        show_all();
 }
 
 
 cxgui::dlg::License::~License() = default;
 
 
-void cxgui::dlg::License::registerLayouts()
+void cxgui::dlg::License::configureWindow()
 {
-    add(m_mainLayout);
+    set_title("License");
+    set_position(Gtk::WIN_POS_CENTER);
+
+    // We get the screen information to calculate good dimensions
+    // for the dialog. Sadly, by default, almost no information is
+    // displayed because of the scrolling area:
+    Glib::RefPtr<Gdk::Screen> screen{Gdk::Screen::get_default()};
+    CX_ASSERT(screen);
+
+    const int nbOfMonitors{screen->get_n_monitors()          };
+    const int width       {screen->get_width() / nbOfMonitors};
+    const int height      {screen->get_height()              };
+
+    set_size_request(width/4, height/2);
 }
 
 
@@ -82,7 +74,7 @@ void cxgui::dlg::License::registerWidgets()
 }
 
 
-void cxgui::dlg::License::configureLayoutsAndWidgets()
+void cxgui::dlg::License::configureWidgets()
 {
     populateLicenseFromFile();
 
@@ -95,6 +87,10 @@ void cxgui::dlg::License::configureLayoutsAndWidgets()
 
     // Read only:
     m_textArea.set_editable(false);
+
+    show_all();
+
+    INVARIANTS();
 }
 
 
@@ -121,4 +117,10 @@ void cxgui::dlg::License::populateLicenseFromFile()
     m_license->set_text(sstr.str());
 
     in.close();
+}
+
+
+void cxgui::dlg::License::checkInvariant() const
+{
+    INVARIANT(!m_licenseFilePath.empty());
 }

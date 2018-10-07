@@ -32,6 +32,7 @@
 #include <cxutil/include/util.h>
 
 #include "../include/License.h"
+#include "../include/util.h"
 
 
 cx::ui::License::License() : cxgui::dlg::License{cxutil::path::currentExecutablePath()
@@ -42,3 +43,21 @@ cx::ui::License::License() : cxgui::dlg::License{cxutil::path::currentExecutable
 
 
 cx::ui::License::~License() = default;
+
+
+void cx::ui::License::setWindowIcon()
+{
+    cx::ui::setConnectXWindowIcon(this, cx::ui::IconSize::PIXELS_16);
+}
+
+
+void cx::ui::License::registerLayouts()
+{
+    // Nothing to do, only the main layout is used.
+}
+
+
+void cx::ui::License::configureLayouts()
+{
+    // Nothing to do, only the main layout is used.
+}
