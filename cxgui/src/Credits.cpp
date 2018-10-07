@@ -25,14 +25,16 @@
  * @date    September 2018
  * @version 1.0
  *
- * Implementation for a simple credits dialog.
+ * Implementation for a simple 'credits' dialog.
  *
  **************************************************************************************************/
 
 #include <algorithm>
 #include <fstream>
 #include <regex>
+#include <vector>
 
+#include <gdkmm/screen.h>
 #include <pangomm/fontdescription.h>
 
 #include <cxutil/include/Assertion.h>
@@ -43,6 +45,63 @@
 #include <cxgui/include/util.h>
 
 #include "../include/Credits.h"
+
+
+namespace
+{
+
+/***************************************************************************************************
+ * @brief Transfer the contributor list information to the credits text buffer.
+ *
+ * This helper function transfers the contents of any contributor list to a text buffer. This
+ * function mostly exist to remove code duplication.
+ *
+ * @param p_iterator An iterator representing a position in the text buffer.
+ * @param p_title    The title of the new section to create in the text buffer. All the transeferd
+ *                   information will go in between sections.
+ * @param p_credits  The credits text buffer.
+ * @param p_list     The contributor's list.
+ * @param p_tags     The needed tags for proper formatting.
+ *
+ * @pre The title must be a non empty string.
+ * @pre There has to be exactly three tags (one for the title, one for the contributor's name
+ *      and one for its email address, in that order).
+ * @pre Every tag should be valid.
+ *
+ **************************************************************************************************/
+void transferFromList(Gtk::TextIter& p_iterator,
+                      const std::string& p_title,
+                      Glib::RefPtr<Gtk::TextBuffer> p_credits,
+                      const cxgui::dlg::Credits::ContributorList& p_list,
+                      const std::vector<Glib::RefPtr<Gtk::TextBuffer::Tag>>& p_tags)
+{
+    PRECONDITION(!p_title.empty());
+    PRECONDITION(p_tags.size() == 3);
+
+    for(const auto& tag : p_tags)
+    {
+        PRECONDITION(tag);
+    }
+
+    const Glib::RefPtr<Gtk::TextBuffer::Tag> listTitleTag{p_tags[0]};
+    const Glib::RefPtr<Gtk::TextBuffer::Tag> nameTag     {p_tags[1]};
+    const Glib::RefPtr<Gtk::TextBuffer::Tag> emailTag    {p_tags[2]};
+
+    p_iterator = p_credits->insert_with_tag(p_iterator, p_title + "\n", listTitleTag);
+
+    for(const auto& contributor : p_list)
+    {
+        // Developper name:
+        p_iterator = p_credits->insert_with_tag(p_iterator, contributor.first, nameTag);
+
+        // Formatted developper email address
+        p_iterator = p_credits->insert(p_iterator, " <");
+        p_iterator = p_credits->insert_with_tag(p_iterator, contributor.second, emailTag);
+        p_iterator = p_credits->insert(p_iterator, ">\n");
+    }
+}
+
+} // unamed namespace
 
 
 cxgui::dlg::Credits::Credits(const std::map<CreditedTeam, ContributorList>& p_contributorLists)
@@ -82,26 +141,7 @@ cxgui::dlg::Credits::Credits(const std::map<CreditedTeam, ContributorList>& p_co
         }
     }
 
-    // Window setup:
-    set_title("Credits");
-
-    std::string iconPath{cxutil::path::currentExecutablePath()};
-    iconPath.append("/icons/cxicon16.png");
-
-    set_icon_from_file(iconPath);
-    set_position(Gtk::WIN_POS_CENTER);
-
-    // Layouts registration:
-    registerLayouts();
-
-    // Widgets registration in layouts:
-    registerWidgets();
-
-    // Layout and Widgets look:
-    configureLayoutsAndWidgets();
-
-    // Display all widgets:
-    show_all();
+    INVARIANTS();
 }
 
 cxgui::dlg::Credits::Credits(const std::string& p_creditsFilePath)
@@ -109,37 +149,28 @@ cxgui::dlg::Credits::Credits(const std::string& p_creditsFilePath)
  , m_fromFile{true}
 {
     PRECONDITION(!p_creditsFilePath.empty());
-
-    // Window setup:
-    set_title("Credits");
-
-    std::string iconPath{cxutil::path::currentExecutablePath()};
-    iconPath.append("/icons/cxicon16.png");
-
-    set_icon_from_file(iconPath);
-    set_position(Gtk::WIN_POS_CENTER);
-
-    // Layouts registration:
-    registerLayouts();
-
-    // Widgets registration in layouts:
-    registerWidgets();
-
-    // Layout and Widgets look:
-    configureLayoutsAndWidgets();
-
-    // Display all widgets:
-    show_all();
 }
 
 
 cxgui::dlg::Credits::~Credits() = default;
 
 
-void cxgui::dlg::Credits::registerLayouts()
+void cxgui::dlg::Credits::configureWindow()
 {
-    // Add the main layout to the window:
-    add(m_mainLayout);
+    set_title("Credits");
+    set_position(Gtk::WIN_POS_CENTER);
+
+    // We get the screen information to calculate good dimensions
+    // for the dialog. Sadly, by default, almost no information is
+    // displayed because of the scrolling area:
+    Glib::RefPtr<Gdk::Screen> screen{Gdk::Screen::get_default()};
+    CX_ASSERT(screen);
+
+    const int nbOfMonitors{screen->get_n_monitors()          };
+    const int width       {screen->get_width() / nbOfMonitors};
+    const int height      {screen->get_height()              };
+
+    set_size_request(width/3, height/2);
 }
 
 
@@ -150,7 +181,7 @@ void cxgui::dlg::Credits::registerWidgets()
 }
 
 
-void cxgui::dlg::Credits::configureLayoutsAndWidgets()
+void cxgui::dlg::Credits::configureWidgets()
 {
     if(m_fromFile)
     {
@@ -167,8 +198,13 @@ void cxgui::dlg::Credits::configureLayoutsAndWidgets()
     m_scrollArea.set_hexpand(true);
     m_scrollArea.set_vexpand(true);
 
+    m_scrollArea.set_policy(Gtk::POLICY_AUTOMATIC, Gtk::POLICY_AUTOMATIC);
+
     // Read only:
     m_textArea.set_editable(false);
+    m_textArea.set_cursor_visible(false);
+
+    show_all();
 }
 
 
@@ -271,14 +307,13 @@ void cxgui::dlg::Credits::populateListFromFile()
             CX_ASSERT_MSG(false, "There is a syntax error in the contributor file.");
         }
     }
+
+    INVARIANTS();
 }
 
 
 /***************************************************************************************************
  * @brief Transfers the information of the lists to the text area and adds proper formating.
- *
- * Note: I think using the tag table, this could be done only once and reused everytime.
- * investigate this upon second pass...
  *
  **************************************************************************************************/
 void cxgui::dlg::Credits::formatTextArea()
@@ -311,45 +346,31 @@ void cxgui::dlg::Credits::formatTextArea()
 
     auto iter{m_credits->get_iter_at_offset(0)};
 
-    // Handle developpement list:
-    iter = m_credits->insert_with_tag(iter, "Development\n", listTitleTag);
+    transferFromList(iter, "Development",   m_credits, m_devList, {listTitleTag, nameTag, emailTag});
+    transferFromList(iter, "Documentation", m_credits, m_docList, {listTitleTag, nameTag, emailTag});
+    transferFromList(iter, "Artwork",       m_credits, m_artList, {listTitleTag, nameTag, emailTag});
+}
 
-    for(const auto& developper : m_devList)
+
+void cxgui::dlg::Credits::checkInvariant() const
+{
+    const std::vector<cxgui::dlg::Credits::ContributorList> lists{m_devList, m_docList, m_artList};
+    std::size_t nbContributors{0};
+
+    for(const auto& list : lists)
     {
-        // Developper name:
-        iter = m_credits->insert_with_tag(iter, developper.first, nameTag);
-
-        // Formatted developper email address
-        iter = m_credits->insert(iter, " <");
-        iter = m_credits->insert_with_tag(iter, developper.second, emailTag);
-        iter = m_credits->insert(iter, ">\n");
+        for(const auto& contributor : list)
+        {
+            INVARIANT(!contributor.first.empty()                       );
+            INVARIANT(contributor.second.find('@') != std::string::npos);
+            nbContributors += list.size();
+        }
     }
 
-    // Handle documentation list:
-    iter = m_credits->insert_with_tag(iter, "Documentation\n", listTitleTag);
+    INVARIANT(nbContributors > 0);
 
-    for(const auto& documentationWriter : m_docList)
+    if(m_fromFile)
     {
-        // Developper name:
-        iter = m_credits->insert_with_tag(iter, documentationWriter.first, nameTag);
-
-        // Formatted developper email address
-        iter = m_credits->insert(iter, " <");
-        iter = m_credits->insert_with_tag(iter, documentationWriter.second, emailTag);
-        iter = m_credits->insert(iter, ">\n");
-    }
-
-    // Handle artwork list:
-    iter = m_credits->insert_with_tag(iter, "Artwork\n", listTitleTag);
-
-    for(const auto& artworkArtist : m_artList)
-    {
-        // Developper name:
-        iter = m_credits->insert_with_tag(iter, artworkArtist.first, nameTag);
-
-        // Formatted developper email address
-        iter = m_credits->insert(iter, " <");
-        iter = m_credits->insert_with_tag(iter, artworkArtist.second, emailTag);
-        iter = m_credits->insert(iter, ">\n");
+        INVARIANT(!m_creditsFilePath.empty());
     }
 }

@@ -54,6 +54,8 @@ class Credits final : public cxgui::dlg::Credits
 
 public:
 
+///@{ @name Object construction and destruction
+
     /*******************************************************************************************//**
      * @brief Default constructor.
      *
@@ -66,6 +68,19 @@ public:
      *
      ***********************************************************************************************/
     ~Credits();
+
+///@}
+
+
+private:
+
+///@{ @name Window setup
+
+    virtual void setWindowIcon()    override;
+    virtual void registerLayouts()  override;
+    virtual void configureLayouts() override;
+
+///@}
 
 };
 

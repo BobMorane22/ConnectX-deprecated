@@ -30,6 +30,7 @@
  **************************************************************************************************/
 
 #include <cxutil/include/util.h>
+#include <cxexec/include/util.h>
 
 #include "../include/Credits.h"
 
@@ -40,3 +41,21 @@ cx::ui::Credits::Credits() : cxgui::dlg::Credits(cxutil::path::currentExecutable
 
 
 cx::ui::Credits::~Credits() = default;
+
+
+void cx::ui::Credits::setWindowIcon()
+{
+    cx::ui::setConnectXWindowIcon(this, cx::ui::IconSize::PIXELS_16);
+}
+
+
+void cx::ui::Credits::registerLayouts()
+{
+    // Nothing to do here. Only the main layout is needed.
+}
+
+
+void cx::ui::Credits::configureLayouts()
+{
+    m_mainLayout.set_border_width(15);
+}

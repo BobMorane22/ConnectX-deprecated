@@ -32,15 +32,18 @@
 #include <string>
 
 #include <gtkmm/application.h>
-#include <gtkmm/button.h>
 
 #include <cxutil/include/util.h>
+
+// Refactored:
+#include <cxexec/include/About.h>
+#include <cxexec/include/Credits.h>
+
+// To be refactored:
 
 #include <cxexec/include/GameWindow.h>
 #include <cxexec/include/NewGame.h>
 #include <cxexec/include/Help.h>
-#include <cxexec/include/About.h>
-#include <cxexec/include/Credits.h>
 #include <cxexec/include/License.h>
 #include <cxexec/include/MessageBox.h>
 
@@ -52,7 +55,7 @@ int main(int argc, char** argv)
     Glib::RefPtr<Gtk::Application> app{Gtk::Application::create(argc, argv, "com.github.bobmorane22.connectx")};
 
     // Parent window:
-    cx::ui::About w;
+    cx::ui::Credits w;
 
     w.show_all();
 

@@ -91,8 +91,6 @@ std::vector<std::string> cxutil::string::vectorize(const std::string& p_text,
     std::size_t start{0};
     std::size_t end{p_text.find(p_delimiter)};
 
-    std::cout << start << " " << end << std::endl;
-
     // If the text string is empty, return empty vector:
     if(p_text.empty())
     {
@@ -128,8 +126,6 @@ std::vector<std::string> cxutil::string::vectorize(const std::string& p_text,
             start = end + p_delimiter.size();
             end   = p_text.find(p_delimiter, end + p_delimiter.size());
         }
-
-        std::cout << start << " " << end << std::endl;
 
         if(end == std::string::npos)
         {

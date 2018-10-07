@@ -38,7 +38,8 @@
 #include <gtkmm/grid.h>
 #include <gtkmm/scrolledwindow.h>
 #include <gtkmm/textview.h>
-#include <gtkmm/window.h>
+
+#include <cxgui/include/Window.h>
 
 
 namespace cxgui
@@ -88,7 +89,7 @@ enum class CreditedTeam
  * where:
  *
  *   -# <tt>team</tt> is the credited team the contributor contributed to. Note that its
- *      spelling must match (even the case) the spellint in the CreditedTeam enum,
+ *      spelling must match (even the case) the spelling in the CreditedTeam enum,
  *      otherwise parsing will fail. Options are: @c DEVELOPMENT, @c DOCUMENTATION and
  *      @c ARTWORK .
  *
@@ -98,18 +99,16 @@ enum class CreditedTeam
  *      the '@' character to be valid. It will appear as clickable to the user who would like
  *      to reach a contributor, so make sure it is correct.
  *
- * Note that only one such line should appear on the same line in the file, otherwise parsing
+ * Note that only one such entry should appear on a line in the file, otherwise parsing
  * will fail. Furthermore, blank lines and lines starting with '#' are ignored.
  *
  * @invariant Every list contains only non empty names.
  * @invariant Every list contains valid email addresses.
  * @invariant At least one contributor is listed (otherwise the dialog does not make sense).
- * @invariant If @c m_creditsFilePath is empty, the @c m_fromFile bolean is set to @c false,
- *            otherwise it is not empty.
- * @invariant @c m_creditsFilePath is a valid path on the system.
+ * @invariant The file path name, if it exists, is a valid path on the system.
  *
  **************************************************************************************************/
-class Credits : public Gtk::Window
+class Credits : public cxgui::dlg::Window
 {
 
 public:
@@ -168,9 +167,16 @@ public:
 
 private:
 
-    void registerLayouts();
-    void registerWidgets();
-    void configureLayoutsAndWidgets();
+///@{ @name Window setup
+
+    virtual void setWindowIcon()    = 0;
+    virtual void configureWindow()  override;
+    virtual void registerLayouts()  = 0;
+    virtual void registerWidgets()  override;
+    virtual void configureLayouts() = 0;
+    virtual void configureWidgets() override;
+
+///@}
 
 ///@{ @name Text Area Generation
 
@@ -178,6 +184,8 @@ private:
     void formatTextArea();
 
 ///@}
+
+    void checkInvariant() const;
 
 ///@{ @name Data members
 
@@ -189,8 +197,6 @@ private:
 
     ContributorList     m_artList;    ///< A list of names and corresponiding email addresses
                                       ///< for the documentation artwork artists.
-
-    Gtk::Grid           m_mainLayout; ///< The dialog's main layout.
 
     Gtk::ScrolledWindow m_scrollArea; ///< This is the scrolling area around the text.
 
