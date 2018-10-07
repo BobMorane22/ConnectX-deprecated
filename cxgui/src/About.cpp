@@ -47,7 +47,7 @@ namespace
  *
  * Two formats are available, depending on the copyright years range. If the copyright is only
  * valid in 20XX, for example, the format <tt>Copyright © 20XX Owner</tt> will be used. If the
- * copiright is valid from 20XX to 20YY (with XX < YY), the the format will be:
+ * copyright is valid from 20XX to 20YY (with XX < YY), the the format will be:
  * <tt>Copyright © 20XX-20YY Owner</tt>.
  *
  * @param p_copyrightInfo A structure containing the necessary copyright information.
@@ -131,22 +131,7 @@ cxgui::dlg::About::About(const ApplicationInformation& p_appInfo,
     PRECONDITION(!p_appInfo.m_name.empty());
     PRECONDITION(!p_appInfo.m_version.empty());
 
-    // Window setup:
-    set_title("About Connect X");
-
-    std::string iconPath{cxutil::path::currentExecutablePath()};
-    iconPath.append("/icons/cxicon16.png");
-
-    set_icon_from_file(iconPath);
-    set_position(Gtk::WIN_POS_CENTER);
-
-    // Layouts registration:
-    registerLayouts();
-
-    // Widgets registration in layouts:
-    registerWidgets();
-
-    // Layout and Widgets look:
+    // Artwork:
     const bool artworkDefined{!p_appInfo.m_pathToArtwork.empty()};
 
     if(artworkDefined)
@@ -167,6 +152,46 @@ cxgui::dlg::About::About(const ApplicationInformation& p_appInfo,
 
     m_copyrightInformation.set_label(buildCopyrightNotice(p_cpInfo));
 
+    INVARIANTS();
+}
+
+
+cxgui::dlg::About::~About() = default;
+
+
+void cxgui::dlg::About::configureWindow()
+{
+    set_position(Gtk::WIN_POS_CENTER);
+    set_resizable(false);
+    set_title("About Connect X");
+
+    INVARIANTS();
+}
+
+
+void cxgui::dlg::About::registerWidgets()
+{
+    m_mainLayout.attach(m_artwork              ,0 ,0 ,3, 1);
+    m_mainLayout.attach(m_softwareName         ,0 ,1 ,3, 1);
+    m_mainLayout.attach(m_softwareDescription  ,0 ,2 ,3, 1);
+    m_mainLayout.attach(m_copyrightInformation ,0 ,3 ,3, 1);
+    m_mainLayout.attach(m_credits              ,0 ,4 ,1, 1);
+    m_mainLayout.attach(m_license              ,1 ,4 ,1, 1);
+    m_mainLayout.attach(m_close                ,2 ,4 ,1, 1);
+
+    INVARIANTS();
+}
+
+
+void cxgui::dlg::About::configureWidgets()
+{
+    // We adjust the widgets' paddings so that everything looks good:
+    m_mainLayout          .set_border_width(15);
+    m_softwareName        .set_margin_top(15);
+    m_softwareDescription .set_margin_top(15);
+    m_copyrightInformation.set_margin_top(15);
+    m_copyrightInformation.set_margin_bottom(15);
+
     // Here we show the widgets one by one, except for the artwork widget.
     // We deal with this on in the constructor:
     m_mainLayout          .show();
@@ -178,29 +203,6 @@ cxgui::dlg::About::About(const ApplicationInformation& p_appInfo,
     m_close               .show();
 
     INVARIANTS();
-}
-
-
-cxgui::dlg::About::~About() = default;
-
-
-void cxgui::dlg::About::registerLayouts()
-{
-    // Add the main layout to the window:
-    add(m_mainLayout);
-}
-
-
-void cxgui::dlg::About::registerWidgets()
-{
-    // Add all widgets to the main layout:
-    m_mainLayout.attach(m_artwork              ,0 ,0 ,3, 1);
-    m_mainLayout.attach(m_softwareName         ,0 ,1 ,3, 1);
-    m_mainLayout.attach(m_softwareDescription  ,0 ,2 ,3, 1);
-    m_mainLayout.attach(m_copyrightInformation ,0 ,3 ,3, 1);
-    m_mainLayout.attach(m_credits              ,0 ,4 ,1, 1);
-    m_mainLayout.attach(m_license              ,1 ,4 ,1, 1);
-    m_mainLayout.attach(m_close                ,2 ,4 ,1, 1);
 }
 
 

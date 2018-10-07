@@ -43,54 +43,7 @@
 #include <cxexec/include/Credits.h>
 #include <cxexec/include/License.h>
 #include <cxexec/include/MessageBox.h>
-#include <cxgui/include/Window.h>
 
-class MyWindow1 : public cxgui::dlg::Window
-{
-
-public:
-
-    MyWindow1();
-
-    virtual ~MyWindow1() = default;
-
-private:
-
-    Gtk::Button m_btn1;
-
-    virtual void setWindowIcon() override
-    {
-        std::string iconPath{cxutil::path::currentExecutablePath()};
-        iconPath.append("/icons/cxicon16.png");
-
-        set_icon_from_file(iconPath);
-    }
-
-    virtual void registerLayouts() override
-    {
-        // Nothing here...
-    }
-
-    virtual void registerWidgets() override
-    {
-        m_mainLayout.add(m_btn1);
-    }
-
-    virtual void configureLayouts() override
-    {
-        // Nothing here...
-    }
-
-    virtual void configureWidgets() override
-    {
-        m_btn1.set_label("Allo!");
-    }
-};
-
-MyWindow1::MyWindow1()
-{
-    m_btn1.show();
-}
 
 int main(int argc, char** argv)
 {
@@ -99,7 +52,7 @@ int main(int argc, char** argv)
     Glib::RefPtr<Gtk::Application> app{Gtk::Application::create(argc, argv, "com.github.bobmorane22.connectx")};
 
     // Parent window:
-    MyWindow1 w;
+    cx::ui::About w;
 
     w.show_all();
 

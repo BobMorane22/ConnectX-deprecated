@@ -20,19 +20,20 @@
  **************************************************************************************************/
 
 /***********************************************************************************************//**
- * @file    About.h
+ * @file    util.h
  * @author  Eric Poirier
- * @date    August 2018
+ * @date    October 2018
  * @version 1.0
  *
- * Interface for the Connect X 'about' dialog.
+ * Utilities for the cxexec library.
  *
  **************************************************************************************************/
 
-#ifndef ABOUT_H_6347564A_EF2C_4AA0_AB0B_8C3B9DD9F6F0
-#define ABOUT_H_6347564A_EF2C_4AA0_AB0B_8C3B9DD9F6F0
+#ifndef UTIL_H_AFF27968_0C9E_4E11_879E_35696052D2C8
+#define UTIL_H_AFF27968_0C9E_4E11_879E_35696052D2C8
 
-#include <cxgui/include/About.h>
+#include <cxutil/include/util.h>
+#include <cxgui/include/Window.h>
 
 
 namespace cx
@@ -42,49 +43,38 @@ namespace ui
 {
 
 /***********************************************************************************************//**
- * @class About
+ * @enum IconSize
  *
- * @brief About dialog for the Connect X project.
- *
- * This class represents the About dialog presented to the user for the Connect X application.
+ * @brief Connect X icon source image sizes.
  *
  **************************************************************************************************/
-class About final : public cxgui::dlg::About
+enum class IconSize
 {
-
-public:
-
-///@{ @name Object Construction and Destruction
-
-    /*******************************************************************************************//**
-     * Default constructor.
-     *
-     **********************************************************************************************/
-    About();
-
-
-    /*******************************************************************************************//**
-     * Default destructor.
-     *
-     **********************************************************************************************/
-    ~About();
-
-///@}
-
-private:
-
-///@{ @name Window setup
-
-    virtual void setWindowIcon() override;
-    virtual void registerLayouts() override;
-    virtual void configureLayouts() override;
-
-///@}
-
+    PIXELS_16, ///< Use a 16 pixels source image.
+    PIXELS_32, ///< Use a 32 pixels source image.
+    PIXELS_64, ///< Use a 64 pixels source image.
+    PIXELS_128,///< Use a 128 pixels source image.
+    UNDEFINED  ///< Use whatever default size there is.
 };
+
+
+/***********************************************************************************************//**
+ * @brief Set the Connect X window icon.
+ *
+ * Sets the Connect X window icon for a parent window.
+ *
+ * @param p_parent   The address of the parent window.
+ * @param p_iconSize The wanted icon size. This does not affect the size of the onscreen
+ *                   image. It only affects the quality of the source image file.
+ *
+ * @pre The parent window is valid.
+ *
+ **************************************************************************************************/
+void setConnectXWindowIcon(cxgui::dlg::Window* p_parent, const IconSize p_iconSize);
 
 } // namespace ui
 
 } // namespace cx
 
-#endif // ABOUT_H_6347564A_EF2C_4AA0_AB0B_8C3B9DD9F6F0
+#endif // UTIL_H_AFF27968_0C9E_4E11_879E_35696052D2C8
+

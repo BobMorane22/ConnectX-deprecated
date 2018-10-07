@@ -36,9 +36,10 @@
 #include <gtkmm/grid.h>
 #include <gtkmm/image.h>
 #include <gtkmm/label.h>
-#include <gtkmm/window.h>
 
 #include <cxutil/include/Date.h>
+
+#include "Window.h"
 
 
 namespace cxgui
@@ -85,6 +86,8 @@ namespace dlg
 /***********************************************************************************************//**
  * @class About
  *
+ * @brief A simple 'about' dialog.
+ *
  * Represents a simple 'about' dialog. These dialogs are helpful to provide information about the
  * software and the development team to the interested user. Mainly, it has three major sections:
  *
@@ -101,7 +104,7 @@ namespace dlg
  * @invariant All the application information is present (no empty strings).
  *
  **************************************************************************************************/
-class About : public Gtk::Window
+class About : public cxgui::dlg::Window
 {
 
 public:
@@ -141,10 +144,18 @@ private:
 
     void checkInvariant() const;
 
-    void registerLayouts();
-    void registerWidgets();
+///@{ @name Window setup
 
-    Gtk::Grid   m_mainLayout;           ///< The window's main layout.
+    virtual void setWindowIcon()    = 0;
+    virtual void configureWindow()  override;
+    virtual void registerLayouts()  = 0;
+    virtual void registerWidgets()  override;
+    virtual void configureLayouts() = 0;
+    virtual void configureWidgets() override;
+
+///@}
+
+///@{ @name Data members
 
     Gtk::Image  m_artwork;              ///< The artwork for the application.
 
@@ -161,6 +172,9 @@ private:
     Gtk::Button m_license;              ///< A button to launch the 'license' dialog.
 
     Gtk::Button m_close;                ///< A button to close the dialog.
+
+///@}
+
 };
 
 } // namespace dlg

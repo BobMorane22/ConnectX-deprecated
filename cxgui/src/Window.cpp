@@ -32,7 +32,7 @@ cxgui::dlg::Window::~Window() = default;
 void cxgui::dlg::Window::init()
 {
     setWindowIcon();
-
+    configureWindow();
     registerLayouts();
     registerWidgets();
     configureLayouts();

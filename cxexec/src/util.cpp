@@ -20,64 +20,39 @@
  **************************************************************************************************/
 
 /***********************************************************************************************//**
- * @file    About.cpp
+ * @file    util.cpp
  * @author  Eric Poirier
- * @date    August 2018
+ * @date    October 2018
  * @version 1.0
  *
- * Implementation for the Connect X 'about' dialog.
+ * Utilities for the cxexec library.
  *
  **************************************************************************************************/
 
-#include <cxutil/include/Date.h>
-#include <cxutil/include/util.h>
-#include <cxexec/include/util.h>
+#include <cxutil/include/ContractException.h>
 
-#include "../include/About.h"
+#include "../include/util.h"
 
 
-namespace
+void cx::ui::setConnectXWindowIcon(cxgui::dlg::Window* p_parent, const cx::ui::IconSize p_iconSize)
 {
+    PRECONDITION(p_parent != nullptr);
 
-const cxgui::ApplicationInformation APPLICATION_INFORMATION
-{
-    cxutil::path::currentExecutablePath() + "/icons/cxicon64.png",
-    "Connect X",
-    "1.0",
-    "A scalable connect 4 game."
-};
+    using namespace cx::ui;
 
-const cxgui::CopyrightInformation COPYRIGHT_INFORMATION
-{
-    "Eric Poirier",
-    cxutil::Date{2016, 1, 1},
-    cxutil::Date()
-};
+    std::string iconPath{cxutil::path::currentExecutablePath()};
 
-} // unamed namespace
+    switch(p_iconSize)
+    {
+        case IconSize::PIXELS_16:   iconPath.append("/icons/cxicon16.png");   break;
+        case IconSize::PIXELS_32:   iconPath.append("/icons/cxicon32.png");   break;
+        case IconSize::PIXELS_64:   iconPath.append("/icons/cxicon64.png");   break;
+        case IconSize::PIXELS_128:  iconPath.append("/icons/cxicon128.png");  break;
 
+        default:
+            iconPath.append("/icons/cxicon64.png");
+            break;
+    }
 
-cx::ui::About::About() : cxgui::dlg::About(APPLICATION_INFORMATION, COPYRIGHT_INFORMATION)
-{
-}
-
-
-cx::ui::About::~About() = default;
-
-
-void cx::ui::About::setWindowIcon()
-{
-    cx::ui::setConnectXWindowIcon(this, cx::ui::IconSize::PIXELS_16);
-}
-
-
-void cx::ui::About::registerLayouts()
-{
-    // Nothing to do: only the main layout is used.
-}
-
-
-void cx::ui::About::configureLayouts()
-{
-    // Nothing to do: only the main layout is used.
+    p_parent->set_icon_from_file(iconPath);
 }
