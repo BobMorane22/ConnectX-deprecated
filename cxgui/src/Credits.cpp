@@ -42,9 +42,9 @@
 #include <cxutil/include/ContractException.h>
 #include <cxutil/include/narrow_cast.h>
 #include <cxutil/include/util.h>
-#include <cxgui/include/util.h>
 
 #include "../include/Credits.h"
+#include "../include/util.h"
 
 
 namespace

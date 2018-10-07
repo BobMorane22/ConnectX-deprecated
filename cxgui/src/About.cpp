@@ -33,10 +33,10 @@
 
 #include <gtkmm/stock.h>
 
-#include <cxgui/include/util.h>
 #include <cxutil/include/util.h>
 
 #include "../include/About.h"
+#include "../include/util.h"
 
 
 namespace

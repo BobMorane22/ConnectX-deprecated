@@ -30,9 +30,9 @@
  **************************************************************************************************/
 
 #include <cxutil/include/util.h>
-#include <cxexec/include/util.h>
 
 #include "../include/Credits.h"
+#include "../include/util.h"
 
 
 cx::ui::Credits::Credits() : cxgui::dlg::Credits(cxutil::path::currentExecutablePath() + "/ressources/contributors")
