@@ -150,7 +150,7 @@ private:
     virtual void configureWindow()  override;
     virtual void registerLayouts()  = 0;
     virtual void registerWidgets()  override;
-    virtual void configureLayouts() = 0;
+    virtual void configureLayouts() override;
     virtual void configureWidgets() override;
 
 ///@}

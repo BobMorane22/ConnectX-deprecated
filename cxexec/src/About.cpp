@@ -75,9 +75,3 @@ void cx::ui::About::registerLayouts()
 {
     // Nothing to do: only the main layout is used.
 }
-
-
-void cx::ui::About::configureLayouts()
-{
-    // Nothing to do: only the main layout is used.
-}

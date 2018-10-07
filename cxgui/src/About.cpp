@@ -183,10 +183,16 @@ void cxgui::dlg::About::registerWidgets()
 }
 
 
+void cxgui::dlg::About::configureLayouts()
+{
+    m_mainLayout.set_border_width(15);
+    m_mainLayout.show();
+}
+
+
 void cxgui::dlg::About::configureWidgets()
 {
     // We adjust the widgets' paddings so that everything looks good:
-    m_mainLayout          .set_border_width(15);
     m_softwareName        .set_margin_top(15);
     m_softwareDescription .set_margin_top(15);
     m_copyrightInformation.set_margin_top(15);
@@ -194,7 +200,6 @@ void cxgui::dlg::About::configureWidgets()
 
     // Here we show the widgets one by one, except for the artwork widget.
     // We deal with this on in the constructor:
-    m_mainLayout          .show();
     m_softwareName        .show();
     m_softwareDescription .show();
     m_copyrightInformation.show();

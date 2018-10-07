@@ -77,7 +77,6 @@ private:
 
     virtual void setWindowIcon() override;
     virtual void registerLayouts() override;
-    virtual void configureLayouts() override;
 
 ///@}
 
