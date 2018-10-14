@@ -109,6 +109,8 @@ class About : public cxgui::dlg::Window
 
 public:
 
+///@{ @name Object Construction and Destruction
+
     /*******************************************************************************************//**
      * Constructor.
      *
@@ -139,21 +141,35 @@ public:
      **********************************************************************************************/
     virtual ~About();
 
+///@}
 
-private:
 
-    void checkInvariant() const;
+protected:
 
 ///@{ @name Window setup
 
-    virtual void setWindowIcon()    = 0;
-    virtual void configureWindow()  override;
-    virtual void registerLayouts()  = 0;
-    virtual void registerWidgets()  override;
-    virtual void configureLayouts() override;
-    virtual void configureWidgets() override;
+    virtual void setWindowIcon()           = 0;
+    virtual void configureWindow()         override;
+    virtual void registerLayouts()         = 0;
+    virtual void registerWidgets()         override;
+    virtual void configureLayouts()        override;
+    virtual void configureWidgets()        override;
+    virtual void configureSignalHandlers() override;
 
 ///@}
+
+
+private:
+
+///@{ @name Signal handlers
+
+    virtual void onCreditBtnClicked()  = 0;
+    virtual void onLicenseBtnClicked() = 0;
+    virtual void onCloseBtnClicked();
+
+///@}
+
+    void checkInvariant() const;
 
 ///@{ @name Data members
 
@@ -166,6 +182,9 @@ private:
     Gtk::Label  m_copyrightInformation; ///< The copyright information as 'Copyright (c) AAAA-BBBB Owner'
                                         ///< or 'Copyright (c) AAAA Owner' if the copyright start
                                         ///< year is the same as the end year.
+
+
+protected:
 
     Gtk::Button m_credits;              ///< A button to launch the 'credits' dialog.
 

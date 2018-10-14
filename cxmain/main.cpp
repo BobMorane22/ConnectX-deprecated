@@ -55,7 +55,7 @@ int main(int argc, char** argv)
     Glib::RefPtr<Gtk::Application> app{Gtk::Application::create(argc, argv, "com.github.bobmorane22.connectx")};
 
     // Parent window:
-    cx::ui::License w;
+    cx::ui::About w;
 
     w.show_all();
 

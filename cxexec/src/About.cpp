@@ -29,6 +29,7 @@
  *
  **************************************************************************************************/
 
+#include <cxutil/include/Assertion.h>
 #include <cxutil/include/Date.h>
 #include <cxutil/include/util.h>
 
@@ -74,4 +75,32 @@ void cx::ui::About::setWindowIcon()
 void cx::ui::About::registerLayouts()
 {
     // Nothing to do: only the main layout is used.
+}
+
+
+void cx::ui::About::configureSignalHandlers()
+{
+    // Important to call base class handers:
+    cxgui::dlg::About::configureSignalHandlers();
+
+    m_credits.signal_clicked().connect([this](){onCreditBtnClicked();}  );
+    m_license.signal_clicked().connect([this](){onLicenseBtnClicked();} );
+}
+
+
+void cx::ui::About::onCreditBtnClicked()
+{
+    m_creditsWindow.reset(new cx::ui::Credits());
+    CX_ASSERT(m_creditsWindow);
+
+    m_creditsWindow->show();
+}
+
+
+void cx::ui::About::onLicenseBtnClicked()
+{
+    m_licenseWindow.reset(new cx::ui::License());
+    CX_ASSERT(m_licenseWindow);
+
+    m_licenseWindow->show();
 }

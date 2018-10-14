@@ -37,5 +37,6 @@ void cxgui::dlg::Window::init()
     registerWidgets();
     configureLayouts();
     configureWidgets();
+    configureSignalHandlers();
 }
 

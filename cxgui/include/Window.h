@@ -65,6 +65,8 @@ class Window : public Gtk::Window
 
 public:
 
+///@{ @name Object Construction and Destruction
+
     /*******************************************************************************************//**
      * @brief Default constructor.
      *
@@ -78,14 +80,20 @@ public:
      **********************************************************************************************/
     virtual ~Window();
 
+///@}
+
 
 protected:
+
+///@{ @name Data members
 
     Gtk::Grid m_mainLayout; ///< The window's main layout. This is where every other widget/
                             ///< layout is embedded to make up the window.
 
+///@}
 
-private:
+
+///@{ @name Window setup
 
     /*******************************************************************************************//**
      * @brief Sets an icon for the window.
@@ -145,7 +153,18 @@ private:
     virtual void configureWidgets() = 0;
 
 
+    /*******************************************************************************************//**
+     * @brief Configure the window's signal handlers.
+     *
+     * Override this method to connect different signals to a handler function or method.
+     *
+     **********************************************************************************************/
+    virtual void configureSignalHandlers() = 0;
+
+
     void init();
+
+///@}
 
 };
 

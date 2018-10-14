@@ -87,6 +87,8 @@ private:
 
 ///@}
 
+    virtual void configureSignalHandlers() {}
+
 };
 
 } // namespace ui

@@ -32,8 +32,12 @@
 #ifndef ABOUT_H_6347564A_EF2C_4AA0_AB0B_8C3B9DD9F6F0
 #define ABOUT_H_6347564A_EF2C_4AA0_AB0B_8C3B9DD9F6F0
 
+#include <memory>
+
 #include <cxgui/include/About.h>
 
+#include "../include/Credits.h"
+#include "../include/License.h"
 
 namespace cx
 {
@@ -75,10 +79,26 @@ private:
 
 ///@{ @name Window setup
 
-    virtual void setWindowIcon() override;
-    virtual void registerLayouts() override;
+    virtual void setWindowIcon()           override;
+    virtual void registerLayouts()         override;
+    virtual void configureSignalHandlers() override;
 
 ///@}
+
+///@{ @name Signal handlers
+
+    virtual void onCreditBtnClicked()  override;
+    virtual void onLicenseBtnClicked() override;
+
+///@}
+
+///@{ @name Data members
+
+    std::unique_ptr<cx::ui::Credits> m_creditsWindow;
+    std::unique_ptr<cx::ui::License> m_licenseWindow;
+
+///@}
+
 
 };
 

@@ -211,6 +211,20 @@ void cxgui::dlg::About::configureWidgets()
 }
 
 
+void cxgui::dlg::About::configureSignalHandlers()
+{
+    m_close.signal_clicked().connect([this](){onCloseBtnClicked();});
+
+    INVARIANTS();
+}
+
+
+void cxgui::dlg::About::onCloseBtnClicked()
+{
+    close();
+}
+
+
 void cxgui::dlg::About::checkInvariant() const
 {
     INVARIANT(!m_softwareName.get_label().empty());
