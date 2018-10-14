@@ -39,56 +39,54 @@ cxgui::dlg::Help::Help(const std::string& p_visibleMsg)
 {
     PRECONDITION(!p_visibleMsg.empty());
 
-    // Window setup:
-    set_title("Help");
-
-    std::string iconPath{cxutil::path::currentExecutablePath()};
-    iconPath.append("/icons/cxicon16.png");
-
-    set_icon_from_file(iconPath);
-    set_position(Gtk::WIN_POS_CENTER);
-
     // Setup the help message:
     m_visibleMsg.set_text(p_visibleMsg);
-
-    // Layouts registration:
-    registerLayouts();
-
-    // Widgets registration in layouts:
-    registerWidgets();
-
-    // Layout and Widgets look:
-    configureLayoutsAndWidgets();
-
-    // Display all widgets:
-    show_all();
-
-    INVARIANTS();
 }
 
 
 cxgui::dlg::Help::~Help() = default;
 
 
-void cxgui::dlg::Help::registerLayouts()
+void cxgui::dlg::Help::configureWindow()
 {
-    add(m_layout);
+    set_title("Help");
+    set_position(Gtk::WIN_POS_CENTER);
 }
 
 
 void cxgui::dlg::Help::registerWidgets()
 {
-    m_layout.attach(m_visibleMsg, 0, 0, 2, 1);
-    m_layout.attach(m_cancel,     0, 1, 1, 1);
-    m_layout.attach(m_readOnline, 1, 1, 1, 1);
+    m_mainLayout.attach(m_visibleMsg, 0, 0, 2, 1);
+    m_mainLayout.attach(m_cancel,     0, 1, 1, 1);
+    m_mainLayout.attach(m_readOnline, 1, 1, 1, 1);
 }
 
 
-void cxgui::dlg::Help::configureLayoutsAndWidgets()
+void cxgui::dlg::Help::configureWidgets()
 {
     m_visibleMsg.set_use_markup(true);
     m_cancel.set_label("Cancel");
     m_readOnline.set_label("Read online");
+
+    show_all();
+}
+
+
+void cxgui::dlg::Help::configureSignalHandlers()
+{
+    m_cancel.signal_clicked().connect([this](){onCancel();});
+}
+
+
+/***************************************************************************************************
+ * @brief Handler for the 'Cancel' button.
+ *
+ * Cancels the help request and closes the help window.
+ *
+ **************************************************************************************************/
+void cxgui::dlg::Help::onCancel()
+{
+    close();
 }
 
 

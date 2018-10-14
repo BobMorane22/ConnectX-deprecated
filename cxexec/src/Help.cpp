@@ -29,6 +29,8 @@
  *
  **************************************************************************************************/
 
+#include <cstdio>
+#include <iostream>
 #include <sstream>
 
 #include <cxgui/include/util.h>
@@ -62,3 +64,50 @@ cx::ui::Help::Help() : cxgui::dlg::Help(buildHelpMessage())
 
 
 cx::ui::Help::~Help() = default;
+
+
+void cx::ui::Help::setWindowIcon()
+{
+    cx::ui::setConnectXWindowIcon(this, IconSize::PIXELS_16);
+}
+
+
+void cx::ui::Help::registerLayouts()
+{
+    // Nothing to do, only main layout is needed.
+}
+
+
+void cx::ui::Help::configureLayouts()
+{
+    // Nothing to do, only main layout is needed.
+}
+
+
+void cx::ui::Help::configureSignalHandlers()
+{
+    // Important to call the base class signal to reuse their handlers:
+    cxgui::dlg::Help::configureSignalHandlers();
+
+    m_readOnline.signal_clicked().connect([this](){onConsultOnlineHelp();});
+}
+
+
+/***************************************************************************************************
+ * @brief Handler for the 'Read online' button.
+ *
+ * Redirects to the Connect X documentation online page. It fires up the default web browser,
+ * redirects to the documentation page and closes the window.
+ *
+ **************************************************************************************************/
+void cx::ui::Help::onConsultOnlineHelp()
+{
+    // Open online page in web browser:
+    const std::string browser             {"xdg-open http:"                 };
+    const std::string documentationAddress{"github.com/BobMorane22/ConnectX"};
+    const std::string sysCommand          {browser + documentationAddress   };
+    system(sysCommand.c_str());
+
+    // Close the help window:
+    close();
+}

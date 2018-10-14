@@ -35,9 +35,9 @@
 #include <string>
 
 #include <gtkmm/button.h>
-#include <gtkmm/grid.h>
 #include <gtkmm/label.h>
-#include <gtkmm/window.h>
+
+#include "../include/Window.h"
 
 
 namespace cxgui
@@ -60,10 +60,12 @@ namespace dlg
  * @invariant The help message is a non empty string.
  *
  **************************************************************************************************/
-class Help : public Gtk::Window
+class Help : public cxgui::dlg::Window
 {
 
 public:
+
+///@{ @name Object Construction and Destruction
 
     /*******************************************************************************************//**
      * Constructor.
@@ -83,22 +85,42 @@ public:
      **********************************************************************************************/
     virtual ~Help();
 
+///@}
+
+
+protected:
+
+///@{ @name Window setup
+
+    virtual void setWindowIcon()           = 0;
+    virtual void configureWindow()         override;
+    virtual void registerLayouts()         = 0;
+    virtual void registerWidgets()         override;
+    virtual void configureLayouts()        = 0;
+    virtual void configureWidgets()        override;
+    virtual void configureSignalHandlers() override;
+
+///@}
+
+///@{ @name Data members
+
+    Gtk::Label  m_visibleMsg;  ///< The message to be presented to the user.
+    Gtk::Button m_readOnline;  ///< Button to consult the online documentation.
+    Gtk::Button m_cancel;      ///< Button to cancel the help request and close the dialog.
+
+///@}
+
 
 private:
 
+///@{ @name Signal Handlers
+
+    void onCancel();
+
+///@}
+
     void checkInvariant() const;
 
-    void registerLayouts();
-    void registerWidgets();
-    void configureLayoutsAndWidgets();
-
-
-    Gtk::Label  m_visibleMsg;  ///< The message to be presented to the user.
-
-    Gtk::Grid   m_layout;      ///< The window layout container.
-
-    Gtk::Button m_readOnline;  ///< Button to consult the online documentation.
-    Gtk::Button m_cancel;      ///< Button to cancel the help request and close the dialog.
 };
 
 } // namespace dlg

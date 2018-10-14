@@ -34,6 +34,8 @@
 
 #include <cxgui/include/Help.h>
 
+#include "../include/util.h"
+
 namespace cx
 {
 
@@ -63,6 +65,27 @@ public:
      *
      **********************************************************************************************/
     ~Help();
+
+
+protected:
+
+///@{ @name Window Setup
+
+    virtual void setWindowIcon()           override;
+    virtual void registerLayouts()         override;
+    virtual void configureLayouts()        override;
+    virtual void configureSignalHandlers() override;
+
+///@}
+
+private:
+
+///@{ @name Signal Handlers
+
+    void onConsultOnlineHelp();
+
+///@}
+
 };
 
 } // namespace ui
