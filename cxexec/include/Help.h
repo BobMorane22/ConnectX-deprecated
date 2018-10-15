@@ -73,7 +73,6 @@ protected:
 
     virtual void setWindowIcon()           override;
     virtual void registerLayouts()         override;
-    virtual void configureLayouts()        override;
     virtual void configureSignalHandlers() override;
 
 ///@}

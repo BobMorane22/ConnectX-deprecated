@@ -78,12 +78,6 @@ void cx::ui::Help::registerLayouts()
 }
 
 
-void cx::ui::Help::configureLayouts()
-{
-    // Nothing to do, only main layout is needed.
-}
-
-
 void cx::ui::Help::configureSignalHandlers()
 {
     // Important to call the base class signal to reuse their handlers:

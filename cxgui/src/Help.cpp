@@ -50,7 +50,9 @@ cxgui::dlg::Help::~Help() = default;
 void cxgui::dlg::Help::configureWindow()
 {
     set_title("Help");
+
     set_position(Gtk::WIN_POS_CENTER);
+    set_border_width(15);
 }
 
 
@@ -59,6 +61,13 @@ void cxgui::dlg::Help::registerWidgets()
     m_mainLayout.attach(m_visibleMsg, 0, 0, 2, 1);
     m_mainLayout.attach(m_cancel,     0, 1, 1, 1);
     m_mainLayout.attach(m_readOnline, 1, 1, 1, 1);
+}
+
+
+void cxgui::dlg::Help::configureLayouts()
+{
+    // This makes sure both buttons are of equal width:
+    m_mainLayout.set_column_homogeneous(true);
 }
 
 
@@ -75,6 +84,8 @@ void cxgui::dlg::Help::configureWidgets()
 void cxgui::dlg::Help::configureSignalHandlers()
 {
     m_cancel.signal_clicked().connect([this](){onCancel();});
+
+    INVARIANTS();
 }
 
 
