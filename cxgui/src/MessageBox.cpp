@@ -152,7 +152,7 @@ Gtk::ButtonsType getButtons(const cxgui::dlg::MessageType p_messageType)
  **************************************************************************************************/
 std::string extractMessage(const std::string& p_line, MessageVisibility& p_visibility)
 {
-    const std::string primary  {"PRIMARY"};
+    const std::string primary  {"PRIMARY"  };
     const std::string secondary{"SECONDARY"};
 
     std::string message;
@@ -258,7 +258,7 @@ cxgui::dlg::MessageBox::MessageBox(Gtk::Window&       p_parent,
     // The stream is working, we can go on. We scan each line ignoring lines that:
     //   1. Start with a '#' character. Those are comments.
     //   2. Lines that are only a combination of spaces and/or tabs.
-    const std::regex  ignored   {"((\\t|\\s)+)|#(\\w|\\W)*"                };
+    const std::regex  ignored   {"((\\t|\\s)+)|#(\\w|\\W)*"                 };
     const std::string messageTag{"CX_MSG-" + std::to_string(p_messageNumber)};
 
     std::string line;
