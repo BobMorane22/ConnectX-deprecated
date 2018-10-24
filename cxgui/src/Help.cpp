@@ -77,6 +77,17 @@ void cxgui::dlg::Help::configureWidgets()
     m_cancel.set_label("Cancel");
     m_readOnline.set_label("Read online");
 
+    // For some reason, the window is too tall. We shrink it vertically
+    // to match the container:
+    const int width {get_width()              };
+    const int height{m_mainLayout.get_height()};
+
+    // First make a size request:
+    set_size_request(width, height);
+
+    // Then resize accordinly:
+    resize(width, height);
+
     show_all();
 }
 
