@@ -37,6 +37,7 @@
 #include <cxutil/include/ContractException.h>
 
 #include "../include/MessageBox.h"
+#include "../include/Window.h"
 
 namespace
 {
@@ -207,11 +208,11 @@ std::string extractMessage(const std::string& p_line, MessageVisibility& p_visib
 } // unamed namespace
 
 
-cxgui::dlg::MessageBox::MessageBox(Gtk::Window&       p_parent,
-                                   const MessageType  p_messageType,
-                                   const std::string& p_primaryMessage,
-                                   const std::string& p_secondaryMessage,
-                                   const bool         p_makeModal)
+cxgui::dlg::MessageBox::MessageBox(cxgui::dlg::Window&  p_parent,
+                                   const MessageType    p_messageType,
+                                   const std::string&   p_primaryMessage,
+                                   const std::string&   p_secondaryMessage,
+                                   const bool           p_makeModal)
  : Gtk::MessageDialog(p_parent,
                       p_primaryMessage,
                       true,
@@ -220,6 +221,12 @@ cxgui::dlg::MessageBox::MessageBox(Gtk::Window&       p_parent,
                       p_makeModal)
 {
     PRECONDITION(!p_primaryMessage.empty());
+
+    // First, we connect to the realize signal:
+    signal_realize().connect([this]()
+                             {
+                                 init();
+                             });
 
     // We need to set this because otherwise, the primary message does
     // not appear in bold, which is inconsistent with the next constructor.
@@ -234,11 +241,11 @@ cxgui::dlg::MessageBox::MessageBox(Gtk::Window&       p_parent,
 }
 
 
-cxgui::dlg::MessageBox::MessageBox(Gtk::Window&       p_parent,
-                                   const MessageType  p_messageType,
-                                   const int          p_messageNumber,
-                                   const std::string& p_messagesFilePath,
-                                   const bool         p_makeModal)
+cxgui::dlg::MessageBox::MessageBox(cxgui::dlg::Window&  p_parent,
+                                   const MessageType    p_messageType,
+                                   const int            p_messageNumber,
+                                   const std::string&   p_messagesFilePath,
+                                   const bool           p_makeModal)
  : Gtk::MessageDialog(p_parent,
                       std::string(),
                       true,
@@ -247,6 +254,12 @@ cxgui::dlg::MessageBox::MessageBox(Gtk::Window&       p_parent,
                       p_makeModal)
 {
     PRECONDITION(!p_messagesFilePath.empty());
+
+    // First, we connect to the realize signal:
+    signal_realize().connect([this]()
+                             {
+                                 init();
+                             });
 
     // Both messages are empty, we have to go fetch them from the
     // file whose path is given as an argument. First, we make sure
@@ -321,3 +334,30 @@ cxgui::dlg::MessageBox::MessageBox(Gtk::Window&       p_parent,
 
 
 cxgui::dlg::MessageBox::~MessageBox() = default;
+
+
+cxgui::dlg::ResponseType cxgui::dlg::MessageBox::invoke()
+{
+    return static_cast<cxgui::dlg::ResponseType>(run());
+}
+
+
+/***************************************************************************************************
+ * @brief Window initialisation.
+ *
+ * This method is automatically called when the @c Window::signal_realize is sent by the message
+ * box, i.e. when every data structure used by the message box is constructed and ready for use.
+ * It is hence called after construction of the window and is therefore not subject to the
+ * constructor restriction to avoid virtual methods. You can call anything you want from here
+ * because you have the guarantee the message box is fully constructed.
+ *
+ * @note This is a minimal version of the cxgui::dlg::Window framework. I have decided not to
+ *       re-use it here because cxgui::dlg::Window is not a pure interface and I fear it could
+ *       lead to multiple inheritance issues...
+ *
+ **************************************************************************************************/
+void cxgui::dlg::MessageBox::init()
+{
+    setWindowIcon();
+}
+

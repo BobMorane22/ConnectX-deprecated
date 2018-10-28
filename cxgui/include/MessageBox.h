@@ -35,7 +35,13 @@
 #include <gtkmm/messagedialog.h>
 
 
-namespace Gtk { class Window; }
+namespace cxgui
+{
+    namespace dlg
+    {
+        class Window;
+    }
+}
 
 
 namespace cxgui
@@ -45,11 +51,47 @@ namespace dlg
 {
 
 /***********************************************************************************************//**
+ * @enum ResponseType
+ *
+ * @brief Types of responses.
+ *
+ * This lists the response types.
+ *
+ * @see invoke
+ *
+ **************************************************************************************************/
+enum class ResponseType
+{
+    NONE          = Gtk::RESPONSE_NONE,         ///< The dialog was destroyed (for some reason)
+                                                ///< during a call to @c invoke.
+
+    REJECT        = Gtk::RESPONSE_REJECT,       ///< The user has rejected the proposition.
+    ACCEPT        = Gtk::RESPONSE_ACCEPT,       ///< The user has accepted the proposition.
+
+    DELETE_EVENT  = Gtk::RESPONSE_DELETE_EVENT, ///< The user has destroyed the message box without
+                                                ///< answering.
+
+    OK            = Gtk::RESPONSE_OK,           ///< The user has read the information and whishes
+                                                ///< to resume the program execution.
+
+    APPLY         = Gtk::RESPONSE_APPLY,        ///< The user wishes to confirm an operation.
+    CANCEL        = Gtk::RESPONSE_CANCEL,       ///< The user wishes to cancel an operation.
+
+    CLOSE         = Gtk::RESPONSE_CLOSE,        ///< The user wishes to close the message box.
+    
+    YES           = Gtk::RESPONSE_YES,          ///< The user has answered 'yes' to a question.
+    NO            = Gtk::RESPONSE_NO,           ///< The user has answered 'no' to a question.
+
+    HELP          = Gtk::RESPONSE_HELP,         ///< Help was requested by the user.
+};
+
+
+/***********************************************************************************************//**
  * @enum MessageType
  *
  * @brief Types of messages.
  *
- * This list the major message types one can use in a MessageBox widget.
+ * This lists the major message types one can use in a MessageBox widget.
  *
  **************************************************************************************************/
 enum class MessageType
@@ -94,6 +136,7 @@ class MessageBox : public Gtk::MessageDialog
 
 public:
 
+
 ///@{ @name Object construction and destruction
 
     /*******************************************************************************************//**
@@ -116,11 +159,11 @@ public:
      * @pre The primary message is not an empty string.
      *
      **********************************************************************************************/
-    MessageBox(Gtk::Window&       p_parent,
-               const MessageType  p_messageType,
-               const std::string& p_primaryMessage,
-               const std::string& p_secondaryMessage = std::string(),
-               const bool         p_makeModal = false);
+    MessageBox(cxgui::dlg::Window&  p_parent,
+               const MessageType    p_messageType,
+               const std::string&   p_primaryMessage,
+               const std::string&   p_secondaryMessage = std::string(),
+               const bool           p_makeModal = false);
 
 
     /*******************************************************************************************//**
@@ -141,11 +184,11 @@ public:
      * @pre The message file path must point to a valid file on the disc.
      *
      **********************************************************************************************/
-    MessageBox(Gtk::Window&       p_parent,
-               const MessageType  p_messageType,
-               const int          p_messageNumber,
-               const std::string& p_messagesFilePath,
-               const bool         p_makeModal = false);
+    MessageBox(cxgui::dlg::Window&  p_parent,
+               const MessageType    p_messageType,
+               const int            p_messageNumber,
+               const std::string&   p_messagesFilePath,
+               const bool           p_makeModal = false);
 
 
     /*******************************************************************************************//**
@@ -153,6 +196,49 @@ public:
      *
      **********************************************************************************************/
     virtual ~MessageBox();
+
+///@}
+
+
+///@{ @name Window actions
+
+    /*******************************************************************************************//**
+     * @brief Invokes the dialog in a blocking loop.
+     * 
+     * This is a wrapper around the @c Gtk::Dialog::run method. See the Gtkmm documentation
+     * on @c run for more information.
+     *
+     * @note According to Gtkmm: After @c run() returns (and hence @invoke also), you are
+     * responsible for hiding or destroying the dialog if you wish to do so.
+     *
+     * @return The response chosen by the user.
+     *
+     * @see cxgui::dlg::ResponseType
+     *
+     **********************************************************************************************/
+    ResponseType invoke();
+
+///@}
+
+
+protected:
+
+///@{ @name Window setup
+
+    /*******************************************************************************************//**
+     * @brief Sets an icon for the window.
+     *
+     * Override this method to specify a path for the window icon.
+     *
+     **********************************************************************************************/
+    virtual void setWindowIcon() = 0;
+
+///@}
+
+
+private:
+
+    void init();
 
 ///@}
 

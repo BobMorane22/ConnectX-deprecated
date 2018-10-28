@@ -59,6 +59,32 @@ public:
     /*******************************************************************************************//**
      * @brief Constructor with parameters.
      *
+     * Constructs a Connect X message box for which you can specify the message directly in the
+     * source code. Use this for non standard messages (i.e. a message that is only used once).
+     * Note that the buttons are automatically set to match the message type you specify.
+     *
+     * @param p_parent           A reference to the parent window (i.e. the window from which
+     *                           the dialog is invoked).
+     * @param p_messageType      The type of message. This will influence the buttons that are
+     *                           added to the message box.
+     * @param p_primaryMessage   The message to add to the message box. This is what the user will
+     *                           read.
+     * @param p_secondaryMessage A secondary, optional message to complement the primary message.
+     *                           The user will see this.
+     * @param p_makeModal        @c true is the message box should be modal, @c false otherwise.
+     *
+     * @pre The primary message is not an empty string.
+     *
+     **********************************************************************************************/
+    MessageBox(cxgui::dlg::Window&            p_parent,
+               const cxgui::dlg::MessageType  p_messageType,
+               const std::string&             p_primaryMessage,
+               const std::string&             p_secondaryMessage = std::string(),
+               const bool                     p_makeModal = false);
+
+    /*******************************************************************************************//**
+     * @brief Constructor with parameters.
+     *
      * Constructs a message box for which the messages are taken from the @c cxmessage file. See
      * the base class documentation for the message file syntax. Note that the buttons are
      * automatically set to match the message type you specify.
@@ -73,10 +99,19 @@ public:
      * @pre The message file path must point to a valid file on the disc.
      *
      **********************************************************************************************/
-    MessageBox(Gtk::Window&                   p_parent,
+    MessageBox(cxgui::dlg::Window&            p_parent,
                const cxgui::dlg::MessageType  p_messageType,
                const int                      p_messageNumber,
                const bool                     p_makeModal = false);
+
+///@}
+
+
+protected:
+
+///@{ @name Window setup
+
+    virtual void setWindowIcon() override;
 
 ///@}
 

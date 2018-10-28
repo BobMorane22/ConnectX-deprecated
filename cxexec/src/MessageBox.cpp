@@ -32,9 +32,25 @@
 #include <cxutil/include/util.h>
 
 #include "../include/MessageBox.h"
+#include "../include/util.h"
 
 
-cx::ui::MessageBox::MessageBox(Gtk::Window&                   p_parent,
+cx::ui::MessageBox::MessageBox(cxgui::dlg::Window&            p_parent,
+                               const cxgui::dlg::MessageType  p_messageType,
+                               const std::string&             p_primaryMessage,
+                               const std::string&             p_secondaryMessage,
+                               const bool                     p_makeModal)
+ : cxgui::dlg::MessageBox(p_parent,
+                          p_messageType,
+                          p_primaryMessage,
+                          p_secondaryMessage,
+                          p_makeModal)
+{
+    // Nothing to do...
+}
+
+
+cx::ui::MessageBox::MessageBox(cxgui::dlg::Window&            p_parent,
                                const cxgui::dlg::MessageType  p_messageType,
                                const int                      p_messageNumber,
                                const bool                     p_makeModal)
@@ -44,4 +60,16 @@ cx::ui::MessageBox::MessageBox(Gtk::Window&                   p_parent,
                           cxutil::path::currentExecutablePath() + "/ressources/cxmessages",
                           p_makeModal)
 {
+    // Nothing to do...
 }
+
+
+void cx::ui::MessageBox::setWindowIcon()
+{
+    // The framework can't be used here, so we have to detail everything:
+    std::string iconPath{cxutil::path::currentExecutablePath()};
+    iconPath.append("/icons/cxicon16.png");
+
+    set_icon_from_file(iconPath);
+}
+
