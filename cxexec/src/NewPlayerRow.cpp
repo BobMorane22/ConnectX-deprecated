@@ -59,6 +59,9 @@ cx::ui::NewPlayerRow::NewPlayerRow(const std::string& p_playerName, const cxutil
 }
 
 
+cx::ui::NewPlayerRow::~NewPlayerRow() = default;
+
+
 void cx::ui::NewPlayerRow::update(const std::string& p_playerNewName, const cxutil::Color& p_playerNewDiscColor)
 {
     PRECONDITION(!p_playerNewName.empty());
@@ -87,13 +90,24 @@ cxutil::Color cx::ui::NewPlayerRow::playerDiscColor() const
 }
 
 
-/***********************************************************************************************//**
- * Checks if all class invariants are respected. Call this method every time a modification is
- * done to the class state to avoid incoherent states. If the invariants are not respected, an
- * exception of the type @c InvariantException is thrown.
+/***************************************************************************************************
+ * @brief Checks if all class invariants are respected.
  *
  **************************************************************************************************/
 void cx::ui::NewPlayerRow::checkInvariant() const
 {
     INVARIANT(!m_playerName.get_text().empty());
+}
+
+
+bool cx::ui::operator==(const NewPlayerRow& p_lhs, const NewPlayerRow& p_rhs)
+{
+    return (p_lhs.playerName() == p_rhs.playerName()) &&
+           (p_lhs.playerDiscColor() == p_rhs.playerDiscColor());
+}
+
+
+bool cx::ui::operator!=(const NewPlayerRow& p_lhs, const NewPlayerRow& p_rhs)
+{
+    return !(p_lhs == p_rhs);
 }

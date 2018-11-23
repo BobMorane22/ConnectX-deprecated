@@ -37,6 +37,8 @@
 #include <gtkmm/listbox.h>
 #include <gtkmm/treeview.h>
 
+#include <cxutil/include/ReturnCode.h>
+
 #include "NewPlayerRow.h"
 
 namespace cx
@@ -46,9 +48,12 @@ namespace ui
 {
 
 /***********************************************************************************************//**
+ * @class NewPlayersList
+ *
+ * @brief Widget to list players.
+ *
  * Widget containing row of players to be registered for a Connect X game, as well as the color
- * they have chosen for their discs. There can be a minimum of two players and a maximum of ten
- * players listed in this widget.
+ * they have chosen for their discs.
  *
  * @see cx::ui::NewPlayerRow
  *
@@ -58,33 +63,197 @@ class NewPlayersList final : public Gtk::ListBox
 
 public:
 
+///@{ @name Object Construction and Destruction
+
     /*******************************************************************************************//**
      * Default constructor.
      *
      * Construct a list of two players with different colors. This is the basic Connect X
-     * configuration, an is equivalent to the classic Connect 4 requirements.
+     * configuration, and is equivalent to the classic Connect 4 requirements.
      *
      **********************************************************************************************/
     NewPlayersList();
 
 
     /*******************************************************************************************//**
-     * Default destructor.
+     * @brief Default destructor.
      *
      **********************************************************************************************/
-    ~NewPlayersList();
+    virtual ~NewPlayersList();
+
+///@}
+
+///@{ @name Accessors
+
+
+    /*******************************************************************************************//**
+     * @brief Accesses the size of the list.
+     *
+     * @return The size of the list.
+     *
+     **********************************************************************************************/
+    std::size_t size() const;
+
+
+    /*******************************************************************************************//**
+     * @brief Accesses a specific row's player disc color.
+     *
+     * For a given row index, gets the specific row's player disc color.
+     *
+     * @param p_index The row index.
+     *
+     * @pre The row index is at most the number of players in the list,
+     *      minus one (zero-based).
+     *
+     * @return The row's player disc color.
+     *
+     **********************************************************************************************/
+    cxutil::Color rowPlayerDiscColor(const std::size_t p_index) const;
+
+
+    /*******************************************************************************************//**
+     * @brief Accesses a specific row's player name.
+     *
+     * For a given row index, gets the specific row's player name.
+     *
+     * @param p_index The row index.
+     *
+     * @pre The row index is at most the number of players in the list,
+     *      minus one (zero-based).
+     *
+     * @return The row's player name.
+     *
+     **********************************************************************************************/
+    std::string rowPlayerName(const std::size_t p_index) const;
+
+
+    /*******************************************************************************************//**
+     * @brief Accesses all player disc colors in the list.
+     *
+     * @return An @c std::vector containing all the player disc colors in the list.
+     *
+     **********************************************************************************************/
+    std::vector<cxutil::Color> rowColors() const;
+
+
+    /*******************************************************************************************//**
+     * @brief Accesses all player names in the list.
+     *
+     * @return An @c std::vector containing all the player names in the list.
+     *
+     **********************************************************************************************/
+    std::vector<std::string> rowPlayerNames() const;
+
+
+///@}
+
+///@{ @name Mutators
+
+    /*******************************************************************************************//**
+     * @brief Adds a row to the list.
+     *
+     * Adds a row to the list. The row is appended at the end of the list. Only if the color is
+     * not already present in the list. Otherwise, and error is returned and the row is not
+     * appended.
+     *
+     * @param p_playerNewName
+     * @param p_playerNewDiscColor
+     *
+     * @pre The player name is not an empty string.
+     *
+     * @return A return code indicating if the operation succeeded. @c ReturnCode::OK is returned
+     *         if the operation succeeded, @c ReturnCode::ERROR is returned if there was a problem
+     *         while adding the new row. If the return code is @c ReturnCode::ERROR , the row has
+     *         not been added.
+     *
+     * @see cxutil::ReturnCode
+     *
+     **********************************************************************************************/
+    cxutil::ReturnCode addRow(const std::string&    p_playerNewName,
+                              const cxutil::Color&  p_playerNewDiscColor);
+
+
+    /*******************************************************************************************//**
+     * @brief Removes a row from the list by its index.
+     *
+     * @param p_index The row index.
+     * @param
+     *
+     * @pre p_index The row index is at most the number of players in the list,
+     *              minus one (zero-based).
+     *
+     * @return A @c cxutil::ReturnCode indicating if the operation succeeded or failed.
+     *
+     **********************************************************************************************/
+    cxutil::ReturnCode removeRow(const std::size_t p_index);
+
+
+    /*******************************************************************************************//**
+     * @brief Removes a row from the list from the player name and disc color.
+     *
+     * Removes a row from the list from its player name and disc color. If the player name and the
+     * disc color pair is not found, an error is returned and nothing is removed.
+     *
+     * @param p_playerNewName      The player's name.
+     * @param p_playerNewDiscColor The player's disc color.
+     *
+     * @pre The player name is not an empty string.
+     *
+     * @return A @c cxutil::ReturnCode indicating if the operation succeeded or failed.
+     *
+     **********************************************************************************************/
+    cxutil::ReturnCode removeRow(const std::string&    p_playerNewName,
+                                 const cxutil::Color&  p_playerNewDiscColor);
+
+
+    /*******************************************************************************************//**
+     * @brief Updates a row from its index.
+     *
+     * Updates row information from its index. You can update the player name and the player disc
+     * color. Note that if the color already exists in the list, the operation will fail and nothing
+     * will be updated.
+     *
+     * @param p_index                 The row index.
+     * @param p_newPlayerNewName      The player name.
+     * @param p_newPlayerNewDiscColor The player disc color.
+     *
+     * @pre The row index is at most the number of players in the list,
+     *      minus one (zero-based).
+     * @pre The player name is not an empty string.
+     *
+     * @return A @c cxutil::ReturnCode indicating if the operation succeeded or failed.
+     *
+     **********************************************************************************************/
+    cxutil::ReturnCode updateRow(const std::size_t    p_index,
+                                 const std::string&   p_newPlayerNewName,
+                                 const cxutil::Color& p_newPlayerNewDiscColor);
+
+
+    /*******************************************************************************************//**
+     * @brief Clears the list content.
+     *
+     * Removes every row in the list.
+     *
+     * @post The list is empty (no more rows).
+     *
+     **********************************************************************************************/
+    void clear();
+
+///@}
 
 private:
 
-    const static int MIN_NB_PLAYERS;            ///< Minimum number of players that can be registered
-                                                ///< in this widget.
+///@{ @name Internal container manipulations
 
-    const static int MAX_NB_PLAYERS;            ///< Maximum number of players that can be registered
-                                                ///< in this widget.
+    const cx::ui::NewPlayerRow* row(const std::size_t p_index) const;
+    cx::ui::NewPlayerRow*       row(const std::size_t p_index);
 
-    std::vector<NewPlayerRow> m_newPlayersList; ///< List of rows of players for a game. These rows
-                                                ///< are vertically concatenated to make the current
-                                                ///< widget.
+    std::vector<const cx::ui::NewPlayerRow*> rows() const;
+    std::vector<cx::ui::NewPlayerRow*>       rows();
+
+    cxutil::ReturnCode removeManaged(cx::ui::NewPlayerRow* p_row);
+
+///@}
 
 };
 
