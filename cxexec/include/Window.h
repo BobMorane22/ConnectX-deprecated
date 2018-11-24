@@ -46,13 +46,15 @@ namespace ui
  * @brief Abstract Connect X window.
  *
  * This abstract window is meant to be the base class of every other Connect X related windows and
- * dialogs. It encapsulate the data and behaviours that should be shared among all of them.
+ * dialogs. It encapsulates the data and behaviors that should be shared among all of them.
  *
  **************************************************************************************************/
 class Window : public cxgui::dlg::Window
 {
 
 public:
+
+///@{ @name Object construction and destruction
 
     /*******************************************************************************************//**
      * @brief Default constructor.
@@ -67,11 +69,16 @@ public:
      **********************************************************************************************/
     virtual ~Window();
 
+///@}
 
-private:
 
+protected:
+
+///@{ @name Window setup
 
     virtual void setWindowIcon() final override;
+
+///@}
 
 };
 

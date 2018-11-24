@@ -36,11 +36,11 @@
 #include <gtkmm/grid.h>
 #include <gtkmm/entry.h>
 #include <gtkmm/hvbuttonbox.h>
-#include <gtkmm/window.h>
 
 #include <cxgui/include/SectionTitle.h>
 
 #include "../include/NewPlayersList.h"
+#include "../include/Window.h"
 
 namespace cx
 {
@@ -48,52 +48,88 @@ namespace cx
 namespace ui
 {
 
-class NewGame final : public Gtk::Window
+class NewGame final : public cx::ui::Window
 {
+
 public:
 
 ///@{ @name Object Construction and Destruction
 
+    /*******************************************************************************************//**
+     * @brief Default constructor.
+     *
+     **********************************************************************************************/
     NewGame();
-    ~NewGame();
+
+
+    /*******************************************************************************************//**
+     * @brief Default destructor.
+     *
+     **********************************************************************************************/
+    virtual ~NewGame();
+
+///@}
+
+protected:
+
+///@{ @name Window setup
+
+    virtual void configureWindow()         override;
+    virtual void registerLayouts()         override;
+    virtual void registerWidgets()         override;
+    virtual void configureLayouts()        override;
+    virtual void configureWidgets()        override;
+    virtual void configureSignalHandlers() override;
 
 ///@}
 
 private:
 
-///@{ @name Layouts and widgets configuration
+///@{ @name Data members
 
-    void registerLayouts();
-    void registerMenu(){};
-    void registerWidgets();
-    void configureLayoutsAndWidgets();
+    // Layouts:
+    Gtk::Grid              m_gameSectionLayout;       ///< The layout for the "Game" section.
+    Gtk::Grid              m_gameBoardSectionLayout;  ///< The layout for the "Game board" section.
+    Gtk::Grid              m_playersSectionLayout;    ///< The layout for the "Players" section.
+
+    Gtk::HButtonBox        m_addPlayerButtonLayout;   ///< The label containing the "Add player" button.
+    Gtk::HButtonBox        m_startGameSectionLayout;  ///< The label containing the "Start" button.
+
+    // Visible widgets:
+    cxgui::SectionTitle    m_gameSectionTitle        {"Game:"};               ///< The "Game" section title.
+    
+    Gtk::Label             m_inARowValueLabel        {"In-a-row value:"};     ///< The label telling the user to enter
+                                                                              ///< a specific "in-a-row" value for the game.
+
+    Gtk::Entry             m_inARowValueEntry;                                ///< The "in-a-row" combobox.
+
+    cxgui::SectionTitle    m_gameBoardSectionTitle   {"Game board:"};         ///< The "Game board" section title.
+
+    Gtk::Label             m_nbRowsLabel             {"Number of rows:"};     ///< The label telling the user to enter
+                                                                              ///< a specific number of rows for the game.
+
+    Gtk::Entry             m_nbRowsEntry;                                     ///< The number of rows combobox.
+
+    Gtk::Label             m_nbColumnsLabel          {"Number of columns:"};  ///< The label telling the user to enter
+
+                                                                              ///< a specific number of columns for the game.
+
+    Gtk::Entry             m_nbColumnsEntry;                                  ///< The number of columns combobox.
+
+    cxgui::SectionTitle    m_playersSectionTitle     {"Players:"};       ///< The "Players" section title.
+
+    cx::ui::NewPlayersList m_playersTable;                               ///< The list of players (names and disc colors).
+
+    Gtk::Button            m_addPlayerButton         {"Add player..."};  ///< The button used to add players.
+
+    Gtk::Button            m_startButton             {"Start"};          ///< The button used to start a game.
+
+    const int              m_spacing                 {15};  ///< Value used to space out widgets
+                                                            ///< appart if they feel to close to
+                                                            ///< one another.
 
 ///@}
 
-    // Widget layouts:
-    Gtk::Grid              m_mainLayout;
-    Gtk::Grid              m_gameSectionLayout;
-    Gtk::Grid              m_gameBoardSectionLayout;
-    Gtk::Grid              m_playersSectionLayout;
-    Gtk::HButtonBox        m_addPlayerButtonLayout;
-    Gtk::HButtonBox        m_startGameSectionLayout;
-
-    // Visible widgets:
-    cxgui::SectionTitle    m_gameSectionTitle        {"Game:"};
-    Gtk::Label             m_inARowValueLabel        {"In-a-row value:"};
-    Gtk::Entry             m_inARowValueEntry;
-
-    cxgui::SectionTitle    m_gameBoardSectionTitle   {"Game board:"};
-    Gtk::Label             m_nbRowsLabel             {"Number of rows:"};
-    Gtk::Entry             m_nbRowsEntry;
-    Gtk::Label             m_nbColumnsLabel          {"Number of columns:"};
-    Gtk::Entry             m_nbColumnsEntry;
-
-    cxgui::SectionTitle    m_playersSectionTitle     {"Players:"};
-    cx::ui::NewPlayersList m_playersTable;
-    Gtk::Button            m_addPlayerButton         {"Add player..."};
-
-    Gtk::Button            m_startButton             {"Start"};
 };
 
 } // namespace ui

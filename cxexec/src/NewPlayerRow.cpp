@@ -53,6 +53,11 @@ cx::ui::NewPlayerRow::NewPlayerRow(const std::string& p_playerName, const cxutil
     m_gridLayout.add(m_playerName);
     m_gridLayout.add(m_playerDiscColor);
 
+    // Make sure the player name combobox scales horizontally, but not the disc
+    // color picker button:
+    m_playerName.set_hexpand(true);
+    m_playerDiscColor.set_hexpand(false);
+
     add(m_gridLayout);
 
     INVARIANTS();
