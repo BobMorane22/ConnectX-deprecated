@@ -29,6 +29,10 @@
  *
  **************************************************************************************************/
 
+#include <iostream>
+
+#include <gdk/gdkkeysyms.h>
+
 #include <cxutil/include/util.h>
 #include <cxgui/include/enums.h>
 
@@ -50,6 +54,9 @@ enum
 
 cx::ui::NewGame::NewGame()
 {
+    // Add keyboard events:
+    add_events(Gdk::KEY_PRESS_MASK);
+
     // Display all widgets:
     show_all();
 }
@@ -67,9 +74,6 @@ void cx::ui::NewGame::configureWindow()
 
 void cx::ui::NewGame::registerLayouts()
 {
-    // Window main layout:
-    add(m_mainLayout);
-
     using namespace cxgui;
 
     // Principal sub-layouts used in this window:
@@ -154,5 +158,30 @@ void cx::ui::NewGame::configureWidgets()
 
 void cx::ui::NewGame::configureSignalHandlers()
 {
-    // Nothing so far...
+    // Button handlers:
+    m_addPlayerButton.signal_clicked().connect([this](){onAddPlayersBtnClicked();} );
+    m_startButton    .signal_clicked().connect([this](){onStartBtnClicked();}      );
+}
+
+
+void cx::ui::NewGame::onAddPlayersBtnClicked()
+{
+    std::cout << "Add players... clicked!" << std::endl;
+}
+
+
+void cx::ui::NewGame::onStartBtnClicked()
+{
+    std::cout << "Start clicked!" << std::endl;
+}
+
+
+bool cx::ui::NewGame::on_key_press_event(GdkEventKey* p_event)
+{
+    if(p_event->keyval == GDK_KEY_Delete)
+    {
+        std::cout << "Delete key pressed!" << std::endl;
+    }
+
+    return true;
 }

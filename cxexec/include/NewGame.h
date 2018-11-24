@@ -70,7 +70,8 @@ public:
 
 ///@}
 
-protected:
+private:
+
 
 ///@{ @name Window setup
 
@@ -83,7 +84,16 @@ protected:
 
 ///@}
 
-private:
+///@{ @name Signal handlers
+
+    void onAddPlayersBtnClicked();
+    void onStartBtnClicked();
+
+    // Default signal handler.
+    virtual bool on_key_press_event(GdkEventKey* p_event) override;
+
+///@}
+
 
 ///@{ @name Data members
 
