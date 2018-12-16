@@ -96,6 +96,8 @@ std::string addMarkupTags(const std::string& p_text, const std::string& p_tag);
  *
  * @see addMarkupTags
  *
+ * @todo Comment other similar functions!
+ *
  *************************************************************************************************/
 std::string addBoldMarkupTags(const std::string& p_textToMakeBold);
 
