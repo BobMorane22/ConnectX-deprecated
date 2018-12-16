@@ -42,6 +42,7 @@
 #include "../include/NewPlayersList.h"
 #include "../include/Window.h"
 
+
 namespace cx
 {
 
@@ -87,6 +88,7 @@ private:
 ///@{ @name Signal handlers
 
     void onAddPlayersBtnClicked();
+    void onRemovePlayerKeyPressed();
     void onStartBtnClicked();
 
     // Default signal handler.

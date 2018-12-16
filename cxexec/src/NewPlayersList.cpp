@@ -112,24 +112,8 @@ cxutil::ReturnCode cx::ui::NewPlayersList::addRow(const std::string&    p_player
 
     PRECONDITION(!p_playerNewName.empty());
 
-    // We first make sure the color given as an argument does not already exist in the list:
-    const std::vector<Color> colors{rowColors()};
-    const bool colorAlreadyChosen{std::any_of(std::begin(colors),
-                                              std::end(colors),
-                                              [&p_playerNewDiscColor](const Color p_color)
-                                              {
-                                                  return p_color == p_playerNewDiscColor;
-                                              })};
-
-    if(colorAlreadyChosen)
-    {
-        return ReturnCode{ReturnCode::Code::ERROR, "The color already exists in the list."};
-    }
-
-    // The color is not already in use, we can continue:
     const std::size_t sizeBefore{size()};
 
-    // We use Gtk::manage here to let Gtkmm deal with the children deletions:
     add(*Gtk::manage(new NewPlayerRow(p_playerNewName, p_playerNewDiscColor)));
     
     const std::size_t sizeAfter{size()};
@@ -156,14 +140,14 @@ cxutil::ReturnCode cx::ui::NewPlayersList::removeRow(const std::size_t p_index)
 }
 
 
-cxutil::ReturnCode cx::ui::NewPlayersList::removeRow(const std::string&    p_playerNewName,
-                                                     const cxutil::Color&  p_playerNewDiscColor)
+cxutil::ReturnCode cx::ui::NewPlayersList::removeRow(const std::string&    p_playerName,
+                                                     const cxutil::Color&  p_playerDiscColor)
 {
-    PRECONDITION(!p_playerNewName.empty());
+    PRECONDITION(!p_playerName.empty());
 
     using namespace cxutil;
 
-    const cx::ui::NewPlayerRow rowToRemoveData{p_playerNewName, p_playerNewDiscColor};
+    const cx::ui::NewPlayerRow rowToRemoveData{p_playerName, p_playerDiscColor};
     cx::ui::NewPlayerRow*      rowToRemoveAddress{nullptr};
 
     std::vector<cx::ui::NewPlayerRow*> allRows{rows()};
@@ -196,18 +180,6 @@ cxutil::ReturnCode cx::ui::NewPlayersList::updateRow(const std::size_t    p_inde
     PRECONDITION(!p_playerNewName.empty());
 
     using namespace cxutil;
-
-    bool colorAlreadyChosen{std::any_of(std::begin(rowColors()),
-                                        std::end(rowColors()),
-                                        [&p_playerNewDiscColor](const cxutil::Color& p_color)
-                                        {
-                                            return p_playerNewDiscColor == p_color;
-                                        })};
-
-    if(colorAlreadyChosen)
-    {
-        return ReturnCode{ReturnCode::Code::ERROR, "The color already exists in the list."};
-    }
 
     // All is fine, we can proceed with the update:
     cx::ui::NewPlayerRow* rowToUpdate{row(p_index)};

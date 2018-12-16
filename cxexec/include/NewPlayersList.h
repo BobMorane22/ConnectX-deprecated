@@ -152,12 +152,10 @@ public:
     /*******************************************************************************************//**
      * @brief Adds a row to the list.
      *
-     * Adds a row to the list. The row is appended at the end of the list. Only if the color is
-     * not already present in the list. Otherwise, and error is returned and the row is not
-     * appended.
+     * Adds a row to the list. The row is appended at the end of the list.
      *
-     * @param p_playerNewName
-     * @param p_playerNewDiscColor
+     * @param p_playerNewName      The player's name.
+     * @param p_playerNewDiscColor The player's disc color.
      *
      * @pre The player name is not an empty string.
      *
@@ -177,7 +175,6 @@ public:
      * @brief Removes a row from the list by its index.
      *
      * @param p_index The row index.
-     * @param
      *
      * @pre p_index The row index is at most the number of players in the list,
      *              minus one (zero-based).
@@ -194,24 +191,23 @@ public:
      * Removes a row from the list from its player name and disc color. If the player name and the
      * disc color pair is not found, an error is returned and nothing is removed.
      *
-     * @param p_playerNewName      The player's name.
-     * @param p_playerNewDiscColor The player's disc color.
+     * @param p_playerName      The player's name.
+     * @param p_playerDiscColor The player's disc color.
      *
      * @pre The player name is not an empty string.
      *
      * @return A @c cxutil::ReturnCode indicating if the operation succeeded or failed.
      *
      **********************************************************************************************/
-    cxutil::ReturnCode removeRow(const std::string&    p_playerNewName,
-                                 const cxutil::Color&  p_playerNewDiscColor);
+    cxutil::ReturnCode removeRow(const std::string&    p_playerName,
+                                 const cxutil::Color&  p_playerDiscColor);
 
 
     /*******************************************************************************************//**
      * @brief Updates a row from its index.
      *
      * Updates row information from its index. You can update the player name and the player disc
-     * color. Note that if the color already exists in the list, the operation will fail and nothing
-     * will be updated.
+     * color.
      *
      * @param p_index                 The row index.
      * @param p_newPlayerNewName      The player name.

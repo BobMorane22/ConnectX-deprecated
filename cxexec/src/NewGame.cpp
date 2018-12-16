@@ -29,13 +29,20 @@
  *
  **************************************************************************************************/
 
+#include <algorithm>
 #include <iostream>
+#include <regex>
+#include <sstream>
 
 #include <gdk/gdkkeysyms.h>
 
+#include <cxutil/include/Assertion.h>
+#include <cxutil/include/narrow_cast.h>
 #include <cxutil/include/util.h>
 #include <cxgui/include/enums.h>
+#include <cxgui/include/util.h>
 
+#include "../include/MessageBox.h"
 #include "../include/NewGame.h"
 
 namespace
@@ -48,6 +55,195 @@ enum
     PLAYERS,
     START_GAME,
 };
+
+// https://developer.gnome.org/gtkmm-tutorial/stable/sec-keyboardevents-propagation.html.en
+const bool STOP_EVENT_PROPAGATION {true};
+const bool ALLOW_EVENT_PROPAGATION{false};
+
+const std::size_t NB_MIN_PLAYERS{2};
+const std::size_t NB_MAX_PLAYERS{10};
+
+const std::size_t NB_ROWS_MIN       {6};
+const std::size_t NB_ROWS_MAX       {64};
+const std::size_t NB_COLUMNS_MIN    {7};
+const std::size_t NB_COLUMNS_MAX    {64};
+
+const std::size_t IN_A_ROW_VALUE_MIN{2};
+
+
+/***********************************************************************************************//**
+ * @brief
+ *
+ * <Description>
+ *
+ * @return
+ *
+ **************************************************************************************************/
+cxgui::dlg::ResponseType tooManyPlayersToAddMsg(cx::ui::NewGame& p_parent)
+{
+    std::ostringstream primaryMsg;
+
+    primaryMsg << "You cannot register more than " << NB_MAX_PLAYERS << " players.";
+    
+    // Show message:
+    cx::ui::MessageBox msgBox{p_parent,
+                              cxgui::dlg::MessageType::INFORMATION,
+                              primaryMsg.str(),
+                              "You can unregister players by selecting rows and pressing the DEL key.",
+                              true};
+
+    return msgBox.invoke();
+}
+
+
+/***********************************************************************************************//**
+ * @brief
+ *
+ * <Description>
+ *
+ * @return
+ *
+ **************************************************************************************************/
+cxgui::dlg::ResponseType tooFewPlayersToUnregisterMsg(cx::ui::NewGame& p_parent)
+{
+    // Only the minimum amount of players are left, we can proceed. We warn the user:
+    cx::ui::MessageBox msgBox{p_parent,
+                              cxgui::dlg::MessageType::INFORMATION,
+                              6,
+                              true};
+
+    return msgBox.invoke();
+}
+
+
+/***********************************************************************************************//**
+ * @brief
+ *
+ * <Description>
+ *
+ * @param
+ *
+ * @return
+ *
+ **************************************************************************************************/
+cxgui::dlg::ResponseType invalidEditBoxContentMsg(cx::ui::NewGame& p_parent, const std::string p_invalidContent)
+{
+    std::ostringstream primaryMsg;
+    std::ostringstream secondaryMsg;
+    
+    if(p_invalidContent.empty())
+    {
+        primaryMsg   << "You must specify all parameters.";
+    }
+    else
+    {
+        primaryMsg << p_invalidContent << " is not a valid integer number.";
+    }
+
+    secondaryMsg << "Enter a valid positive integer value.";
+
+    // Show message:
+    cx::ui::MessageBox msgBox{p_parent,
+                              cxgui::dlg::MessageType::INFORMATION,
+                              primaryMsg.str(),
+                              secondaryMsg.str(),
+                              true};
+
+    return msgBox.invoke();
+}
+
+
+/***********************************************************************************************//**
+ * @brief
+ *
+ * <Description>
+ *
+ * @return
+ *
+ **************************************************************************************************/
+cxgui::dlg::ResponseType invalidInARowValueMsg(cx::ui::NewGame& p_parent, std::size_t p_inARowValueMax)
+{
+    std::ostringstream primaryMsg;
+    std::ostringstream secondaryMsg;
+
+    primaryMsg   << "In-a-row value is not valid.";
+    secondaryMsg << "Minimum is 3, maximum is " << p_inARowValueMax << ".";
+
+    // Show message:
+    cx::ui::MessageBox msgBox{p_parent,
+                              cxgui::dlg::MessageType::INFORMATION,
+                              primaryMsg.str(),
+                              secondaryMsg.str(),
+                              true};
+
+    return msgBox.invoke();
+}
+
+
+/***********************************************************************************************//**
+ * @brief
+ *
+ * <Description>
+ *
+ * @return
+ *
+ **************************************************************************************************/
+cxgui::dlg::ResponseType invalidGameBoardDimensionsMsg(cx::ui::NewGame& p_parent)
+{
+    std::ostringstream primaryMsg;
+
+    primaryMsg << "Game board dimensions are not valid.";
+    
+    // Show message:
+    cx::ui::MessageBox msgBox{p_parent,
+                              cxgui::dlg::MessageType::INFORMATION,
+                              primaryMsg.str(),
+                              "Minimum dimensions are 6x7, maximum are 64x64.",
+                              true};
+
+    return msgBox.invoke();
+}
+
+
+/*******************************************************************************************//**
+ * @brief
+ *
+ * <Description>
+ *
+ *
+ * @param
+ * @param
+ *
+ * @pre
+ * @pre
+ * @post
+ * @post
+ *
+ * @return
+ *
+ * @note
+ *
+ * @see
+ *
+ **********************************************************************************************/
+cxgui::dlg::ResponseType twoSameColorMsg(cx::ui::NewGame& p_parent)
+{
+    std::ostringstream primaryMsg;
+    std::ostringstream secondaryMsg;
+
+    primaryMsg   << "Two or more players cannot share the same disc color.";
+    secondaryMsg << "Please choose a different color for every player.";
+
+    // Show message:
+    cx::ui::MessageBox msgBox{p_parent,
+                              cxgui::dlg::MessageType::INFORMATION,
+                              primaryMsg.str(),
+                              secondaryMsg.str(),
+                              true};
+
+    return msgBox.invoke();
+}
+
 
 } // unnamed namespace
 
@@ -153,6 +349,9 @@ void cx::ui::NewGame::configureWidgets()
     
     // Leave some space between the list and the buttons:
     m_playersTable.set_margin_bottom(m_spacing);
+
+    // Allow multiple item selection:
+    m_playersTable.set_selection_mode(Gtk::SELECTION_MULTIPLE);
 }
 
 
@@ -164,24 +363,227 @@ void cx::ui::NewGame::configureSignalHandlers()
 }
 
 
+/*******************************************************************************************//**
+ * @brief
+ *
+ * <Description>
+ *
+ * @note
+ *
+ * @see
+ *
+ **********************************************************************************************/
 void cx::ui::NewGame::onAddPlayersBtnClicked()
 {
-    std::cout << "Add players... clicked!" << std::endl;
+    const std::size_t currentNbPlayers{m_playersTable.size()};
+
+    if(currentNbPlayers >= NB_MIN_PLAYERS && currentNbPlayers < NB_MAX_PLAYERS)
+    {
+        const std::size_t newRowIndex{m_playersTable.size() + 1};
+
+        // We construct the new name:
+        std::ostringstream newPlayerName;
+        newPlayerName << "-- Player " << newRowIndex << " --";
+
+        // Now, we need a color. We use yellow:
+        const cxutil::Color newPlayerColor{cxutil::Color::yellow()};
+
+        // We add the player:
+        CX_ASSERT(m_playersTable.addRow(newPlayerName.str(), newPlayerColor).isOk());
+
+        // resize window:
+        m_playersTable.show_all();
+    }
+    else if(currentNbPlayers == NB_MAX_PLAYERS)
+    {
+        tooManyPlayersToAddMsg(*this);
+    }
+    else
+    {
+        CX_ASSERT_MSG(currentNbPlayers >= NB_MIN_PLAYERS, "Not enough players. There should always be at least two.");
+    }
 }
 
 
+/*******************************************************************************************//**
+ * @brief Handler for the @c DEL key.
+ *
+ * Handles the removal of players from the list when the @c DEL key is pressed.
+ *
+ **********************************************************************************************/
+void cx::ui::NewGame::onRemovePlayerKeyPressed()
+{
+    std::vector< Gtk::ListBoxRow* > playersToRemove{m_playersTable.get_selected_rows()};
+
+    if(playersToRemove.size() == 0)
+    {
+        // No rows have been selected: nothing to do.
+        return;
+    }
+
+    CX_ASSERT(std::none_of(std::begin(playersToRemove),
+                           std::end(playersToRemove),
+                           [](const Gtk::ListBoxRow* p_player)
+                           {
+                               return p_player == nullptr;
+                           }));
+
+    const std::size_t currentNbPlayers{m_playersTable.size()};
+
+    if(currentNbPlayers > NB_MIN_PLAYERS &&
+       currentNbPlayers <= NB_MAX_PLAYERS &&
+       m_playersTable.size() - playersToRemove.size() >= 2)
+    {
+        // Ok, we can proceed with the operation:
+        for(Gtk::ListBoxRow* player : playersToRemove)
+        {
+            cx::ui::NewPlayerRow* newPlayer{cxutil::narrow_cast<cx::ui::NewPlayerRow*>(player)};
+
+            cxutil::ReturnCode returnCode{m_playersTable.removeRow(newPlayer->playerName(),
+                                                                   newPlayer->playerDiscColor())};
+
+            CX_ASSERT_MSG(returnCode.isOk(), "An error occured while removing a player.");
+        }
+
+        // First, get the preferred heights values:
+        int minimumHeight, naturalHeight;
+        get_preferred_height(minimumHeight, naturalHeight);
+
+        // Then make a size request using the minimum height. Notice the '20'
+        // that is removed. This was added to make sure Gtkmm did not leave any
+        // extra blank space by resizing smaller than the minimum value:
+        set_size_request(get_width(), minimumHeight - 20);
+
+        // Then resize accordinly:
+        resize(get_width(), naturalHeight);
+
+        show_all();
+
+        return;
+    }
+    else if(currentNbPlayers == NB_MIN_PLAYERS ||
+            m_playersTable.size() - playersToRemove.size() < 2)
+    {
+        tooFewPlayersToUnregisterMsg(*this);
+    }
+    else
+    {
+        CX_ASSERT_MSG(false, "You have exceeded the maximum player amount for the Connect X game.");
+    }
+}
+
+
+/*******************************************************************************************//**
+ * @brief Handler for the start button.
+ *
+ * Handle the start of the game. This is where all the fields are validated.
+ *
+ **********************************************************************************************/
 void cx::ui::NewGame::onStartBtnClicked()
 {
-    std::cout << "Start clicked!" << std::endl;
+    // Get the edit box information:
+    std::size_t inARowValue, nbRows, nbColumns;
+
+    try
+    {
+        inARowValue = cxutil::narrow_cast<std::size_t>(std::stoi(m_inARowValueEntry.get_text()));
+    }
+    catch(std::exception& p_exception)
+    {
+        invalidEditBoxContentMsg(*this, m_inARowValueEntry.get_text());
+
+        return;
+    }
+
+    try
+    {
+        nbRows = cxutil::narrow_cast<std::size_t>(std::stoi(m_nbRowsEntry.get_text()));
+    }
+    catch(std::exception& p_exception)
+    {
+        invalidEditBoxContentMsg(*this, m_nbRowsEntry.get_text());
+
+        return;
+    }
+
+    try
+    {
+        nbColumns = cxutil::narrow_cast<std::size_t>(std::stoi(m_nbColumnsEntry.get_text()));
+    }
+    catch(std::exception& p_exception)
+    {
+        invalidEditBoxContentMsg(*this, m_nbColumnsEntry.get_text());
+
+        return;
+    }
+
+    // Validate the In-a-row value:
+    const std::size_t inARowValueMax{std::min(nbRows, nbColumns)};
+    const bool inARowValueIsValid{inARowValue >= IN_A_ROW_VALUE_MIN &&
+                                  inARowValue < inARowValueMax + 1};
+
+    if(!inARowValueIsValid)
+    {
+        invalidInARowValueMsg(*this, inARowValueMax);
+
+        return;
+    }
+
+    // Validate the game board dimentsions:
+    const bool gameBoardDimensionsAreValid{nbRows >= NB_ROWS_MIN          &&
+                                           nbRows < NB_ROWS_MAX + 1       &&
+                                           nbColumns >= NB_COLUMNS_MIN    &&
+                                           nbColumns < NB_COLUMNS_MAX + 1};
+
+    if(!gameBoardDimensionsAreValid)
+    {
+        invalidGameBoardDimensionsMsg(*this);
+
+        return;
+    }
+
+    // Validate the player list. No same color should be used twice:
+    const std::vector<cxutil::Color> colors{m_playersTable.rowColors()};
+    for(auto& color : m_playersTable.rowColors())
+    {
+        const long int colorOccurences{std::count_if(colors.cbegin(),
+                                                     colors.cend(),
+                                                     [color](const cxutil::Color& p_color)
+                                                     {
+                                                         return color == p_color;
+                                                     })};
+
+        if(colorOccurences > 1)
+        {
+            twoSameColorMsg(*this);
+
+            return;
+        }
+    }
+
+    // Everything is valid, the game can be started:
+    std::cout << "Game started!" << std::endl;
 }
 
 
+/*******************************************************************************************//**
+ * @brief Default key pressed signal handler.
+ *
+ * This handler must be overriden to allow key evens to be caught.
+ *
+ * @return @c true to stop other handlers from being invoked for the event. @c false to
+ *         propagate the event further.
+ *
+ **********************************************************************************************/
 bool cx::ui::NewGame::on_key_press_event(GdkEventKey* p_event)
 {
     if(p_event->keyval == GDK_KEY_Delete)
     {
-        std::cout << "Delete key pressed!" << std::endl;
+        onRemovePlayerKeyPressed();
+
+        return STOP_EVENT_PROPAGATION;
     }
 
-    return true;
+    // Call base class handler (to get the normal behaviour):
+    return Gtk::Window::on_key_release_event(p_event);
 }
