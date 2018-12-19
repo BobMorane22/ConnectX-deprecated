@@ -31,7 +31,6 @@
 
 #include <algorithm>
 #include <iostream>
-#include <regex>
 #include <sstream>
 
 #include <gdk/gdkkeysyms.h>
@@ -60,23 +59,26 @@ enum
 const bool STOP_EVENT_PROPAGATION {true};
 const bool ALLOW_EVENT_PROPAGATION{false};
 
-const std::size_t NB_MIN_PLAYERS{2};
-const std::size_t NB_MAX_PLAYERS{10};
 
-const std::size_t NB_ROWS_MIN       {6};
-const std::size_t NB_ROWS_MAX       {64};
-const std::size_t NB_COLUMNS_MIN    {7};
-const std::size_t NB_COLUMNS_MAX    {64};
+const std::size_t NB_MIN_PLAYERS{2};      ///< @todo Get from cxbase API
+const std::size_t NB_MAX_PLAYERS{10};     ///< @todo Get from cxbase API
 
-const std::size_t IN_A_ROW_VALUE_MIN{2};
+const std::size_t NB_ROWS_MIN       {6};  ///< @todo Get from cxbase API
+const std::size_t NB_ROWS_MAX       {64}; ///< @todo Get from cxbase API
+const std::size_t NB_COLUMNS_MIN    {7};  ///< @todo Get from cxbase API
+const std::size_t NB_COLUMNS_MAX    {64}; ///< @todo Get from cxbase API
+
+const std::size_t IN_A_ROW_VALUE_MIN{2};  ///< @todo Get from cxbase API
 
 
 /***********************************************************************************************//**
- * @brief
+ * @brief Invokes a message box.
  *
- * <Description>
+ * Invokes a message box for when there are to many players to use the "Add players..." button.
  *
- * @return
+ * @param p_parent The parent window.
+ *
+ * @return A response type according to the user action.
  *
  **************************************************************************************************/
 cxgui::dlg::ResponseType tooManyPlayersToAddMsg(cx::ui::NewGame& p_parent)
@@ -97,11 +99,13 @@ cxgui::dlg::ResponseType tooManyPlayersToAddMsg(cx::ui::NewGame& p_parent)
 
 
 /***********************************************************************************************//**
- * @brief
+ * @brief Invokes a message box.
  *
- * <Description>
+ * Invokes a message box for when there are too few players to unregister any more.
  *
- * @return
+ * @param p_parent The parent window.
+ *
+ * @return A response type according to the user action.
  *
  **************************************************************************************************/
 cxgui::dlg::ResponseType tooFewPlayersToUnregisterMsg(cx::ui::NewGame& p_parent)
@@ -117,13 +121,15 @@ cxgui::dlg::ResponseType tooFewPlayersToUnregisterMsg(cx::ui::NewGame& p_parent)
 
 
 /***********************************************************************************************//**
- * @brief
+ * @brief Invokes a message box.
  *
- * <Description>
+ * Invokes a message box for when an edit box does not contain an integer value.
  *
- * @param
+ * @param p_parent The parent window.
+ * @param p_invalidContent A string containing the invalid content. It will ultimately be printed
+ *                         in the edit box to the user.
  *
- * @return
+ * @return A response type according to the user action.
  *
  **************************************************************************************************/
 cxgui::dlg::ResponseType invalidEditBoxContentMsg(cx::ui::NewGame& p_parent, const std::string p_invalidContent)
@@ -154,11 +160,15 @@ cxgui::dlg::ResponseType invalidEditBoxContentMsg(cx::ui::NewGame& p_parent, con
 
 
 /***********************************************************************************************//**
- * @brief
+ * @brief Invokes a message box.
  *
- * <Description>
+ * Invokes a message box for when the in-a-row value is invalid.
  *
- * @return
+ * @param p_parent         The parent window.
+ * @param p_inARowValueMax The invalid in-a-row value. Ultimately, it will be printed in the edit
+ *                         box to the user.
+ *
+ * @return A response type according to the user action.
  *
  **************************************************************************************************/
 cxgui::dlg::ResponseType invalidInARowValueMsg(cx::ui::NewGame& p_parent, std::size_t p_inARowValueMax)
@@ -181,11 +191,13 @@ cxgui::dlg::ResponseType invalidInARowValueMsg(cx::ui::NewGame& p_parent, std::s
 
 
 /***********************************************************************************************//**
- * @brief
+ * @brief Invokes a message box.
  *
- * <Description>
+ * Invokes a message box for when the game board dimensions are invalid.
  *
- * @return
+ * @param p_parent The parent window.
+ *
+ * @return A response type according to the user action.
  *
  **************************************************************************************************/
 cxgui::dlg::ResponseType invalidGameBoardDimensionsMsg(cx::ui::NewGame& p_parent)
@@ -206,24 +218,13 @@ cxgui::dlg::ResponseType invalidGameBoardDimensionsMsg(cx::ui::NewGame& p_parent
 
 
 /*******************************************************************************************//**
- * @brief
+ * @brief Invokes a message box.
  *
- * <Description>
+ * Invokes a message box for when two user have the same disc color.
  *
+ * @param p_parent The parent window.
  *
- * @param
- * @param
- *
- * @pre
- * @pre
- * @post
- * @post
- *
- * @return
- *
- * @note
- *
- * @see
+ * @return A response type according to the user action.
  *
  **********************************************************************************************/
 cxgui::dlg::ResponseType twoSameColorMsg(cx::ui::NewGame& p_parent)
@@ -346,7 +347,7 @@ void cx::ui::NewGame::configureWidgets()
 
     // The player list should scale as well:
     m_playersTable.set_hexpand(true);
-    
+
     // Leave some space between the list and the buttons:
     m_playersTable.set_margin_bottom(m_spacing);
 
@@ -364,13 +365,9 @@ void cx::ui::NewGame::configureSignalHandlers()
 
 
 /*******************************************************************************************//**
- * @brief
+ * @brief Handler for the "Add player..." button.
  *
- * <Description>
- *
- * @note
- *
- * @see
+ * Handles the addition of a player to the list of players.
  *
  **********************************************************************************************/
 void cx::ui::NewGame::onAddPlayersBtnClicked()
@@ -449,10 +446,10 @@ void cx::ui::NewGame::onRemovePlayerKeyPressed()
         int minimumHeight, naturalHeight;
         get_preferred_height(minimumHeight, naturalHeight);
 
-        // Then make a size request using the minimum height. Notice the '20'
+        // Then make a size request using the minimum height. Notice the '100'
         // that is removed. This was added to make sure Gtkmm did not leave any
         // extra blank space by resizing smaller than the minimum value:
-        set_size_request(get_width(), minimumHeight - 20);
+        set_size_request(get_width(), minimumHeight - 100);
 
         // Then resize accordinly:
         resize(get_width(), naturalHeight);

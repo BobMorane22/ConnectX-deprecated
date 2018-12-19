@@ -211,8 +211,7 @@ void cx::ui::NewPlayersList::clear()
  *
  * @param p_index The row index.
  *
- * @pre The row index is at most the number of players in the list,
- *      minus one (zero-based).
+ * @pre The row index is at most the number of players in the list, minus one (zero-based).
  *
  * @post The returned address is valid.
  *
@@ -240,17 +239,16 @@ const cx::ui::NewPlayerRow* cx::ui::NewPlayersList::row(const std::size_t p_inde
  *
  * @param p_index The row index.
  *
- * @pre The row index is at most the number of players in the list,
- *      minus one (zero-based).
+ * @pre The row index is at most the number of players in the list, minus one (zero-based).
  *
  * @post The returned address is valid.
  *
  * @return The row address.
  *
  * @note This ugly implementation only serves to avoid duplication of code with the @c const method
- *       version. See @c the const version for the logic. I thought better to leave the pre and post
- *       conditions even though they are also checked in the @c const version, just as a remainder
- *       that this method also needs them.
+ *       version. See @c the const version for the logic. I thought better to repeat the pre and
+ *       post conditions even though they are also checked in the @c const version, just as a
+ *       remainder that this method also needs them.
  *
  **************************************************************************************************/
 cx::ui::NewPlayerRow* cx::ui::NewPlayersList::row(const std::size_t p_index)

@@ -35,11 +35,11 @@
 #include <vector>
 
 #include <gtkmm/listbox.h>
-#include <gtkmm/treeview.h>
 
 #include <cxutil/include/ReturnCode.h>
 
 #include "NewPlayerRow.h"
+
 
 namespace cx
 {
@@ -52,7 +52,7 @@ namespace ui
  *
  * @brief Widget to list players.
  *
- * Widget containing row of players to be registered for a Connect X game, as well as the color
+ * Widget containing rows of players to be registered for a Connect X game, as well as the color
  * they have chosen for their discs.
  *
  * @see cx::ui::NewPlayerRow
@@ -66,9 +66,9 @@ public:
 ///@{ @name Object Construction and Destruction
 
     /*******************************************************************************************//**
-     * Default constructor.
+     * @brief Default constructor.
      *
-     * Construct a list of two players with different colors. This is the basic Connect X
+     * Constructs a list of two players with different colors. This is the basic Connect X
      * configuration, and is equivalent to the classic Connect 4 requirements.
      *
      **********************************************************************************************/
@@ -89,6 +89,9 @@ public:
     /*******************************************************************************************//**
      * @brief Accesses the size of the list.
      *
+     * The size of the list is the number of players (visually, the number of rows) contained
+     * in the widget.
+     *
      * @return The size of the list.
      *
      **********************************************************************************************/
@@ -102,8 +105,7 @@ public:
      *
      * @param p_index The row index.
      *
-     * @pre The row index is at most the number of players in the list,
-     *      minus one (zero-based).
+     * @pre The row index is at most the number of players in the list, minus one (zero-based).
      *
      * @return The row's player disc color.
      *
@@ -118,8 +120,7 @@ public:
      *
      * @param p_index The row index.
      *
-     * @pre The row index is at most the number of players in the list,
-     *      minus one (zero-based).
+     * @pre The row index is at most the number of players in the list, minus one (zero-based).
      *
      * @return The row's player name.
      *
@@ -161,14 +162,14 @@ public:
      *
      * @return A return code indicating if the operation succeeded. @c ReturnCode::OK is returned
      *         if the operation succeeded, @c ReturnCode::ERROR is returned if there was a problem
-     *         while adding the new row. If the return code is @c ReturnCode::ERROR , the row has
+     *         appending the new row. If the return code is @c ReturnCode::ERROR , the row has
      *         not been added.
      *
      * @see cxutil::ReturnCode
      *
      **********************************************************************************************/
-    cxutil::ReturnCode addRow(const std::string&    p_playerNewName,
-                              const cxutil::Color&  p_playerNewDiscColor);
+    cxutil::ReturnCode addRow(const std::string&   p_playerNewName,
+                              const cxutil::Color& p_playerNewDiscColor);
 
 
     /*******************************************************************************************//**
@@ -186,21 +187,25 @@ public:
 
 
     /*******************************************************************************************//**
-     * @brief Removes a row from the list from the player name and disc color.
+     * @brief Removes a row from the list.
      *
-     * Removes a row from the list from its player name and disc color. If the player name and the
-     * disc color pair is not found, an error is returned and nothing is removed.
+     * Removes a row from the list. The row must match a given player name and disc color.. If
+     * the player name and the disc color pair is not found, an error is returned and nothing
+     * is removed.
      *
      * @param p_playerName      The player's name.
      * @param p_playerDiscColor The player's disc color.
      *
      * @pre The player name is not an empty string.
      *
-     * @return A @c cxutil::ReturnCode indicating if the operation succeeded or failed.
+     * @return A return code indicating if the operation succeeded. @c ReturnCode::OK is returned
+     *         if the operation succeeded, @c ReturnCode::ERROR is returned if there was a problem
+     *         removing the new row. If the return code is @c ReturnCode::ERROR , the row has
+     *         not been added.
      *
      **********************************************************************************************/
-    cxutil::ReturnCode removeRow(const std::string&    p_playerName,
-                                 const cxutil::Color&  p_playerDiscColor);
+    cxutil::ReturnCode removeRow(const std::string&   p_playerName,
+                                 const cxutil::Color& p_playerDiscColor);
 
 
     /*******************************************************************************************//**
@@ -213,8 +218,7 @@ public:
      * @param p_newPlayerNewName      The player name.
      * @param p_newPlayerNewDiscColor The player disc color.
      *
-     * @pre The row index is at most the number of players in the list,
-     *      minus one (zero-based).
+     * @pre The row index is at most the number of players in the list, minus one (zero-based).
      * @pre The player name is not an empty string.
      *
      * @return A @c cxutil::ReturnCode indicating if the operation succeeded or failed.
@@ -228,7 +232,8 @@ public:
     /*******************************************************************************************//**
      * @brief Clears the list content.
      *
-     * Removes every row in the list.
+     * Removes every players in the list, leaving the container empty (visually, there are
+     * no rows left).
      *
      * @post The list is empty (no more rows).
      *
