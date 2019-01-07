@@ -336,7 +336,6 @@ private:
                                                ///< geometric shape will be left untouched. If the
                                                ///< fill color is set to transparent, no background color
                                                ///< will be visible in the shape are.
-                                               ///<
 
     mutable bool  m_simpleAndClosedCheckDone;  // Flag that makes sure the method
                                                // 'isTheBorderASimpleAndClosedCurve()'

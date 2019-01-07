@@ -31,84 +31,10 @@
 
 
 #include <cxutil/include/ContractException.h>
-#include <cxutil/include/Coordinate.h>
-#include <cxutil/include/narrow_cast.h>
+#include <cxutil/include/LineSegment.h>
 
 #include "../include/GeometricShape.h"
 #include "../include/RAIICairoPath.h"
-
-
-namespace
-{
-
-using DataPoint = std::tuple<cxutil::Coordinate<double>, cxutil::Coordinate<double>>;
-
-
-/***************************************************************************************************
- * @brief
- *
- **************************************************************************************************/
-struct Vector
-{
-    double x; ///<
-    double y; ///<
-};
-
-
-/***************************************************************************************************
- * @brief
- *
- *
- * @param p_v1
- * @param p_v2
- *
- * @return
- *
- * @todo Encapsulate this operation into a decent Vector class for linear algebra.
- *
- **************************************************************************************************/
-static Vector diff(const Vector& p_v1, const Vector& p_v2)
-{
-    return Vector{p_v1.x - p_v2.x, p_v1.y - p_v2.y};
-}
-
-
-/***************************************************************************************************
- * @brief
- *
- *
- * @param p_v1
- * @param p_v2
- *
- * @return
- *
- * @todo Encapsulate this operation into a decent Vector class for linear algebra.
- *
- **************************************************************************************************/
-static double crossProduct2D(const Vector& p_v1, const Vector& p_v2)
-{
-    return (p_v1.x * p_v2.y) - (p_v1.y * p_v2.x);
-}
-
-
-/***************************************************************************************************
- * @brief
- *
- *
- * @param p_v1
- * @param p_v2
- *
- * @return
- *
- * @todo Encapsulate this operation into a decent Vector class for linear algebra.
- *
- **************************************************************************************************/
-static double dotProduct2D(const Vector& p_v1, const Vector& p_v2)
-{
-    return (p_v1.x * p_v2.x) + (p_v1.y * p_v2.y);
-}
-
-} // unamed namespace
 
 
 cxgui::GeometricShape::GeometricShape(const cxutil::Color& p_fillColor       ,
@@ -269,7 +195,7 @@ void cxgui::GeometricShape::draw(const Cairo::RefPtr<Cairo::Context>& p_context)
             double nbPointsOn{5.0};
             double nbPointsOff{nbPointsOn};
 
-            const std::vector<double> pattern {nbPointsOn, nbPointsOff};
+            const std::vector<double> pattern{nbPointsOn, nbPointsOff};
             p_context->set_dash(pattern, 0.0);
         }
         else if(isBorderDashed())
@@ -277,7 +203,7 @@ void cxgui::GeometricShape::draw(const Cairo::RefPtr<Cairo::Context>& p_context)
             double nbPointsOn{10.0};
             double nbPointsOff{nbPointsOn};
 
-            const std::vector<double> pattern {nbPointsOn, nbPointsOff};
+            const std::vector<double> pattern{nbPointsOn, nbPointsOff};
             p_context->set_dash(pattern, 0.0);
         }
         else
@@ -403,15 +329,16 @@ bool cxgui::GeometricShape::isTheBorderASimpleAndClosedCurve() const
     if(!isBorderClosed)
     {
         // Get starting point:
-        const double xStart{shapeFlatPath->data[1].point.x};
-        const double yStart{shapeFlatPath->data[1].point.y};
+        const cxutil::math::Point2D startPoint{shapeFlatPath->data[1].point.x,
+                                               shapeFlatPath->data[1].point.y};
 
         // Get the ending point:
-        const double xEnd{shapeFlatPath->data[lastIndex + 1].point.x};
-        const double yEnd{shapeFlatPath->data[lastIndex + 1].point.y};
+        const cxutil::math::Point2D endPoint{shapeFlatPath->data[lastIndex + 1].point.x,
+                                             shapeFlatPath->data[lastIndex + 1].point.y};
 
-        isBorderClosed = (xStart == xEnd) &&
-                         (yStart == yEnd);
+        /*! @todo This naked equality test is dangerous on <tt>double</tt>s and should be
+        replaced by some kind of logical equality with some tolerance. */
+        isBorderClosed = (startPoint == endPoint);
     }
 
     // If the path is closed, we check if it is also simple:
@@ -419,7 +346,7 @@ bool cxgui::GeometricShape::isTheBorderASimpleAndClosedCurve() const
 
     if(isBorderClosed)
     {
-        std::vector<DataPoint> dataPoints;
+        std::vector<cxutil::math::Point2D> dataPoints;
 
         for (int index{0}; index < shapeFlatPath->num_data; index += shapeFlatPath->data[index].header.length)
         {
@@ -427,80 +354,26 @@ bool cxgui::GeometricShape::isTheBorderASimpleAndClosedCurve() const
             if(shapeFlatPath->data[index].header.type == CAIRO_PATH_LINE_TO ||
                shapeFlatPath->data[index].header.type == CAIRO_PATH_MOVE_TO)
             {
-                const cxutil::Coordinate<double> x{shapeFlatPath->data[index + 1].point.x};
+                cxutil::math::Point2D dataPoint{shapeFlatPath->data[index + 1].point.x,
+                                                shapeFlatPath->data[index + 1].point.y};
 
-                const cxutil::Coordinate<double> y{shapeFlatPath->data[index + 1].point.y};
-                dataPoints.push_back(std::make_tuple(x, y));
+                dataPoints.push_back(std::move(dataPoint));
             }
         }
 
         CX_ASSERT(!dataPoints.empty());
 
         // We check if the path is simple:
-        //
-        // Note: The algorithm used here is the one presented by Gareth Rees on this
-        // Stack Overflow article:
-        //
-        //        https://stackoverflow.com/questions/563198/
-        //                whats-the-most-efficent-way-to-calculate-where-two-line-segments-intersect
-        //
-        // It is simplified because we do not need to know at which point the segments intersect,
-        // if they do, but only that they do.
-        //
-        for(int i{0}; i < cxutil::narrow_cast<int>(dataPoints.size()) - 2; ++i)
+        for(std::size_t i = 0; i < dataPoints.size() - 2; ++i)
         {
-            for(int j{i + 1}; j < cxutil::narrow_cast<int>(dataPoints.size()) -1; ++j)
+            for(std::size_t j = i + 1; j < dataPoints.size() - 1; ++j)
             {
-                Vector p, q, r, s;
+                using namespace cxutil::math;
+                
+                const LineSegment2D fistSegment  {dataPoints[i], dataPoints[i + 1]};
+                const LineSegment2D secondSegment{dataPoints[j], dataPoints[j + 1]};
 
-                // First line segment:
-                p.x = std::get<0>(dataPoints[i]).value();
-                p.y = std::get<1>(dataPoints[i]).value();
-
-                r.x = std::get<0>(dataPoints[i + 1]).value() - std::get<0>(dataPoints[i]).value();
-                r.y = std::get<1>(dataPoints[i + 1]).value() - std::get<1>(dataPoints[i]).value();
-
-                // Second line segment:
-                q.x = std::get<0>(dataPoints[j]).value();
-                q.y = std::get<1>(dataPoints[j]).value();
-
-                s.x = std::get<0>(dataPoints[j + 1]).value() - std::get<0>(dataPoints[j]).value();
-                s.y = std::get<1>(dataPoints[j + 1]).value() - std::get<1>(dataPoints[j]).value();
-
-                bool areSegmentsIntersecting{false};
-
-                if(crossProduct2D(r, s) == 0.0 && crossProduct2D(diff(q, p), r) == 0.0)
-                {
-                    // The two lines are collinear. Are they also overlapping?
-                    const double t0{dotProduct2D(diff(q, p), r) / dotProduct2D(r, r)};
-                    const double t1{t0 + dotProduct2D(s, r) / dotProduct2D(r, r)};
-
-                    const bool segmentsIntersect{(t0 > 0.0 && t0 < 1.0) && (t1 > 0.0 && t1 < 1.0)};
-
-                    areSegmentsIntersecting |= segmentsIntersect;
-                }
-                else if(crossProduct2D(r, s) == 0.0 && crossProduct2D(diff(q, p), r) != 0.0)
-                {
-                    // The two lines segments are parallel and non-intersecting
-                }
-                else if(crossProduct2D(r, s) != 0.0)
-                {
-                    const double t{crossProduct2D(diff(q, p), s) / crossProduct2D(r, s)};
-                    const double u{crossProduct2D(diff(q, p), r) / crossProduct2D(r, s)};
-                    const bool tIn0To1{t > 0.0 && t < 1.0};
-                    const bool uIn0To1{u > 0.0 && u < 1.0};
-
-                    if(tIn0To1 && uIn0To1)
-                    {
-                        areSegmentsIntersecting = true;
-                    }
-                }
-                else
-                {
-                    CX_ASSERT_MSG(false, "Impossible line segments configuration.");
-                }
-
-                isPathSimple &= !areSegmentsIntersecting;
+                isPathSimple &= !cxutil::math::intersect<double>(fistSegment, secondSegment);
             }
         }
     }

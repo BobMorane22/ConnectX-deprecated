@@ -52,6 +52,10 @@ namespace math
  * @tparam T The coordinate type (not necessarily a cxutil::Coordinate).
  * @tparam N The point dimension (either 1, 2 or 3). Higher dimensions are not supported.
  *
+ * @todo Equality checks are done using a naked '==' operator, which is a problem for floating
+ *       point values. Some kind of logical equality check (i.e. using a tolerance of some sort)
+ *       is needed. It should be made available.
+ *
  **************************************************************************************************/
 template<typename T, typename std::size_t N>
 class Point final
