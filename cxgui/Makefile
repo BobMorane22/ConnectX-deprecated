@@ -30,28 +30,30 @@ LIBS_OUT     = $(BIN_ROOT)/connectx/libs
 INCLUDES     = -I$(SRC_ROOT)
 VPATH        = src
 
-SRCS     = About.cpp          \
-           Credits.cpp        \
-           Disc.cpp           \
-           GeometricShape.cpp \
-           Help.cpp           \
-           License.cpp        \
-           MessageBox.cpp     \
-           RAIICairoPath.cpp  \
-           SectionTitle.cpp   \
-           util.cpp           \
+SRCS     = About.cpp                         \
+           Credits.cpp                       \
+           Disc.cpp                          \
+           GeometricShape.cpp                \
+           Help.cpp                          \
+           License.cpp                       \
+           MessageBox.cpp                    \
+           RAIICairoPath.cpp                 \
+           SectionTitle.cpp                  \
+           SimpleAndClosedGeometricShape.cpp \
+           util.cpp                          \
            Window.cpp
 
-OBJS     = $(OBJ_DIR)/About.o          \
-		   $(OBJ_DIR)/Credits.o        \
-           $(OBJ_DIR)/Disc.o           \
-           $(OBJ_DIR)/GeometricShape.o \
-           $(OBJ_DIR)/Help.o           \
-           $(OBJ_DIR)/License.o        \
-           $(OBJ_DIR)/MessageBox.o     \
-           $(OBJ_DIR)/RAIICairoPath.o  \
-           $(OBJ_DIR)/SectionTitle.o   \
-           $(OBJ_DIR)/util.o           \
+OBJS     = $(OBJ_DIR)/About.o                         \
+		   $(OBJ_DIR)/Credits.o                       \
+           $(OBJ_DIR)/Disc.o                          \
+           $(OBJ_DIR)/GeometricShape.o                \
+           $(OBJ_DIR)/Help.o                          \
+           $(OBJ_DIR)/License.o                       \
+           $(OBJ_DIR)/MessageBox.o                    \
+           $(OBJ_DIR)/RAIICairoPath.o                 \
+           $(OBJ_DIR)/SectionTitle.o                  \
+           $(OBJ_DIR)/SimpleAndClosedGeometricShape.o \
+           $(OBJ_DIR)/util.o                          \
            $(OBJ_DIR)/Window.o
 
 LIBS = -lcxbase \

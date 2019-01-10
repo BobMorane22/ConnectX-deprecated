@@ -25,7 +25,7 @@
  * @date    February 2018
  * @version 1.0
  *
- * Interface for a simple and closed geometric shape widget utility.
+ * Interface for a geometric shape widget utility.
  *
  **************************************************************************************************/
 
@@ -49,7 +49,7 @@ namespace cxgui
  * @li @c DASHED : __ __ __ __ __ __ __
  *
  **************************************************************************************************/
-enum class BorderStyle : int
+enum class BorderStyle
 {
     SOLID,
     DOTTED,
@@ -62,15 +62,13 @@ enum class BorderStyle : int
  *
  * A geometric shape is an external boundary (a border) defining two regions: the internal and
  * external regions. These regions are referred to respectively as the fill and the background
- * regions. The border must be a simple and closed curve, otherwise drawing behavior is undefined.
- * The border, although it always exists, might not be visible.
+ * regions. The border, although it always exists, might not be visible.
  *
  * Use this base abstract class to derive from if you need to create a geometric shape (square,
  * circle, triangle, etc) that can be drawn to the screen as an independent widget. Override the
  * @c drawBorder() method to define your own shape.
  *
  * @invariant The border thickness is a positive real number.
- * @invariant The border is a simple and closed curve.
  *
  * @see drawBorder
  *
@@ -256,15 +254,9 @@ protected:
 ///@}
 
 
-private:
+protected:
 
 ///@{ @name Automatic Drawing Process
-
-    virtual bool on_draw            (const Cairo::RefPtr<Cairo::Context>& p_context) override final;
-    void         draw               (const Cairo::RefPtr<Cairo::Context>& p_context) const;
-    void         drawBackgroundColor(const Cairo::RefPtr<Cairo::Context>& p_context) const;
-    void         drawFillColor      (const Cairo::RefPtr<Cairo::Context>& p_context) const;
-
 
     /*******************************************************************************************//**
      * @brief Defines the shape's border.
@@ -306,7 +298,29 @@ private:
     virtual void drawBorder(const Cairo::RefPtr<Cairo::Context>& p_context) const = 0;
 
 
-    bool isTheBorderASimpleAndClosedCurve() const;
+    /*******************************************************************************************//**
+     * @brief Signal handler called when the widget is to be drawn to the screen.
+     *
+     * This signal handler is called after the widget has been realized and needs to be drawn
+     * to the screen. Calling @c reDraw() will trigger this signal handler.
+     *
+     * @param[in] p_context The Cairo::Context passed from the drawing handler.
+     *
+     * @see reDraw
+     *
+     **********************************************************************************************/
+    virtual bool on_draw(const Cairo::RefPtr<Cairo::Context>& p_context) override;
+
+///@}
+
+
+private:
+
+///@{ @name Automatic Drawing Process
+
+    void         draw               (const Cairo::RefPtr<Cairo::Context>& p_context) const;
+    void         drawBackgroundColor(const Cairo::RefPtr<Cairo::Context>& p_context) const;
+    void         drawFillColor      (const Cairo::RefPtr<Cairo::Context>& p_context) const;
 
 ///@}
 
@@ -336,15 +350,6 @@ private:
                                                ///< geometric shape will be left untouched. If the
                                                ///< fill color is set to transparent, no background color
                                                ///< will be visible in the shape are.
-
-    mutable bool  m_simpleAndClosedCheckDone;  // Flag that makes sure the method
-                                               // 'isTheBorderASimpleAndClosedCurve()'
-                                               // is called at least once. It is mutable
-                                               // because its value is modified at the
-                                               // end of that method, which is const. This
-                                               // check needs not be repeated because it
-                                               // is very expensive, and useless to perform
-                                               // more than once.
 
 ///@}
 

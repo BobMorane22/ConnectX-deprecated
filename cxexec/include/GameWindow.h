@@ -92,7 +92,7 @@ private:
     Gtk::Label          m_nbMovesLeftNumber          {"21"                   };
 
     cxgui::SectionTitle m_gameBoardSection           {"Game board:"          };
-    cx::ui::GameBoard   m_gameBoard                  {std::make_shared<cxbase::GameBoard>()};
+    cx::ui::GameBoard   m_gameBoard                  {std::make_shared<cxbase::GameBoard>(10, 10)};
 
     Gtk::Button         m_reinitialize               {"Reinitialize"         };
 

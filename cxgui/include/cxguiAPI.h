@@ -35,7 +35,6 @@
 // UI
 #include "About.h"
 #include "Credits.h"
-#include "cxguiAPI.h"
 #include "Disc.h"
 #include "enums.h"
 #include "GeometricShape.h"
@@ -44,6 +43,7 @@
 #include "MessageBox.h"
 #include "RAIICairoPath.h"
 #include "SectionTitle.h"
+#include "SimpleAndClosedGeometricShape.h"
 #include "Window.h"
 
 // Utilities

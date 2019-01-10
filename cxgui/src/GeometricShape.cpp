@@ -52,7 +52,6 @@ cxgui::GeometricShape::GeometricShape(const cxutil::Color& p_fillColor       ,
  , m_borderThickness{p_borderThickness}
  , m_borderStyle{p_borderStyle}
  , m_fillOnlyVisibleBackground{p_fillOnlyVisibleBackground}
- , m_simpleAndClosedCheckDone{false}
 {
     PRECONDITION(p_borderThickness >= 0);
 }
@@ -115,27 +114,9 @@ void cxgui::GeometricShape::removeBorder()
 }
 
 
-/*******************************************************************************************//**
- * @brief Signal handler called when the widget is to be drawn to the screen.
- *
- * This signal handler is called after the widget has been realized and needs to be drawn
- * to the screen. Calling @c reDraw() will trigger this signal handler.
- *
- * @param[in] p_context The Cairo::Context passed from the drawing handler.
- *
- * @see reDraw
- *
- **********************************************************************************************/
 bool cxgui::GeometricShape::on_draw(const Cairo::RefPtr<Cairo::Context>& p_context)
 {
     draw(p_context);
-
-    if(!m_simpleAndClosedCheckDone)
-    {
-        CX_ASSERT_MSG(isTheBorderASimpleAndClosedCurve(), "The geometric shape you are attempting "
-                                                          "to draw is either not closed or not "
-                                                          "simple.");
-    }
 
     INVARIANTS();
 
@@ -146,14 +127,9 @@ bool cxgui::GeometricShape::on_draw(const Cairo::RefPtr<Cairo::Context>& p_conte
 /*******************************************************************************************//**
  * @brief Draws the geometric shape.
  *
- * This is the actual method doing all the drawing. Its behavior is completely defined by the
- * the two methods @c drawBackgroundColor() and @c drawFillColor() and the BorderDrawer
- * functor passed as an argument to the constructor.
+ * This is the actual method doing all the drawing.
  *
  * @param[in] p_context The Cairo::Context passed from the drawing handler.
- *
- * @see drawBackgroundColor
- * @see drawFillColor
  *
  **********************************************************************************************/
 void cxgui::GeometricShape::draw(const Cairo::RefPtr<Cairo::Context>& p_context) const
@@ -276,111 +252,6 @@ void cxgui::GeometricShape::drawFillColor(const Cairo::RefPtr<Cairo::Context>& p
 
     drawBorder(p_context);
     p_context->fill();
-}
-
-
-/*******************************************************************************************//**
- * @brief Checks if the border is a simple and closed curve.
- *
- * In other words, it checks that the BorderDrawer functor passed as an argument to the
- * constructor defines a simple and closed curve, i.e. a curve for which the starting point
- * is the ending point and such that no other two points on the curve are the same.
- *
- * @return @c true if the border defined in @c drawBorder() is a simple and closed curve,
- *         @c false otherwise.
- *
- **********************************************************************************************/
-bool cxgui::GeometricShape::isTheBorderASimpleAndClosedCurve() const
-{
-    // Get a mock context (no actual drawing needs to be done!):
-    Cairo::RefPtr<Cairo::Surface> mockSurface{Cairo::ImageSurface::create(Cairo::Format::FORMAT_A8, 200, 200)};
-    CX_ASSERT(mockSurface);
-
-    Cairo::RefPtr<Cairo::Context> context{Cairo::Context::create(mockSurface)};
-    CX_ASSERT(context);
-
-    // Get the underlying path as a collection of straight lines:
-    drawBorder(context);
-
-    cxgui::RAIICairoPath shapeFlatPath{context->copy_path_flat()};
-    CX_ASSERT(shapeFlatPath);
-
-    // We check if the shape is closed. To do this, we first check if there is
-    // a CAIRO_PATH_CLOSE_PATH in the path data, since it does not cost much. If this
-    // test is not conclusive, it might not mean the shape is not closed: maybe it
-    // was closed by hand, with a call to @c line_to() instead of @c close_path(). So
-    // we check if the starting point matches the ending point, to cover this case too:
-    bool isBorderClosed{false};
-    int lastIndex{0};
-
-    for (int index{0}; index < shapeFlatPath->num_data; index += shapeFlatPath->data[index].header.length)
-    {
-        if(shapeFlatPath->data[index].header.type == CAIRO_PATH_CLOSE_PATH)
-        {
-            isBorderClosed = true;
-        }
-        if(shapeFlatPath->data[index].header.type == CAIRO_PATH_LINE_TO ||
-           shapeFlatPath->data[index].header.type == CAIRO_PATH_MOVE_TO)
-        {
-            lastIndex = index;
-        }
-    }
-
-    if(!isBorderClosed)
-    {
-        // Get starting point:
-        const cxutil::math::Point2D startPoint{shapeFlatPath->data[1].point.x,
-                                               shapeFlatPath->data[1].point.y};
-
-        // Get the ending point:
-        const cxutil::math::Point2D endPoint{shapeFlatPath->data[lastIndex + 1].point.x,
-                                             shapeFlatPath->data[lastIndex + 1].point.y};
-
-        /*! @todo This naked equality test is dangerous on <tt>double</tt>s and should be
-        replaced by some kind of logical equality with some tolerance. */
-        isBorderClosed = (startPoint == endPoint);
-    }
-
-    // If the path is closed, we check if it is also simple:
-    bool isPathSimple{true};
-
-    if(isBorderClosed)
-    {
-        std::vector<cxutil::math::Point2D> dataPoints;
-
-        for (int index{0}; index < shapeFlatPath->num_data; index += shapeFlatPath->data[index].header.length)
-        {
-            // Get points for flattened path:
-            if(shapeFlatPath->data[index].header.type == CAIRO_PATH_LINE_TO ||
-               shapeFlatPath->data[index].header.type == CAIRO_PATH_MOVE_TO)
-            {
-                cxutil::math::Point2D dataPoint{shapeFlatPath->data[index + 1].point.x,
-                                                shapeFlatPath->data[index + 1].point.y};
-
-                dataPoints.push_back(std::move(dataPoint));
-            }
-        }
-
-        CX_ASSERT(!dataPoints.empty());
-
-        // We check if the path is simple:
-        for(std::size_t i = 0; i < dataPoints.size() - 2; ++i)
-        {
-            for(std::size_t j = i + 1; j < dataPoints.size() - 1; ++j)
-            {
-                using namespace cxutil::math;
-                
-                const LineSegment2D fistSegment  {dataPoints[i], dataPoints[i + 1]};
-                const LineSegment2D secondSegment{dataPoints[j], dataPoints[j + 1]};
-
-                isPathSimple &= !cxutil::math::intersect<double>(fistSegment, secondSegment);
-            }
-        }
-    }
-
-    m_simpleAndClosedCheckDone = true;
-
-    return isBorderClosed && isPathSimple;
 }
 
 
