@@ -35,7 +35,7 @@
 // UI
 #include "About.h"
 #include "Credits.h"
-#include "CXDisc.h"
+#include "Chip.h"
 #include "GameBoard.h"
 #include "GameWindow.h"
 #include "GBDisc.h"
