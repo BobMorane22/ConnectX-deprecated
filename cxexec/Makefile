@@ -32,8 +32,8 @@ INCLUDES     = -I$(SRC_ROOT)
 VPATH        = src
 
 SRCS     = About.cpp          \
+           Chip.cpp           \
            Credits.cpp        \
-           CXDisc.cpp         \
            GameBoard.cpp      \
            GameWindow.cpp     \
            GBDisc.cpp         \
@@ -48,8 +48,8 @@ SRCS     = About.cpp          \
            Window.cpp
 
 OBJS     = $(OBJ_DIR)/About.o          \
+           $(OBJ_DIR)/Chip.o           \
            $(OBJ_DIR)/Credits.o        \
-           $(OBJ_DIR)/CXDisc.o         \
            $(OBJ_DIR)/GameBoard.o      \
            $(OBJ_DIR)/GameWindow.o     \
            $(OBJ_DIR)/GBDisc.o         \

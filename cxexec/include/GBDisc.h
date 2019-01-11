@@ -34,7 +34,7 @@
 
 #include <cxbase/include/Disc.h>
 
-#include "CXDisc.h"
+#include "Chip.h"
 
 namespace cx
 {
@@ -52,7 +52,7 @@ namespace ui
  *     @li when hidden, the disc's fill area becomes black.
  *
  **************************************************************************************************/
-class GBDisc : public CXDisc
+class GBDisc : public Chip
 {
 
 public:
@@ -111,9 +111,11 @@ public:
 
 private:
 
+    virtual void drawBorder(const Cairo::RefPtr<Cairo::Context>& p_context) const override;
+
+
     cxbase::Disc m_backEndDisc;   ///< The backend (from @c cxbase ) disc visually represented.
                                   ///< the current GUI disc.
-                                  ///<
 };
 
 } // namespace ui

@@ -32,16 +32,16 @@
 #include "../include/NDADisc.h"
 
 
-cx::ui::NDADisc::NDADisc() : cx::ui::CXDisc(cxutil::Color::transparent(),
-                                            cxutil::Color::transparent(),
-                                            cxutil::Color::transparent())
+cx::ui::NDADisc::NDADisc() : cx::ui::Chip(cxutil::Color::transparent(),
+                                          cxutil::Color::transparent(),
+                                          cxutil::Color::transparent())
 {
 }
 
 
-cx::ui::NDADisc::NDADisc(const cxbase::Disc& p_backEndDisc) : CXDisc(p_backEndDisc.color(),
-                                                                     cxutil::Color::transparent(),
-                                                                     cxutil::Color::black())
+cx::ui::NDADisc::NDADisc(const cxbase::Disc& p_backEndDisc) : Chip(p_backEndDisc.color(),
+                                                                   cxutil::Color::transparent(),
+                                                                   cxutil::Color::black())
 {
 }
 
@@ -64,4 +64,23 @@ void cx::ui::NDADisc::update(const cxbase::Disc& p_newBackEndDisc)
     showBorder();
 
     reDraw();
+}
+
+
+void cx::ui::NDADisc::drawBorder(const Cairo::RefPtr<Cairo::Context>& p_context) const
+{
+    const Gtk::Allocation allocation{get_allocation()};
+
+    const int width{allocation.get_width()};
+    const int height{allocation.get_height()};
+    const int smallestDimension{std::min(width, height)};
+
+    const int xCenter{width / 2};
+    const int yCenter{height / 2};
+
+    p_context->arc(xCenter,
+                   yCenter,
+                   smallestDimension / 2.5,
+                   0.0,
+                   2.0 * M_PI);
 }

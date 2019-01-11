@@ -20,34 +20,37 @@
  **************************************************************************************************/
 
 /***********************************************************************************************//**
- * @file    CXDisc.cpp
+ * @file    Chip.cpp
  * @author  Eric Poirier
  * @date    February 2018
  * @version 1.0
  *
- * Implementation for a Connect X GUI disc utility.
+ * Implementation for a Connect X GUI chip utility.
  *
  **************************************************************************************************/
 
 
-#include "../include/CXDisc.h"
+#include "../include/Chip.h"
 
 
-cx::ui::CXDisc::CXDisc(const cxutil::Color& p_fillColor,
-                       const cxutil::Color& p_backgroundColor,
-                       const cxutil::Color& p_borderColor) :
-                       cxgui::Disc(p_fillColor,
-                                   p_backgroundColor,
-                                   p_borderColor),
-                       m_isHighlighted{false}
+cx::ui::Chip::Chip(const cxutil::Color& p_fillColor,
+                   const cxutil::Color& p_backgroundColor,
+                   const cxutil::Color& p_borderColor)
+ : cxgui::SimpleAndClosedGeometricShape(p_fillColor,
+                                        p_backgroundColor,
+                                        p_borderColor,
+                                        true,
+                                        0.02,
+                                        cxgui::BorderStyle::SOLID)
+ , m_isHighlighted{false}
 {
 }
 
 
-cx::ui::CXDisc::~CXDisc() = default;
+cx::ui::Chip::~Chip() = default;
 
 
-void cx::ui::CXDisc::highlight()
+void cx::ui::Chip::highlight()
 {
     if(!m_isHighlighted)
     {
@@ -72,7 +75,7 @@ void cx::ui::CXDisc::highlight()
 }
 
 
-void cx::ui::CXDisc::removeHighlighting()
+void cx::ui::Chip::removeHighlighting()
 {
     if(m_isHighlighted)
     {

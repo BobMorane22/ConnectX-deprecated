@@ -32,15 +32,15 @@
 #include "../include/GBDisc.h"
 
 
-cx::ui::GBDisc::GBDisc() : cx::ui::CXDisc(cxutil::Color::transparent(),
-                                          cxutil::Color::blue(),
-                                          cxutil::Color::black())
+cx::ui::GBDisc::GBDisc() : cx::ui::Chip(cxutil::Color::transparent(),
+                                        cxutil::Color::blue(),
+                                        cxutil::Color::black())
 {
 }
 
 
-cx::ui::GBDisc::GBDisc(const cxbase::Disc& p_backEndDisc) : CXDisc(p_backEndDisc.color(),
-                                                                   cxutil::Color::blue())
+cx::ui::GBDisc::GBDisc(const cxbase::Disc& p_backEndDisc) : Chip(p_backEndDisc.color(),
+                                                                 cxutil::Color::blue())
 {
 }
 
@@ -64,3 +64,20 @@ void cx::ui::GBDisc::update(const cxbase::Disc& p_newBackEndDisc)
 }
 
 
+void cx::ui::GBDisc::drawBorder(const Cairo::RefPtr<Cairo::Context>& p_context) const
+{
+    const Gtk::Allocation allocation{get_allocation()};
+
+    const int width{allocation.get_width()};
+    const int height{allocation.get_height()};
+    const int smallestDimension{std::min(width, height)};
+
+    const int xCenter{width / 2};
+    const int yCenter{height / 2};
+
+    p_context->arc(xCenter,
+                   yCenter,
+                   smallestDimension / 2.5,
+                   0.0,
+                   2.0 * M_PI);
+}

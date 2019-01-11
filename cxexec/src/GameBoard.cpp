@@ -48,7 +48,7 @@ cx::ui::GameBoard::GameBoard(const std::shared_ptr<cxbase::GameBoard>& p_gameBoa
 
     for(int col{0}; col < nbColumns; ++col)
     {
-        NDADisc* noDisc{Gtk::manage(new NDADisc)};
+        Chip* noDisc{Gtk::manage(new NDADisc)};
         noDisc->set_size_request(40, 40);
 
         m_nextDiscArea.attach(*noDisc, col, 0, 1, 1);
@@ -62,7 +62,7 @@ cx::ui::GameBoard::GameBoard(const std::shared_ptr<cxbase::GameBoard>& p_gameBoa
     {
         for(int col{0}; col < nbColumns; ++col)
         {
-            GBDisc* noDisc{Gtk::manage(new GBDisc)};
+            Chip* noDisc{Gtk::manage(new GBDisc)};
             noDisc->set_size_request(40, 40);
 
             m_gameBoardGrid.attach(*noDisc, col, row, 1, 1);

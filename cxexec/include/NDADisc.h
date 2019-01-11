@@ -34,7 +34,7 @@
 
 #include <cxbase/include/Disc.h>
 
-#include "CXDisc.h"
+#include "Chip.h"
 
 namespace cx
 {
@@ -55,7 +55,7 @@ namespace ui
  * user.
  *
  **************************************************************************************************/
-class NDADisc : public CXDisc
+class NDADisc : public Chip
 {
 
 public:
@@ -115,7 +115,10 @@ public:
 
 private:
 
-    cxbase::Disc m_backEndDisc;   ///<
+    virtual void drawBorder(const Cairo::RefPtr<Cairo::Context>& p_context) const override;
+
+    cxbase::Disc m_backEndDisc;   ///< The backend (from @c cxbase ) disc visually represented.
+                                  ///< the current GUI disc.
 };
 
 } // namespace ui
