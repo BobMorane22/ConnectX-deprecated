@@ -35,10 +35,10 @@ SRCS     = About.cpp          \
            Chip.cpp           \
            Credits.cpp        \
            GameBoard.cpp      \
-           GameWindow.cpp     \
            GBDisc.cpp         \
            Help.cpp           \
            License.cpp        \
+           MainWindow.cpp     \
            MessageBox.cpp     \
            NDADisc.cpp        \
            NewGame.cpp        \
@@ -51,10 +51,10 @@ OBJS     = $(OBJ_DIR)/About.o          \
            $(OBJ_DIR)/Chip.o           \
            $(OBJ_DIR)/Credits.o        \
            $(OBJ_DIR)/GameBoard.o      \
-           $(OBJ_DIR)/GameWindow.o     \
            $(OBJ_DIR)/GBDisc.o         \
            $(OBJ_DIR)/Help.o           \
            $(OBJ_DIR)/License.o        \
+           $(OBJ_DIR)/MainWindow.o     \
            $(OBJ_DIR)/MessageBox.o     \
            $(OBJ_DIR)/NDADisc.o        \
            $(OBJ_DIR)/NewGame.o        \

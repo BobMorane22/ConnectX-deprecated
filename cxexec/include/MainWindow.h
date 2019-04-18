@@ -1,9 +1,42 @@
+/***************************************************************************************************
+ *
+ * Copyright (C) 2018 Connect X team
+ *
+ * This file is part of Connect X.
+ *
+ * Connect X is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Connect X is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Connect X.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ **************************************************************************************************/
+
+/***********************************************************************************************//**
+ * @file    MainWindow.h
+ * @author  Eric Poirier
+ * @date    February 2018
+ * @version 1.0
+ *
+ * Interface for a Connect X GUI main window.
+ *
+ **************************************************************************************************/
+
+#ifndef MAINWINDOW_H_1900DBCF_E1B9_43A8_9FFC_94376406279E
+#define MAINWINDOW_H_1900DBCF_E1B9_43A8_9FFC_94376406279E
+
 #include <memory>
 
 #include <gtkmm/applicationwindow.h>
 #include <gtkmm/button.h>
 #include <gtkmm/buttonbox.h>
-#include <gtkmm/grid.h>
 #include <gtkmm/imagemenuitem.h>
 #include <gtkmm/label.h>
 #include <gtkmm/menu.h>
@@ -12,6 +45,7 @@
 #include <gtkmm/stock.h>
 
 #include <cxbase/include/Game.h>
+
 #include <cxgui/include/SectionTitle.h>
 
 #include "GameBoard.h"
@@ -23,29 +57,56 @@ namespace cx
 namespace ui
 {
 
-class GameWindow final : public Gtk::ApplicationWindow
+/***************************************************************************************************
+ * @class MainWindow
+ *
+ * @brief Main Connect X window.
+ *
+ * This special window encapsulate many necessary goodies to be used with a Gtk::Application
+ * object. There should only be one such window in the whole code base, and it should be the
+ * window used as an argument in @c Gtk::Application::run() .
+ *
+ * @todo Automate the window layout creation process.
+ *
+ **************************************************************************************************/
+class MainWindow : public Gtk::ApplicationWindow
 {
 
 public:
 
 ///@{ @name Object Construction and Destruction
 
-    GameWindow();
-    //GameWindow(const std::shared_ptr<cxbase::Game>& p_game);
-    virtual ~GameWindow() override;
+    /***********************************************************************************************
+     * Default constructor.
+     *
+     **********************************************************************************************/
+    MainWindow();
+
+
+    /***********************************************************************************************
+     * Default destructor.
+     *
+     **********************************************************************************************/
+    virtual ~MainWindow() override;
 
 ///@}
 
-    //bool connect(const std::shared_ptr<cxbase::Game>& p_game);
+
 
 private:
 
 ///@{ @name Layout and widgets configuration
 
-    void registerLayouts();
+    void setWindowIcon();
+    void configureWindow();
     void registerMenu();
+    void registerLayouts();
     void registerWidgets();
-    void configureLayoutsAndWidgets();
+    void configureLayouts();
+    void configureWidgets();
+    void configureSignalHandlers();
+
+    void init();
 
 ///@}
 
@@ -53,7 +114,7 @@ private:
 ///@{ @name Data members:
 
     // Widget layouts:
-    Gtk::Grid       m_mainLayout;                 ///< Contains all window sub-layouts.
+    Gtk::Grid       m_mainLayout;                 // The main window layout.
 
     Gtk::Grid       m_menuBarLayout;
     Gtk::Grid       m_gameInfoLayout;             ///< Contains all widgets in
@@ -103,3 +164,5 @@ private:
 } // namespace ui
 
 } // namespace cx
+
+#endif // MAINWINDOW_H_1900DBCF_E1B9_43A8_9FFC_94376406279E

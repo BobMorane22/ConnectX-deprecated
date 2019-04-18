@@ -1,9 +1,40 @@
+/***************************************************************************************************
+ *
+ * Copyright (C) 2018 Connect X team
+ *
+ * This file is part of Connect X.
+ *
+ * Connect X is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Connect X is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Connect X.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ **************************************************************************************************/
+
+/***********************************************************************************************//**
+ * @file    MainWindow.cpp
+ * @author  Eric Poirier
+ * @date    February 2018
+ * @version 1.0
+ *
+ * Implementation for a Connect X GUI main window.
+ *
+ **************************************************************************************************/
+
 #include <iostream>
 
 #include <cxutil/include/util.h>
 #include <cxgui/include/enums.h>
 
-#include "../include/GameWindow.h"
+#include "../include/MainWindow.h"
 
 namespace
 {
@@ -35,51 +66,48 @@ enum GameInformationColumns
 
 } // unamed namespace
 
-cx::ui::GameWindow::GameWindow()
+cx::ui::MainWindow::MainWindow()
 {
-    // Window setup:
-    set_title("Connect X");
+    // Automate the layout process:
+    signal_realize().connect([this]()
+                             {
+                                 init();
+                             });
 
-    std::string iconPath{cxutil::path::currentExecutablePath()};
-    iconPath.append("/icons/cxicon16.png");
-
-    set_icon_from_file(iconPath);
-    set_position(Gtk::WIN_POS_CENTER);
-
-    // Layouts registration:
-    registerLayouts();
+    add(m_mainLayout);
 
     // Menu bar items registration:
     registerMenu();
-
-    // Widgets registration in layouts:
-    registerWidgets();
-
-    // Layout and Widgets look:
-    configureLayoutsAndWidgets();
 
     // Display all widgets:
     show_all();
 }
 
 
-cx::ui::GameWindow::~GameWindow() = default;
+cx::ui::MainWindow::~MainWindow() = default;
 
 
-void cx::ui::GameWindow::registerLayouts()
+void cx::ui::MainWindow::setWindowIcon()
 {
-    // Window main layout:
-    add(m_mainLayout);
+    // The framework can't be used here, so we have to detail everything:
+    std::string iconPath{cxutil::path::currentExecutablePath()};
+    iconPath.append("/icons/cxicon16.png");
 
-    // Principal sub-layouts used in this window:
-    m_mainLayout.attach(m_menuBarLayout,      0, MENU_BAR,         cxgui::GridWidth::ONE_COLUMN, cxgui::GridHeight::ONE_ROW);
-    m_mainLayout.attach(m_gameInfoLayout,     0, GAME_INFORMATION, cxgui::GridWidth::ONE_COLUMN, cxgui::GridHeight::ONE_ROW);
-    m_mainLayout.attach(m_gameBoardLayout,    0, GAME_BOARD,       cxgui::GridWidth::ONE_COLUMN, cxgui::GridHeight::ONE_ROW);
-    m_mainLayout.attach(m_reinitializeLayout, 0, REINITIALIZE,     cxgui::GridWidth::ONE_COLUMN, cxgui::GridHeight::ONE_ROW);
+    set_icon_from_file(iconPath);
 }
 
 
-void cx::ui::GameWindow::registerMenu()
+void cx::ui::MainWindow::configureWindow()
+{
+    // Window setup:
+    set_title("Connect X");
+
+    //set_icon_from_file(iconPath);
+    set_position(Gtk::WIN_POS_CENTER);
+}
+
+
+void cx::ui::MainWindow::registerMenu()
 {
     m_menuBar.append(m_gameMenuItem);
     m_gameMenuItem.set_submenu(m_gameMenu);
@@ -94,7 +122,17 @@ void cx::ui::GameWindow::registerMenu()
 }
 
 
-void cx::ui::GameWindow::registerWidgets()
+void cx::ui::MainWindow::registerLayouts()
+{
+    // Principal sub-layouts used in this window:
+    m_mainLayout.attach(m_menuBarLayout,      0, MENU_BAR,         cxgui::GridWidth::ONE_COLUMN, cxgui::GridHeight::ONE_ROW);
+    m_mainLayout.attach(m_gameInfoLayout,     0, GAME_INFORMATION, cxgui::GridWidth::ONE_COLUMN, cxgui::GridHeight::ONE_ROW);
+    m_mainLayout.attach(m_gameBoardLayout,    0, GAME_BOARD,       cxgui::GridWidth::ONE_COLUMN, cxgui::GridHeight::ONE_ROW);
+    m_mainLayout.attach(m_reinitializeLayout, 0, REINITIALIZE,     cxgui::GridWidth::ONE_COLUMN, cxgui::GridHeight::ONE_ROW);
+}
+
+
+void cx::ui::MainWindow::registerWidgets()
 {
     //Menu bar:
     m_menuBarLayout.attach(m_menuBar,            0,              0,                              cxgui::GridWidth::ONE_COLUMN, cxgui::GridHeight::ONE_ROW);
@@ -122,7 +160,7 @@ void cx::ui::GameWindow::registerWidgets()
 }
 
 
-void cx::ui::GameWindow::configureLayoutsAndWidgets()
+void cx::ui::MainWindow::configureLayouts()
 {
     const int spacing{15};
 
@@ -137,6 +175,12 @@ void cx::ui::GameWindow::configureLayoutsAndWidgets()
     m_reinitializeLayout.set_margin_left(spacing);
     m_reinitializeLayout.set_margin_right(spacing);
     m_reinitializeLayout.set_margin_bottom(spacing);
+}
+
+
+void cx::ui::MainWindow::configureWidgets()
+{
+    const int spacing{15};
 
     m_menuBar.set_hexpand(true);
 
@@ -161,4 +205,35 @@ void cx::ui::GameWindow::configureLayoutsAndWidgets()
 
     // Button to the left:
     m_reinitializeLayout.set_layout(Gtk::BUTTONBOX_END);
+}
+
+
+void cx::ui::MainWindow::configureSignalHandlers()
+{
+    // Nothing so far...
+}
+
+
+/***************************************************************************************************
+ * @brief Window initialisation.
+ *
+ * This method is automatically called when the @c Window::signal_realize is sent by the window,
+ * i.e. when every data structure used by the window is constructed and ready for use. It is hence
+ * called after construction of the window and is therefore not subject to the constructor
+ * restriction to avoid virtual methods. You can call anything you want from here because you
+ * have the guarantee the window is fully constructed.
+ *
+ * @note Once again, the cxgui::dlg::Window framework for automating the layout could not be
+ *       be used because of multiple inheritance issues...
+ *
+ **************************************************************************************************/
+void cx::ui::MainWindow::init()
+{
+    setWindowIcon();
+    configureWindow();
+    registerLayouts();
+    registerWidgets();
+    configureLayouts();
+    configureWidgets();
+    configureSignalHandlers();
 }

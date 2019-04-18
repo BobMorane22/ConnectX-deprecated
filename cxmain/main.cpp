@@ -47,14 +47,14 @@
 #include <cxexec/include/NewGame.h>
 
 // To be refactored:
-#include <cxexec/include/GameWindow.h>
+#include <cxexec/include/MainWindow.h>
 
 
 int main(int argc, char** argv)
 {
     Glib::RefPtr<Gtk::Application> app{Gtk::Application::create(argc, argv, "com.github.bobmorane22.connectx")};
 
-    cx::ui::GameWindow w;
+    cx::ui::MainWindow w;
 
     w.show_all();
 
