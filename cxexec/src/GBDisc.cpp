@@ -32,7 +32,7 @@
 #include "../include/GBDisc.h"
 
 
-cx::ui::GBDisc::GBDisc() : cx::ui::Chip(cxutil::Color::transparent(),
+cx::ui::GBDisc::GBDisc() : cx::ui::Chip(cxutil::Color::black(),
                                         cxutil::Color::blue(),
                                         cxutil::Color::black())
 {

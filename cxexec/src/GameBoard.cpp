@@ -43,29 +43,41 @@ cx::ui::GameBoard::GameBoard(const std::shared_ptr<cxbase::GameBoard>& p_gameBoa
     const int nbColumns {m_gameBoard->nbColumns()};
 
     // Setting up the next disc area:
-    m_nextDiscArea.set_row_homogeneous(true);
-    m_nextDiscArea.set_column_homogeneous(true);
-
     for(int col{0}; col < nbColumns; ++col)
     {
-        Chip* noDisc{Gtk::manage(new NDADisc)};
-        noDisc->set_size_request(40, 40);
+        Chip* someDisc{nullptr};
 
-        m_nextDiscArea.attach(*noDisc, col, 0, 1, 1);
+        if(col == 0)
+        {
+            someDisc = Gtk::manage(new NDADisc(cxbase::Disc::greenDisc()));
+        }
+        else
+        {
+            someDisc = Gtk::manage(new NDADisc);
+        }
+
+        someDisc->set_size_request(40, 40);
+        m_nextDiscArea.attach(*someDisc, col, 0, 1, 1);
     }
 
     // Then, the game board area:
-    m_gameBoardGrid.set_row_homogeneous(true);
-    m_gameBoardGrid.set_column_homogeneous(true);
-
     for(int row{0}; row < nbRows; ++row)
     {
         for(int col{0}; col < nbColumns; ++col)
         {
-            Chip* noDisc{Gtk::manage(new GBDisc)};
-            noDisc->set_size_request(40, 40);
+            Chip* someDisc{nullptr};
 
-            m_gameBoardGrid.attach(*noDisc, col, row, 1, 1);
+            if(col == 1)
+            {
+                someDisc = Gtk::manage(new GBDisc(cxbase::Disc::redDisc()));
+            }
+            else
+            {
+                someDisc = Gtk::manage(new GBDisc);
+            }
+
+            someDisc->set_size_request(40, 40);
+            m_gameBoardGrid.attach(*someDisc, col, row, 1, 1);
         }
     }
 
