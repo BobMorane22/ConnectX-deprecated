@@ -182,7 +182,7 @@ void cx::ui::MainWindow::configureWidgets()
 {
     const int spacing{15};
 
-    m_menuBar.set_hexpand(true);
+    //m_menuBar.set_hexpand(true);
 
     // Leave some space between the game information widgets:
     m_gameInfoLayout.set_column_spacing(spacing);
@@ -192,7 +192,7 @@ void cx::ui::MainWindow::configureWidgets()
     {
         Gtk::Label* label{static_cast<Gtk::Label*>(widget)};
 
-        label->set_alignment(Gtk::Align::ALIGN_START);
+        label->set_halign(Gtk::Align::ALIGN_START);
         label->set_vexpand(false);
     }
 

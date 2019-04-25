@@ -43,6 +43,9 @@ cx::ui::GameBoard::GameBoard(const std::shared_ptr<cxbase::GameBoard>& p_gameBoa
     const int nbColumns {m_gameBoard->nbColumns()};
 
     // Setting up the next disc area:
+    m_nextDiscArea.set_row_homogeneous(true);
+    m_nextDiscArea.set_column_homogeneous(true);
+
     for(int col{0}; col < nbColumns; ++col)
     {
         Chip* someDisc{nullptr};
@@ -61,6 +64,9 @@ cx::ui::GameBoard::GameBoard(const std::shared_ptr<cxbase::GameBoard>& p_gameBoa
     }
 
     // Then, the game board area:
+    m_gameBoardGrid.set_row_homogeneous(true);
+    m_gameBoardGrid.set_column_homogeneous(true);
+
     for(int row{0}; row < nbRows; ++row)
     {
         for(int col{0}; col < nbColumns; ++col)
