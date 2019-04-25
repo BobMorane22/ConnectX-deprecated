@@ -29,6 +29,7 @@
  *
  **************************************************************************************************/
 
+#include <iostream>
 
 #include <cxbase/include/GameBoard.h>
 
@@ -93,8 +94,35 @@ cx::ui::GameBoard::GameBoard(const std::shared_ptr<cxbase::GameBoard>& p_gameBoa
 }
 
 
+// Memory management: https:
+//
+//   https://developer.gnome.org/gtkmm-tutorial/stable/sec-memory-widgets.html.en
+//
+//
+// Why std tools are not used:
+//
+//   https://softwareengineering.stackexchange.com/questions/206223/gtkmm-manage-add-vs-smart-pointers
 
-// Memory management: https:   https://developer.gnome.org/gtkmm-tutorial/stable/sec-memory-widgets.html.en
-// Why std tools are not used: https://softwareengineering.stackexchange.com/questions/206223/gtkmm-manage-add-vs-smart-pointers
+
 cx::ui::GameBoard::~GameBoard() = default;
+
+
+void cx::ui::GameBoard::moveChipLeft()
+{
+    std::cout << "Current disc moved left" << std::endl;
+}
+
+
+void cx::ui::GameBoard::moveChipRight()
+{
+    std::cout << "NDA disc moved right" << std::endl;
+}
+
+
+bool cx::ui::GameBoard::dropChip()
+{
+    std::cout << "NDA disc dropped" << std::endl;
+
+    return true;
+}
 

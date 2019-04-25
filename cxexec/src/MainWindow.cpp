@@ -31,10 +31,16 @@
 
 #include <iostream>
 
+#include <gdk/gdkkeysyms.h>
+
 #include <cxutil/include/util.h>
 #include <cxgui/include/enums.h>
 
 #include "../include/MainWindow.h"
+
+// https://developer.gnome.org/gtkmm-tutorial/stable/sec-keyboardevents-propagation.html.en
+const bool STOP_EVENT_PROPAGATION {true};
+const bool ALLOW_EVENT_PROPAGATION{false};
 
 namespace
 {
@@ -237,3 +243,69 @@ void cx::ui::MainWindow::init()
     configureWidgets();
     configureSignalHandlers();
 }
+
+
+/*******************************************************************************************//**
+ * @brief Handles a 'left' key press on the keyboard.
+ *
+ **********************************************************************************************/
+void cx::ui::MainWindow::onLeftArrowKeyPressed()
+{
+    m_gameBoard.moveChipLeft();
+}
+
+
+/*******************************************************************************************//**
+ * @brief  Handles a 'down' key press on the keyboard.
+ *
+ **********************************************************************************************/
+void cx::ui::MainWindow::onRightArrowKeyPressed()
+{
+    m_gameBoard.moveChipRight();
+}
+
+
+/*******************************************************************************************//**
+ * @brief  Handles a 'down' key press on the keyboard.
+ *
+ **********************************************************************************************/
+void cx::ui::MainWindow::onDownArrowKeyPressed()
+{
+    m_gameBoard.dropChip();
+}
+
+
+/*******************************************************************************************//**
+ * @brief Default key pressed signal handler.
+ *
+ * This handler must be overriden to allow key evens to be caught.
+ *
+ * @return @c true to stop other handlers from being invoked for the event. @c false to
+ *         propagate the event further.
+ *
+ **********************************************************************************************/
+bool cx::ui::MainWindow::on_key_press_event(GdkEventKey* p_event)
+{
+    switch(p_event->keyval)
+    {
+        case GDK_KEY_Left:
+        {
+            onLeftArrowKeyPressed();
+            return STOP_EVENT_PROPAGATION;
+        }
+        case GDK_KEY_Right:
+        {
+            onRightArrowKeyPressed();
+            return STOP_EVENT_PROPAGATION;
+        }
+        case GDK_KEY_Down:
+        {
+            onDownArrowKeyPressed();
+            return STOP_EVENT_PROPAGATION;
+        }
+    }
+
+    // Call base class handler (to get the normal behaviour):
+    return Gtk::ApplicationWindow::on_key_release_event(p_event);
+}
+

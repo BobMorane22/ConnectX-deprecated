@@ -110,6 +110,17 @@ private:
 
 ///@}
 
+///@{ @name Signal handlers
+
+    void onLeftArrowKeyPressed();
+    void onRightArrowKeyPressed();
+    void onDownArrowKeyPressed();
+
+    // Default signal handler.
+    virtual bool on_key_press_event(GdkEventKey* p_event) override;
+
+///@}
+
 
 ///@{ @name Data members:
 

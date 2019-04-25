@@ -113,9 +113,43 @@ public:
      *********************************************************************************************/
     virtual ~GameBoard();
 
+
+    /******************************************************************************************//**
+     * @brief Moves the current disc one column left.
+     *
+     * If this is called from the leftmost column, the chip is moved to the rightmost column,
+     * like in a circular buffer.
+     *
+     **********************************************************************************************/
+    void moveChipLeft();
+
+
+    /******************************************************************************************//**
+     * @brief Moves the current disc one column right.
+     *
+     * If this is called from the rightmost column, the chip is moved to the leftmost column,
+     * like in a circular buffer.
+     *
+     **********************************************************************************************/
+    void moveChipRight();
+
+
+    /******************************************************************************************//**
+     * @brief Drops the current chip in the game board.
+     *
+     * If no more space is available for the chip, @c false is returned. Otherwise, @c true is
+     * returned.
+     *
+     * @return @c true if the chip has been sucessfully dropped in the gameboard area. Returns
+     *         @c false otherwise.
+     *
+     **********************************************************************************************/
+    bool dropChip();
+
 ///@}
 
 private:
+
 
 ///@{ @name Data Members
 
