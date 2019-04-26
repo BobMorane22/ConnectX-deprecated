@@ -253,9 +253,6 @@ cx::ui::NewGame::NewGame()
 {
     // Add keyboard events:
     add_events(Gdk::KEY_PRESS_MASK);
-
-    // Display all widgets:
-    show_all();
 }
 
 
@@ -353,6 +350,8 @@ void cx::ui::NewGame::configureWidgets()
 
     // Allow multiple item selection:
     m_playersTable.set_selection_mode(Gtk::SELECTION_MULTIPLE);
+    
+    show_all_children();
 }
 
 

@@ -115,13 +115,13 @@ void cx::ui::GameBoard::moveChipLeft()
 
 void cx::ui::GameBoard::moveChipRight()
 {
-    std::cout << "NDA disc moved right" << std::endl;
+    std::cout << "Current disc moved right" << std::endl;
 }
 
 
 bool cx::ui::GameBoard::dropChip()
 {
-    std::cout << "NDA disc dropped" << std::endl;
+    std::cout << "Current disc dropped" << std::endl;
 
     return true;
 }

@@ -36,7 +36,10 @@
 #include <cxutil/include/util.h>
 #include <cxgui/include/enums.h>
 
+#include "../include/About.h"
+#include "../include/Help.h"
 #include "../include/MainWindow.h"
+#include "../include/NewGame.h"
 
 // https://developer.gnome.org/gtkmm-tutorial/stable/sec-keyboardevents-propagation.html.en
 const bool STOP_EVENT_PROPAGATION {true};
@@ -84,9 +87,6 @@ cx::ui::MainWindow::MainWindow()
 
     // Menu bar items registration:
     registerMenu();
-
-    // Display all widgets:
-    show_all();
 }
 
 
@@ -211,12 +211,22 @@ void cx::ui::MainWindow::configureWidgets()
 
     // Button to the left:
     m_reinitializeLayout.set_layout(Gtk::BUTTONBOX_END);
+
+    // Show everything:
+    show_all_children();
 }
 
 
 void cx::ui::MainWindow::configureSignalHandlers()
 {
-    // Nothing so far...
+    m_quitMenuItem.signal_activate().connect([this](){onClose();});
+    
+    m_reinitializeGameMenuItem.signal_activate().connect([this](){onReinitializeGame();});
+    m_reinitialize.signal_clicked().connect([this](){onReinitializeGame();});
+    
+    m_showHelpMenuItem.signal_activate().connect([this](){onHelp();});
+    m_aboutMenuItem.signal_activate().connect([this](){onAbout();});
+    m_newGameMenuItem.signal_activate().connect([this](){onNewGame();});
 }
 
 
@@ -246,6 +256,42 @@ void cx::ui::MainWindow::init()
 
 
 /*******************************************************************************************//**
+ * @brief Handler for the 'New game' menu item.
+ *
+ * Summons the 'New game' view.
+ *
+ **********************************************************************************************/
+void cx::ui::MainWindow::onNewGame()
+{
+    m_newGameWindow.show();
+}
+
+
+/*******************************************************************************************//**
+ * @brief Handler for the 'Help' menu item.
+ *
+ * Summons the 'Help' view.
+ *
+ **********************************************************************************************/
+void cx::ui::MainWindow::onHelp()
+{
+    m_helpWindow.show();
+}
+
+
+/*******************************************************************************************//**
+ * @brief Handler for the 'About' menu item.
+ *
+ * Summons the 'About' view.
+ *
+ **********************************************************************************************/
+void cx::ui::MainWindow::onAbout()
+{
+    m_aboutWindow.show();
+}
+
+
+/*******************************************************************************************//**
  * @brief Handles a 'left' key press on the keyboard.
  *
  **********************************************************************************************/
@@ -256,7 +302,7 @@ void cx::ui::MainWindow::onLeftArrowKeyPressed()
 
 
 /*******************************************************************************************//**
- * @brief  Handles a 'down' key press on the keyboard.
+ * @brief Handles a 'down' key press on the keyboard.
  *
  **********************************************************************************************/
 void cx::ui::MainWindow::onRightArrowKeyPressed()
@@ -266,12 +312,34 @@ void cx::ui::MainWindow::onRightArrowKeyPressed()
 
 
 /*******************************************************************************************//**
- * @brief  Handles a 'down' key press on the keyboard.
+ * @brief Handles a 'down' key press on the keyboard.
  *
  **********************************************************************************************/
 void cx::ui::MainWindow::onDownArrowKeyPressed()
 {
     m_gameBoard.dropChip();
+}
+
+
+/*******************************************************************************************//**
+ * @brief Handler for the 'Reinitialize' menu item and button.
+ *
+ **********************************************************************************************/
+void cx::ui::MainWindow::onReinitializeGame()
+{
+    std::cout << "Current game reinitialized!" << std::endl;
+    // Reinitialize model.
+    // Reinitialize game information.
+    // Reinitialize game board.
+}
+
+/*******************************************************************************************//**
+ * @brief Handler for the 'Close' menu item.
+ *
+ **********************************************************************************************/
+void cx::ui::MainWindow::onClose()
+{
+    close();
 }
 
 

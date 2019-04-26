@@ -131,18 +131,7 @@ cxgui::dlg::About::About(const ApplicationInformation& p_appInfo,
     PRECONDITION(!p_appInfo.m_name.empty());
     PRECONDITION(!p_appInfo.m_version.empty());
 
-    // Artwork:
-    const bool artworkDefined{!p_appInfo.m_pathToArtwork.empty()};
-
-    if(artworkDefined)
-    {
-        m_artwork.set(p_appInfo.m_pathToArtwork);
-        m_artwork.show();
-    }
-    else
-    {
-        m_artwork.hide();
-    }
+    m_artwork.set(p_appInfo.m_pathToArtwork);
 
     // General information labels:
     const std::string applicationName{buildVersionedApplicationName(p_appInfo)};
@@ -178,6 +167,8 @@ void cxgui::dlg::About::registerWidgets()
     m_mainLayout.attach(m_credits              ,0 ,4 ,1, 1);
     m_mainLayout.attach(m_license              ,1 ,4 ,1, 1);
     m_mainLayout.attach(m_close                ,2 ,4 ,1, 1);
+    
+    show_all_children();
 
     INVARIANTS();
 }
@@ -186,7 +177,6 @@ void cxgui::dlg::About::registerWidgets()
 void cxgui::dlg::About::configureLayouts()
 {
     m_mainLayout.set_border_width(15);
-    m_mainLayout.show();
 }
 
 
@@ -197,15 +187,6 @@ void cxgui::dlg::About::configureWidgets()
     m_softwareDescription .set_margin_top(15);
     m_copyrightInformation.set_margin_top(15);
     m_copyrightInformation.set_margin_bottom(15);
-
-    // Here we show the widgets one by one, except for the artwork widget.
-    // We deal with this on in the constructor:
-    m_softwareName        .show();
-    m_softwareDescription .show();
-    m_copyrightInformation.show();
-    m_credits             .show();
-    m_license             .show();
-    m_close               .show();
 
     INVARIANTS();
 }

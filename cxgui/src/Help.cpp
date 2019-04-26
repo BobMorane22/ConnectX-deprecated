@@ -88,7 +88,7 @@ void cxgui::dlg::Help::configureWidgets()
     // Then resize accordinly:
     resize(width, height);
 
-    show_all();
+    show_all_children();
 }
 
 

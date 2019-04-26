@@ -93,7 +93,7 @@ void cx::ui::About::onCreditBtnClicked()
     m_creditsWindow.reset(new cx::ui::Credits());
     CX_ASSERT(m_creditsWindow);
 
-    m_creditsWindow->show();
+    m_creditsWindow->show_all();
 }
 
 
@@ -102,5 +102,5 @@ void cx::ui::About::onLicenseBtnClicked()
     m_licenseWindow.reset(new cx::ui::License());
     CX_ASSERT(m_licenseWindow);
 
-    m_licenseWindow->show();
+    m_licenseWindow->show_all();
 }

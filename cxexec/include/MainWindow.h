@@ -48,7 +48,10 @@
 
 #include <cxgui/include/SectionTitle.h>
 
+#include "About.h"
+#include "Help.h"
 #include "GameBoard.h"
+#include "NewGame.h"
 
 
 namespace cx
@@ -112,9 +115,16 @@ private:
 
 ///@{ @name Signal handlers
 
+    void onNewGame();
+    void onHelp();
+    void onAbout();
+    
     void onLeftArrowKeyPressed();
     void onRightArrowKeyPressed();
     void onDownArrowKeyPressed();
+
+    void onReinitializeGame();
+    void onClose();
 
     // Default signal handler.
     virtual bool on_key_press_event(GdkEventKey* p_event) override;
@@ -167,6 +177,11 @@ private:
     cx::ui::GameBoard   m_gameBoard                  {std::make_shared<cxbase::GameBoard>(10, 10)};
 
     Gtk::Button         m_reinitialize               {"Reinitialize"         };
+    
+    // Child windows:
+    cx::ui::About   m_aboutWindow;
+    cx::ui::Help    m_helpWindow;
+    cx::ui::NewGame m_newGameWindow;
 
 ///@}
 
