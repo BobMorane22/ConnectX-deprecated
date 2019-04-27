@@ -35,15 +35,12 @@
 // UI
 #include "About.h"
 #include "Credits.h"
-#include "Disc.h"
 #include "enums.h"
 #include "GeometricShape.h"
 #include "Help.h"
 #include "License.h"
 #include "MessageBox.h"
-#include "RAIICairoPath.h"
 #include "SectionTitle.h"
-#include "SimpleAndClosedGeometricShape.h"
 #include "Window.h"
 
 // Utilities

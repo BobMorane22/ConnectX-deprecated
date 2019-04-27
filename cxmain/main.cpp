@@ -29,13 +29,7 @@
  *
  **************************************************************************************************/
 
-#include <iostream>
-#include <memory>
-#include <string>
-
 #include <gtkmm/application.h>
-
-#include <cxutil/include/cxutilAPI.h>
 
 #include <cxexec/include/MainWindow.h>
 

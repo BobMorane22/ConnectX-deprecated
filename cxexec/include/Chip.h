@@ -33,7 +33,7 @@
 #define CHIP_H_72172974_77FE_4634_97FA_FB68CB3954CB
 
 
-#include <cxgui/include/SimpleAndClosedGeometricShape.h>
+#include <cxgui/include/GeometricShape.h>
 
 namespace cxbase {class Disc;}
 
@@ -50,7 +50,7 @@ namespace ui
  * a Connect X game.
  *
  *************************************************************************************************/
-class Chip : public cxgui::SimpleAndClosedGeometricShape
+class Chip : public cxgui::GeometricShape
 {
 
 public:

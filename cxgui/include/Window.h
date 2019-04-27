@@ -27,6 +27,11 @@
  *
  * Interface for a generic window.
  *
+ * Note: one anoying issue about this little framework is that as soon as you want to inherit
+ *       from a Gtkmm type that is a specialization of Gtk::Window, this class cannot be used
+ *       anymore because a diamond problem arises. For example, it can't be used with a
+ *       Gtk::ApplicationWindow specialization.
+ *
  **************************************************************************************************/
 
 #ifndef WINDOW_H_0A630348_EB2E_40A6_A426_68F2DF750663

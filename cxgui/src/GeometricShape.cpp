@@ -34,7 +34,6 @@
 #include <cxutil/include/LineSegment.h>
 
 #include "../include/GeometricShape.h"
-#include "../include/RAIICairoPath.h"
 
 
 cxgui::GeometricShape::GeometricShape(const cxutil::Color& p_fillColor       ,

@@ -36,12 +36,13 @@
 cx::ui::Chip::Chip(const cxutil::Color& p_fillColor,
                    const cxutil::Color& p_backgroundColor,
                    const cxutil::Color& p_borderColor)
- : cxgui::SimpleAndClosedGeometricShape(p_fillColor,
-                                        p_backgroundColor,
-                                        p_borderColor,
-                                        true,
-                                        0.02,
-                                        cxgui::BorderStyle::SOLID)
+ : cxgui::GeometricShape(p_fillColor,
+                         p_backgroundColor,
+                         p_borderColor,
+                         true,
+                         0.02,
+                         cxgui::BorderStyle::SOLID,
+                         false)
  , m_isHighlighted{false}
 {
 }
