@@ -1,22 +1,21 @@
 #------------------------------------------------------------------------------#
 #
-# @file		makefile
+# @file		Makefile
 # @author   Eric Poirier
-# @date		March 2017
-# @version	1
+# @date		December 2017
 #
-# Builds the C++ programming norm LaTeX source files into a PDF.
+# Builds the Connect X GUI specification LaTeX source files into a PDF.
 #
 #------------------------------------------------------------------------------#
 
-SRC  = cx_cpp_norm.tex
-OUT  = cx_cpp_norm.pdf
-NORM = norm
+SRC  = spec_gui.tex
+OUT  = spec_gui.pdf
+SPEC = spec
 CC   = latexmk
 
-all: $(NORM)
+all: $(SPEC)
 
-norm: $(SRC)
+spec: $(SRC)
 	$(CC) $(SRC)
 
 clean:

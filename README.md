@@ -70,4 +70,4 @@ Refer to the repository's main `Makefile` to know all the module names.
 
 ## Help manual
 
-See the [help manual](connectx/doc/help/help.md).
+See the [help manual](connectx/cxdoc/help_manual/help_manual.md).

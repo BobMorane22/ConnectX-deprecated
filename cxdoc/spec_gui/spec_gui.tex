@@ -1,0 +1,83 @@
+% ------------------------------------------------------------------------------
+% Connect X project's GUI specification.
+%
+% @file     spec_gui.tex
+% @author   Éric Poirier
+% @date     December 2017
+% ------------------------------------------------------------------------------
+
+% ------------------------------------------------------------------------------
+% Copyright (C) 2017 Connect X team.
+%
+% This file is part of Connect X.
+%
+% Connect X is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or
+% (at your option) any later version.
+%
+% Connect X is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+%
+% You should have received a copy of the GNU General Public License
+% along with Connect X.  If not, see <http://www.gnu.org/licenses/>.
+% ------------------------------------------------------------------------------
+
+\documentclass{report}
+
+% ------------------------------------------------------------------------------
+%                                    MACROs
+%-------------------------------------------------------------------------------
+\newcommand{\versionNumber}{1}
+
+% Facilitate source code inclusion:
+\newcommand{\includecode}[1]{\lstinputlisting[language=c++]{#1}}
+
+% Facilitate typewriter font usage:
+\newcommand{\ttt}[1]{\texttt{#1}}
+
+% General code snippet location:
+\newcommand{\snippets}{./snippets/}
+
+% Images and prototypes locations:
+\newcommand{\proto}{./proto/}
+\newcommand{\img}{./img/}
+
+% Document teX files location:
+\newcommand{\files}{./files/}
+\newcommand{\shared}{../shared/tex/}
+
+% ------------------------------------------------------------------------------
+% ------------------------------------------------------------------------------
+
+\input{\shared preambule.tex}
+
+\begin{document}
+
+% Title page
+\title{GUI Specification for \texttt{Connect X}}
+\author{Éric Poirier}
+\maketitle
+
+
+% Document body:
+
+\chapter{Motivation}
+\input{\files motivation.tex}
+
+
+\chapter{Detailed specification}
+\input{\files detailedSpec.tex}
+
+
+% Bibliography:
+%\bibliographystyle{plain}
+%\bibliography{spec_gui.bib}
+
+\end{document}
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

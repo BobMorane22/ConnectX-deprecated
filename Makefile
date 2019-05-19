@@ -58,10 +58,10 @@ TARGETS  += cxutil     \
             cxexectest \
             cxexecdoc  \
             cxmain     \
-            cxcppnorm
+            cxdoc
 
 
-.PHONY: cxutil cxbase cxgui cxexec cxmain
+.PHONY: cxutil cxbase cxgui cxexec cxmain cxdoc
 
 all: $(MAIN)
 
@@ -110,11 +110,11 @@ cxexecdoc:
 cxmain:
 	$(MAKE) -C cxmain
 
-cxcppnorm:
-	$(MAKE) -C cx_cpp_norme
+cxdoc:
+	$(MAKE) -C cxdoc
 
 mrproper:
-	@echo Cleaning Connect X...
+	@echo Purging Connect X...
 	$(MAKE) mrproper -C cxutil
 	$(MAKE) mrproper -C cxutil/test
 	$(MAKE) mrproper -C cxutil/doc
@@ -128,11 +128,11 @@ mrproper:
 	$(MAKE) mrproper -C cxexec/test
 	$(MAKE) mrproper -C cxexec/doc
 	$(MAKE) mrproper -C cxmain
-	$(MAKE) mrproper -C cx_cpp_norme
-	@echo ConnectX cleaned!
+	$(MAKE) mrproper -C cxdoc
+	@echo Connect X purged!
 
 clean:
-	@echo Removing object files...
+	@echo Cleaning Connect X...
 	$(MAKE) clean -C cxutil
 	$(MAKE) clean -C cxutil/test
 	$(MAKE) clean -C cxutil/doc
@@ -146,5 +146,5 @@ clean:
 	$(MAKE) clean -C cxexec/test
 	$(MAKE) clean -C cxexec/doc
 	$(MAKE) clean -C cxmain
-	$(MAKE) clean -C cx_cpp_norme
-	@echo Object files removed!
+	$(MAKE) clean -C cxdoc
+	@echo Connect X cleaned!

@@ -1,22 +1,21 @@
 #------------------------------------------------------------------------------#
 #
-# @file		Makefile
+# @file     Makefile
 # @author   Eric Poirier
-# @date		December 2017
-# @version	1.0
+# @date     May 2019
 #
-# Builds the C++ programming GUI specification LaTeX source files into a PDF.
+# Builds the Connect X architecture specification LaTeX source files into a PDF.
 #
 #------------------------------------------------------------------------------#
 
-SRC  = connectXGuiSpec.tex
-OUT  = connectXGuiSpec.pdf
+SRC  = spec_arch.tex
+OUT  = spec_arch.pdf
 SPEC = spec
 CC   = latexmk
 
 all: $(SPEC)
 
-norm: $(SRC)
+spec: $(SRC)
 	$(CC) $(SRC)
 
 clean:

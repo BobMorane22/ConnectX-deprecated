@@ -460,10 +460,6 @@ cxbase/doc/doxygen/latex/
 cxbase/doc/doxygen/examples/out
 cxbase/doc/external/
 
-### cx_cpp_norm ###
-cx_cpp_norme/versions/
-cx_cpp_norme/cx_cpp_norm.pdf
-
 ### cxgui ###
 cxgui/doc/doxygen/html/
 cxgui/doc/doxygen/latex/
@@ -479,5 +475,10 @@ cxmain/doc/specs/ui/connectXGuiSpec.pdf
 cxmain/doc/specs/ui/auto/
 cxmain/doc/specs/ui/files/auto/
 cxmain/doc/external/
+
+### cxdoc ###
+cxdoc/coding_std/coding_std.pdf
+cxdoc/spec_arch/spec_arch.pdf
+cxdoc/spec_gui/spec_gui.pdf
 
 # End of https://www.gitignore.io/api/c++, python, eclipse, latex, emacs
