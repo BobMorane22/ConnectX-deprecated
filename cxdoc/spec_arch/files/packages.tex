@@ -1,0 +1,74 @@
+% ------------------------------------------------------------------------------
+% Packages descritions.
+%
+% @file     packages.tex
+% @author   Éric Poirier
+% @date     May 2019
+% ------------------------------------------------------------------------------
+
+% ------------------------------------------------------------------------------
+% Copyright (C) 2019 Connect X team.
+%
+% This file is part of Connect X.
+%
+% Connect X is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or
+% (at your option) any later version.
+%
+% Connect X is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+%
+% You should have received a copy of the GNU General Public License
+% along with Connect X.  If not, see <http://www.gnu.org/licenses/>.
+% ------------------------------------------------------------------------------
+
+% Packages descriptions:
+\newcommand{\cxinvDescription}{Utilities to check that some system conditions
+are respected. These utilities include various assertions macros, such a
+basic assertion, preconditions, postconditions, invariants, and so on.}
+
+\newcommand{\cxmathDescription}{Mathematical tools are stored in this package.
+They include, points, vectors and many operations on these. Most of the tools
+are generic.}
+
+\newcommand{\cxutilDescription}{General utilities that either have no place in
+any other packages. These often include very basic utilities, such as the
+\ttt{narrow\_cast} function, which has no logical binding to any other package.}
+
+\newcommand{\cxcmdDescription}{Regroups everything that is nedded to create
+command objects, from a command interface to an undo stack. Note that the
+concrete commands themselves are not created here. This package only handles
+the abstract command utilities.}
+
+\newcommand{\cxbaseDescription}{Contains all the buisness rules. In other words,
+every piece of logic \textit{directly} related to a \connectx game is
+in this package. It is the core of the application.}
+
+\newcommand{\cxosDescription}{Contains abstractions over the operating system.}
+
+\newcommand{\cxlogDescription}{Regroups logging utilities.}
+
+\newcommand{\cxguiDescription}{Contains reusable GUI components (i.e, components
+that could be reused in another application entirely). No \connectx GUI
+components should reside in this package.}
+
+\newcommand{\cxexecDescription}{All \connectx specific code is located here.
+This package is the least reusable of all.}
+
+
+Every \connectx package is described here:
+
+\begin{description}
+    \item[\cxinv]   \cxinvDescription
+    \item[\cxmath]  \cxmathDescription
+    \item[\cxutil]  \cxutilDescription
+    \item[\cxcmd]   \cxcmdDescription
+    \item[\cxbase]  \cxbaseDescription
+    \item[\cxos]    \cxosDescription
+    \item[\cxlog]   \cxlogDescription
+    \item[\cxgui]   \cxguiDescription
+    \item[\cxexec]  \cxexecDescription
+\end{description}

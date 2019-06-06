@@ -1,0 +1,40 @@
+% ------------------------------------------------------------------------------
+% Buisness logic architecture.
+%
+% @file     buisnessLogic.tex
+% @author   Éric Poirier
+% @date     May 2019
+% ------------------------------------------------------------------------------
+
+% ------------------------------------------------------------------------------
+% Copyright (C) 2019 Connect X team.
+%
+% This file is part of Connect X.
+%
+% Connect X is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or
+% (at your option) any later version.
+%
+% Connect X is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+%
+% You should have received a copy of the GNU General Public License
+% along with Connect X.  If not, see <http://www.gnu.org/licenses/>.
+% ------------------------------------------------------------------------------
+
+Next, the \textit{Buisness logic layer}. This is the most critical layer since
+without it, no \connectx application can exist. It holds all the \connectx
+related logic. This logic should not depend on any details, such as frameworks,
+operating systems and outside tools that have nothing to do with the buisness
+domain:
+
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width = 0.9\textwidth]{\img cxbase_di.png}
+    \end{center}
+\caption{\connectx Plugin architecture for the buisness logic}
+\label{imgBuisnessPlugins}
+\end{figure}

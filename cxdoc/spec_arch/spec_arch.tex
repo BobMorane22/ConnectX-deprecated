@@ -49,6 +49,17 @@
 \newcommand{\files}{./files/}
 \newcommand{\shared}{../shared/tex/}
 
+% Packages
+\newcommand{\cxinv}{\ttt{cxinv}}
+\newcommand{\cxmath}{\ttt{cxmath}}
+\newcommand{\cxutil}{\ttt{cxutil}}
+\newcommand{\cxcmd}{\ttt{cxcmd}}
+\newcommand{\cxbase}{\ttt{cxbase}}
+\newcommand{\cxos}{\ttt{cxos}}
+\newcommand{\cxlog}{\ttt{cxlog}}
+\newcommand{\cxexec}{\ttt{cxexec}}
+\newcommand{\cxgui}{\ttt{cxgui}}
+
 % ------------------------------------------------------------------------------
 % ------------------------------------------------------------------------------
 
@@ -63,18 +74,15 @@
 
 
 % Document body:
+\chapter{Packages}
+\input{\files packages.tex}
 
-\chapter{Motivation}
-\input{\files motivation.tex}
+\chapter{General architecture}
+\input{\files generalArchitecture.tex}
 
+\chapter{Buisness logic architecture}
+\input{\files buisnessLogic.tex}
 
-\chapter{Detailed specification}
-\input{\files detailedSpec.tex}
-
-
-% Bibliography:
-%\bibliographystyle{plain}
-%\bibliography{spec_arch.bib}
 
 \end{document}
 %%% Local Variables:
