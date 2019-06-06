@@ -32,11 +32,15 @@ include init.mk
 
 TESTS_RUNNER            = $(SRC_ROOT)/cxscripts/python/RunUnitTests.py
 
+CXINV_UNIT_TESTS_EXEC   = -t $(BIN_ROOT)/tests/unit/cxinvTest.out
+CXLOG_UNIT_TESTS_EXEC   = -t $(BIN_ROOT)/tests/unit/cxlogTest.out
 CXUTIL_UNIT_TESTS_EXEC  = -t $(BIN_ROOT)/tests/unit/cxutilTest.out
 CXBASE_UNIT_TESTS_EXEC  = -t $(BIN_ROOT)/tests/unit/cxbaseTest.out
 CXGUI_UNIT_TESTS_EXEC   = -t $(BIN_ROOT)/tests/unit/cxguiTest.out
 CXEXEC_UNIT_TESTS_EXEC  = -t $(BIN_ROOT)/tests/unit/cxexecTest.out
 
+CXINV_UNIT_TESTS_LOG    = -l $(BIN_ROOT)/tests/unit/log/cxinvUnitTests.log
+CXLOG_UNIT_TESTS_LOG    = -l $(BIN_ROOT)/tests/unit/log/cxlogUnitTests.log
 CXUTIL_UNIT_TESTS_LOG   = -l $(BIN_ROOT)/tests/unit/log/cxutilUnitTests.log
 CXBASE_UNIT_TESTS_LOG   = -l $(BIN_ROOT)/tests/unit/log/cxbaseUnitTests.log
 CXGUI_UNIT_TESTS_LOG    = -l $(BIN_ROOT)/tests/unit/log/cxguiUnitTests.log
@@ -45,9 +49,16 @@ CXEXEC_UNIT_TESTS_LOG   = -l $(BIN_ROOT)/tests/unit/log/cxexecUnitTests.log
 
 MAIN     = connectx
 
-TARGETS  += cxutil     \
+
+# Missing cxinvtest
+TARGETS  += cxinv      \
+            cxinvdoc   \
+            cxutil     \
             cxutiltest \
             cxutildoc  \
+            cxlog      \
+            cxlogtest  \
+            cxlogdoc   \
             cxbase     \
             cxbasetest \
             cxbasedoc  \
@@ -61,11 +72,31 @@ TARGETS  += cxutil     \
             cxdoc
 
 
-.PHONY: cxutil cxbase cxgui cxexec cxmain cxdoc
+.PHONY:  cxinv cxlog cxutil cxbase cxgui cxexec cxmain cxdoc
 
 all: $(MAIN)
 
 $(MAIN): $(TARGETS)
+
+cxinv:
+	$(MAKE) -C cxinv
+
+#cxinvtest:
+#	$(MAKE) -C cxinv/test
+#	python $(TESTS_RUNNER) $(CXINV_UNIT_TESTS_EXEC) $(CXINV_UNIT_TESTS_LOG)
+
+cxinvdoc:
+	$(MAKE) -C cxinv/doc
+
+cxlog:
+	$(MAKE) -C cxlog
+
+cxlogtest:
+	$(MAKE) -C cxlog/test
+	python $(TESTS_RUNNER) $(CXLOG_UNIT_TESTS_EXEC) $(CXLOG_UNIT_TESTS_LOG)
+
+cxlogdoc:
+	$(MAKE) -C cxlog/doc
 
 cxutil:
 	$(MAKE) -C cxutil
@@ -115,9 +146,15 @@ cxdoc:
 
 mrproper:
 	@echo Purging Connect X...
+	$(MAKE) mrproper -C cxinv
+#	$(MAKE) mrproper -C cxinv/test
+	$(MAKE) mrproper -C cxinv/doc
 	$(MAKE) mrproper -C cxutil
 	$(MAKE) mrproper -C cxutil/test
 	$(MAKE) mrproper -C cxutil/doc
+	$(MAKE) mrproper -C cxlog
+	$(MAKE) mrproper -C cxlog/test
+	$(MAKE) mrproper -C cxlog/doc
 	$(MAKE) mrproper -C cxbase
 	$(MAKE) mrproper -C cxbase/test
 	$(MAKE) mrproper -C cxbase/doc
@@ -133,9 +170,15 @@ mrproper:
 
 clean:
 	@echo Cleaning Connect X...
+	$(MAKE) clean -C cxinv
+#	$(MAKE) clean -C cxinv/test
+	$(MAKE) clean -C cxinv/doc
 	$(MAKE) clean -C cxutil
 	$(MAKE) clean -C cxutil/test
 	$(MAKE) clean -C cxutil/doc
+	$(MAKE) clean -C cxlog
+	$(MAKE) clean -C cxlog/test
+	$(MAKE) clean -C cxlog/doc
 	$(MAKE) clean -C cxbase
 	$(MAKE) clean -C cxbase/test
 	$(MAKE) clean -C cxbase/doc
