@@ -31,20 +31,22 @@ LIBS_INCLUDE = -static -L$(LIBS_OUT)
 INCLUDES     = -I$(SRC_ROOT)
 VPATH        = src
 
-SRCS     = CSVMessageFormatter.cpp   \
-           FileLogTarget.cpp         \
-           IncrementalLogger.cpp     \
-           Logger.cpp                \
-           StdLogTarget.cpp          \
-           StringStreamLogTarget.cpp \
+SRCS     = CSVMessageFormatter.cpp       \
+           FileLogTarget.cpp             \
+           IncrementalLogger.cpp         \
+           ISO8601TimestampFormatter.cpp \
+           Logger.cpp                    \
+           StdLogTarget.cpp              \
+           StringStreamLogTarget.cpp     \
            VerbosityLevel.cpp
 
-OBJS     = $(OBJ_DIR)/CSVMessageFormatter.o   \
-           $(OBJ_DIR)/FileLogTarget.o         \
-           $(OBJ_DIR)/IncrementalLogger.o     \
-           $(OBJ_DIR)/Logger.o                \
-           $(OBJ_DIR)/StdLogTarget.o          \
-           $(OBJ_DIR)/StringStreamLogTarget.o \
+OBJS     = $(OBJ_DIR)/CSVMessageFormatter.o       \
+           $(OBJ_DIR)/FileLogTarget.o             \
+           $(OBJ_DIR)/IncrementalLogger.o         \
+           $(OBJ_DIR)/ISO8601TimestampFormatter.o \
+           $(OBJ_DIR)/Logger.o                    \
+           $(OBJ_DIR)/StdLogTarget.o              \
+           $(OBJ_DIR)/StringStreamLogTarget.o     \
            $(OBJ_DIR)/VerbosityLevel.o
 
 LIBS = -lcxinv

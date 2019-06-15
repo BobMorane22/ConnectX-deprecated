@@ -2,9 +2,9 @@
 
 #include "../include/IncrementalLogger.h"
 
-cxlog::StringLogger::StringLogger(std::unique_ptr<IMessageFormatter>&& p_msgFormatter,
-                                  std::unique_ptr<ILogTarget>&&        p_logTarget,
-                                  bool                                 p_addHeader)
+cxlog::IncrementalLogger::IncrementalLogger(std::unique_ptr<IMessageFormatter>&& p_msgFormatter,
+                                            std::unique_ptr<ILogTarget>&&        p_logTarget,
+                                            bool                                 p_addHeader)
  : m_msgFormatter{std::move(p_msgFormatter)}
  , m_logTarget{std::move(p_logTarget)}
 {
@@ -24,7 +24,11 @@ cxlog::StringLogger::StringLogger(std::unique_ptr<IMessageFormatter>&& p_msgForm
 }
 
 
-void cxlog::StringLogger::log(const VerbosityLevel p_verbosityLevel, const std::string& p_message)
+void cxlog::IncrementalLogger::log(const VerbosityLevel p_verbosityLevel,
+                                   const std::string&   p_fileName,
+                                   const std::string&   p_functionName,
+                                   const size_t         p_lineNumber,
+                                   const std::string&   p_message)
 {
     if(!m_msgFormatter)
     {
@@ -33,13 +37,21 @@ void cxlog::StringLogger::log(const VerbosityLevel p_verbosityLevel, const std::
         return;
     }
 
-    if(p_verbosityLevel > verbosityLevel() || verbosityLevel() == VerbosityLevel::NONE)
+    if(p_verbosityLevel > verbosityLevel() ||
+       p_verbosityLevel == VerbosityLevel::NONE ||
+       verbosityLevel() == VerbosityLevel::NONE)
     {
+        if(hasSucessor())
+        {
+            // Forward message to next logger:
+            m_successor->log(p_verbosityLevel, p_fileName, p_functionName, p_lineNumber, p_message);
+        }
+
         return;
     }
 
     // Create well formatted message:
-    const std::string msg{m_msgFormatter->formatMessage(p_verbosityLevel, p_message)};
+    const std::string msg{m_msgFormatter->formatMessage(p_verbosityLevel, p_fileName, p_functionName, p_lineNumber, p_message)};
 
     if(!m_logTarget)
     {
@@ -57,7 +69,7 @@ void cxlog::StringLogger::log(const VerbosityLevel p_verbosityLevel, const std::
     if(hasSucessor())
     {
         // Forward message to next logger:
-        m_successor->log(p_verbosityLevel, p_message);
+        m_successor->log(p_verbosityLevel, p_fileName, p_functionName, p_lineNumber, p_message);
     }
 
     INVARIANT(m_msgFormatter != nullptr);

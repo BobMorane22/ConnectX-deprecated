@@ -7,16 +7,16 @@
 #include <cxlog/include/IncrementalLogger.h>
 #include <cxlog/include/StringStreamLogTarget.h>
 
-#include "CVSLoggerUtil.h"
+#include "CSVLoggerUtil.h"
 
 
-TEST(Logger, CVSStringLogger_ValidStringAsInfo_LoggingIsAdequate)
+TEST(CSVLogger, CVSStringLogger_ValidStringAsInfo_LoggingIsAdequate)
 {
     std::ostringstream t_stream;
     auto t_logger{createCVSStringStreamLogger(t_stream)};
 
     // Log a string:
-    t_logger->log(cxlog::VerbosityLevel::INFO, generateLineToLog());
+    t_logger->log(cxlog::VerbosityLevel::INFO, _FILE_, _FUNCTION_, _LINE_, generateLineToLog());
 
     // Get log result:
     const std::string loggedLine{t_stream.str()};
@@ -25,13 +25,13 @@ TEST(Logger, CVSStringLogger_ValidStringAsInfo_LoggingIsAdequate)
 }
 
 
-TEST(Logger, CVSStringLogger_ValidStringAsError_LoggingIsAdequate)
+TEST(CSVLogger, CVSStringLogger_ValidStringAsError_LoggingIsAdequate)
 {
     std::ostringstream t_stream;
     auto t_logger{createCVSStringStreamLogger(t_stream)};
 
     // Log a string:
-    t_logger->log(cxlog::VerbosityLevel::ERROR, generateLineToLog());
+    t_logger->log(cxlog::VerbosityLevel::ERROR, _FILE_, _FUNCTION_, _LINE_, generateLineToLog());
 
     // Get log result:
     const std::string loggedLine{t_stream.str()};
@@ -40,13 +40,13 @@ TEST(Logger, CVSStringLogger_ValidStringAsError_LoggingIsAdequate)
 }
 
 
-TEST(Logger, CVSStringLogger_ValidStringAsFatal_LoggingIsAdequate)
+TEST(CSVLogger, CVSStringLogger_ValidStringAsFatal_LoggingIsAdequate)
 {
     std::ostringstream t_stream;
     auto t_logger{createCVSStringStreamLogger(t_stream)};
 
     // Log a string:
-    t_logger->log(cxlog::VerbosityLevel::FATAL, generateLineToLog());
+    t_logger->log(cxlog::VerbosityLevel::FATAL, _FILE_, _FUNCTION_, _LINE_, generateLineToLog());
 
     // Get log result:
     const std::string loggedLine{t_stream.str()};
@@ -55,13 +55,13 @@ TEST(Logger, CVSStringLogger_ValidStringAsFatal_LoggingIsAdequate)
 }
 
 
-TEST(Logger, CVSStringLogger_ValidStringAsDebug_LoggingIsAdequate)
+TEST(CSVLogger, CVSStringLogger_ValidStringAsDebug_LoggingIsAdequate)
 {
     std::ostringstream t_stream;
     auto t_logger{createCVSStringStreamLogger(t_stream)};
 
     // Log a string:
-    t_logger->log(cxlog::VerbosityLevel::DEBUG, generateLineToLog());
+    t_logger->log(cxlog::VerbosityLevel::DEBUG, _FILE_, _FUNCTION_, _LINE_, generateLineToLog());
 
     // Get log result:
     const std::string loggedLine{t_stream.str()};
@@ -70,15 +70,15 @@ TEST(Logger, CVSStringLogger_ValidStringAsDebug_LoggingIsAdequate)
 }
 
 
-TEST(Logger, CVSStringLogger_ValidStrings_AllLinesLoggued)
+TEST(CSVLogger, CVSStringLogger_ValidStrings_AllLinesLoggued)
 {
     std::ostringstream t_stream;
     auto t_logger{createCVSStringStreamLogger(t_stream)};
 
     // Log a string:
-    t_logger->log(cxlog::VerbosityLevel::INFO,  generateLineToLog());
-    t_logger->log(cxlog::VerbosityLevel::ERROR, generateLineToLog());
-    t_logger->log(cxlog::VerbosityLevel::FATAL, generateLineToLog());
+    t_logger->log(cxlog::VerbosityLevel::INFO,  _FILE_, _FUNCTION_, _LINE_, generateLineToLog());
+    t_logger->log(cxlog::VerbosityLevel::ERROR, _FILE_, _FUNCTION_, _LINE_, generateLineToLog());
+    t_logger->log(cxlog::VerbosityLevel::FATAL, _FILE_, _FUNCTION_, _LINE_, generateLineToLog());
 
     // Get log result:
     const std::string loggedLines{t_stream.str()};
@@ -86,4 +86,16 @@ TEST(Logger, CVSStringLogger_ValidStrings_AllLinesLoggued)
     const std::string expectedLines{infoResult() + errorResult() + fatalResult()};
 
     ASSERT_EQ(loggedLines, expectedLines);
+}
+
+
+TEST(CSVLogger, CVSStringLogger_GenerateHeadersTrue_HeadersGenerated)
+{
+    std::ostringstream t_stream;
+    auto t_logger{createCVSStringStreamLogger(t_stream, true)};
+
+    // Get log result:
+    const std::string loggedLines{t_stream.str()};
+
+    ASSERT_EQ(loggedLines, headerLine());
 }
