@@ -1,5 +1,5 @@
 #include <cxlog/include/CSVMessageFormatter.h>
-#include <cxlog/include/IncrementalLogger.h>
+#include <cxlog/include/IncrementalChainedLogger.h>
 #include <cxlog/include/IMessageFormatter.h>
 #include <cxlog/include/StringStreamLogTarget.h>
 
@@ -62,7 +62,6 @@ std::string headerLine()
            "Message"         + END_OF_LINE;
 }
 
-
 std::unique_ptr<cxlog::ILogger> createCVSStringStreamLogger(std::ostringstream& p_stream,
                                                             const bool          p_generateHeader)
 {
@@ -73,9 +72,28 @@ std::unique_ptr<cxlog::ILogger> createCVSStringStreamLogger(std::ostringstream& 
     std::unique_ptr<cxlog::ILogTarget> t_target{new cxlog::StringStreamLogTarget{p_stream}};
 
     // Creating CSV string logger:
-    std::unique_ptr<cxlog::ILogger> t_logger{new cxlog::IncrementalLogger{std::move(t_msgFormatter),
-                                                                          std::move(t_target),
-                                                                          p_generateHeader}};
+    std::unique_ptr<cxlog::ILogger> t_logger{new cxlog::IncrementalChainedLogger{std::move(t_msgFormatter),
+                                             std::move(t_target),
+                                             p_generateHeader}};
+
+    t_logger->setVerbosityLevel(cxlog::VerbosityLevel::DEBUG);
+
+    return std::move(t_logger);
+}
+
+std::unique_ptr<cxlog::ChainLogger> createCVSStringStreamChainLogger(std::ostringstream& p_stream,
+                                                                     const bool          p_generateHeader)
+{
+    // Creating logger dependencies:
+    std::unique_ptr<cxlog::ITimestampFormatter> t_timeFormatter{new TimestampFormatterMock};
+    std::unique_ptr<cxlog::IMessageFormatter> t_msgFormatter{new cxlog::CSVMessageFormatter{std::move(t_timeFormatter)}};
+
+    std::unique_ptr<cxlog::ILogTarget> t_target{new cxlog::StringStreamLogTarget{p_stream}};
+
+    // Creating CSV string logger:
+    std::unique_ptr<cxlog::ChainLogger> t_logger{new cxlog::IncrementalChainedLogger{std::move(t_msgFormatter),
+                                                                                     std::move(t_target),
+                                                                                     p_generateHeader}};
 
     t_logger->setVerbosityLevel(cxlog::VerbosityLevel::DEBUG);
 

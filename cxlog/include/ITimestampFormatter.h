@@ -8,7 +8,7 @@ namespace cxlog
 class ITimestampFormatter
 {
 public:
-    virtual ~ITimestampFormatter() = default;
+    virtual ~ITimestampFormatter(){}
 
     virtual std::string formatTimestamp() const = 0;
 };

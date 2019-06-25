@@ -1,10 +1,10 @@
 #include <cxinv/include/assertion.h>
 
-#include "../include/IncrementalLogger.h"
+#include "../include/IncrementalChainedLogger.h"
 
-cxlog::IncrementalLogger::IncrementalLogger(std::unique_ptr<IMessageFormatter>&& p_msgFormatter,
-                                            std::unique_ptr<ILogTarget>&&        p_logTarget,
-                                            bool                                 p_addHeader)
+cxlog::IncrementalChainedLogger::IncrementalChainedLogger(std::unique_ptr<IMessageFormatter>&& p_msgFormatter,
+                                                          std::unique_ptr<ILogTarget>&&        p_logTarget,
+                                                          bool                                 p_addHeader)
  : m_msgFormatter{std::move(p_msgFormatter)}
  , m_logTarget{std::move(p_logTarget)}
 {
@@ -24,11 +24,11 @@ cxlog::IncrementalLogger::IncrementalLogger(std::unique_ptr<IMessageFormatter>&&
 }
 
 
-void cxlog::IncrementalLogger::log(const VerbosityLevel p_verbosityLevel,
-                                   const std::string&   p_fileName,
-                                   const std::string&   p_functionName,
-                                   const size_t         p_lineNumber,
-                                   const std::string&   p_message)
+void cxlog::IncrementalChainedLogger::log(const VerbosityLevel p_verbosityLevel,
+                                          const std::string&   p_fileName,
+                                          const std::string&   p_functionName,
+                                          const size_t         p_lineNumber,
+                                          const std::string&   p_message)
 {
     if(!m_msgFormatter)
     {
@@ -38,9 +38,15 @@ void cxlog::IncrementalLogger::log(const VerbosityLevel p_verbosityLevel,
     }
 
     if(p_verbosityLevel > verbosityLevel() ||
-        p_verbosityLevel == VerbosityLevel::NONE ||
-        verbosityLevel() == VerbosityLevel::NONE)
+       p_verbosityLevel == VerbosityLevel::NONE ||
+       verbosityLevel() == VerbosityLevel::NONE)
     {
+        if(hasSucessor())
+        {
+            // Forward message to next logger:
+            m_successor->log(p_verbosityLevel, p_fileName, p_functionName, p_lineNumber, p_message);
+        }
+
         return;
     }
 
@@ -59,6 +65,12 @@ void cxlog::IncrementalLogger::log(const VerbosityLevel p_verbosityLevel,
 
     // Log it to the target:
     m_logTarget->log(msg);
+
+    if(hasSucessor())
+    {
+        // Forward message to next logger:
+        m_successor->log(p_verbosityLevel, p_fileName, p_functionName, p_lineNumber, p_message);
+    }
 
     INVARIANT(m_msgFormatter != nullptr);
     INVARIANT(m_logTarget != nullptr);

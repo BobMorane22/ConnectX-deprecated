@@ -4,7 +4,7 @@
 #include <gtest/gtest.h>
 
 #include <cxlog/include/CSVMessageFormatter.h>
-#include <cxlog/include/IncrementalLogger.h>
+#include <cxlog/include/IncrementalChainedLogger.h>
 #include <cxlog/include/StringStreamLogTarget.h>
 
 #include "CSVLoggerUtil.h"
@@ -15,8 +15,8 @@ TEST(ChainLogging, ChainLogging_TwoSuccessiveLoggers_FirstHasSuccessorSecondDoes
     std::ostringstream t_stream;
     std::ostringstream t_streamSuccessor;
 
-    auto t_logger{createCVSStringStreamLogger(t_stream)};
-    auto t_loggerSuccessor{createCVSStringStreamLogger(t_streamSuccessor)};
+    auto t_logger{createCVSStringStreamChainLogger(t_stream)};
+    auto t_loggerSuccessor{createCVSStringStreamChainLogger(t_streamSuccessor)};
 
     ASSERT_FALSE(t_logger->hasSucessor());
 
@@ -31,8 +31,8 @@ TEST(ChainLogging, ChainLogging_ValidStringAsInfo_AllLoggersLog)
     std::ostringstream t_stream;
     std::ostringstream t_streamSuccessor;
 
-    auto t_logger{createCVSStringStreamLogger(t_stream)};
-    auto t_loggerSuccessor{createCVSStringStreamLogger(t_streamSuccessor)};
+    auto t_logger{createCVSStringStreamChainLogger(t_stream)};
+    auto t_loggerSuccessor{createCVSStringStreamChainLogger(t_streamSuccessor)};
 
     t_logger->setSucessor(std::move(t_loggerSuccessor));
 
@@ -54,9 +54,9 @@ TEST(ChainLogging, ChainLogging_ValidStringAsInfo_AllLoggersLogExceptNone)
                        t_streamFirstSuccessor,
                        t_streamSecondSuccessor;
 
-    auto t_logger               {createCVSStringStreamLogger(t_stream)};
-    auto t_loggerFirstSuccessor {createCVSStringStreamLogger(t_streamFirstSuccessor)};
-    auto t_loggerSecondSuccessor{createCVSStringStreamLogger(t_streamSecondSuccessor)};
+    auto t_logger               {createCVSStringStreamChainLogger(t_stream)};
+    auto t_loggerFirstSuccessor {createCVSStringStreamChainLogger(t_streamFirstSuccessor)};
+    auto t_loggerSecondSuccessor{createCVSStringStreamChainLogger(t_streamSecondSuccessor)};
 
     // Middle successor is silenced:
     t_loggerFirstSuccessor->setVerbosityLevel(cxlog::VerbosityLevel::NONE);

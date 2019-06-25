@@ -4,7 +4,7 @@
 #include <gtest/gtest.h>
 
 #include <cxlog/include/CSVMessageFormatter.h>
-#include <cxlog/include/IncrementalLogger.h>
+#include <cxlog/include/IncrementalChainedLogger.h>
 #include <cxlog/include/StringStreamLogTarget.h>
 
 #include "CSVLoggerUtil.h"

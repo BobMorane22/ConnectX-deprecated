@@ -1,7 +1,7 @@
 #include <memory.h>
 #include <sstream>
 
-#include <cxlog/include/ILogger.h>
+#include <cxlog/include/ChainLogger.h>
 
 // Constants:
 const std::string BASIC_STRING_TO_LOG{"CSV logger test"};
@@ -33,3 +33,6 @@ std::string headerLine();
 
 std::unique_ptr<cxlog::ILogger> createCVSStringStreamLogger(std::ostringstream& p_stream,
                                                             const bool p_generateHeader = false);
+
+std::unique_ptr<cxlog::ChainLogger> createCVSStringStreamChainLogger(std::ostringstream& p_stream,
+                                                                     const bool p_generateHeader = false);
