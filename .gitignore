@@ -442,6 +442,10 @@ flycheck_*.el
 # directory configuration
 .dir-locals.el
 
+### KDevelop4 ###
+*.kdev4
+.kdev4/
+
 ####################################################################################################
 #                            CONNECT X SPECIFIC FILES AND DIRECTORIES                              #
 ####################################################################################################
@@ -449,10 +453,20 @@ flycheck_*.el
 ### global ###
 init.mk
 
+### cxinv ###
+cxinv/doc/doxygen/html/
+cxinv/doc/doxygen/latex/
+cxinv/doc/external/
+
 ### cxutil ###
 cxutil/doc/doxygen/html/
 cxutil/doc/doxygen/latex/
 cxutil/doc/external/
+
+### cxlog ###
+cxlog/doc/doxygen/html/
+cxlog/doc/doxygen/latex/
+cxlog/doc/external/
 
 ### cxbase ###
 cxbase/doc/doxygen/html/
