@@ -463,6 +463,11 @@ cxutil/doc/doxygen/html/
 cxutil/doc/doxygen/latex/
 cxutil/doc/external/
 
+### cxcmd ###
+cxcmd/doc/doxygen/html/
+cxcmd/doc/doxygen/latex/
+cxcmd/doc/external/
+
 ### cxlog ###
 cxlog/doc/doxygen/html/
 cxlog/doc/doxygen/latex/

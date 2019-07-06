@@ -33,15 +33,17 @@ include init.mk
 TESTS_RUNNER            = $(SRC_ROOT)/cxscripts/python/RunUnitTests.py
 
 CXINV_UNIT_TESTS_EXEC   = -t $(BIN_ROOT)/tests/unit/cxinvTest.out
-CXLOG_UNIT_TESTS_EXEC   = -t $(BIN_ROOT)/tests/unit/cxlogTest.out
 CXUTIL_UNIT_TESTS_EXEC  = -t $(BIN_ROOT)/tests/unit/cxutilTest.out
+CXLOG_UNIT_TESTS_EXEC   = -t $(BIN_ROOT)/tests/unit/cxlogTest.out
+CXCMD_UNIT_TESTS_EXEC   = -t $(BIN_ROOT)/tests/unit/cxcmdTest.out
 CXBASE_UNIT_TESTS_EXEC  = -t $(BIN_ROOT)/tests/unit/cxbaseTest.out
 CXGUI_UNIT_TESTS_EXEC   = -t $(BIN_ROOT)/tests/unit/cxguiTest.out
 CXEXEC_UNIT_TESTS_EXEC  = -t $(BIN_ROOT)/tests/unit/cxexecTest.out
 
 CXINV_UNIT_TESTS_LOG    = -l $(BIN_ROOT)/tests/unit/log/cxinvUnitTests.log
-CXLOG_UNIT_TESTS_LOG    = -l $(BIN_ROOT)/tests/unit/log/cxlogUnitTests.log
 CXUTIL_UNIT_TESTS_LOG   = -l $(BIN_ROOT)/tests/unit/log/cxutilUnitTests.log
+CXLOG_UNIT_TESTS_LOG    = -l $(BIN_ROOT)/tests/unit/log/cxlogUnitTests.log
+CXCMD_UNIT_TESTS_LOG    = -l $(BIN_ROOT)/tests/unit/log/cxcmdUnitTests.log
 CXBASE_UNIT_TESTS_LOG   = -l $(BIN_ROOT)/tests/unit/log/cxbaseUnitTests.log
 CXGUI_UNIT_TESTS_LOG    = -l $(BIN_ROOT)/tests/unit/log/cxguiUnitTests.log
 CXEXEC_UNIT_TESTS_LOG   = -l $(BIN_ROOT)/tests/unit/log/cxexecUnitTests.log
@@ -59,6 +61,9 @@ TARGETS  += cxinv      \
             cxlog      \
             cxlogtest  \
             cxlogdoc   \
+            cxcmd      \
+            cxcmdtest  \
+            cxcmddoc   \
             cxbase     \
             cxbasetest \
             cxbasedoc  \
@@ -72,7 +77,7 @@ TARGETS  += cxinv      \
             cxdoc
 
 
-.PHONY:  cxinv cxlog cxutil cxbase cxgui cxexec cxmain cxdoc
+.PHONY:  cxinv cxlog cxcmd cxutil cxbase cxgui cxexec cxmain cxdoc
 
 all: $(MAIN)
 
@@ -88,6 +93,16 @@ cxinv:
 cxinvdoc:
 	$(MAKE) -C cxinv/doc
 
+cxutil:
+	$(MAKE) -C cxutil
+
+cxutiltest:
+	$(MAKE) -C cxutil/test
+	python $(TESTS_RUNNER) $(CXUTIL_UNIT_TESTS_EXEC) $(CXUTIL_UNIT_TESTS_LOG)
+
+cxutildoc:
+	$(MAKE) -C cxutil/doc
+
 cxlog:
 	$(MAKE) -C cxlog
 
@@ -98,15 +113,15 @@ cxlogtest:
 cxlogdoc:
 	$(MAKE) -C cxlog/doc
 
-cxutil:
-	$(MAKE) -C cxutil
+cxcmd:
+	$(MAKE) -C cxcmd
 
-cxutiltest:
-	$(MAKE) -C cxutil/test
-	python $(TESTS_RUNNER) $(CXUTIL_UNIT_TESTS_EXEC) $(CXUTIL_UNIT_TESTS_LOG)
+cxcmdtest:
+	$(MAKE) -C cxcmd/test
+	python $(TESTS_RUNNER) $(CXCMD_UNIT_TESTS_EXEC) $(CXCMD_UNIT_TESTS_LOG)
 
-cxutildoc:
-	$(MAKE) -C cxutil/doc
+cxcmddoc:
+	$(MAKE) -C cxcmd/doc
 
 cxbase:
 	$(MAKE) -C cxbase
@@ -155,6 +170,9 @@ mrproper:
 	$(MAKE) mrproper -C cxlog
 	$(MAKE) mrproper -C cxlog/test
 	$(MAKE) mrproper -C cxlog/doc
+	$(MAKE) mrproper -C cxcmd
+	$(MAKE) mrproper -C cxcmd/test
+	$(MAKE) mrproper -C cxcmd/doc
 	$(MAKE) mrproper -C cxbase
 	$(MAKE) mrproper -C cxbase/test
 	$(MAKE) mrproper -C cxbase/doc
@@ -179,6 +197,9 @@ clean:
 	$(MAKE) clean -C cxlog
 	$(MAKE) clean -C cxlog/test
 	$(MAKE) clean -C cxlog/doc
+	$(MAKE) clean -C cxcmd
+	$(MAKE) clean -C cxcmd/test
+	$(MAKE) clean -C cxcmd/doc
 	$(MAKE) clean -C cxbase
 	$(MAKE) clean -C cxbase/test
 	$(MAKE) clean -C cxbase/doc
