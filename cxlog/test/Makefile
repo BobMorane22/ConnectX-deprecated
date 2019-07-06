@@ -31,13 +31,20 @@ SRCS      = cxlogTest.cpp                        \
             CSVLoggerChainLoggingTests.cpp       \
             CSVLoggerTests.cpp                   \
             CSVLoggerIncrementalLoggingTests.cpp \
-            CVSLoggerUtil.cpp
+            CSVLoggerUtil.cpp                    \
+            CSVMessageFormatter.cpp              \
+            LoggingManagerTests.cpp              \
+            StringStreamLogTargetTests.cpp
+            
 
 OBJS      = cxlogTest.o                        \
             CSVLoggerChainLoggingTests.o       \
             CSVLoggerTests.o                   \
             CSVLoggerIncrementalLoggingTests.o \
-            CVSLoggerUtil.o
+            CSVLoggerUtil.o                    \
+            CSVMessageFormatterTests.o         \
+            LoggingManagerTests.o              \
+            StringStreamLogTargetTests.o
 
 OBJS := $(addprefix $(OBJ_DIR)/,$(OBJS))
 

@@ -16,7 +16,7 @@ public:
 
     ~CSVMessageFormatter() override;
 
-    std::string         formatHeaders() const override final;
+    std::string formatHeaders() const override final;
 
     virtual std::string formatMessage(const VerbosityLevel p_verbosityLevel,
                                       const std::string&   p_fileName,

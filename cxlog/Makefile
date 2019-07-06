@@ -38,6 +38,8 @@ SRCS     = ChainLogger.cpp               \
            IncrementalLogger.cpp         \
            ISO8601TimestampFormatter.cpp \
            Logger.cpp                    \
+           Logging.cpp                   \
+           LoggingManager.cpp            \
            StdLogTarget.cpp              \
            StringStreamLogTarget.cpp     \
            VerbosityLevel.cpp
@@ -49,6 +51,8 @@ OBJS     = $(OBJ_DIR)/ChainLogger.o               \
            $(OBJ_DIR)/IncrementalLogger.o         \
            $(OBJ_DIR)/ISO8601TimestampFormatter.o \
            $(OBJ_DIR)/Logger.o                    \
+           $(OBJ_DIR)/Logging.o                   \
+           $(OBJ_DIR)/LoggingManager.o            \
            $(OBJ_DIR)/StdLogTarget.o              \
            $(OBJ_DIR)/StringStreamLogTarget.o     \
            $(OBJ_DIR)/VerbosityLevel.o
