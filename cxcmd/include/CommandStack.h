@@ -28,14 +28,12 @@ public:
 private:
 
     bool noCommandUndoed() const;
+    size_t lastCmdPosition() const;
 
-    struct State
-    {
-        const std::size_t m_end;
-        std::size_t       m_current;
-    };
+    const std::size_t m_endPosition;
+    std::size_t       m_currentPosition;
+    bool              m_allCmdUndoed;
 
-    State                                  m_state;
     std::vector<std::unique_ptr<ICommand>> m_commands;
 };
 

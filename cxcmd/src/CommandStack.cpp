@@ -4,14 +4,16 @@
 
 
 cxcmd::CommandStack::CommandStack(const size_t p_capacity)
- : m_state{p_capacity - 1, 0}
+ : m_currentPosition{0}
+ , m_endPosition{p_capacity - 1}
+ , m_allCmdUndoed{false}
 {
     PRECONDITION(p_capacity > 1);
 
     m_commands.reserve(p_capacity);
 
-    POSTCONDITION(m_state.m_end > 1);
-    INVARIANT(m_state.m_end > 1);
+    POSTCONDITION(m_endPosition > 1);
+    INVARIANT(m_endPosition > 1);
 }
 
 
@@ -26,29 +28,31 @@ void cxcmd::CommandStack::add(std::unique_ptr<cxcmd::ICommand>&& p_command)
 
     if(isFull() && noCommandUndoed())
     {
-        return;
+        m_commands.erase(m_commands.cbegin());
+        m_commands.push_back(std::move(p_command));
     }
-
     else if(!isFull() && noCommandUndoed())
     {
         m_commands.push_back(std::move(p_command));
 
-        if( !isFull() )
+        // If this is the first added command, the current position
+        // is still 0.
+        if(m_commands.size() != 1)
         {
-            ++m_state.m_current;
+            ++m_currentPosition;
         }
     }
     else
     {
         // Strip all previously undoed commands:
-        m_commands.erase(m_commands.cbegin() + m_state.m_current,
+        m_commands.erase(m_commands.cbegin() + m_currentPosition,
                          m_commands.cend());
 
         m_commands.shrink_to_fit();
 
         // Add the command:
         m_commands.push_back(std::move(p_command));
-        ++m_state.m_current;
+        ++m_currentPosition;
     }
 }
 
@@ -66,10 +70,15 @@ void cxcmd::CommandStack::undo()
         return;
     }
 
-    if(m_state.m_current != 0)
+    if(m_currentPosition != 0)
     {
-        m_commands[m_state.m_current - 1]->undo();
-        --m_state.m_current;
+        m_commands[m_currentPosition]->undo();
+        --m_currentPosition;
+    }
+    else if(m_currentPosition == 0 && !m_allCmdUndoed)
+    {
+        m_commands[m_currentPosition]->undo();
+        m_allCmdUndoed = true;
     }
 }
 
@@ -81,10 +90,15 @@ void cxcmd::CommandStack::redo()
         return;
     }
 
-    if(m_state.m_current != m_state.m_end)
+    if(m_currentPosition == 0)
     {
-        m_commands[m_state.m_current]->execute();
-        ++m_state.m_current;
+        m_allCmdUndoed = false;
+    }
+
+    if(m_currentPosition != m_endPosition)
+    {
+        m_commands[m_currentPosition]->execute();
+        ++m_currentPosition;
     }
 }
 
@@ -97,7 +111,7 @@ bool cxcmd::CommandStack::isEmpty() const
 
 bool cxcmd::CommandStack::isFull() const
 {
-    return m_state.m_end == m_commands.size() - 1;
+    return m_endPosition == lastCmdPosition();
 }
 
 
@@ -109,16 +123,16 @@ size_t cxcmd::CommandStack::nbCommands() const
 
 bool cxcmd::CommandStack::noCommandUndoed() const
 {
-    bool areCommandsUndoed{false};
-
-    if(!isFull())
+    if(m_commands.empty())
     {
-        areCommandsUndoed = m_state.m_current == m_commands.size();
-    }
-    else
-    {
-        areCommandsUndoed = m_state.m_current == m_commands.size() - 1;
+        return true;
     }
 
-    return areCommandsUndoed;
+    return m_currentPosition == lastCmdPosition();
+}
+
+
+size_t cxcmd::CommandStack::lastCmdPosition() const
+{
+    return m_commands.size() - 1;
 }

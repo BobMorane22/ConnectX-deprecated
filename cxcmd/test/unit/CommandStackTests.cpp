@@ -39,6 +39,9 @@ TEST(CommandStack, Add_InvalidCommand_CommandNotAdded)
     ASSERT_TRUE(stack);
     ASSERT_TRUE(stack->isEmpty());
 
+    double result{0.0};
+    (void)result; // unused
+
     std::unique_ptr<cxcmd::ICommand> cmd;
     ASSERT_FALSE(cmd);
 
@@ -68,7 +71,7 @@ TEST(CommandStack, Add_ManyValidCommands_CommandsAdded)
 }
 
 
-TEST(CommandStack, Add_TooManyValidCommands_OnlyValidAmountAdded)
+TEST(CommandStack, Add_TooManyValidCommands_LastCommandIsLastInStack)
 {
     std::unique_ptr<cxcmd::ICommandStack> stack{new cxcmd::CommandStack(STACK_SIZE)};
 
@@ -80,15 +83,28 @@ TEST(CommandStack, Add_TooManyValidCommands_OnlyValidAmountAdded)
     for(size_t index = 0; index < STACK_SIZE; ++index)
     {
         std::unique_ptr<cxcmd::ICommand> cmd{new CommandAddTwoMock{result}};
+        cmd->execute();
         stack->add(std::move(cmd));
     }
 
+    ASSERT_TRUE(stack->isFull());
+    ASSERT_EQ(stack->nbCommands(), STACK_SIZE);
+    ASSERT_EQ(result, 400.0);
+
     // Add one too many:
-    std::unique_ptr<cxcmd::ICommand> cmd{new CommandAddTwoMock{result}};
+    std::unique_ptr<cxcmd::ICommand> cmd{new CommandTimesThreeMock{result}};
+    cmd->execute();
     stack->add(std::move(cmd));
 
     ASSERT_TRUE(stack->isFull());
     ASSERT_EQ(stack->nbCommands(), STACK_SIZE);
+    ASSERT_EQ(result, 1200.0);
+
+    stack->undo();
+
+    ASSERT_TRUE(stack->isFull());
+    ASSERT_EQ(stack->nbCommands(), STACK_SIZE);
+    ASSERT_EQ(result, 400.0);
 }
 
 
