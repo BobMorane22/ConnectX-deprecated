@@ -27,17 +27,18 @@ INCLUDES     = -I$(SRC_ROOT)/
 LIBINCLUDES  = -L$(BIN_ROOT)/connectx/libs
 VPATH        = unit
 
-SRCS      = cxinvTest.cpp\
+SRCS      = cxinvTest.cpp         \
+            test_handleAssert.cpp
 
-OBJS      =
+OBJS      = cxinvTest.o         \
+            test_handleAssert.o
 
 OBJS := $(addprefix $(OBJ_DIR)/,$(OBJS))
 
-            -lcxinv
-
-LIBS      = -lgtest      \
+LIBS      = -lcxinv      \
+            -lgtest      \
             -lgtest_main \
-            -lpthread    \
+            -lpthread
 # Product:
 MAIN = cxinvTest.out
 

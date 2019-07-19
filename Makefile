@@ -91,9 +91,9 @@ $(MAIN): $(TARGETS)
 cxinv:
 	$(MAKE) -C cxinv
 
-#cxinvtest:
-#	$(MAKE) -C cxinv/test
-#	python $(TESTS_RUNNER) $(CXINV_UNIT_TESTS_EXEC) $(CXINV_UNIT_TESTS_LOG)
+cxinvtest:
+	$(MAKE) -C cxinv/test
+	python $(TESTS_RUNNER) $(CXINV_UNIT_TESTS_EXEC) $(CXINV_UNIT_TESTS_LOG)
 
 cxinvdoc:
 	$(MAKE) -C cxinv/doc
@@ -177,7 +177,7 @@ cxdoc:
 mrproper:
 	@echo Purging Connect X...
 	$(MAKE) mrproper -C cxinv
-#	$(MAKE) mrproper -C cxinv/test
+	$(MAKE) mrproper -C cxinv/test
 	$(MAKE) mrproper -C cxinv/doc
 	$(MAKE) mrproper -C cxutil
 	$(MAKE) mrproper -C cxutil/test
@@ -207,7 +207,7 @@ mrproper:
 clean:
 	@echo Cleaning Connect X...
 	$(MAKE) clean -C cxinv
-#	$(MAKE) clean -C cxinv/test
+	$(MAKE) clean -C cxinv/test
 	$(MAKE) clean -C cxinv/doc
 	$(MAKE) clean -C cxutil
 	$(MAKE) clean -C cxutil/test
