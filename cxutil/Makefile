@@ -34,7 +34,6 @@ SRCS     = Color.cpp             \
            ContractException.cpp \
            Date.cpp              \
            ISubject.cpp          \
-           Logger.cpp            \
            Name.cpp              \
            ReturnCode.cpp        \
            Time.cpp              \
@@ -44,7 +43,6 @@ OBJS     = $(OBJ_DIR)/Color.o             \
            $(OBJ_DIR)/ContractException.o \
            $(OBJ_DIR)/Date.o              \
            $(OBJ_DIR)/ISubject.o          \
-           $(OBJ_DIR)/Logger.o            \
            $(OBJ_DIR)/Name.o              \
            $(OBJ_DIR)/ReturnCode.o        \
            $(OBJ_DIR)/Time.o              \
