@@ -35,10 +35,7 @@
 #include <array>
 
 
-namespace cxutil
-{
-
-namespace math
+namespace cxmath
 {
 
 /***********************************************************************************************//**
@@ -49,7 +46,7 @@ namespace math
  * This genereic class represents a 1, 2 or 3D euclidian space point in the classic
  * <tt>(x, y, z)</tt> form.
  *
- * @tparam T The coordinate type (not necessarily a cxutil::Coordinate).
+ * @tparam T The coordinate type.
  * @tparam N The point dimension (either 1, 2 or 3). Higher dimensions are not supported.
  *
  * @todo Equality checks are done using a naked '==' operator, which is a problem for floating
@@ -354,9 +351,7 @@ bool operator>=(const Point<T, N>& p_left, const Point<T, N> p_right) = delete;
 
 ///@}
 
-} // namespace math
-
-} // namespace cxutil
+} // namespace cxmath
 
 
 #include "../src/Point.ipp"

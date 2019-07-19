@@ -35,10 +35,8 @@
 
 #include "Point.h"
 
-namespace cxutil
-{
 
-namespace math
+namespace cxmath
 {
 
 /***********************************************************************************************//**
@@ -56,8 +54,9 @@ namespace math
  *   - @c T is comparable (i.e comparison operators are defined).
  *   - +, - and * arithmetic operators are defined for @c T.
  *
- * @tparam T The coordinate type (not necessarily a cxutil::Coordinate). One can also think of
- *           it mathematically as the field over which the vector space is defined.
+ * @tparam T The coordinate type. One can also think of it mathematically as the field over
+ * which the vector space is defined.
+ *
  * @tparam N The dimension (either 1, 2 or 3). Higher dimensions are not supported.
  *
  **************************************************************************************************/
@@ -369,7 +368,7 @@ Vector<T, N> operator*(const T& p_scalar, const Vector<T, N>& p_vector);
 
 /***********************************************************************************************//**
  *
- * @copydoc cxutil::math::operator*(T, cxutil::math::Vector<T, N>)
+ * @copydoc cxmath::operator*(T, cxmath::Vector<T, N>)
  *
  **************************************************************************************************/
 template<typename T, std::size_t N>
@@ -447,9 +446,8 @@ T dotProduct(const Vector<T, N>& p_v1, const Vector<T, N>& p_v2);
 
 ///@}
 
-}// namespace math
+}// namespace cxmath
 
-} // namespace cxutil
 
 #include "../src/Vector.ipp"
 #include "../src/Vector2D.ipp"

@@ -34,6 +34,7 @@ TESTS_RUNNER            = $(SRC_ROOT)/cxscripts/python/RunUnitTests.py
 
 CXINV_UNIT_TESTS_EXEC   = -t $(BIN_ROOT)/tests/unit/cxinvTest.out
 CXUTIL_UNIT_TESTS_EXEC  = -t $(BIN_ROOT)/tests/unit/cxutilTest.out
+CXMATH_UNIT_TESTS_EXEC  = -t $(BIN_ROOT)/tests/unit/cxmathTest.out
 CXLOG_UNIT_TESTS_EXEC   = -t $(BIN_ROOT)/tests/unit/cxlogTest.out
 CXCMD_UNIT_TESTS_EXEC   = -t $(BIN_ROOT)/tests/unit/cxcmdTest.out
 CXBASE_UNIT_TESTS_EXEC  = -t $(BIN_ROOT)/tests/unit/cxbaseTest.out
@@ -42,6 +43,7 @@ CXEXEC_UNIT_TESTS_EXEC  = -t $(BIN_ROOT)/tests/unit/cxexecTest.out
 
 CXINV_UNIT_TESTS_LOG    = -l $(BIN_ROOT)/tests/unit/log/cxinvUnitTests.log
 CXUTIL_UNIT_TESTS_LOG   = -l $(BIN_ROOT)/tests/unit/log/cxutilUnitTests.log
+CXMATH_UNIT_TESTS_LOG   = -l $(BIN_ROOT)/tests/unit/log/cxmathUnitTests.log
 CXLOG_UNIT_TESTS_LOG    = -l $(BIN_ROOT)/tests/unit/log/cxlogUnitTests.log
 CXCMD_UNIT_TESTS_LOG    = -l $(BIN_ROOT)/tests/unit/log/cxcmdUnitTests.log
 CXBASE_UNIT_TESTS_LOG   = -l $(BIN_ROOT)/tests/unit/log/cxbaseUnitTests.log
@@ -58,6 +60,9 @@ TARGETS  += cxinv      \
             cxutil     \
             cxutiltest \
             cxutildoc  \
+            cxmath     \
+            cxmathtest \
+            cxmathdoc  \
             cxlog      \
             cxlogtest  \
             cxlogdoc   \
@@ -77,7 +82,7 @@ TARGETS  += cxinv      \
             cxdoc
 
 
-.PHONY:  cxinv cxlog cxcmd cxutil cxbase cxgui cxexec cxmain cxdoc
+.PHONY:  cxinv cxmath cxlog cxcmd cxutil cxbase cxgui cxexec cxmain cxdoc
 
 all: $(MAIN)
 
@@ -102,6 +107,16 @@ cxutiltest:
 
 cxutildoc:
 	$(MAKE) -C cxutil/doc
+
+cxmath:
+	$(MAKE) -C cxmath
+
+cxmathtest:
+	$(MAKE) -C cxmath/test
+	python $(TESTS_RUNNER) $(CXMATH_UNIT_TESTS_EXEC) $(CXMATH_UNIT_TESTS_LOG)
+
+cxmathdoc:
+	$(MAKE) -C cxmath/doc
 
 cxlog:
 	$(MAKE) -C cxlog

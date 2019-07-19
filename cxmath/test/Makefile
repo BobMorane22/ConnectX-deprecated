@@ -1,11 +1,11 @@
 #--------------------------------------------------------------------------------------------------#
 #
 # @file    Makefile
-# @author  Éric Poirier
-# @date    July, 2017
+# @author  morane
+# @date    July, 2019
 # @version 1
 #
-# This makefile defines how the unit tests for cxutil are built.
+# This makefile defines how the unit tests for cxmath are built.
 #
 # To use this makefile, you need at least these tools installed on your
 # machine:
@@ -23,41 +23,30 @@ CPPFLAGS = $(OPT_FLAGS) $(DEBUG_FLAGS) $(STANDARD_FLAGS) \
 # Source files, headers, etc.:
 OBJ_DIR      = $(BIN_ROOT)/tests/unit
 OUT_DIR      = $(BIN_ROOT)/tests/unit
-INCLUDES     = -I$(SRC_ROOT)
+INCLUDES     = -I$(SRC_ROOT)/cxmath -I$(SRC_ROOT)
 LIBINCLUDES  = -L$(BIN_ROOT)/connectx/libs
 VPATH        = unit
 
-SRCS      = cxutilTest.cpp       \
-            test_Color.cpp       \
-            test_Date.cpp        \
-            test_ISubject.cpp    \
-            test_Logger.cpp      \
-            test_Name.cpp        \
-            test_narrow_cast.cpp \
-            test_ReturnCode.cpp  \
-            test_Time.cpp        \
-            test_util.cpp
+SRCS      = cxmathTest.cpp       \
+            test_LineSegment.cpp \
+            test_Point.cpp       \
+            test_Vector.cpp
 
-OBJS      = cxutilTest.o       \
-            test_Date.o        \
-            test_Color.o       \
-            test_ISubject.o    \
-            test_Logger.o      \
-            test_Name.o        \
-            test_narrow_cast.o \
-            test_ReturnCode.o  \
-            test_Time.o        \
-            test_util.o
+OBJS      = cxmathTest.o       \
+            test_LineSegment.o \
+            test_Point.o       \
+            test_Vector.o
 
 OBJS := $(addprefix $(OBJ_DIR)/,$(OBJS))
 
-LIBS      = -lgtest      \
+LIBS      = -lcxmath     \
+            -lcxutil     \
+            -lgtest      \
             -lgtest_main \
-            -lpthread    \
-            -lcxutil
+            -lpthread
 
 # Product:
-MAIN = cxutilTest.out
+MAIN = cxmathTest.out
 
 all: make_dir make_log $(MAIN)
 
@@ -77,7 +66,7 @@ make_dir:
 
 make_log:
 	mkdir -p $(OUT_DIR)/log
-	touch $(OUT_DIR)/log/cxutilUnitTests.log
+	touch $(OUT_DIR)/log/cxmathUnitTests.log
 
 clean:
 	@echo Removing object files...

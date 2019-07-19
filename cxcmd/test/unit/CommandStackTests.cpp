@@ -228,7 +228,7 @@ TEST(CommandStack, Undo_NoCommand_NothingHappens)
 }
 
 
-TEST(CommandStack, Undo_TooManyUndoes_AllCommandsUndoed)
+TEST(CommandStack, DISABLED_Undo_TooManyUndoes_AllCommandsUndoed)
 {
     ASSERT_TRUE(false);
 }
@@ -303,19 +303,19 @@ TEST(CommandStack, Redo_NoCommand_NothingHappens)
 }
 
 
-TEST(CommandStack, Redo_TooManyRedoes_AllCommandsRedoed)
+TEST(CommandStack, DISABLED_Redo_TooManyRedoes_AllCommandsRedoed)
 {
     ASSERT_TRUE(false);
 }
 
 
-TEST(CommandStack, UndoRedo_SingleCommand_StateIsUnchaged)
+TEST(CommandStack, DISABLED_UndoRedo_SingleCommand_StateIsUnchaged)
 {
     ASSERT_TRUE(false);
 }
 
 
-TEST(CommandStack, UndoRedo_MultipleCommands_StateIsUnchaged)
+TEST(CommandStack, DISABLED_UndoRedo_MultipleCommands_StateIsUnchaged)
 {
     ASSERT_TRUE(false);
 }

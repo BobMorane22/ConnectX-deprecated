@@ -35,7 +35,7 @@ SRCS      = cxlogTest.cpp                        \
             CSVMessageFormatter.cpp              \
             LoggingManagerTests.cpp              \
             StringStreamLogTargetTests.cpp
-            
+
 
 OBJS      = cxlogTest.o                        \
             CSVLoggerChainLoggingTests.o       \

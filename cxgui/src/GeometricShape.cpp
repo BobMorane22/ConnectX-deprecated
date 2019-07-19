@@ -30,8 +30,8 @@
  **************************************************************************************************/
 
 
+#include <cxutil/include/Assertion.h>
 #include <cxutil/include/ContractException.h>
-#include <cxutil/include/LineSegment.h>
 
 #include "../include/GeometricShape.h"
 

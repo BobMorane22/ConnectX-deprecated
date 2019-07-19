@@ -32,13 +32,12 @@
 #ifndef LINESEGMENT_H_211CAF0D_19F6_4B9B_A0FC_690207C49414
 #define LINESEGMENT_H_211CAF0D_19F6_4B9B_A0FC_690207C49414
 
-#include "ContractException.h"
+#include <cxutil/include/ContractException.h>
+
 #include "Point.h"
 
-namespace cxutil
-{
 
-namespace math
+namespace cxmath
 {
 
 /***********************************************************************************************//**
@@ -221,9 +220,7 @@ bool intersect(const LineSegment<T, 2>& p_first, const LineSegment<T, 2>& p_seco
 
 ///@}
 
-} // namespace math
-
-} // namespace cxutil
+} // namespace cxmath
 
 #include "../src/LineSegment.ipp"
 

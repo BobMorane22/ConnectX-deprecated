@@ -36,8 +36,9 @@
 
 #include <gtest/gtest.h>
 
+#include <cxmath/include/Vector.h>
 #include <cxutil/include/narrow_cast.h>
-#include <cxutil/include/Vector.h>
+
 
 template <typename T>
 class VectorTest : public ::testing::Test
@@ -48,9 +49,9 @@ public:
     VectorTest() = default;
     virtual ~VectorTest() = default;
 
-    cxutil::math::Vector<T, 1> m_vector1D;
-    cxutil::math::Vector<T, 2> m_vector2D;
-    cxutil::math::Vector<T, 3> m_vector3D;
+    cxmath::Vector<T, 1> m_vector1D;
+    cxmath::Vector<T, 2> m_vector2D;
+    cxmath::Vector<T, 3> m_vector3D;
 };
 
 
@@ -71,11 +72,11 @@ namespace
  *
  **************************************************************************************************/
 template <typename T>
-cxutil::math::Point<T, 1> make1DTestPoint(const T& p_x)
+cxmath::Point<T, 1> make1DTestPoint(const T& p_x)
 {
-    using namespace cxutil;
+    using namespace cxmath;
 
-    return math::Point<T, 1>{narrow_cast<T>(p_x)};
+    return Point<T, 1>{cxutil::narrow_cast<T>(p_x)};
 }
 
 
@@ -90,11 +91,11 @@ cxutil::math::Point<T, 1> make1DTestPoint(const T& p_x)
  *
  **************************************************************************************************/
 template <typename T>
-cxutil::math::Point<T, 2> make2DTestPoint(const T& p_x, const T& p_y)
+cxmath::Point<T, 2> make2DTestPoint(const T& p_x, const T& p_y)
 {
-    using namespace cxutil;
+    using namespace cxmath;
 
-    return math::Point<T, 2>{narrow_cast<T>(p_x), narrow_cast<T>(p_y)};
+    return Point<T, 2>{cxutil::narrow_cast<T>(p_x), cxutil::narrow_cast<T>(p_y)};
 }
 
 
@@ -110,11 +111,11 @@ cxutil::math::Point<T, 2> make2DTestPoint(const T& p_x, const T& p_y)
  *
  **************************************************************************************************/
 template <typename T>
-cxutil::math::Point<T, 3> make3DTestPoint(const T& p_x, const T& p_y, const T& p_z)
+cxmath::Point<T, 3> make3DTestPoint(const T& p_x, const T& p_y, const T& p_z)
 {
-    using namespace cxutil;
+    using namespace cxmath;
 
-    return math::Point<T, 3>{narrow_cast<T>(p_x), narrow_cast<T>(p_y), narrow_cast<T>(p_z)};
+    return Point<T, 3>{cxutil::narrow_cast<T>(p_x), cxutil::narrow_cast<T>(p_y), cxutil::narrow_cast<T>(p_z)};
 }
 
 } // unamed namespace
@@ -143,7 +144,7 @@ TYPED_TEST(VectorTest, DefaultConstructor_3D_FromOriginLengthIs0)
 
 TYPED_TEST(VectorTest, ConstructorWithParameters_1D_VectorWellDefined)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 1> origin     {make1DTestPoint<TypeParam>(1)};
     const Point<TypeParam, 1> destination{make1DTestPoint<TypeParam>(3)};
@@ -159,7 +160,7 @@ TYPED_TEST(VectorTest, ConstructorWithParameters_1D_VectorWellDefined)
 
 TYPED_TEST(VectorTest, ConstructorWithParameters_2D_VectorWellDefined)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 2> origin     {make2DTestPoint<TypeParam>(1, 2)};
     const Point<TypeParam, 2> destination{make2DTestPoint<TypeParam>(3, 4)};
@@ -176,7 +177,7 @@ TYPED_TEST(VectorTest, ConstructorWithParameters_2D_VectorWellDefined)
 
 TYPED_TEST(VectorTest, ConstructorWithParameters_3D_VectorWellDefined)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 3> origin     {make3DTestPoint<TypeParam>(1, 2, 3)};
     const Point<TypeParam, 3> destination{make3DTestPoint<TypeParam>(3, 4, 5)};
@@ -194,7 +195,7 @@ TYPED_TEST(VectorTest, ConstructorWithParameters_3D_VectorWellDefined)
 
 TYPED_TEST(VectorTest, Origin_ZeroVector1D_ReturnsOrigin)
 {
-    const cxutil::math::Point<TypeParam, 1> origin;
+    const cxmath::Point<TypeParam, 1> origin;
 
     ASSERT_EQ(this->m_vector1D.origin(), origin);
 }
@@ -202,7 +203,7 @@ TYPED_TEST(VectorTest, Origin_ZeroVector1D_ReturnsOrigin)
 
 TYPED_TEST(VectorTest, Origin_ZeroVector2D_ReturnsOrigin)
 {
-    const cxutil::math::Point<TypeParam, 2> origin;
+    const cxmath::Point<TypeParam, 2> origin;
 
     ASSERT_EQ(this->m_vector2D.origin(), origin);
 }
@@ -210,7 +211,7 @@ TYPED_TEST(VectorTest, Origin_ZeroVector2D_ReturnsOrigin)
 
 TYPED_TEST(VectorTest, Origin_ZeroVector3D_ReturnsOrigin)
 {
-    const cxutil::math::Point<TypeParam, 3> origin;
+    const cxmath::Point<TypeParam, 3> origin;
 
     ASSERT_EQ(this->m_vector3D.origin(), origin);
 }
@@ -218,9 +219,9 @@ TYPED_TEST(VectorTest, Origin_ZeroVector3D_ReturnsOrigin)
 
 TYPED_TEST(VectorTest, Origin_SomeVector1D_ReturnsOrigin)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
-    const Point<TypeParam, 1> origin{make1DTestPoint<TypeParam>(1)};
+    const Point<TypeParam, 1>  origin{make1DTestPoint<TypeParam>(1)};
     const Vector<TypeParam, 1> vector{origin, Point<TypeParam, 1>()};
 
     ASSERT_EQ(vector.origin(), origin);
@@ -229,7 +230,7 @@ TYPED_TEST(VectorTest, Origin_SomeVector1D_ReturnsOrigin)
 
 TYPED_TEST(VectorTest, Origin_SomeVector2D_ReturnsOrigin)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 2> origin{make2DTestPoint<TypeParam>(1, 2)};
 
@@ -241,10 +242,9 @@ TYPED_TEST(VectorTest, Origin_SomeVector2D_ReturnsOrigin)
 
 TYPED_TEST(VectorTest, Origin_SomeVector3D_ReturnsOrigin)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
-    const Point<TypeParam, 3> origin{make3DTestPoint<TypeParam>(1, 2, 3)};
-
+    const Point<TypeParam, 3>  origin{make3DTestPoint<TypeParam>(1, 2, 3)};
     const Vector<TypeParam, 3> vector{origin, Point<TypeParam, 3>()};
 
     ASSERT_EQ(vector.origin(), origin);
@@ -253,7 +253,7 @@ TYPED_TEST(VectorTest, Origin_SomeVector3D_ReturnsOrigin)
 
 TYPED_TEST(VectorTest, Origin_Two1DVectorsAdded_OriginOfTheFirstIsUnchanged)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     // First vector:
     const Point<TypeParam, 1> origin1     {make1DTestPoint<TypeParam>(1)};
@@ -276,7 +276,7 @@ TYPED_TEST(VectorTest, Origin_Two1DVectorsAdded_OriginOfTheFirstIsUnchanged)
 
 TYPED_TEST(VectorTest, Origin_Two1DVectorsSubstracted_OriginOfTheFirstIsUnchanged)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     // First vector:
     const Point<TypeParam, 1> origin1     {make1DTestPoint<TypeParam>(1)};
@@ -299,7 +299,7 @@ TYPED_TEST(VectorTest, Origin_Two1DVectorsSubstracted_OriginOfTheFirstIsUnchange
 
 TYPED_TEST(VectorTest, Origin_ScalarTimesA1DVector_OriginIsUnchanged)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     // First vector:
     const Point<TypeParam, 1> origin     {make1DTestPoint<TypeParam>(1)};
@@ -319,7 +319,7 @@ TYPED_TEST(VectorTest, Origin_ScalarTimesA1DVector_OriginIsUnchanged)
 
 TYPED_TEST(VectorTest, Origin_1DVectorTimesAScalar_OriginIsUnchanged)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     // First vector:
     const Point<TypeParam, 1> origin     {make1DTestPoint<TypeParam>(1)};
@@ -339,7 +339,7 @@ TYPED_TEST(VectorTest, Origin_1DVectorTimesAScalar_OriginIsUnchanged)
 
 TYPED_TEST(VectorTest, Origin_Two2DVectorsAdded_OriginOfTheFirstIsUnchanged)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     // First vector:
     const Point<TypeParam, 2> origin1     {make2DTestPoint<TypeParam>(1, 2)};
@@ -362,7 +362,7 @@ TYPED_TEST(VectorTest, Origin_Two2DVectorsAdded_OriginOfTheFirstIsUnchanged)
 
 TYPED_TEST(VectorTest, Origin_Two2DVectorsSubstracted_OriginOfTheFirstIsUnchanged)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     // First vector:
     const Point<TypeParam, 2> origin1     {make2DTestPoint<TypeParam>(1, 2)};
@@ -385,7 +385,7 @@ TYPED_TEST(VectorTest, Origin_Two2DVectorsSubstracted_OriginOfTheFirstIsUnchange
 
 TYPED_TEST(VectorTest, Origin_ScalarTimesA2DVector_OriginIsUnchanged)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     // First vector:
     const Point<TypeParam, 2> origin     {make2DTestPoint<TypeParam>(1, 2)};
@@ -405,7 +405,7 @@ TYPED_TEST(VectorTest, Origin_ScalarTimesA2DVector_OriginIsUnchanged)
 
 TYPED_TEST(VectorTest, Origin_2DVectorTimesAScalar_OriginIsUnchanged)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     // First vector:
     const Point<TypeParam, 2> origin     {make2DTestPoint<TypeParam>(1, 2)};
@@ -425,7 +425,7 @@ TYPED_TEST(VectorTest, Origin_2DVectorTimesAScalar_OriginIsUnchanged)
 
 TYPED_TEST(VectorTest, Origin_Two3DVectorsAdded_OriginOfTheFirstIsUnchanged)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     // First vector:
     const Point<TypeParam, 3> origin1     {make3DTestPoint<TypeParam>(1, 2, 3)};
@@ -448,7 +448,7 @@ TYPED_TEST(VectorTest, Origin_Two3DVectorsAdded_OriginOfTheFirstIsUnchanged)
 
 TYPED_TEST(VectorTest, Origin_Two3DVectorsSubstracted_OriginOfTheFirstIsUnchanged)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     // First vector:
     const Point<TypeParam, 3> origin1     {make3DTestPoint<TypeParam>(1, 2, 3)};
@@ -471,7 +471,7 @@ TYPED_TEST(VectorTest, Origin_Two3DVectorsSubstracted_OriginOfTheFirstIsUnchange
 
 TYPED_TEST(VectorTest, Origin_ScalarTimesA3DVector_OriginIsUnchanged)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     // First vector:
     const Point<TypeParam, 3> origin     {make3DTestPoint<TypeParam>(1, 2, 3)};
@@ -491,7 +491,7 @@ TYPED_TEST(VectorTest, Origin_ScalarTimesA3DVector_OriginIsUnchanged)
 
 TYPED_TEST(VectorTest, Origin_3DVectorTimesAScalar_OriginIsUnchanged)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     // First vector:
     const Point<TypeParam, 3> origin     {make3DTestPoint<TypeParam>(1, 2, 3)};
@@ -512,7 +512,7 @@ TYPED_TEST(VectorTest, Origin_3DVectorTimesAScalar_OriginIsUnchanged)
 
 TYPED_TEST(VectorTest, Destination_ZeroVector1D_ReturnsOrigin)
 {
-    const cxutil::math::Point<TypeParam, 1> origin;
+    const cxmath::Point<TypeParam, 1> origin;
 
     ASSERT_EQ(this->m_vector1D.destination(), origin);
 }
@@ -520,7 +520,7 @@ TYPED_TEST(VectorTest, Destination_ZeroVector1D_ReturnsOrigin)
 
 TYPED_TEST(VectorTest, Destination_ZeroVector2D_ReturnsOrigin)
 {
-    const cxutil::math::Point<TypeParam, 2> origin;
+    const cxmath::Point<TypeParam, 2> origin;
 
     ASSERT_EQ(this->m_vector2D.destination(), origin);
 }
@@ -528,7 +528,7 @@ TYPED_TEST(VectorTest, Destination_ZeroVector2D_ReturnsOrigin)
 
 TYPED_TEST(VectorTest, Destination_ZeroVector3D_ReturnsOrigin)
 {
-    const cxutil::math::Point<TypeParam, 3> origin;
+    const cxmath::Point<TypeParam, 3> origin;
 
     ASSERT_EQ(this->m_vector3D.destination(), origin);
 }
@@ -536,7 +536,7 @@ TYPED_TEST(VectorTest, Destination_ZeroVector3D_ReturnsOrigin)
 
 TYPED_TEST(VectorTest, Destination_SomeVector1D_ReturnsDestination)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 1> origin;
     const Point<TypeParam, 1> destination{make1DTestPoint<TypeParam>(1)};
@@ -549,7 +549,7 @@ TYPED_TEST(VectorTest, Destination_SomeVector1D_ReturnsDestination)
 
 TYPED_TEST(VectorTest, Destination_SomeVector2D_ReturnsDestination)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 2> origin;
     const Point<TypeParam, 2> destination{make2DTestPoint<TypeParam>(1, 2)};
@@ -562,7 +562,7 @@ TYPED_TEST(VectorTest, Destination_SomeVector2D_ReturnsDestination)
 
 TYPED_TEST(VectorTest, Destination_SomeVector3D_ReturnsDestination)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 3> origin;
     const Point<TypeParam, 3> destination{make3DTestPoint<TypeParam>(1, 2, 3)};
@@ -575,7 +575,7 @@ TYPED_TEST(VectorTest, Destination_SomeVector3D_ReturnsDestination)
 
 TYPED_TEST(VectorTest, Destination_Two1DVectorsAdded_ReturnsUpdatedDestination)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     // First vector:
     const Point<TypeParam, 1> origin1     {make1DTestPoint<TypeParam>(1)};
@@ -601,7 +601,7 @@ TYPED_TEST(VectorTest, Destination_Two1DVectorsAdded_ReturnsUpdatedDestination)
 
 TYPED_TEST(VectorTest, Destination_Two1DVectorsSubstracted_ReturnsUpdatedDestination)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     // First vector:
     const Point<TypeParam, 1> origin1     {make1DTestPoint<TypeParam>(1)};
@@ -627,7 +627,7 @@ TYPED_TEST(VectorTest, Destination_Two1DVectorsSubstracted_ReturnsUpdatedDestina
 
 TYPED_TEST(VectorTest, Destination_ScalarTimesA1DVector_ReturnsUpdatedDestination)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 1> origin     {make1DTestPoint<TypeParam>(1)};
     const Point<TypeParam, 1> destination{make1DTestPoint<TypeParam>(2)};
@@ -646,7 +646,7 @@ TYPED_TEST(VectorTest, Destination_ScalarTimesA1DVector_ReturnsUpdatedDestinatio
 
 TYPED_TEST(VectorTest, Destination_1DVectorTimesAScalar_ReturnsUpdatedDestination)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 1> origin     {make1DTestPoint<TypeParam>(1)};
     const Point<TypeParam, 1> destination{make1DTestPoint<TypeParam>(2)};
@@ -665,7 +665,7 @@ TYPED_TEST(VectorTest, Destination_1DVectorTimesAScalar_ReturnsUpdatedDestinatio
 
 TYPED_TEST(VectorTest, Destination_Two2DVectorsAdded_ReturnsUpdatedDestination)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     // First vector:
     const Point<TypeParam, 2> origin1     {make2DTestPoint<TypeParam>(1, 2)};
@@ -691,7 +691,7 @@ TYPED_TEST(VectorTest, Destination_Two2DVectorsAdded_ReturnsUpdatedDestination)
 
 TYPED_TEST(VectorTest, Destination_Two2DVectorsSubstracted_ReturnsUpdatedDestination)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     // First vector:
     const Point<TypeParam, 2> origin1     {make2DTestPoint<TypeParam>(1, 2)};
@@ -717,7 +717,7 @@ TYPED_TEST(VectorTest, Destination_Two2DVectorsSubstracted_ReturnsUpdatedDestina
 
 TYPED_TEST(VectorTest, Destination_ScalarTimesA2DVector_ReturnsUpdatedDestination)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 2> origin     {make2DTestPoint<TypeParam>(1, 2)};
     const Point<TypeParam, 2> destination{make2DTestPoint<TypeParam>(2, 4)};
@@ -736,7 +736,7 @@ TYPED_TEST(VectorTest, Destination_ScalarTimesA2DVector_ReturnsUpdatedDestinatio
 
 TYPED_TEST(VectorTest, Destination_2DVectorTimesAScalar_ReturnsUpdatedDestination)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 2> origin     {make2DTestPoint<TypeParam>(1, 2)};
     const Point<TypeParam, 2> destination{make2DTestPoint<TypeParam>(2, 4)};
@@ -755,7 +755,7 @@ TYPED_TEST(VectorTest, Destination_2DVectorTimesAScalar_ReturnsUpdatedDestinatio
 
 TYPED_TEST(VectorTest, Destination_Two3DVectorsAdded_ReturnsUpdatedDestination)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     // First vector:
     const Point<TypeParam, 3> origin1     {make3DTestPoint<TypeParam>(1, 2, 3)};
@@ -781,7 +781,7 @@ TYPED_TEST(VectorTest, Destination_Two3DVectorsAdded_ReturnsUpdatedDestination)
 
 TYPED_TEST(VectorTest, Destination_Two3DVectorsSubstracted_ReturnsUpdatedDestination)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     // First vector:
     const Point<TypeParam, 3> origin1     {make3DTestPoint<TypeParam>(1, 2, 3)};
@@ -807,7 +807,7 @@ TYPED_TEST(VectorTest, Destination_Two3DVectorsSubstracted_ReturnsUpdatedDestina
 
 TYPED_TEST(VectorTest, Destination_ScalarTimesA3DVector_ReturnsUpdatedDestination)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 3> origin     {make3DTestPoint<TypeParam>(1, 2, 3)};
     const Point<TypeParam, 3> destination{make3DTestPoint<TypeParam>(2, 4, 6)};
@@ -826,7 +826,7 @@ TYPED_TEST(VectorTest, Destination_ScalarTimesA3DVector_ReturnsUpdatedDestinatio
 
 TYPED_TEST(VectorTest, Destination_3DVectorTimesAScalar_ReturnsUpdatedDestination)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 3> origin     {make3DTestPoint<TypeParam>(1, 2, 3)};
     const Point<TypeParam, 3> destination{make3DTestPoint<TypeParam>(2, 4, 6)};
@@ -881,7 +881,7 @@ TYPED_TEST(VectorTest, Z_Origin3DVector_Returns0)
 
 TYPED_TEST(VectorTest, X_Some1DVector_ReturnsXComponent)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 1> origin     {make1DTestPoint<TypeParam>(1)};
     const Point<TypeParam, 1> destination{make1DTestPoint<TypeParam>(2)};
@@ -894,7 +894,7 @@ TYPED_TEST(VectorTest, X_Some1DVector_ReturnsXComponent)
 
 TYPED_TEST(VectorTest, X_Some2DVector_ReturnsXComponent)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 2> origin     {make2DTestPoint<TypeParam>(1, 2)};
     const Point<TypeParam, 2> destination{make2DTestPoint<TypeParam>(2, 4)};
@@ -907,7 +907,7 @@ TYPED_TEST(VectorTest, X_Some2DVector_ReturnsXComponent)
 
 TYPED_TEST(VectorTest, X_Some3DVector_ReturnsXComponent)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 3> origin     {make3DTestPoint<TypeParam>(1, 2, 3)};
     const Point<TypeParam, 3> destination{make3DTestPoint<TypeParam>(2, 4, 6)};
@@ -920,7 +920,7 @@ TYPED_TEST(VectorTest, X_Some3DVector_ReturnsXComponent)
 
 TYPED_TEST(VectorTest, Y_Some2DVector_ReturnsYComponent)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 2> origin     {make2DTestPoint<TypeParam>(1, 2)};
     const Point<TypeParam, 2> destination{make2DTestPoint<TypeParam>(2, 4)};
@@ -933,7 +933,7 @@ TYPED_TEST(VectorTest, Y_Some2DVector_ReturnsYComponent)
 
 TYPED_TEST(VectorTest, Y_Some3DVector_ReturnsYComponent)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 3> origin     {make3DTestPoint<TypeParam>(1, 2, 3)};
     const Point<TypeParam, 3> destination{make3DTestPoint<TypeParam>(2, 4, 6)};
@@ -946,7 +946,7 @@ TYPED_TEST(VectorTest, Y_Some3DVector_ReturnsYComponent)
 
 TYPED_TEST(VectorTest, Z_Some3DVector_ReturnsZComponent)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 3> origin     {make3DTestPoint<TypeParam>(1, 2, 3)};
     const Point<TypeParam, 3> destination{make3DTestPoint<TypeParam>(2, 4, 6)};
@@ -959,7 +959,7 @@ TYPED_TEST(VectorTest, Z_Some3DVector_ReturnsZComponent)
 
 TYPED_TEST(VectorTest, SubscriptOperator_Some1DVectorSusbriptN_ExceptionThrown)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     ASSERT_THROW(this->m_vector1D[(Vector<TypeParam, 1>::X_COMPONENT + 1)], PreconditionException);
 }
@@ -967,7 +967,7 @@ TYPED_TEST(VectorTest, SubscriptOperator_Some1DVectorSusbriptN_ExceptionThrown)
 
 TYPED_TEST(VectorTest, SubscriptOperator_Some2DVectorSusbriptN_ExceptionThrown)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     ASSERT_THROW(this->m_vector2D[(Vector<TypeParam, 2>::Y_COMPONENT + 1)], PreconditionException);
 }
@@ -975,7 +975,7 @@ TYPED_TEST(VectorTest, SubscriptOperator_Some2DVectorSusbriptN_ExceptionThrown)
 
 TYPED_TEST(VectorTest, SubscriptOperator_Some3DVectorSusbriptN_ExceptionThrown)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     ASSERT_THROW(this->m_vector3D[(Vector<TypeParam, 3>::Z_COMPONENT + 1)], PreconditionException);
 }
@@ -983,7 +983,7 @@ TYPED_TEST(VectorTest, SubscriptOperator_Some3DVectorSusbriptN_ExceptionThrown)
 
 TYPED_TEST(VectorTest, SubscriptOperator_Some1DVector_ReturnsComponent)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 1> origin     {make1DTestPoint<TypeParam>(1)};
     const Point<TypeParam, 1> destination{make1DTestPoint<TypeParam>(2)};
@@ -997,7 +997,7 @@ TYPED_TEST(VectorTest, SubscriptOperator_Some1DVector_ReturnsComponent)
 
 TYPED_TEST(VectorTest, SubscriptOperator_Some2DVector_ReturnsComponent)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 2> origin     {make2DTestPoint<TypeParam>(1, 2)};
     const Point<TypeParam, 2> destination{make2DTestPoint<TypeParam>(2, 4)};
@@ -1012,7 +1012,7 @@ TYPED_TEST(VectorTest, SubscriptOperator_Some2DVector_ReturnsComponent)
 
 TYPED_TEST(VectorTest, SubscriptOperator_Some3DVector_ReturnsComponent)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 3> origin     {make3DTestPoint<TypeParam>(1, 2, 3)};
     const Point<TypeParam, 3> destination{make3DTestPoint<TypeParam>(2, 4, 6)};
@@ -1046,7 +1046,7 @@ TYPED_TEST(VectorTest, UnaryMinus_ZeroVector3D_ReturnsZeroVector)
 
 TYPED_TEST(VectorTest, UnaryMinus_SomeVector1D_ReturnsOppositeVector)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     Point<TypeParam, 1> origin     {make1DTestPoint<TypeParam>(1)};
     Point<TypeParam, 1> destination{make1DTestPoint<TypeParam>(2)};
@@ -1060,7 +1060,7 @@ TYPED_TEST(VectorTest, UnaryMinus_SomeVector1D_ReturnsOppositeVector)
 
 TYPED_TEST(VectorTest, UnaryMinus_SomeVector2D_ReturnsOppositeVector)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     Point<TypeParam, 2> origin     {make2DTestPoint<TypeParam>(1, 2)};
     Point<TypeParam, 2> destination{make2DTestPoint<TypeParam>(2, 4)};
@@ -1074,7 +1074,7 @@ TYPED_TEST(VectorTest, UnaryMinus_SomeVector2D_ReturnsOppositeVector)
 
 TYPED_TEST(VectorTest, UnaryMinus_SomeVector3D_ReturnsOppositeVector)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     Point<TypeParam, 3> origin     {make3DTestPoint<TypeParam>(1, 2, 3)};
     Point<TypeParam, 3> destination{make3DTestPoint<TypeParam>(2, 4, 6)};
@@ -1088,7 +1088,7 @@ TYPED_TEST(VectorTest, UnaryMinus_SomeVector3D_ReturnsOppositeVector)
 
 TYPED_TEST(VectorTest, AdditionAssignement_SomeVector1D_ReturnsSum)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     // First vector:
     Point<TypeParam, 1> origin1     {make1DTestPoint<TypeParam>(1)};
@@ -1108,7 +1108,7 @@ TYPED_TEST(VectorTest, AdditionAssignement_SomeVector1D_ReturnsSum)
 
 TYPED_TEST(VectorTest, AdditionAssignement_SomeVector2D_ReturnsSum)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     // First vector:
     Point<TypeParam, 2> origin1     {make2DTestPoint<TypeParam>(1, 2)};
@@ -1128,7 +1128,7 @@ TYPED_TEST(VectorTest, AdditionAssignement_SomeVector2D_ReturnsSum)
 
 TYPED_TEST(VectorTest, AdditionAssignement_SomeVector3D_ReturnsSum)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     // First vector:
     Point<TypeParam, 3> origin1     {make3DTestPoint<TypeParam>(1, 2, 3)};
@@ -1148,7 +1148,7 @@ TYPED_TEST(VectorTest, AdditionAssignement_SomeVector3D_ReturnsSum)
 
 TYPED_TEST(VectorTest, SubtractionAssignement_SomeVector1D_ReturnsDifference)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     // First vector:
     Point<TypeParam, 1> origin     {make1DTestPoint<TypeParam>(1)};
@@ -1165,7 +1165,7 @@ TYPED_TEST(VectorTest, SubtractionAssignement_SomeVector1D_ReturnsDifference)
 
 TYPED_TEST(VectorTest, SubtractionAssignement_SomeVector2D_ReturnsDifference)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     // First vector:
     Point<TypeParam, 2> origin     {make2DTestPoint<TypeParam>(1, 2)};
@@ -1182,7 +1182,7 @@ TYPED_TEST(VectorTest, SubtractionAssignement_SomeVector2D_ReturnsDifference)
 
 TYPED_TEST(VectorTest, SubtractionAssignement_SomeVector3D_ReturnsDifference)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     // First vector:
     Point<TypeParam, 3> origin     {make3DTestPoint<TypeParam>(1, 2, 3)};
@@ -1199,7 +1199,7 @@ TYPED_TEST(VectorTest, SubtractionAssignement_SomeVector3D_ReturnsDifference)
 
 TYPED_TEST(VectorTest, ProductAssignement_SomeVector1D_ReturnsProduct)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     // First vector:
     Point<TypeParam, 1> origin1     {make1DTestPoint<TypeParam>(1)};
@@ -1222,7 +1222,7 @@ TYPED_TEST(VectorTest, ProductAssignement_SomeVector1D_ReturnsProduct)
 
 TYPED_TEST(VectorTest, ProductAssignement_SomeVector2D_ReturnsProduct)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     // First vector:
     Point<TypeParam, 2> origin1     {make2DTestPoint<TypeParam>(1, 2)};
@@ -1245,7 +1245,7 @@ TYPED_TEST(VectorTest, ProductAssignement_SomeVector2D_ReturnsProduct)
 
 TYPED_TEST(VectorTest, ProductAssignement_SomeVector3D_ReturnsProduct)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     // First vector:
     Point<TypeParam, 3> origin1     {make3DTestPoint<TypeParam>(1, 2, 3)};
@@ -1268,7 +1268,7 @@ TYPED_TEST(VectorTest, ProductAssignement_SomeVector3D_ReturnsProduct)
 
 TYPED_TEST(VectorTest, EqualityOperator_TwoEqual1DVectors_ReturnsTrue)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 1> origin1     {make1DTestPoint<TypeParam>(1)};
     const Point<TypeParam, 1> destination1{make1DTestPoint<TypeParam>(2)};
@@ -1286,7 +1286,7 @@ TYPED_TEST(VectorTest, EqualityOperator_TwoEqual1DVectors_ReturnsTrue)
 
 TYPED_TEST(VectorTest, EqualityOperator_TwoEqual2DVectors_ReturnsTrue)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 2> origin1     {make2DTestPoint<TypeParam>(1, 2)};
     const Point<TypeParam, 2> destination1{make2DTestPoint<TypeParam>(2, 3)};
@@ -1304,7 +1304,7 @@ TYPED_TEST(VectorTest, EqualityOperator_TwoEqual2DVectors_ReturnsTrue)
 
 TYPED_TEST(VectorTest, EqualityOperator_TwoEqual3DVectors_ReturnsTrue)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 3> origin1     {make3DTestPoint<TypeParam>(1, 2, 3)};
     const Point<TypeParam, 3> destination1{make3DTestPoint<TypeParam>(2, 3, 4)};
@@ -1322,7 +1322,7 @@ TYPED_TEST(VectorTest, EqualityOperator_TwoEqual3DVectors_ReturnsTrue)
 
 TYPED_TEST(VectorTest, EqualityOperator_TwoDifferent1DVectors_ReturnsFalse)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 1> origin1     {make1DTestPoint<TypeParam>(1)};
     const Point<TypeParam, 1> destination1{make1DTestPoint<TypeParam>(2)};
@@ -1340,7 +1340,7 @@ TYPED_TEST(VectorTest, EqualityOperator_TwoDifferent1DVectors_ReturnsFalse)
 
 TYPED_TEST(VectorTest, EqualityOperator_TwoDifferent2DVectors_ReturnsFalse)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 2> origin1     {make2DTestPoint<TypeParam>(1, 2)};
     const Point<TypeParam, 2> destination1{make2DTestPoint<TypeParam>(2, 3)};
@@ -1358,7 +1358,7 @@ TYPED_TEST(VectorTest, EqualityOperator_TwoDifferent2DVectors_ReturnsFalse)
 
 TYPED_TEST(VectorTest, EqualityOperator_TwoDifferent3DVectors_ReturnsFalse)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 3> origin1     {make3DTestPoint<TypeParam>(1, 2, 3)};
     const Point<TypeParam, 3> destination1{make3DTestPoint<TypeParam>(2, 3, 4)};
@@ -1376,7 +1376,7 @@ TYPED_TEST(VectorTest, EqualityOperator_TwoDifferent3DVectors_ReturnsFalse)
 
 TYPED_TEST(VectorTest, NonEqualityOperator_TwoDifferent1DVectors_ReturnsTrue)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 1> origin1     {make1DTestPoint<TypeParam>(1)};
     const Point<TypeParam, 1> destination1{make1DTestPoint<TypeParam>(2)};
@@ -1394,7 +1394,7 @@ TYPED_TEST(VectorTest, NonEqualityOperator_TwoDifferent1DVectors_ReturnsTrue)
 
 TYPED_TEST(VectorTest, NonEqualityOperator_TwoDifferent2DVectors_ReturnsTrue)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 2> origin1     {make2DTestPoint<TypeParam>(1, 2)};
     const Point<TypeParam, 2> destination1{make2DTestPoint<TypeParam>(2, 3)};
@@ -1412,7 +1412,7 @@ TYPED_TEST(VectorTest, NonEqualityOperator_TwoDifferent2DVectors_ReturnsTrue)
 
 TYPED_TEST(VectorTest, NonEqualityOperator_TwoDifferent3DVectors_ReturnsTrue)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 3> origin1     {make3DTestPoint<TypeParam>(1, 2, 3)};
     const Point<TypeParam, 3> destination1{make3DTestPoint<TypeParam>(2, 3, 4)};
@@ -1430,7 +1430,7 @@ TYPED_TEST(VectorTest, NonEqualityOperator_TwoDifferent3DVectors_ReturnsTrue)
 
 TYPED_TEST(VectorTest, NonEqualityOperator_TwoEqual1DVectors_ReturnsFalse)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 1> origin1     {make1DTestPoint<TypeParam>(1)};
     const Point<TypeParam, 1> destination1{make1DTestPoint<TypeParam>(2)};
@@ -1448,7 +1448,7 @@ TYPED_TEST(VectorTest, NonEqualityOperator_TwoEqual1DVectors_ReturnsFalse)
 
 TYPED_TEST(VectorTest, NonEqualityOperator_TwoEqual2DVectors_ReturnsFalse)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 2> origin1     {make2DTestPoint<TypeParam>(1, 2)};
     const Point<TypeParam, 2> destination1{make2DTestPoint<TypeParam>(2, 3)};
@@ -1466,7 +1466,7 @@ TYPED_TEST(VectorTest, NonEqualityOperator_TwoEqual2DVectors_ReturnsFalse)
 
 TYPED_TEST(VectorTest, NonEqualityOperator_TwoEqual3DVectors_ReturnsFalse)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 3> origin1     {make3DTestPoint<TypeParam>(1, 2, 3)};
     const Point<TypeParam, 3> destination1{make3DTestPoint<TypeParam>(2, 3, 4)};
@@ -1483,7 +1483,7 @@ TYPED_TEST(VectorTest, NonEqualityOperator_TwoEqual3DVectors_ReturnsFalse)
 
 TYPED_TEST(VectorTest, VectorAddition_Two1DVectorsAdded_ReturnsSumVector)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 1> origin1     {make1DTestPoint<TypeParam>(1)};
     const Point<TypeParam, 1> destination1{make1DTestPoint<TypeParam>(2)};
@@ -1506,7 +1506,7 @@ TYPED_TEST(VectorTest, VectorAddition_Two1DVectorsAdded_ReturnsSumVector)
 
 TYPED_TEST(VectorTest, VectorAddition_Two2DVectorsAdded_ReturnsSumVector)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 2> origin1     {make2DTestPoint<TypeParam>(1, 2)};
     const Point<TypeParam, 2> destination1{make2DTestPoint<TypeParam>(2, 3)};
@@ -1529,7 +1529,7 @@ TYPED_TEST(VectorTest, VectorAddition_Two2DVectorsAdded_ReturnsSumVector)
 
 TYPED_TEST(VectorTest, VectorAddition_Two3DVectorsAdded_ReturnsSumVector)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 3> origin1     {make3DTestPoint<TypeParam>(1, 2, 3)};
     const Point<TypeParam, 3> destination1{make3DTestPoint<TypeParam>(2, 3, 4)};
@@ -1552,7 +1552,7 @@ TYPED_TEST(VectorTest, VectorAddition_Two3DVectorsAdded_ReturnsSumVector)
 
 TYPED_TEST(VectorTest, VectorSubtraction_Two1DVectorsSubtracted_ReturnsDifferenceVector)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 1> origin1     {make1DTestPoint<TypeParam>(1)};
     const Point<TypeParam, 1> destination1{make1DTestPoint<TypeParam>(2)};
@@ -1570,7 +1570,7 @@ TYPED_TEST(VectorTest, VectorSubtraction_Two1DVectorsSubtracted_ReturnsDifferenc
 
 TYPED_TEST(VectorTest, VectorSubtraction_Two2DVectorsSubtracted_ReturnsDifferenceVector)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 2> origin1     {make2DTestPoint<TypeParam>(1, 2)};
     const Point<TypeParam, 2> destination1{make2DTestPoint<TypeParam>(2, 3)};
@@ -1588,7 +1588,7 @@ TYPED_TEST(VectorTest, VectorSubtraction_Two2DVectorsSubtracted_ReturnsDifferenc
 
 TYPED_TEST(VectorTest, VectorSubtraction_Two3DVectorsSubtracted_ReturnsDifferenceVector)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 3> origin1     {make3DTestPoint<TypeParam>(1, 2, 3)};
     const Point<TypeParam, 3> destination1{make3DTestPoint<TypeParam>(2, 3, 4)};
@@ -1606,7 +1606,7 @@ TYPED_TEST(VectorTest, VectorSubtraction_Two3DVectorsSubtracted_ReturnsDifferenc
 
 TYPED_TEST(VectorTest, LeftScalarMultiplication_ScalarTimes1DVector_ReturnsScaledVector)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const TypeParam k{cxutil::narrow_cast<TypeParam>(2)};
 
@@ -1626,7 +1626,7 @@ TYPED_TEST(VectorTest, LeftScalarMultiplication_ScalarTimes1DVector_ReturnsScale
 
 TYPED_TEST(VectorTest, LeftScalarMultiplication_ScalarTimes2DVector_ReturnsScaledVector)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const TypeParam k{cxutil::narrow_cast<TypeParam>(2)};
 
@@ -1646,7 +1646,7 @@ TYPED_TEST(VectorTest, LeftScalarMultiplication_ScalarTimes2DVector_ReturnsScale
 
 TYPED_TEST(VectorTest, LeftScalarMultiplication_ScalarTimes3DVector_ReturnsScaledVector)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const TypeParam k{cxutil::narrow_cast<TypeParam>(2)};
 
@@ -1666,7 +1666,7 @@ TYPED_TEST(VectorTest, LeftScalarMultiplication_ScalarTimes3DVector_ReturnsScale
 
 TYPED_TEST(VectorTest, RightScalarMultiplication_ScalarTimes1DVector_ReturnsScaledVector)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const TypeParam k{cxutil::narrow_cast<TypeParam>(2)};
 
@@ -1686,7 +1686,7 @@ TYPED_TEST(VectorTest, RightScalarMultiplication_ScalarTimes1DVector_ReturnsScal
 
 TYPED_TEST(VectorTest, RightScalarMultiplication_ScalarTimes2DVector_ReturnsScaledVector)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const TypeParam k{cxutil::narrow_cast<TypeParam>(2)};
 
@@ -1706,7 +1706,7 @@ TYPED_TEST(VectorTest, RightScalarMultiplication_ScalarTimes2DVector_ReturnsScal
 
 TYPED_TEST(VectorTest, RightScalarMultiplication_ScalarTimes3DVector_ReturnsScaledVector)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const TypeParam k{cxutil::narrow_cast<TypeParam>(2)};
 
@@ -1726,7 +1726,7 @@ TYPED_TEST(VectorTest, RightScalarMultiplication_ScalarTimes3DVector_ReturnsScal
 
 TYPED_TEST(VectorTest, CrossProduct2D_Two2DVectorsA_ReturnsCrossProductValue)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 2> origin;
     const Point<TypeParam, 2> destination1{make2DTestPoint<TypeParam>(1, 2)};
@@ -1748,7 +1748,7 @@ TYPED_TEST(VectorTest, CrossProduct2D_Two2DVectorsA_ReturnsCrossProductValue)
 
 TYPED_TEST(VectorTest, CrossProduct2D_Two2DVectorsB_ReturnsCrossProductValue)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 2> origin;
     const Point<TypeParam, 2> destination1{make2DTestPoint<TypeParam>(1, 2)};
@@ -1770,7 +1770,7 @@ TYPED_TEST(VectorTest, CrossProduct2D_Two2DVectorsB_ReturnsCrossProductValue)
 
 TYPED_TEST(VectorTest, CrossProduct3D_Two2DIdenticalVectors_Returns0)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 2> origin;
     const Point<TypeParam, 2> destination1{make2DTestPoint<TypeParam>(1, 2)};
@@ -1789,7 +1789,7 @@ TYPED_TEST(VectorTest, CrossProduct3D_Two2DIdenticalVectors_Returns0)
 
 TYPED_TEST(VectorTest, CrossProduct3D_Two3DVectorsA_ReturnsCrossProduct3DVector)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 3> origin;
     const Point<TypeParam, 3> destination1{make3DTestPoint<TypeParam>(1, 2, 3)};
@@ -1811,7 +1811,7 @@ TYPED_TEST(VectorTest, CrossProduct3D_Two3DVectorsA_ReturnsCrossProduct3DVector)
 
 TYPED_TEST(VectorTest, CrossProduct3D_Two3DVectorsB_ReturnsCrossProduct3DVector)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 3> origin;
     const Point<TypeParam, 3> destination1{make3DTestPoint<TypeParam>(1, 2, 3)};
@@ -1833,25 +1833,25 @@ TYPED_TEST(VectorTest, CrossProduct3D_Two3DVectorsB_ReturnsCrossProduct3DVector)
 
 TYPED_TEST(VectorTest, AdditionIdentity_InstantiateNew1DVector_VectorIsAdditionIdentity)
 {
-    ASSERT_EQ((cxutil::math::additionIdentity<TypeParam, 1>()), this->m_vector1D);
+    ASSERT_EQ((cxmath::additionIdentity<TypeParam, 1>()), this->m_vector1D);
 }
 
 
 TYPED_TEST(VectorTest, AdditionIdentity_InstantiateNew2DVector_VectorIsAdditionIdentity)
 {
-    ASSERT_EQ((cxutil::math::additionIdentity<TypeParam, 2>()), this->m_vector2D);
+    ASSERT_EQ((cxmath::additionIdentity<TypeParam, 2>()), this->m_vector2D);
 }
 
 
 TYPED_TEST(VectorTest, AdditionIdentity_InstantiateNew3DVector_VectorIsAdditionIdentity)
 {
-    ASSERT_EQ((cxutil::math::additionIdentity<TypeParam, 3>()), this->m_vector3D);
+    ASSERT_EQ((cxmath::additionIdentity<TypeParam, 3>()), this->m_vector3D);
 }
 
 
 TYPED_TEST(VectorTest, DotProduct_Two1DVectors_ReturnsDotProductValue)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 1> origin;
     const Vector<TypeParam, 1> u{origin, make1DTestPoint<TypeParam>(1)};
@@ -1867,7 +1867,7 @@ TYPED_TEST(VectorTest, DotProduct_Two1DVectors_ReturnsDotProductValue)
 
 TYPED_TEST(VectorTest, DotProduct_Two2DVectors_ReturnsDotProductValue)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 2> origin;
     const Vector<TypeParam, 2> u{origin, make2DTestPoint<TypeParam>(1, 2)};
@@ -1883,7 +1883,7 @@ TYPED_TEST(VectorTest, DotProduct_Two2DVectors_ReturnsDotProductValue)
 
 TYPED_TEST(VectorTest, DotProduct_Two3DVectors_ReturnsDotProductValue)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 3> origin;
     const Vector<TypeParam, 3> u{origin, make3DTestPoint<TypeParam>(1, 2, 3)};
@@ -1898,8 +1898,8 @@ TYPED_TEST(VectorTest, DotProduct_Two3DVectors_ReturnsDotProductValue)
 
 
 /***************************************************************************************************
- * The following tests verify that the cxutil::math::Vector class satisfies the  8 conditions of a
- * vector space over T. Let u, v and w be arbritary cxutil::math::Vector objects and a and b
+ * The following tests verify that the cxmath::Vector class satisfies the  8 conditions of a
+ * vector space over T. Let u, v and w be arbritary cxmath::Vector objects and a and b
  * scalars in T. We want to verify (only through unit testing, not formally) that:
  *
  *   1. u + (v + w) = (u + v) + w
@@ -1913,11 +1913,11 @@ TYPED_TEST(VectorTest, DotProduct_Two3DVectors_ReturnsDotProductValue)
  *
  * where 0 is the identity over addition and 1 is the identity over multiplication.
  *
- * These tests do not aim to prove that cxutil::math::Vector is a vector space over T, but
+ * These tests do not aim to prove that cxmath::Vector is a vector space over T, but
  * rather that is most likely is, based on various examples. In other works, these tests aim to
- * prove that the implementation of cxutil::math::Vector most likely agree with its theoretical
- * vector space properties. A formal proof that cxutil::math::Vector forms a vector space can be
- * obtained mathematically from its definition. See the cxutil::math::Vector for more details.
+ * prove that the implementation of cxmath::Vector most likely agree with its theoretical
+ * vector space properties. A formal proof that cxmath::Vector forms a vector space can be
+ * obtained mathematically from its definition. See the cxmath::Vector for more details.
  *
  * Note: here, the definition of vector space is of course limited by the capacity of registers
  *       and hence is not as broad as the mathematical one. For extremely small or large values,
@@ -1968,9 +1968,9 @@ Distribution getValidUniformDistribution(const T p_min, const T p_max)
  *
  **************************************************************************************************/
 template<typename T, std::size_t N>
-cxutil::math::Vector<T, N> makeRandomTestVector()
+cxmath::Vector<T, N> makeRandomTestVector()
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     // We obtain a seed from the timer:
     typedef std::chrono::high_resolution_clock myclock;
@@ -2015,7 +2015,7 @@ cxutil::math::Vector<T, N> makeRandomTestVector()
 
 TYPED_TEST(VectorTest, Vector1DAdditionAssociativity)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Vector<TypeParam, 1> u{makeRandomTestVector<TypeParam, 1>()};
     const Vector<TypeParam, 1> v{makeRandomTestVector<TypeParam, 1>()};
@@ -2027,7 +2027,7 @@ TYPED_TEST(VectorTest, Vector1DAdditionAssociativity)
 
 TYPED_TEST(VectorTest, Vector2DAdditionAssociativity)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Vector<TypeParam, 2> u{makeRandomTestVector<TypeParam, 2>()};
     const Vector<TypeParam, 2> v{makeRandomTestVector<TypeParam, 2>()};
@@ -2039,7 +2039,7 @@ TYPED_TEST(VectorTest, Vector2DAdditionAssociativity)
 
 TYPED_TEST(VectorTest, Vector3DAdditionAssociativity)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Vector<TypeParam, 3> u{makeRandomTestVector<TypeParam, 3>()};
     const Vector<TypeParam, 3> v{makeRandomTestVector<TypeParam, 3>()};
@@ -2051,7 +2051,7 @@ TYPED_TEST(VectorTest, Vector3DAdditionAssociativity)
 
 TYPED_TEST(VectorTest, Vector1DAdditionCommutativity)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Vector<TypeParam, 1> u{makeRandomTestVector<TypeParam, 1>()};
     const Vector<TypeParam, 1> v{makeRandomTestVector<TypeParam, 1>()};
@@ -2062,7 +2062,7 @@ TYPED_TEST(VectorTest, Vector1DAdditionCommutativity)
 
 TYPED_TEST(VectorTest, Vector2DAdditionCommutativity)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Vector<TypeParam, 2> u{makeRandomTestVector<TypeParam, 2>()};
     const Vector<TypeParam, 2> v{makeRandomTestVector<TypeParam, 2>()};
@@ -2073,7 +2073,7 @@ TYPED_TEST(VectorTest, Vector2DAdditionCommutativity)
 
 TYPED_TEST(VectorTest, Vector3DAdditionCommutativity)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Vector<TypeParam, 3> u{makeRandomTestVector<TypeParam, 3>()};
     const Vector<TypeParam, 3> v{makeRandomTestVector<TypeParam, 3>()};
@@ -2084,7 +2084,7 @@ TYPED_TEST(VectorTest, Vector3DAdditionCommutativity)
 
 TYPED_TEST(VectorTest, Vector1DAdditionIdentityElement)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Vector<TypeParam, 1> u{makeRandomTestVector<TypeParam, 1>()};
 
@@ -2094,7 +2094,7 @@ TYPED_TEST(VectorTest, Vector1DAdditionIdentityElement)
 
 TYPED_TEST(VectorTest, Vector2DAdditionIdentityElement)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Vector<TypeParam, 2> u{makeRandomTestVector<TypeParam, 2>()};
 
@@ -2104,7 +2104,7 @@ TYPED_TEST(VectorTest, Vector2DAdditionIdentityElement)
 
 TYPED_TEST(VectorTest, Vector3DAdditionIdentityElement)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Vector<TypeParam, 3> u{makeRandomTestVector<TypeParam, 3>()};
 
@@ -2114,7 +2114,7 @@ TYPED_TEST(VectorTest, Vector3DAdditionIdentityElement)
 
 TYPED_TEST(VectorTest, Vector1DAdditionInverseElement)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Vector<TypeParam, 1> u{makeRandomTestVector<TypeParam, 1>()};
 
@@ -2124,7 +2124,7 @@ TYPED_TEST(VectorTest, Vector1DAdditionInverseElement)
 
 TYPED_TEST(VectorTest, Vector2DAdditionInverseElement)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Vector<TypeParam, 2> u{makeRandomTestVector<TypeParam, 2>()};
 
@@ -2134,7 +2134,7 @@ TYPED_TEST(VectorTest, Vector2DAdditionInverseElement)
 
 TYPED_TEST(VectorTest, Vector3DAdditionInverseElement)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Vector<TypeParam, 3> u{makeRandomTestVector<TypeParam, 3>()};
 
@@ -2144,7 +2144,7 @@ TYPED_TEST(VectorTest, Vector3DAdditionInverseElement)
 
 TYPED_TEST(VectorTest, Vector1DScalarAndFieldMultiplicationsCompatibility)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const TypeParam a{cxutil::narrow_cast<TypeParam>(3)};
     const TypeParam b{cxutil::narrow_cast<TypeParam>(-4)};
@@ -2157,7 +2157,7 @@ TYPED_TEST(VectorTest, Vector1DScalarAndFieldMultiplicationsCompatibility)
 
 TYPED_TEST(VectorTest, Vector2DScalarAndFieldMultiplicationsCompatibility)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const TypeParam a{cxutil::narrow_cast<TypeParam>(3)};
     const TypeParam b{cxutil::narrow_cast<TypeParam>(-4)};
@@ -2170,7 +2170,7 @@ TYPED_TEST(VectorTest, Vector2DScalarAndFieldMultiplicationsCompatibility)
 
 TYPED_TEST(VectorTest, Vector3DScalarAndFieldMultiplicationsCompatibility)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const TypeParam a{cxutil::narrow_cast<TypeParam>(3)};
     const TypeParam b{cxutil::narrow_cast<TypeParam>(-4)};
@@ -2183,7 +2183,7 @@ TYPED_TEST(VectorTest, Vector3DScalarAndFieldMultiplicationsCompatibility)
 
 TYPED_TEST(VectorTest, Vector1DScalarMultiplicationIdentityElement)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const TypeParam multIdentity{cxutil::narrow_cast<TypeParam>(1)};
 
@@ -2195,7 +2195,7 @@ TYPED_TEST(VectorTest, Vector1DScalarMultiplicationIdentityElement)
 
 TYPED_TEST(VectorTest, Vector2DScalarMultiplicationIdentityElement)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const TypeParam multIdentity{cxutil::narrow_cast<TypeParam>(1)};
 
@@ -2207,7 +2207,7 @@ TYPED_TEST(VectorTest, Vector2DScalarMultiplicationIdentityElement)
 
 TYPED_TEST(VectorTest, Vector3DScalarMultiplicationIdentityElement)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const TypeParam multIdentity{cxutil::narrow_cast<TypeParam>(1)};
 
@@ -2219,7 +2219,7 @@ TYPED_TEST(VectorTest, Vector3DScalarMultiplicationIdentityElement)
 
 TYPED_TEST(VectorTest, Vector1DScalarMultiplicationDistributivityWithRespectToVectorAddition)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const TypeParam a{cxutil::narrow_cast<TypeParam>(2)};
 
@@ -2232,7 +2232,7 @@ TYPED_TEST(VectorTest, Vector1DScalarMultiplicationDistributivityWithRespectToVe
 
 TYPED_TEST(VectorTest, Vector2DScalarMultiplicationDistributivityWithRespectToVectorAddition)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const TypeParam a{cxutil::narrow_cast<TypeParam>(2)};
 
@@ -2245,7 +2245,7 @@ TYPED_TEST(VectorTest, Vector2DScalarMultiplicationDistributivityWithRespectToVe
 
 TYPED_TEST(VectorTest, Vector3DScalarMultiplicationDistributivityWithRespectToVectorAddition)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const TypeParam a{cxutil::narrow_cast<TypeParam>(2)};
 
@@ -2258,7 +2258,7 @@ TYPED_TEST(VectorTest, Vector3DScalarMultiplicationDistributivityWithRespectToVe
 
 TYPED_TEST(VectorTest, Vector1DScalarMultiplicationDistributivityWithRespectToFieldAddition)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const TypeParam a{cxutil::narrow_cast<TypeParam>(-1)};
     const TypeParam b{cxutil::narrow_cast<TypeParam>(2)};
@@ -2272,7 +2272,7 @@ TYPED_TEST(VectorTest, Vector1DScalarMultiplicationDistributivityWithRespectToFi
 
 TYPED_TEST(VectorTest, Vector2DScalarMultiplicationDistributivityWithRespectToFieldAddition)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const TypeParam a{cxutil::narrow_cast<TypeParam>(-1)};
     const TypeParam b{cxutil::narrow_cast<TypeParam>(2)};
@@ -2286,7 +2286,7 @@ TYPED_TEST(VectorTest, Vector2DScalarMultiplicationDistributivityWithRespectToFi
 
 TYPED_TEST(VectorTest, Vector3DScalarMultiplicationDistributivityWithRespectToFieldAddition)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const TypeParam a{cxutil::narrow_cast<TypeParam>(-1)};
     const TypeParam b{cxutil::narrow_cast<TypeParam>(2)};

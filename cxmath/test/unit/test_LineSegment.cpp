@@ -32,7 +32,7 @@
 #include <gtest/gtest.h>
 
 #include <cxutil/include/narrow_cast.h>
-#include <cxutil/include/LineSegment.h>
+#include <cxmath/include/LineSegment.h>
 
 
 template <typename T>
@@ -63,11 +63,11 @@ namespace
  *
  **************************************************************************************************/
 template <typename T>
-cxutil::math::Point<T, 1> make1DTestPoint(const T& p_x)
+cxmath::Point<T, 1> make1DTestPoint(const T& p_x)
 {
     using namespace cxutil;
 
-    return math::Point<T, 1>{narrow_cast<T>(p_x)};
+    return cxmath::Point<T, 1>{narrow_cast<T>(p_x)};
 }
 
 
@@ -82,11 +82,11 @@ cxutil::math::Point<T, 1> make1DTestPoint(const T& p_x)
  *
  **************************************************************************************************/
 template <typename T>
-cxutil::math::Point<T, 2> make2DTestPoint(const T& p_x, const T& p_y)
+cxmath::Point<T, 2> make2DTestPoint(const T& p_x, const T& p_y)
 {
     using namespace cxutil;
 
-    return math::Point<T, 2>{narrow_cast<T>(p_x), narrow_cast<T>(p_y)};
+    return cxmath::Point<T, 2>{narrow_cast<T>(p_x), narrow_cast<T>(p_y)};
 }
 
 
@@ -102,11 +102,11 @@ cxutil::math::Point<T, 2> make2DTestPoint(const T& p_x, const T& p_y)
  *
  **************************************************************************************************/
 template <typename T>
-cxutil::math::Point<T, 3> make3DTestPoint(const T& p_x, const T& p_y, const T& p_z)
+cxmath::Point<T, 3> make3DTestPoint(const T& p_x, const T& p_y, const T& p_z)
 {
     using namespace cxutil;
 
-    return math::Point<T, 3>{narrow_cast<T>(p_x), narrow_cast<T>(p_y), narrow_cast<T>(p_z)};
+    return cxmath::Point<T, 3>{narrow_cast<T>(p_x), narrow_cast<T>(p_y), narrow_cast<T>(p_z)};
 }
 
 } // unamed namespace
@@ -114,7 +114,7 @@ cxutil::math::Point<T, 3> make3DTestPoint(const T& p_x, const T& p_y, const T& p
 
 TYPED_TEST(LineSegmentTest, ConstructorWithParameters_TwoEqual1DEndpoints_ExceptionThrown)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 1> origin;
     const Point<TypeParam, 1> destination;
@@ -125,7 +125,7 @@ TYPED_TEST(LineSegmentTest, ConstructorWithParameters_TwoEqual1DEndpoints_Except
 
 TYPED_TEST(LineSegmentTest, ConstructorWithParameters_TwoEqual2DEndpoints_ExceptionThrown)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 2> origin;
     const Point<TypeParam, 2> destination;
@@ -136,7 +136,7 @@ TYPED_TEST(LineSegmentTest, ConstructorWithParameters_TwoEqual2DEndpoints_Except
 
 TYPED_TEST(LineSegmentTest, ConstructorWithParameters_TwoEqual3DEndpoints_ExceptionThrown)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 3> origin;
     const Point<TypeParam, 3> destination;
@@ -147,7 +147,7 @@ TYPED_TEST(LineSegmentTest, ConstructorWithParameters_TwoEqual3DEndpoints_Except
 
 TYPED_TEST(LineSegmentTest, ConstructorWithParameters_TwoDifferent1DEndpoints_NoExceptionThrown)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 1> origin;
     const Point<TypeParam, 1> destination{make1DTestPoint<TypeParam>(1)};
@@ -158,7 +158,7 @@ TYPED_TEST(LineSegmentTest, ConstructorWithParameters_TwoDifferent1DEndpoints_No
 
 TYPED_TEST(LineSegmentTest, ConstructorWithParameters_TwoDifferent2DEndpoints_NoExceptionThrown)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 2> origin;
     const Point<TypeParam, 2> destination{make2DTestPoint<TypeParam>(1, 1)};
@@ -169,7 +169,7 @@ TYPED_TEST(LineSegmentTest, ConstructorWithParameters_TwoDifferent2DEndpoints_No
 
 TYPED_TEST(LineSegmentTest, ConstructorWithParameters_TwoDifferent3DEndpoints_NoExceptionThrown)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 3> origin;
     const Point<TypeParam, 3> destination{make3DTestPoint<TypeParam>(1, 1, 1)};
@@ -180,7 +180,7 @@ TYPED_TEST(LineSegmentTest, ConstructorWithParameters_TwoDifferent3DEndpoints_No
 
 TYPED_TEST(LineSegmentTest, FirstEndpoint_Two1DEndpoints_ReturnsFirstEndpoint)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 1> origin;
     const Point<TypeParam, 1> destination{make1DTestPoint<TypeParam>(1)};
@@ -193,7 +193,7 @@ TYPED_TEST(LineSegmentTest, FirstEndpoint_Two1DEndpoints_ReturnsFirstEndpoint)
 
 TYPED_TEST(LineSegmentTest, FirstEndpoint_Two2DEndpoints_ReturnsFirstEndpoint)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 2> origin;
     const Point<TypeParam, 2> destination{make2DTestPoint<TypeParam>(1, 1)};
@@ -206,7 +206,7 @@ TYPED_TEST(LineSegmentTest, FirstEndpoint_Two2DEndpoints_ReturnsFirstEndpoint)
 
 TYPED_TEST(LineSegmentTest, FirstEndpoint_Two3DEndpoints_ReturnsFirstEndpoint)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 3> origin;
     const Point<TypeParam, 3> destination{make3DTestPoint<TypeParam>(1, 1, 1)};
@@ -219,7 +219,7 @@ TYPED_TEST(LineSegmentTest, FirstEndpoint_Two3DEndpoints_ReturnsFirstEndpoint)
 
 TYPED_TEST(LineSegmentTest, SecondEndpoint_Two1DEndpoints_ReturnsSecondEndpoint)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 1> origin;
     const Point<TypeParam, 1> destination{make1DTestPoint<TypeParam>(1)};
@@ -232,7 +232,7 @@ TYPED_TEST(LineSegmentTest, SecondEndpoint_Two1DEndpoints_ReturnsSecondEndpoint)
 
 TYPED_TEST(LineSegmentTest, SecondEndpoint_Two2DEndpoints_ReturnsSecondEndpoint)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 2> origin;
     const Point<TypeParam, 2> destination{make2DTestPoint<TypeParam>(1, 1)};
@@ -245,7 +245,7 @@ TYPED_TEST(LineSegmentTest, SecondEndpoint_Two2DEndpoints_ReturnsSecondEndpoint)
 
 TYPED_TEST(LineSegmentTest, SecondEndpoint_Two3DEndpoints_ReturnsSecondEndpoint)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 3> origin;
     const Point<TypeParam, 3> destination{make3DTestPoint<TypeParam>(1, 1, 1)};
@@ -258,7 +258,7 @@ TYPED_TEST(LineSegmentTest, SecondEndpoint_Two3DEndpoints_ReturnsSecondEndpoint)
 
 TYPED_TEST(LineSegmentTest, GetEndpoint_Two1DEndpoints_EndpointsAreDifferent)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 1> origin;
     const Point<TypeParam, 1> destination{make1DTestPoint<TypeParam>(1)};
@@ -271,7 +271,7 @@ TYPED_TEST(LineSegmentTest, GetEndpoint_Two1DEndpoints_EndpointsAreDifferent)
 
 TYPED_TEST(LineSegmentTest, GetEndpoint_Two2DEndpoints_EndpointsAreDifferent)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 2> origin;
     const Point<TypeParam, 2> destination{make2DTestPoint<TypeParam>(1, 1)};
@@ -284,7 +284,7 @@ TYPED_TEST(LineSegmentTest, GetEndpoint_Two2DEndpoints_EndpointsAreDifferent)
 
 TYPED_TEST(LineSegmentTest, GetEndpoint_Two3DEndpoints_EndpointsAreDifferent)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 3> origin;
     const Point<TypeParam, 3> destination{make3DTestPoint<TypeParam>(1, 1, 1)};
@@ -298,7 +298,7 @@ TYPED_TEST(LineSegmentTest, GetEndpoint_Two3DEndpoints_EndpointsAreDifferent)
 
 TYPED_TEST(LineSegmentTest, AreParallel_TwoColinear2DLineSegments_ReturnsTrue)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 2> endPtA1;
     const Point<TypeParam, 2> endPtA2{make2DTestPoint<TypeParam>(1, 1)};
@@ -316,7 +316,7 @@ TYPED_TEST(LineSegmentTest, AreParallel_TwoColinear2DLineSegments_ReturnsTrue)
 
 TYPED_TEST(LineSegmentTest, AreParallel_TwoParallel2DLineSegments_ReturnsTrue)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 2> endPtA1;
     const Point<TypeParam, 2> endPtA2{make2DTestPoint<TypeParam>(1, 1)};
@@ -334,7 +334,7 @@ TYPED_TEST(LineSegmentTest, AreParallel_TwoParallel2DLineSegments_ReturnsTrue)
 
 TYPED_TEST(LineSegmentTest, AreParallel_TwoNonParallel2DLineSegments_ReturnsFalse)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 2> endPtA1;
     const Point<TypeParam, 2> endPtA2{make2DTestPoint<TypeParam>(1, 1)};
@@ -352,7 +352,7 @@ TYPED_TEST(LineSegmentTest, AreParallel_TwoNonParallel2DLineSegments_ReturnsFals
 
 TYPED_TEST(LineSegmentTest, AreOrthogonal_TwoOrthogonal2DLineSegments_ReturnsTrue)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 2> endPtA1;
     const Point<TypeParam, 2> endPtA2{make2DTestPoint<TypeParam>(1, 1)};
@@ -370,7 +370,7 @@ TYPED_TEST(LineSegmentTest, AreOrthogonal_TwoOrthogonal2DLineSegments_ReturnsTru
 
 TYPED_TEST(LineSegmentTest, AreOrthogonal_TwoNonOrthogonal2DLineSegments_ReturnsFalse)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 2> endPtA1;
     const Point<TypeParam, 2> endPtA2{make2DTestPoint<TypeParam>(1, 1)};
@@ -388,7 +388,7 @@ TYPED_TEST(LineSegmentTest, AreOrthogonal_TwoNonOrthogonal2DLineSegments_Returns
 
 TYPED_TEST(LineSegmentTest, AreColinear_TwoColinear2DLineSegments_ReturnsTrue)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 2> endPtA1;
     const Point<TypeParam, 2> endPtA2{make2DTestPoint<TypeParam>(1, 1)};
@@ -406,7 +406,7 @@ TYPED_TEST(LineSegmentTest, AreColinear_TwoColinear2DLineSegments_ReturnsTrue)
 
 TYPED_TEST(LineSegmentTest, AreColinear_TwoNonColinear2DLineSegments_ReturnsFalse)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 2> endPtA1;
     const Point<TypeParam, 2> endPtA2{make2DTestPoint<TypeParam>(1, 1)};
@@ -424,7 +424,7 @@ TYPED_TEST(LineSegmentTest, AreColinear_TwoNonColinear2DLineSegments_ReturnsFals
 
 TYPED_TEST(LineSegmentTest, AreColinear_TwoParallelDisjoint2DLineSegments_ReturnsFalse)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 2> endPtA1;
     const Point<TypeParam, 2> endPtA2{make2DTestPoint<TypeParam>(1, 1)};
@@ -442,7 +442,7 @@ TYPED_TEST(LineSegmentTest, AreColinear_TwoParallelDisjoint2DLineSegments_Return
 
 TYPED_TEST(LineSegmentTest, Intersect_TwoClearlyIntersectingLineSegmentsConsiderEndpoints_ReturnsTrue)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 2> endPtA1;
     const Point<TypeParam, 2> endPtA2{make2DTestPoint<TypeParam>(2, 2)};
@@ -460,7 +460,7 @@ TYPED_TEST(LineSegmentTest, Intersect_TwoClearlyIntersectingLineSegmentsConsider
 
 TYPED_TEST(LineSegmentTest, Intersect_TwoClearlyIntersectingLineSegmentsEndpointsNotConsidered_ReturnsTrue)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 2> endPtA1;
     const Point<TypeParam, 2> endPtA2{make2DTestPoint<TypeParam>(2, 2)};
@@ -478,7 +478,7 @@ TYPED_TEST(LineSegmentTest, Intersect_TwoClearlyIntersectingLineSegmentsEndpoint
 
 TYPED_TEST(LineSegmentTest, Intersect_TwoClearlyNonIntersectingLineSegmentsEndpointsConsidered_ReturnsFalse)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 2> endPtA1;
     const Point<TypeParam, 2> endPtA2{make2DTestPoint<TypeParam>(2, 2)};
@@ -496,7 +496,7 @@ TYPED_TEST(LineSegmentTest, Intersect_TwoClearlyNonIntersectingLineSegmentsEndpo
 
 TYPED_TEST(LineSegmentTest, Intersect_TwoClearlyNonIntersectingLineSegmentsEndpointsNotConsidered_ReturnsFalse)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 2> endPtA1;
     const Point<TypeParam, 2> endPtA2{make2DTestPoint<TypeParam>(2, 2)};
@@ -514,7 +514,7 @@ TYPED_TEST(LineSegmentTest, Intersect_TwoClearlyNonIntersectingLineSegmentsEndpo
 
 TYPED_TEST(LineSegmentTest, Intersect_TwoIntersectingLineSegmentsOnEndpointEndpointsConsidered_ReturnsTrue)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 2> endPtA1;
     const Point<TypeParam, 2> endPtA2{make2DTestPoint<TypeParam>(2, 2)};
@@ -532,7 +532,7 @@ TYPED_TEST(LineSegmentTest, Intersect_TwoIntersectingLineSegmentsOnEndpointEndpo
 
 TYPED_TEST(LineSegmentTest, Intersect_TwoIntersectingLineSegmentsOnEndpointEndpointsNotConsidered_ReturnsFalse)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 2> endPtA1;
     const Point<TypeParam, 2> endPtA2{make2DTestPoint<TypeParam>(2, 2)};
@@ -550,7 +550,7 @@ TYPED_TEST(LineSegmentTest, Intersect_TwoIntersectingLineSegmentsOnEndpointEndpo
 
 TYPED_TEST(LineSegmentTest, Intersect_TwoOverlappingLineSegmentsEndpointsConsidered_ReturnsTrue)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 2> endPtA1;
     const Point<TypeParam, 2> endPtA2{make2DTestPoint<TypeParam>(2, 2)};
@@ -568,7 +568,7 @@ TYPED_TEST(LineSegmentTest, Intersect_TwoOverlappingLineSegmentsEndpointsConside
 
 TYPED_TEST(LineSegmentTest, Intersect_TwoOverlappingLineSegmentsEndpointsNotConsidered_ReturnsTrue)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 2> endPtA1;
     const Point<TypeParam, 2> endPtA2{make2DTestPoint<TypeParam>(2, 2)};
@@ -586,7 +586,7 @@ TYPED_TEST(LineSegmentTest, Intersect_TwoOverlappingLineSegmentsEndpointsNotCons
 
 TYPED_TEST(LineSegmentTest, Intersect_TwoNonOverlappingLineSegmentsEndpointsConsidered_ReturnsFalse)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 2> endPtA1;
     const Point<TypeParam, 2> endPtA2{make2DTestPoint<TypeParam>(2, 2)};
@@ -604,7 +604,7 @@ TYPED_TEST(LineSegmentTest, Intersect_TwoNonOverlappingLineSegmentsEndpointsCons
 
 TYPED_TEST(LineSegmentTest, Intersect_TwoNonOverlappingLineSegmentsEndpointsNotConsidered_ReturnsFalse)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 2> endPtA1;
     const Point<TypeParam, 2> endPtA2{make2DTestPoint<TypeParam>(2, 2)};
@@ -622,7 +622,7 @@ TYPED_TEST(LineSegmentTest, Intersect_TwoNonOverlappingLineSegmentsEndpointsNotC
 
 TYPED_TEST(LineSegmentTest, Intersect_TwoParallelLineSegmentsEndpointsConsidered_ReturnsFalse)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 2> endPtA1;
     const Point<TypeParam, 2> endPtA2{make2DTestPoint<TypeParam>(2, 2)};
@@ -640,7 +640,7 @@ TYPED_TEST(LineSegmentTest, Intersect_TwoParallelLineSegmentsEndpointsConsidered
 
 TYPED_TEST(LineSegmentTest, Intersect_TwoParallelLineSegmentsEndpointsNotConsidered_ReturnsFalse)
 {
-    using namespace cxutil::math;
+    using namespace cxmath;
 
     const Point<TypeParam, 2> endPtA1;
     const Point<TypeParam, 2> endPtA2{make2DTestPoint<TypeParam>(2, 2)};

@@ -1,18 +1,18 @@
  <!-------------------------------------------------------------------------
  Copyright (C) 2018 Connect X team
- 
+
  This file is part of Connect X.
- 
+
  Connect X is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
  the Free Software Foundation, either version 3 of the License, or
  (at your option) any later version.
- 
+
  Connect X is distributed in the hope that it will be useful,
  but WITHOUT ANY WARRANTY; without even the implied warranty of
  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  GNU General Public License for more details.
- 
+
  You should have received a copy of the GNU General Public License
  along with Connect X.  If not, see <http://www.gnu.org/licenses/>.
  -------------------------------------------------------------------------->
@@ -21,10 +21,10 @@
  @author  Eric Poirier
  @date    August 2018
  @version 1.0
- 
+
  This web page acts as a gateway to every piece of Connect X related
  documentation.
- 
+
   -------------------------------------------------------------------------->
 
 <!DOCTYPE html>
@@ -33,14 +33,14 @@
     <head>
         <meta charset="utf-8" />
         <title>Connect X documentation center</title>
-        
+
         <!-- CSS -->
         <style>
             html, body
             {
                 width:  100%;
                 height: 100%;
-                
+
                 margin:  0;
                 padding: 0;
             }
@@ -69,18 +69,19 @@
         <script language="javascript" type="text/javascript">
 
             // ***************************************************************************
-            // Change the iframe target to the needed to the needed documentation.
+            // Change the iframe target to the needed documentation.
             //
-            // @param p_libDocIndexPath The path to the needed documentation.
+            // @param p_docPath The path to the needed documentation.
             //
             // ***************************************************************************
-            function displayLibraryDoc(p_libDocIndexPath) {
-                var frame = document.getElementById('doc-frame').src = p_libDocIndexPath;
+            function displayDocumentation(p_docPath) {
+                var frame = document.getElementById('doc-frame').src = p_docPath;
             }
+
         </script>
-        
+
     </head>
-    
+
     <!-- HTML -->
     <body>
         <header>
@@ -92,26 +93,29 @@
                 <!-- Add documentation reference here... -->
                 <h2>Libraries</h2>
                 <ul>
-                    <li><a type="link" href="" onclick="displayLibraryDoc('../../cxutil/doc/doxygen/html/index.html'); return false;"><tt>cxutil</tt></a></li>
-                    <li><a type="link" href="" onclick="displayLibraryDoc('../../cxbase/doc/doxygen/html/index.html'); return false;"><tt>cxbase</tt></a></li>
-                    <li><a type="link" href="" onclick="displayLibraryDoc('../../cxgui/doc/doxygen/html/index.html'); return false;" ><tt>cxgui </tt></a></li>
-                    <li><a type="link" href="" onclick="displayLibraryDoc('../../cxexec/doc/doxygen/html/index.html'); return false;"><tt>cxexec</tt></a></li>
+                    <li><a type="link" href="" onclick="displayDocumentation('../../cxutil/doc/doxygen/html/index.html'); return false;"><tt>cxutil</tt></a></li>
+                    <li><a type="link" href="" onclick="displayDocumentation('../../cxmath/doc/doxygen/html/index.html'); return false;"><tt>cxmath</tt></a></li>
+                    <li><a type="link" href="" onclick="displayDocumentation('../../cxlog/doc/doxygen/html/index.html'); return false;"><tt>cxlog</tt></a></li>
+                    <li><a type="link" href="" onclick="displayDocumentation('../../cxcmd/doc/doxygen/html/index.html'); return false;"><tt>cxcmd</tt></a></li>
+                    <li><a type="link" href="" onclick="displayDocumentation('../../cxbase/doc/doxygen/html/index.html'); return false;"><tt>cxbase</tt></a></li>
+                    <li><a type="link" href="" onclick="displayDocumentation('../../cxgui/doc/doxygen/html/index.html'); return false;" ><tt>cxgui </tt></a></li>
+                    <li><a type="link" href="" onclick="displayDocumentation('../../cxexec/doc/doxygen/html/index.html'); return false;"><tt>cxexec</tt></a></li>
                 </ul>
-                
+
                 <h2>Specifications</h2>
                 <ul>
-                    <li><a type="link" href="" onclick="displayLibraryDoc('../spec_arch/spec_arch.pdf'); return false;"><tt>Architecture</tt></a></li>
-                    <li><a type="link" href="" onclick="displayLibraryDoc('../spec_gui/spec_gui.pdf');   return false;"><tt>GUI</tt></a></li>
+                    <li><a type="link" href="" onclick="displayDocumentation('../spec_arch/spec_arch.pdf'); return false;"><tt>Architecture</tt></a></li>
+                    <li><a type="link" href="" onclick="displayDocumentation('../spec_gui/spec_gui.pdf');   return false;"><tt>GUI</tt></a></li>
                 </ul>
-                
+
                 <h2>Other</h2>
                 <ul>
-                    <li><a type="link" href="" onclick="displayLibraryDoc('../spec_arch/img/cxbase_refac.dia'); return false;"><tt>Refactoring cxbase</tt></a></li>
-                    <li><a type="link" href="" onclick="displayLibraryDoc('../coding_std/coding_std.pdf'); return false;"><tt>Programming guide</tt></a></li>
-                    <li><a type="link" href="" onclick="displayLibraryDoc('./externalDocumentation.html'); return false;"><tt>External documentation</tt></a></li>
+                    <li><a type="link" href="" onclick="displayDocumentation('../spec_arch/img/cxbase_refac.dia'); return false;"><tt>Refactoring cxbase</tt></a></li>
+                    <li><a type="link" href="" onclick="displayDocumentation('../coding_std/coding_std.pdf'); return false;"><tt>Programming guide</tt></a></li>
+                    <li><a type="link" href="" onclick="displayDocumentation('./externalDocumentation.html'); return false;"><tt>External documentation</tt></a></li>
                 </ul>
             </nav>
-        
+
             <section class="doc-pages">
                 <iframe id="doc-frame" width=100% height=100% src="about:blank"></iframe>
             </section>

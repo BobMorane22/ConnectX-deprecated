@@ -36,35 +36,6 @@
 #include <cxutil/include/util.h>
 
 
-TEST(MathTests, AreLogicallyEqual_TwoLogicallyEqualDoubles_ReturnsTrue)
-{
-    const double expectedResult{0.111111111111111};
-
-    const double lhs{0.555555555555555};
-    const double rhs{0.444444444444444};
-
-    ASSERT_FALSE(lhs - rhs == expectedResult);
-    ASSERT_TRUE(cxutil::math::areLogicallyEqual<double>(lhs - rhs, expectedResult, 3.0));
-}
-
-
-TEST(MathTests, AreLogicallyEqual_TwoLogicallyEqualDoublesNear0_ReturnsTrue)
-{
-    const double expectedResult{0.0};
-    double lhs{0.0};
-
-    for(int i = 0; i < 10; ++i)
-    {
-        lhs += 0.1;
-    }
-
-    const double rhs{1.0};
-
-    ASSERT_FALSE(lhs - rhs == expectedResult);
-    ASSERT_TRUE(cxutil::math::areLogicallyEqual<double>(lhs - rhs, expectedResult, 3.0));
-}
-
-
 TEST(StringTests, Vectorize_EmptyDelimiter_ThrowsException)
 {
     const std::string text     {"Some text"};
