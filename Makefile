@@ -182,6 +182,9 @@ mrproper:
 	$(MAKE) mrproper -C cxutil
 	$(MAKE) mrproper -C cxutil/test
 	$(MAKE) mrproper -C cxutil/doc
+	$(MAKE) mrproper -C cxmath
+	$(MAKE) mrproper -C cxmath/test
+	$(MAKE) mrproper -C cxmath/doc
 	$(MAKE) mrproper -C cxlog
 	$(MAKE) mrproper -C cxlog/test
 	$(MAKE) mrproper -C cxlog/doc
@@ -209,6 +212,9 @@ clean:
 	$(MAKE) clean -C cxutil
 	$(MAKE) clean -C cxutil/test
 	$(MAKE) clean -C cxutil/doc
+	$(MAKE) clean -C cxmath
+	$(MAKE) clean -C cxmath/test
+	$(MAKE) clean -C cxmath/doc
 	$(MAKE) clean -C cxlog
 	$(MAKE) clean -C cxlog/test
 	$(MAKE) clean -C cxlog/doc
