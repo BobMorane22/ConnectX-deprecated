@@ -16,5 +16,5 @@ void cxlog::StringStreamLogTarget::log(const std::string& p_message)
         return;
     }
 
-    ASSERT_FALSE_MSG("String stream not valid.");
+    ASSERT_ERROR_MSG("String stream not valid.");
 }

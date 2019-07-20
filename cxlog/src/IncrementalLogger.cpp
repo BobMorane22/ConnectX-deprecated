@@ -32,7 +32,7 @@ void cxlog::IncrementalLogger::log(const VerbosityLevel p_verbosityLevel,
 {
     if(!m_msgFormatter)
     {
-        ASSERT_FALSE_MSG("No reference to a formatter.");
+        ASSERT_ERROR_MSG("No reference to a formatter.");
 
         return;
     }
@@ -49,7 +49,7 @@ void cxlog::IncrementalLogger::log(const VerbosityLevel p_verbosityLevel,
 
     if(!m_logTarget)
     {
-        ASSERT_FALSE_MSG("No reference to a log target.");
+        ASSERT_ERROR_MSG("No reference to a log target.");
 
         // Release formatter, no logging will be done after all:
         m_msgFormatter.reset(nullptr);

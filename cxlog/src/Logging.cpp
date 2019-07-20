@@ -8,14 +8,14 @@ namespace
 
 std::unique_ptr<cxlog::ILogger> createCSVFileLogger()
 {
-    ASSERT_FALSE_MSG("Not yet implemented.");
+    ASSERT_ERROR_MSG("Not yet implemented.");
 
     return nullptr;
 }
 
 std::unique_ptr<cxlog::ILogger> createCSVStdoutLogger()
 {
-    ASSERT_FALSE_MSG("Not yet implemented.");
+    ASSERT_ERROR_MSG("Not yet implemented.");
 
     return nullptr;
 }
@@ -57,5 +57,5 @@ void cxlog::Logging::log(const cxlog::VerbosityLevel p_verbosityLevel,
         return;
     }
 
-    ASSERT_FALSE();
+    ASSERT_ERROR();
 }

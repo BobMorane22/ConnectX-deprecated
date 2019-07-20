@@ -54,7 +54,7 @@ std::string cxlog::CSVMessageFormatter::formatMessage(const VerbosityLevel p_ver
     {
         case cxlog::VerbosityLevel::NONE:
         {
-            ASSERT_FALSE_MSG("Do this check in higher level functions.");
+            ASSERT_ERROR_MSG("Do this check in higher level functions.");
             return {};
         }
         case cxlog::VerbosityLevel::FATAL:
@@ -79,6 +79,6 @@ std::string cxlog::CSVMessageFormatter::formatMessage(const VerbosityLevel p_ver
         }
     }
 
-    ASSERT_FALSE_MSG("Unknown verbosity level");
+    ASSERT_ERROR_MSG("Unknown verbosity level");
     return {};
 }

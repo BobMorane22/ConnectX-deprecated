@@ -4,12 +4,12 @@
 #include <iostream>
 
 void cxinv::handleAssert(const cxinv::AssertLabel  p_label,
-                         const bool         p_conditionRes,
-                         const char*        p_conditionExpr,
-                         const char*        p_fileName,
-                         const char*        p_functionName,
-                         const long         p_lineNumber,
-                         const char*        p_message)
+                         const bool                p_conditionRes,
+                         const char*               p_conditionExpr,
+                         const char*               p_fileName,
+                         const char*               p_functionName,
+                         const long                p_lineNumber,
+                         const char*               p_message)
 {
     if(!(p_conditionRes))
     {

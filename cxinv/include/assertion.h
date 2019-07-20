@@ -63,15 +63,15 @@ void handleAssert(const AssertLabel  p_label,
 #endif // NDEBUG
 
 #ifndef NDEBUG
-#define ASSERT_FALSE() ASSERT(false)
+#define ASSERT_ERROR() ASSERT(false)
 #else
-#define ASSERT_FALSE() ((void)0)
+#define ASSERT_ERROR() ((void)0)
 #endif // NDEBUG
 
 #ifndef NDEBUG
-#define ASSERT_FALSE_MSG(p_message) ASSERT_MSG(false, p_message)
+#define ASSERT_ERROR_MSG(p_message) ASSERT_MSG(false, p_message)
 #else
-#define ASSERT_FALSE_MSG(p_message) ((void)0)
+#define ASSERT_ERROR_MSG(p_message) ((void)0)
 #endif // NDEBUG
 
 

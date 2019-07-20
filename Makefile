@@ -56,6 +56,7 @@ MAIN     = connectx
 
 # Missing cxinvtest
 TARGETS  += cxinv      \
+            cxinvtest  \
             cxinvdoc   \
             cxutil     \
             cxutiltest \

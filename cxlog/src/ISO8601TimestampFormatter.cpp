@@ -37,7 +37,7 @@ double countFromPrecision(const system_clock::time_point& p_timePoint,
         }
     }
 
-    ASSERT_FALSE_MSG("Unknown precision!");
+    ASSERT_ERROR_MSG("Unknown precision!");
 
     return 0.0;
 }
