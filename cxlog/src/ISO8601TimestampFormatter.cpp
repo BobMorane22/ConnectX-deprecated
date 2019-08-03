@@ -1,3 +1,34 @@
+/***************************************************************************************************
+ *
+ * Copyright (C) 2019 Connect X team
+ *
+ * This file is part of Connect X.
+ *
+ * Connect X is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Connect X is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Connect X.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ **************************************************************************************************/
+
+/***********************************************************************************************//**
+ * @file    ISO8601TimestampFormatter.cpp
+ * @author  Eric Poirier
+ * @date    July 2019
+ * @version 1.0
+ *
+ * Format timestamps to the ISO 8601 format (yyyy-mm-ddThh:mm:ss[.mmm]).
+ *
+ **************************************************************************************************/
+
 #include <chrono>
 #include <iomanip>
 #include <sstream>
@@ -6,11 +37,23 @@
 
 #include "../include/ISO8601TimestampFormatter.h"
 
+
 using namespace std::chrono;
 
 namespace
 {
 
+/***********************************************************************************************//**
+ * @brief Fraction of last second.
+ *
+ * Calculates the fraction of the last second that is spent according to a time precision.
+ *
+ * @param p_timePoint A time point.
+ * @param p_precision The time precision.
+ *
+ * @return The fraction of the last second that is spent according to a time precision.
+ *
+ **************************************************************************************************/
 double countFromPrecision(const system_clock::time_point& p_timePoint,
                           const cxlog::TimePrecision p_precision)
 
@@ -44,13 +87,13 @@ double countFromPrecision(const system_clock::time_point& p_timePoint,
 
 } // namespace
 
+
 cxlog::ISO8601TimestampFormatter::ISO8601TimestampFormatter(const cxlog::TimePrecision p_precision)
  : m_precision{p_precision}
  , m_precisionNeeded{p_precision != TimePrecision::SECONDS ? true : false}
 {
 }
 
-cxlog::ISO8601TimestampFormatter::~ISO8601TimestampFormatter() = default;
 
 // yyyy-mm-ddThh:mm:ss[.mmm]
 std::string cxlog::ISO8601TimestampFormatter::formatTimestamp() const
