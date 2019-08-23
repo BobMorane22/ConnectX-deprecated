@@ -1,3 +1,34 @@
+/***************************************************************************************************
+ *
+ * Copyright (C) 2019 Connect X team
+ *
+ * This file is part of Connect X.
+ *
+ * Connect X is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Connect X is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Connect X.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ **************************************************************************************************/
+
+/***********************************************************************************************//**
+ * @file    Logging.cpp
+ * @author  Eric Poirier
+ * @date    July 2019
+ * @version 1.0
+ *
+ * A singleton logging manager.
+ *
+ **************************************************************************************************/
+
 #include <cxinv/include/assertion.h>
 
 #include "../include/Logging.h"
@@ -6,6 +37,12 @@
 namespace
 {
 
+/***********************************************************************************************//**
+ * @brief Creates a Comma Separated Value (CSV) logger that outputs to a file.
+ *
+ * @return The address of the newly created logger.
+ *
+ **************************************************************************************************/
 std::unique_ptr<cxlog::ILogger> createCSVFileLogger()
 {
     ASSERT_ERROR_MSG("Not yet implemented.");
@@ -13,6 +50,13 @@ std::unique_ptr<cxlog::ILogger> createCSVFileLogger()
     return nullptr;
 }
 
+
+/***********************************************************************************************//**
+ * @brief Creates a Comma Separated Value (CSV) logger that outputs to the standard output.
+ *
+ * @return The address of the newly created logger.
+ *
+ **************************************************************************************************/
 std::unique_ptr<cxlog::ILogger> createCSVStdoutLogger()
 {
     ASSERT_ERROR_MSG("Not yet implemented.");
@@ -23,6 +67,10 @@ std::unique_ptr<cxlog::ILogger> createCSVStdoutLogger()
 } // namespace
 
 
+/***********************************************************************************************//**
+ * @brief Constructor.
+ *
+ **************************************************************************************************/
 cxlog::Logging::Logging()
  : m_loggers{nullptr}
 {
